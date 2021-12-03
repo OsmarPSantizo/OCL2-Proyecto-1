@@ -1,0 +1,127 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+}
+
+/* Header */
+
+.navbar {
+    display: flex;
+    padding: 1.2rem !important;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #000000;
+}
+
+.navbar ul {
+    display: flex;
+    flex: 1 0;
+    list-style: none;
+    margin: 0;
+}
+
+.navbar span {
+    color: #ffff;
+    font-weight: bold;
+    font-size: 1.2rem
+}
+
+ul button {
+    margin: 0 1rem;
+}
+
+a.logo:link {
+    text-decoration: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+a.logo:visited {
+    text-decoration: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+ /* ************************* */
+
+ /* Editor */
+
+ /* Style the tab */
+.tab {
+    overflow: hidden;
+    border: none;
+    background-color: #4834d4;
+    color: #ffff;
+  }
+
+  /* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+    color: white;
+}
+
+  /* Create an active/current tablink class */
+.tab button.active {
+    background-color: #22a6b3;
+    color: #ffff;
+}
+
+/* Style the tab content */
+.tabcontent {
+
+
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+
+ .container {
+
+    margin-top: 2rem;
+ }
+
+ /* Terminal */
+
+ .terminal {
+    background-color: black;
+
+}
+textarea {
+    resize: none;
+    width: 100%;
+}
+.terminal-container {
+    margin-top: 2rem;
+}
+
+.parse-btn {
+    text-align: center;
+    padding: 1rem !important;
+    color: white !important;
+    width: 100%;
+    margin-bottom: -1rem !important;
+}
+
+
+input[type="file"] {
+    display: none;
+
+}
+
+.custom-file-upload {
+    background-color: #ffff;
+    border-radius: 0.25rem;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
