@@ -6,6 +6,7 @@ const openInput = document.getElementById('open');
 const addButton = document.getElementById('new');
 const tabsContainer = document.getElementById('tab-container');
 const parseButton = document.getElementById('parseButton');
+const terminal = document.getElementById('terminal');
 
 var counter = 1;
 var currentEditor = 'editor';
@@ -158,9 +159,8 @@ function readSingleFile(e) {
 
 const parse = () => {
     console.log('parsing...');
-    //let textEditor = document.getElementById(currentEditor);
-
-    console.log(currentEditor.getValue());
+    let editorValue = currentEditor.getValue();
+    let result = calculator.parse( editorValue );
+    terminal.value = result;
+    console.log( editorValue );
 }
-
-

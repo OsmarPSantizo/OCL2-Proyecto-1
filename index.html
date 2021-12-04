@@ -53,14 +53,14 @@
           </div>
 
         <div id="editor1" class="tabcontent">
-            <textarea name="editor" id="editorj" cols="10" rows="10"></textarea>
+            <textarea name="editor" id="editor" cols="10" rows="10"></textarea>
         </div>
     </div>
 
 
 
     <div class="container">
-        <button id="compilarbtn"  class="parse-btn btn btn-warning"> Analizar </button>
+        <button id="compilarbtn" onclick="parse()" class="parse-btn btn btn-warning"> Analizar </button>
     </div>
 
     <!-- Text editor -->
@@ -80,21 +80,7 @@
     <script src="./static/codemirror/lib/codemirror.js"></script>
     <script src="./static/js/editor.js"></script>
 
-    <script src = "../OCL2-Proyecto-1/jquery.js"></script>
-<script src = "../OCL2-Proyecto-1/Analizador/calculator.js"></script>
-<script>
-    $(document).ready(function() {
-        $("#compilarbtn").click(function (){
-            try{
-                var result = calculator.parse($("#editorj").val());
-                $("#calculated_value").html(result);
-                $('#terminal').val(result);
-            }catch (e){
-                $("#calculated_value").html(String(e));
-            }
-        });
-    });
-
-</script>
+    <script src = "./jquery.js"></script>
+<script src = "./Analizador/calculator.js"></script>
 </body>
 </html>

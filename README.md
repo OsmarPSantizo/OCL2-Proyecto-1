@@ -26,3 +26,5 @@ O su forma abreviada,
 ```
 
 Los archivos .js que genera este comando se almacenarán en **src/build**.
+
+En la carpeta parser se estará llevando toda la codificación del interprete utilizando Jison.
