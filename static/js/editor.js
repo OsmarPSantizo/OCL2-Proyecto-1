@@ -96,6 +96,7 @@ const createEditor = ( editor ) => {
     } );
     editorList.push(newEditor);
     currentEditor = newEditor;
+    newEditor.setValue("2+3")
     console.log(editorList);
 }
 
@@ -161,3 +162,5 @@ const parse = () => {
 
     console.log(currentEditor.getValue());
 }
+
+
