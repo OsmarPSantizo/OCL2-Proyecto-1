@@ -1,0 +1,80 @@
+Comentarios
+	Una linea      ✓
+	Multilinea     ✓
+Tipos
+	Nulo
+	int            ✓
+	double         ✓    
+	boolean        ✓
+	char           ✓
+	String         ✓
+ 	Arreglos
+	Struct
+
+Expresiones
+	Suma           	    ✓
+	Resta			    ✓
+	Multiplicacion	    ✓
+	División		    ✓
+	Modulo			    ✓
+	Nativas
+		pow             ✓
+		sqrt            ✓
+		sin             ✓
+		cos             ✓
+		tan             ✓
+Relacionales
+	Igualdad            ✓
+	Diferenciacion      ✓
+	Mayor que           ✓
+	Menor que           ✓
+	Mayor o igual que   ✓
+	Menor o igual que   ✓
+
+Logicas 
+	AND                 ✓
+	OR                  ✓
+	NOT                 ✓
+
+Cadenas
+	Concatenacion          ✓
+	Repetición             ✓
+	Acceso a una posición  
+	Acceso a una porción
+	Tamaño de una cadena
+	Cadena en mayúsculas   ✓
+	Cadena en minúsculas   ✓
+
+Operador Ternario          ✓
+
+Instrucciones
+	Impresión
+	Declaraciones y asignaciones   ✓
+	Llamada a funciones   
+	Distintas funciones nativas
+		tipo.Parse(string)
+		toInt
+		toDouble
+		String
+		typeof                     ✓
+	Funciones
+
+Condicionales
+	if, if else
+	switch
+
+Loops
+
+	while
+	do while
+	for
+
+Arreglos
+	copiar un arreglo
+	Funciones nativas con arreglos
+		push
+		pop
+		length
+	Operador punto con arreglos
+
+Structs
