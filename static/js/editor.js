@@ -97,7 +97,16 @@ const createEditor = ( editor ) => {
     } );
     editorList.push(newEditor);
     currentEditor = newEditor;
-    newEditor.setValue("2+3")
+
+    currentEditor.setValue(`
+    void probandoaritmetica (){
+
+        writeline("hola");
+
+        }
+
+        start with probandoaritmetic
+    `);
     console.log(editorList);
 }
 
@@ -149,7 +158,6 @@ function readSingleFile(e) {
         console.log('contents:', contents);
         createTab(true, contents);
 
-
     };
 
     reader.readAsText(file);
@@ -160,7 +168,10 @@ function readSingleFile(e) {
 const parse = () => {
     console.log('parsing...');
     let editorValue = currentEditor.getValue();
-    let result = calculator.parse( editorValue );
+
+    ejectuarParser( editorValue );
+    //recorrer( editorValue );
+
     terminal.value = result;
     console.log( editorValue );
 }
