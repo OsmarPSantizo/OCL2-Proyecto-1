@@ -1,0 +1,4 @@
+array ::= [] | element
+element ::= value | value , element
+
+array ::= array | NUMBER
