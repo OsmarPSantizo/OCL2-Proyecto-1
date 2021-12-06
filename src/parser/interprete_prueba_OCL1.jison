@@ -142,9 +142,9 @@ caracter      (\' ({escape2}|{aceptacion2})\')
     const evaluar = require(['./src/build/Interprete/Evaluar'])
     const errores = require(['./src/build/Interprete/AST/Errores']);
     const tipo = require(['./src/build/Interprete/TablaSimbolos/Tipo']);
-    const simbolo = require(['./src/build/Interprete/TablaSimbolos/Simbolo']);
-    const parar = require(['./src/build/Interprete/Instrucciones/SentenciadeTransferencia/Break']);
-//     const primitivo = require(['./src/build/Interprete/Expresiones/Primitivo']);
+//     const simbolo = require(['./src/build/Interprete/TablaSimbolos/Simbolo']);
+//     const parar = require(['./src/build/Interprete/Instrucciones/SentenciadeTransferencia/Break']);
+//     const primitivo = require(['./src/build/Interprete/Expresiones/Primitivo.js']);
 %}
 
 /* PRECEDENCIA */
