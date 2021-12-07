@@ -1,3 +1,7 @@
+// Imports
+
+
+
 // elements and global variables
 
 const tabs = document.getElementById('tabs');
@@ -103,7 +107,7 @@ const createEditor = ( editor ) => {
 
         writeline("hola");
 
-        }
+    }
 
         start with probandoaritmetic
     `);
@@ -165,11 +169,11 @@ function readSingleFile(e) {
 }
 
 
-const parse = () => {
+const parseInput = () => {
     console.log('parsing...');
     let editorValue = currentEditor.getValue();
 
-    ejecutarParser( editorValue );
+    ejecutarCodigo( editorValue );
     //recorrer( editorValue );
 
     terminal.value = result;

@@ -7,7 +7,7 @@ import { TablaSimbolos } from "./Interprete/TablaSimbolos/TablaSimbolos";
 const gramatica = require('./Interprete/Gramatica/interprete_prueba_OCL1');
 
 
-function ejecutarCodigo(entrada:string){
+const ejecutarCodigo = (entrada:string) =>{
     const ast : Ast = gramatica.parse(entrada);
 
     const controlador = new Controlador();
@@ -24,12 +24,11 @@ function ejecutarCodigo(entrada:string){
     console.log(ts_html);
 }
 
+    // ejecutarCodigo(`void probandoaritmetica (){
+    //     int var1 = 1;
 
-ejecutarCodigo(`void probandoaritmetica (){
-    int var1 = 1;
-    
-    writeline(var1);
-    
-    }
-    
-    start with probandoaritmetica();`)
+    //     writeline(var1);
+
+    //     }
+
+    //     start with probandoaritmetica();`);
