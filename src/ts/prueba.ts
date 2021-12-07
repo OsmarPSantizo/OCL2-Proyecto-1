@@ -4,7 +4,7 @@ import { TablaSimbolos } from "./Interprete/TablaSimbolos/TablaSimbolos";
 
 
 
-const gramatica = require('../parser/interprete_prueba_OCL1');
+const gramatica = require('./Interprete/Gramatica/interprete_prueba_OCL1');
 
 
 function ejecutarCodigo(entrada:string){
