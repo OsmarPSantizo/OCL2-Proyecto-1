@@ -19,7 +19,11 @@ var Operador;
     Operador[Operador["OR"] = 13] = "OR";
     Operador[Operador["AND"] = 14] = "AND";
     Operador[Operador["NOT"] = 15] = "NOT";
-    Operador[Operador["X"] = 16] = "X";
+    Operador[Operador["SQRT"] = 16] = "SQRT";
+    Operador[Operador["SIN"] = 17] = "SIN";
+    Operador[Operador["COS"] = 18] = "COS";
+    Operador[Operador["TAN"] = 19] = "TAN";
+    Operador[Operador["X"] = 20] = "X";
 })(Operador = exports.Operador || (exports.Operador = {}));
 class Operacion {
     constructor(exp1, signo_operador, exp2, linea, columna, expU) {
@@ -79,6 +83,18 @@ class Operacion {
         }
         else if (signo_operador == '!') {
             return Operador.NOT;
+        }
+        else if (signo_operador == 'sqrt') {
+            return Operador.SQRT;
+        }
+        else if (signo_operador == "sin") {
+            return Operador.SIN;
+        }
+        else if (signo_operador == "cos") {
+            return Operador.COS;
+        }
+        else if (signo_operador == "tan") {
+            return Operador.TAN;
         }
         else {
             return Operador.X;

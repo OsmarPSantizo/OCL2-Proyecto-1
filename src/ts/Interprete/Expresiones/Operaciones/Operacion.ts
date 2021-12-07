@@ -22,6 +22,10 @@ export enum Operador{
     OR,
     AND,
     NOT,
+    SQRT,
+    SIN,
+    COS,
+    TAN,
     X
 }
 
@@ -78,10 +82,18 @@ export class Operacion implements Expresion{
             return Operador.AND;
         }else if(signo_operador == '!'){
             return Operador.NOT;
-        }else{
+        }else if (signo_operador == 'sqrt') {
+            return Operador.SQRT;
+        }else if (signo_operador == "sin"){
+            return Operador.SIN;
+        }else if (signo_operador == "cos"){
+            return Operador.COS;
+        }else if (signo_operador == "tan"){
+            return Operador.TAN;
+        }
+        else{
             return Operador.X
         }
-        
     }
 
     getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {

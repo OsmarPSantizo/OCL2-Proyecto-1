@@ -184,6 +184,22 @@ export class Aritmetica extends Operacion implements Expresion{
                     }else{
                         return tipo.ERROR
                     }
+                }else if(tipo_exp1 == tipo.CADENA){
+                    if(tipo_exp2 == tipo.ENTERO){
+                        return tipo.CADENA
+                    }else{
+                        return tipo.ERROR
+                    }
+
+                }
+                break;
+//RAIZ CUADRADA
+            case Operador.SQRT:
+                
+                if(tipo_exp1 == tipo.ENTERO){
+                    return tipo.DOBLE;
+                }else if(tipo_exp1 == tipo.DOBLE){
+                    return tipo.DOBLE
                 }
                 break;
 //MODULO
@@ -217,6 +233,38 @@ export class Aritmetica extends Operacion implements Expresion{
                 }
                 break;
             default:
+                break;
+
+
+//SENO
+            case Operador.SIN:
+                            
+                if(tipo_exp1 == tipo.ENTERO){
+                    return tipo.DOBLE;
+                }else if(tipo_exp1 == tipo.DOBLE){
+                    return tipo.DOBLE
+                }
+                break;
+
+
+//COSENO
+            case Operador.COS:
+                                        
+                if(tipo_exp1 == tipo.ENTERO){
+                    return tipo.DOBLE;
+                }else if(tipo_exp1 == tipo.DOBLE){
+                    return tipo.DOBLE
+                }
+                break;
+
+//TANGENTE
+            case Operador.TAN:
+                                        
+                if(tipo_exp1 == tipo.ENTERO){
+                    return tipo.DOBLE;
+                }else if(tipo_exp1 == tipo.DOBLE){
+                    return tipo.DOBLE
+                }
                 break;
         }
 
@@ -476,6 +524,7 @@ export class Aritmetica extends Operacion implements Expresion{
             
 //POTENCIA
             case Operador.POT:
+                console.log("Aveeeeer")
                 if(tipo_exp1 == tipo.ENTERO){
                     if(tipo_exp2 == tipo.ENTERO){
                         return valor_exp1 ** valor_exp2;
@@ -492,6 +541,20 @@ export class Aritmetica extends Operacion implements Expresion{
                     }else{
                         return null;
                     }
+                }else if (tipo_exp1 == tipo.CADENA){
+                    
+                    if(tipo_exp2 == tipo.ENTERO)
+                    
+                    return valor_exp1.repeat(valor_exp2)
+                }
+                break;
+
+
+//RAIZ CUADRADA
+            case Operador.SQRT:
+                
+                if(tipo_exp1 == tipo.ENTERO){
+                    return Math.sqrt(valor_exp1);
                 }
                 break;
 //MODULO
@@ -525,6 +588,28 @@ export class Aritmetica extends Operacion implements Expresion{
 
             default:
                 break;
+
+//SENO
+            case Operador.SIN:
+                if(tipo_exp1 == tipo.ENTERO){
+                    return Math.sin(valor_exp1);
+                }
+                break;
+
+//COSENO
+            case Operador.COS:
+                if(tipo_exp1 == tipo.ENTERO){
+                    return Math.cos(valor_exp1);
+                }
+                break;
+
+//TANGENTE
+            case Operador.TAN:
+                if(tipo_exp1 == tipo.ENTERO){
+                    return Math.tan(valor_exp1);
+                }
+                break;
+
         }
 
 

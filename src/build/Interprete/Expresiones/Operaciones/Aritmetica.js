@@ -218,6 +218,23 @@ class Aritmetica extends Operacion_1.Operacion {
                         return Tipo_1.tipo.ERROR;
                     }
                 }
+                else if (tipo_exp1 == Tipo_1.tipo.CADENA) {
+                    if (tipo_exp2 == Tipo_1.tipo.ENTERO) {
+                        return Tipo_1.tipo.CADENA;
+                    }
+                    else {
+                        return Tipo_1.tipo.ERROR;
+                    }
+                }
+                break;
+            //RAIZ CUADRADA
+            case Operacion_1.Operador.SQRT:
+                if (tipo_exp1 == Tipo_1.tipo.ENTERO) {
+                    return Tipo_1.tipo.DOBLE;
+                }
+                else if (tipo_exp1 == Tipo_1.tipo.DOBLE) {
+                    return Tipo_1.tipo.DOBLE;
+                }
                 break;
             //MODULO
             case Operacion_1.Operador.MOD:
@@ -257,6 +274,33 @@ class Aritmetica extends Operacion_1.Operacion {
                 }
                 break;
             default:
+                break;
+            //SENO
+            case Operacion_1.Operador.SIN:
+                if (tipo_exp1 == Tipo_1.tipo.ENTERO) {
+                    return Tipo_1.tipo.DOBLE;
+                }
+                else if (tipo_exp1 == Tipo_1.tipo.DOBLE) {
+                    return Tipo_1.tipo.DOBLE;
+                }
+                break;
+            //COSENO
+            case Operacion_1.Operador.COS:
+                if (tipo_exp1 == Tipo_1.tipo.ENTERO) {
+                    return Tipo_1.tipo.DOBLE;
+                }
+                else if (tipo_exp1 == Tipo_1.tipo.DOBLE) {
+                    return Tipo_1.tipo.DOBLE;
+                }
+                break;
+            //TANGENTE
+            case Operacion_1.Operador.TAN:
+                if (tipo_exp1 == Tipo_1.tipo.ENTERO) {
+                    return Tipo_1.tipo.DOBLE;
+                }
+                else if (tipo_exp1 == Tipo_1.tipo.DOBLE) {
+                    return Tipo_1.tipo.DOBLE;
+                }
                 break;
         }
         return Tipo_1.tipo.ERROR;
@@ -557,6 +601,7 @@ class Aritmetica extends Operacion_1.Operacion {
                 break;
             //POTENCIA
             case Operacion_1.Operador.POT:
+                console.log("Aveeeeer");
                 if (tipo_exp1 == Tipo_1.tipo.ENTERO) {
                     if (tipo_exp2 == Tipo_1.tipo.ENTERO) {
                         return valor_exp1 ** valor_exp2;
@@ -578,6 +623,16 @@ class Aritmetica extends Operacion_1.Operacion {
                     else {
                         return null;
                     }
+                }
+                else if (tipo_exp1 == Tipo_1.tipo.CADENA) {
+                    if (tipo_exp2 == Tipo_1.tipo.ENTERO)
+                        return valor_exp1.repeat(valor_exp2);
+                }
+                break;
+            //RAIZ CUADRADA
+            case Operacion_1.Operador.SQRT:
+                if (tipo_exp1 == Tipo_1.tipo.ENTERO) {
+                    return Math.sqrt(valor_exp1);
                 }
                 break;
             //MODULO
@@ -615,6 +670,24 @@ class Aritmetica extends Operacion_1.Operacion {
                 }
                 break;
             default:
+                break;
+            //SENO
+            case Operacion_1.Operador.SIN:
+                if (tipo_exp1 == Tipo_1.tipo.ENTERO) {
+                    return Math.sin(valor_exp1);
+                }
+                break;
+            //COSENO
+            case Operacion_1.Operador.COS:
+                if (tipo_exp1 == Tipo_1.tipo.ENTERO) {
+                    return Math.cos(valor_exp1);
+                }
+                break;
+            //TANGENTE
+            case Operacion_1.Operador.TAN:
+                if (tipo_exp1 == Tipo_1.tipo.ENTERO) {
+                    return Math.tan(valor_exp1);
+                }
                 break;
         }
     }
