@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+console.log('controlador jeje');
 class Controlador {
     constructor() {
         this.errores = new Array();

@@ -8,6 +8,7 @@ const Funcion_1 = __importDefault(require("../Instrucciones/Funcion"));
 const StartWith_1 = __importDefault(require("../Instrucciones/StartWith"));
 const Errores_1 = __importDefault(require("./Errores"));
 const Nodo_1 = __importDefault(require("./Nodo"));
+console.log('AST');
 class Ast {
     constructor(lista_instrucciones) {
         this.lista_instrucciones = lista_instrucciones;

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+console.log('NODO');
 class Nodo {
     /**
      * @constructor Creamos un nuevo nodo a graficar del ast

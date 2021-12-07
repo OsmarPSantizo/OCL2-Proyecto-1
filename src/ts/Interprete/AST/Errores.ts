@@ -1,5 +1,5 @@
 import {lista_errores} from "./Lista_Errores"
-
+console.log('Errores');
 export default class Errores{
     public tipo : string;
     public descripcion: string;

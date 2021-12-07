@@ -8,8 +8,7 @@ import Errores from "./Errores";
 import Nodo from "./Nodo";
 
 
-
-
+console.log('AST');
 
 export default class Ast implements Instruccion{
     public lista_instrucciones : Array<Instruccion>;
@@ -28,8 +27,8 @@ export default class Ast implements Instruccion{
                 funcion.agregarFuncionTS(ts);
             }
         }
-        
-        
+
+
         //Vamos a recorrer las instrucciones que vienen desde la gramática
 
 
@@ -45,7 +44,7 @@ export default class Ast implements Instruccion{
             if(instruccion instanceof StartWith && !bandera_start){
                 instruccion.ejecutar(controlador,ts);
                 bandera_start = true;
-            
+
             } else if(!(instruccion instanceof Declaracion) && !(instruccion instanceof Funcion) && bandera_start){
                 instruccion.ejecutar(controlador,ts);
             }else if(bandera_start){
@@ -54,8 +53,8 @@ export default class Ast implements Instruccion{
                 controlador.append(`ERROR: Semántico, Solo se puede colocar un startwith.`);
                 console.log("no se puede");
             }
-            
-                     
+
+
         }
     }
     recorrer():Nodo{
@@ -67,5 +66,5 @@ export default class Ast implements Instruccion{
         return raiz;
     }
 
-    
+
 }

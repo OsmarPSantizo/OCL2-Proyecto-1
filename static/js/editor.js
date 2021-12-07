@@ -169,7 +169,7 @@ const parse = () => {
     console.log('parsing...');
     let editorValue = currentEditor.getValue();
 
-    ejectuarParser( editorValue );
+    ejecutarParser( editorValue );
     //recorrer( editorValue );
 
     terminal.value = result;

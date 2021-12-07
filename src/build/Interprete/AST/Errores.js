@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Lista_Errores_1 = require("./Lista_Errores");
+console.log('Errores');
 class Errores {
     constructor(tipo, descripcion, linea, columna) {
         this.tipo = tipo;
