@@ -1,12 +1,12 @@
-import Nodo from "../AST/Nodo";
-import Controlador from "../Controlador";
+import{ Nodo} from "../AST/Nodo";
+import {Controlador} from "../Controlador";
 import { Expresion } from "../Interfaces/Expresion";
 import { Instruccion } from "../Interfaces/Instruccion";
-import TablaSimbolos from "../TablaSimbolos/TablaSimbolos";
+import {TablaSimbolos} from "../TablaSimbolos/TablaSimbolos";
 import { tipo } from "../TablaSimbolos/Tipo";
 
 
-export default class WriteLine implements Instruccion{
+export class WriteLine implements Instruccion{
 
     public expresion : Expresion;
     public linea : number;

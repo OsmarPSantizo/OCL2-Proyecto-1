@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Errores = void 0;
 const Lista_Errores_1 = require("./Lista_Errores");
 class Errores {
     constructor(tipo, descripcion, linea, columna) {
@@ -12,4 +13,4 @@ class Errores {
         }
     }
 }
-exports.default = Errores;
+exports.Errores = Errores;

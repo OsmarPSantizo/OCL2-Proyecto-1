@@ -1,12 +1,12 @@
 
-import Nodo from "../../AST/Nodo";
-import Controlador from "../../Controlador";
+import {Nodo} from "../../AST/Nodo";
+import {Controlador} from "../../Controlador";
 import { Expresion } from "../../Interfaces/Expresion";
-import TablaSimbolos from "../../TablaSimbolos/TablaSimbolos";
-import Tipo, { tipo } from "../../TablaSimbolos/Tipo";
-import Operacion, { Operador } from "./Operacion";
+import {TablaSimbolos} from "../../TablaSimbolos/TablaSimbolos";
+import  { Tipo,tipo  } from "../../TablaSimbolos/Tipo";
+import  { Operador, Operacion } from "./Operacion";
 
-export default class Aritmetica extends Operacion implements Expresion{
+export class Aritmetica extends Operacion implements Expresion{
 
     /**
      * 

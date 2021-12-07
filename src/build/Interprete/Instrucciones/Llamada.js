@@ -1,12 +1,10 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Errores_1 = __importDefault(require("../AST/Errores"));
-const Nodo_1 = __importDefault(require("../AST/Nodo"));
-const Simbolo_1 = __importDefault(require("../TablaSimbolos/Simbolo"));
-const TablaSimbolos_1 = __importDefault(require("../TablaSimbolos/TablaSimbolos"));
+exports.Llamada = void 0;
+const Errores_1 = require("../AST/Errores");
+const Nodo_1 = require("../AST/Nodo");
+const Simbolo_1 = require("../TablaSimbolos/Simbolo");
+const TablaSimbolos_1 = require("../TablaSimbolos/TablaSimbolos");
 class Llamada {
     constructor(identificador, parametros, linea, columna) {
         this.identificador = identificador;
@@ -22,7 +20,7 @@ class Llamada {
         // Primero hay que ver si el método está en la tabla de símbolos
         if (ts.existe(this.identificador)) {
             //creamos una tabla de simbolos local
-            let ts_local = new TablaSimbolos_1.default(ts);
+            let ts_local = new TablaSimbolos_1.TablaSimbolos(ts);
             // obtiene el simbolo del método
             let simbolo_funcion = ts.getSimbolo(this.identificador);
             // verificamos is los parametros están correctos
@@ -34,7 +32,7 @@ class Llamada {
             }
         }
         else {
-            let error = new Errores_1.default("Semantico", `El método no ha sido creado`, this.linea, this.columna);
+            let error = new Errores_1.Errores("Semantico", `El método no ha sido creado`, this.linea, this.columna);
             controlador.errores.push(error);
             controlador.append(`ERROR: Semántico, El método no ha sido creado. En la linea ${this.linea} y columna ${this.columna}`);
             return null;
@@ -44,7 +42,7 @@ class Llamada {
         // Primero hay que ver si el método está en la tabla de símbolos
         if (ts.existe(this.identificador)) {
             //creamos una tabla de simbolos local
-            let ts_local = new TablaSimbolos_1.default(ts);
+            let ts_local = new TablaSimbolos_1.TablaSimbolos(ts);
             if (controlador.tablas.some(x => ts_local === ts_local)) {
             }
             else {
@@ -61,7 +59,7 @@ class Llamada {
             }
         }
         else {
-            let error = new Errores_1.default("Semantico", `El método no ha sido creado`, this.linea, this.columna);
+            let error = new Errores_1.Errores("Semantico", `El método no ha sido creado`, this.linea, this.columna);
             controlador.errores.push(error);
             controlador.append(`ERROR: Semántico, El método no ha sido creado. En la linea ${this.linea} y columna ${this.columna}`);
             return null;
@@ -93,14 +91,14 @@ class Llamada {
                 // ahora validamos si el valor del parametro de la llamada es igual al valor del parametro de la función
                 if (aux_tipo == aux_tipo_exp) {
                     // si son del mismo tipo se guarda cada parametro con su valor en su tabla de simbolos
-                    let simbolo = new Simbolo_1.default(aux.simbolo, aux.tipo, aux_id, aux_valor_exp);
+                    let simbolo = new Simbolo_1.Simbolo(aux.simbolo, aux.tipo, aux_id, aux_valor_exp);
                     ts_local.agregar(aux_id, simbolo);
                 }
             }
             return true;
         }
         else {
-            let error = new Errores_1.default("Semantico", `La cantidad de parametros no coincide con la requerida en el metodos`, this.linea, this.columna);
+            let error = new Errores_1.Errores("Semantico", `La cantidad de parametros no coincide con la requerida en el metodos`, this.linea, this.columna);
             controlador.errores.push(error);
             controlador.append(`ERROR: Semántico,La cantidad de parametros no coincide con la requerida en el metodos. En la linea ${this.linea} y columna ${this.columna}`);
             return null;
@@ -108,20 +106,20 @@ class Llamada {
         return false;
     }
     recorrer() {
-        let padre = new Nodo_1.default("Llamada", "");
-        padre.AddHijo(new Nodo_1.default(this.identificador, ""));
-        padre.AddHijo(new Nodo_1.default("(", ""));
+        let padre = new Nodo_1.Nodo("Llamada", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.identificador, ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
         if (this.parametros == undefined) {
         }
         else {
-            let hijo_parametros = new Nodo_1.default("Parametros", "");
+            let hijo_parametros = new Nodo_1.Nodo("Parametros", "");
             for (let para of this.parametros) {
-                hijo_parametros.AddHijo(new Nodo_1.default("parametro", ""));
+                hijo_parametros.AddHijo(new Nodo_1.Nodo("parametro", ""));
             }
             padre.AddHijo(hijo_parametros);
         }
-        padre.AddHijo(new Nodo_1.default(")", ""));
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
         return padre;
     }
 }
-exports.default = Llamada;
+exports.Llamada = Llamada;

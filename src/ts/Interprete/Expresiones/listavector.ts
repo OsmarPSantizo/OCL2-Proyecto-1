@@ -1,11 +1,11 @@
-import Nodo from "../AST/Nodo";
-import Controlador from "../Controlador";
+import {Nodo} from "../AST/Nodo";
+import {Controlador} from "../Controlador";
 import { Expresion } from "../Interfaces/Expresion";
-import TablaSimbolos from "../TablaSimbolos/TablaSimbolos";
+import {TablaSimbolos }from "../TablaSimbolos/TablaSimbolos";
 import { tipo } from "../TablaSimbolos/Tipo";
 
 
-export default class listavector implements Expresion{
+export class listavector implements Expresion{
     // lista de expresiones {exp,exp,exp}
     public listaexpresiones : Array<Expresion>;
     linea : number

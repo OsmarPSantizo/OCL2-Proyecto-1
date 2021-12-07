@@ -1,13 +1,13 @@
-import Errores from "../../AST/Errores";
-import Nodo from "../../AST/Nodo";
-import Controlador from "../../Controlador";
+import {Errores} from "../../AST/Errores";
+import {Nodo} from "../../AST/Nodo";
+import {Controlador} from "../../Controlador";
 import { Expresion } from "../../Interfaces/Expresion";
-import TablaSimbolos from "../../TablaSimbolos/TablaSimbolos";
+import {TablaSimbolos} from "../../TablaSimbolos/TablaSimbolos";
 import { tipo } from "../../TablaSimbolos/Tipo";
-import Operacion,{Operador} from "./Operacion";
+import { Operador, Operacion } from "./Operacion";
 
 
-export default class Relacional extends Operacion implements Expresion{
+export  class Relacional extends Operacion implements Expresion{
     public constructor(exp1: Expresion, signo_operador : string, exp2: Expresion, linea: number, columna:number , expU:boolean){
         super(exp1,signo_operador, exp2,linea,columna,expU)
     }

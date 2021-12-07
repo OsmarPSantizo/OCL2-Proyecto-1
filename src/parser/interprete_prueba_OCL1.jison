@@ -74,7 +74,7 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 
 
 /* Palabras reservadas */
-"evaluar"             {console.log("Reconocio: "+yytext); return 'EVALUAR'}
+
 "true"             {console.log("Reconocio: "+yytext); return 'TRUE'}
 "false"             {console.log("Reconocio: "+yytext); return 'FALSE'}
 
@@ -139,12 +139,51 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 
 //AREA DE IMPORTS
 %{
-    const evaluar = require(['./src/build/Interprete/Evaluar'])
-    const errores = require(['./src/build/Interprete/AST/Errores']);
-    const tipo = require(['./src/build/Interprete/TablaSimbolos/Tipo']);
-//     const simbolo = require(['./src/build/Interprete/TablaSimbolos/Simbolo']);
-//     const parar = require(['./src/build/Interprete/Instrucciones/SentenciadeTransferencia/Break']);
-//     const primitivo = require(['./src/build/Interprete/Expresiones/Primitivo.js']);
+    
+       
+        const {aritmetica} = require('../Expresiones/Operaciones/Aritmetica');
+        const {primitivo} = require('../Expresiones/Primitivo');
+    
+        
+        const {relacional} = require('../Expresiones/Operaciones/Relacionales')
+        const {logica} = require('../Expresiones/Operaciones/Logicas')
+        const {writeline} = require('../Instrucciones/Writeline');
+        const {tolower} = require('../Instrucciones/Tolower');
+        const {toupper} = require('../Instrucciones/Toupper');
+        const {truncate} = require('../Instrucciones/FuncionesNativas/Truncate');
+        const {round} = require('../Instrucciones/FuncionesNativas/Round');
+        const {typeofF} = require('../Instrucciones/FuncionesNativas/Typeof');
+        const {tostringg} = require('../Instrucciones/FuncionesNativas/Tostring');
+        const {casteos} = require('../Instrucciones/FuncionesNativas/Casteos');
+        const {declaracion} = require('../Instrucciones/Declaracion');
+        const {declvectores} = require('../Instrucciones/DeclaracionVectores');
+        const {accvectores} = require('../Expresiones/AccesoVector');
+        const {asignacion} = require('../Instrucciones/Asignacion');
+        const {Ifs} = require('../Instrucciones/SentenciasdeControl/Ifs');
+        const {While }= require('../Instrucciones/SentenciasCiclicas/While');
+        const {Dowhilee }= require('../Instrucciones/SentenciasCiclicas/DoWhile');
+        const {ast} = require('../AST/Ast');
+        const {errores} = require('../AST/Errores');
+        const {tipo} = require('../TablaSimbolos/Tipo');
+        const {simbolo} = require('../TablaSimbolos/Simbolo');
+        const {identificador} = require('../Expresiones/identificador');
+        const {ternario} = require('../Expresiones/Ternario');
+        const {parar} = require('../Instrucciones/SentenciadeTransferencia/Break');
+        const {retornar} = require('../Instrucciones/SentenciadeTransferencia/Return');
+        const {continuar} = require('../Instrucciones/SentenciadeTransferencia/Continue');
+        const {Switch} = require('../Instrucciones/SentenciasdeControl/Switch');
+        const {caso} = require('../Instrucciones/SentenciasdeControl/caso');
+        const {For} = require('../Instrucciones/SentenciasCiclicas/For');
+        const {funcion} = require('../Instrucciones/Funcion');
+        const {llamada} = require('../Instrucciones/Llamada');
+        const {startwith} = require('../Instrucciones/StartWith');
+
+
+
+
+
+
+
 %}
 
 /* PRECEDENCIA */
@@ -350,8 +389,8 @@ e
     | DECIMAL                   {$$ = new primitivo.default(Number($1),'DOBLE',@1.first_line,@1.last_column);}
     | ENTERO                    {$$ = new primitivo.default(Number($1),'ENTERO',@1.first_line,@1.last_column);}
     | ID                        {$$ = new identificador.default($1,@1.first_line,@1.last_column);}
-    | CADENA                    {$1 = $1.slice(1,$1.length-1);$$ = new primitivo.default($1,'CADENA',@1.first_line,@1.last_column);}
-    | CARACTER                  {$1 = $1.slice(1,$1.length-1);$$ = new primitivo.default($1,'CARACTER',@1.first_line,@1.last_column);}
+    | CADENA                    {$1 = $1.slice(1,$1.length-1);$$ = new primitivo($1,'CADENA',@1.first_line,@1.last_column);}
+    | CARACTER                  {$1 = $1.slice(1,$1.length-1);$$ = new primitivo($1,'CARACTER',@1.first_line,@1.last_column);}
     | TRUE                      {$$ = new primitivo.default(true,'BOOLEAN',@1.first_line,@1.last_column);}
     | FALSE                     {$$ = new primitivo.default(false,'BOOLEAN',@1.first_line,@1.last_column);}
     | e INTERROGACION e DOSPUNTOS e {$$ = new ternario.default($1,$3,$5,@1.first_line,@1.last_column);}

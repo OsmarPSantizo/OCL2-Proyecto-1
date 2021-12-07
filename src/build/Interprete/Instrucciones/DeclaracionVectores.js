@@ -1,10 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Errores_1 = __importDefault(require("../AST/Errores"));
-const Simbolo_1 = __importDefault(require("../TablaSimbolos/Simbolo"));
+exports.DeclararcionVectores = void 0;
+const Errores_1 = require("../AST/Errores");
+const Simbolo_1 = require("../TablaSimbolos/Simbolo");
 const Tipo_1 = require("../TablaSimbolos/Tipo");
 class DeclararcionVectores {
     constructor(tipo_declara, type, lista_ids, expresion, linea, columna) {
@@ -19,7 +17,7 @@ class DeclararcionVectores {
         for (let id of this.lista_ids) {
             //1er paso. Verificar si existe en la tabla actual
             if (ts.existeEnActual(id)) {
-                let error = new Errores_1.default("Semantico", `La variable ${id} ya existe en el entorno actual, no se puede declarar otra vez.`, this.linea, this.columna);
+                let error = new Errores_1.Errores("Semantico", `La variable ${id} ya existe en el entorno actual, no se puede declarar otra vez.`, this.linea, this.columna);
                 controlador.errores.push(error);
                 controlador.append(`ERROR: Semántico, La variable ${id} ya existe en el entorno actual, no se puede declarar otra vez. En la linea ${this.linea} y columna ${this.columna}`);
                 continue;
@@ -34,11 +32,11 @@ class DeclararcionVectores {
                         for (let i = 0; i < valor; i++) {
                             valores.push(0); // el valor por defecto
                         }
-                        let nuevo_simbolo = new Simbolo_1.default(4, this.type, id, valores);
+                        let nuevo_simbolo = new Simbolo_1.Simbolo(4, this.type, id, valores);
                         ts.agregar(id, nuevo_simbolo);
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `La variable ${id} no contiene un numero entero en la declaracion.`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `La variable ${id} no contiene un numero entero en la declaracion.`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, La variable ${id}  no contiene un numero entero en la declaracion. En la linea ${this.linea} y columna ${this.columna}`);
                     }
@@ -51,11 +49,11 @@ class DeclararcionVectores {
                         for (let i = 0; i < valor; i++) {
                             valores.push(0.0); // el valor por defecto
                         }
-                        let nuevo_simbolo = new Simbolo_1.default(4, this.type, id, valores);
+                        let nuevo_simbolo = new Simbolo_1.Simbolo(4, this.type, id, valores);
                         ts.agregar(id, nuevo_simbolo);
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `La variable ${id} no contiene un numero entero en la declaracion.`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `La variable ${id} no contiene un numero entero en la declaracion.`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, La variable ${id}  no contiene un numero entero en la declaracion. En la linea ${this.linea} y columna ${this.columna}`);
                     }
@@ -68,11 +66,11 @@ class DeclararcionVectores {
                         for (let i = 0; i < valor; i++) {
                             valores.push(true); // el valor por defecto
                         }
-                        let nuevo_simbolo = new Simbolo_1.default(4, this.type, id, valores);
+                        let nuevo_simbolo = new Simbolo_1.Simbolo(4, this.type, id, valores);
                         ts.agregar(id, nuevo_simbolo);
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `La variable ${id} no contiene un numero entero en la declaracion.`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `La variable ${id} no contiene un numero entero en la declaracion.`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, La variable ${id}  no contiene un numero entero en la declaracion. En la linea ${this.linea} y columna ${this.columna}`);
                     }
@@ -85,11 +83,11 @@ class DeclararcionVectores {
                         for (let i = 0; i < valor; i++) {
                             valores.push('0'); // el valor por defecto
                         }
-                        let nuevo_simbolo = new Simbolo_1.default(4, this.type, id, valores);
+                        let nuevo_simbolo = new Simbolo_1.Simbolo(4, this.type, id, valores);
                         ts.agregar(id, nuevo_simbolo);
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `La variable ${id} no contiene un numero entero en la declaracion.`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `La variable ${id} no contiene un numero entero en la declaracion.`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, La variable ${id}  no contiene un numero entero en la declaracion. En la linea ${this.linea} y columna ${this.columna}`);
                     }
@@ -102,17 +100,17 @@ class DeclararcionVectores {
                         for (let i = 0; i < valor; i++) {
                             valores.push(""); // el valor por defecto
                         }
-                        let nuevo_simbolo = new Simbolo_1.default(4, this.type, id, valores);
+                        let nuevo_simbolo = new Simbolo_1.Simbolo(4, this.type, id, valores);
                         ts.agregar(id, nuevo_simbolo);
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `La variable ${id} no contiene un numero entero en la declaracion.`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `La variable ${id} no contiene un numero entero en la declaracion.`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, La variable ${id}  no contiene un numero entero en la declaracion. En la linea ${this.linea} y columna ${this.columna}`);
                     }
                 }
                 else {
-                    let error = new Errores_1.default("Semantico", `La variable ${id} posee un tipo no valido.`, this.linea, this.columna);
+                    let error = new Errores_1.Errores("Semantico", `La variable ${id} posee un tipo no valido.`, this.linea, this.columna);
                     controlador.errores.push(error);
                     controlador.append(`ERROR: Semántico, La variable ${id}  posee un tipo no valido. En la linea ${this.linea} y columna ${this.columna}`);
                 }
@@ -131,11 +129,11 @@ class DeclararcionVectores {
                         valores.push(valor);
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `La variable ${id} posee un tipo diferente al de la declaracion del vector.`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `La variable ${id} posee un tipo diferente al de la declaracion del vector.`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, La variable ${id}  posee un tipo diferente al de la declaracion del vector. En la linea ${this.linea} y columna ${this.columna}`);
                     }
-                    let nuevo_simbolo = new Simbolo_1.default(4, this.type, id, valores);
+                    let nuevo_simbolo = new Simbolo_1.Simbolo(4, this.type, id, valores);
                     ts.agregar(id, nuevo_simbolo);
                 }
             }
@@ -145,4 +143,4 @@ class DeclararcionVectores {
         throw new Error("Method not implemented.");
     }
 }
-exports.default = DeclararcionVectores;
+exports.DeclararcionVectores = DeclararcionVectores;

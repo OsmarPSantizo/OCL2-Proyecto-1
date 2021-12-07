@@ -1,10 +1,10 @@
-import Errores from "./AST/Errores";
-import Simbolo from "./TablaSimbolos/Simbolo";
-import TablaSimbolos from "./TablaSimbolos/TablaSimbolos";
+import {Errores} from "./AST/Errores";
+import {Simbolo} from "./TablaSimbolos/Simbolo";
+import {TablaSimbolos} from "./TablaSimbolos/TablaSimbolos";
 
 
 
-export default class Controlador{
+export  class Controlador{
 
     public errores: Array<Errores>;
     public consola : string;

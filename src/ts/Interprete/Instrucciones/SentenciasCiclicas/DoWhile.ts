@@ -1,16 +1,16 @@
-import Errores from "../../AST/Errores";
-import Nodo from "../../AST/Nodo";
-import Controlador from "../../Controlador";
+import {Errores} from "../../AST/Errores";
+import {Nodo} from "../../AST/Nodo";
+import {Controlador} from "../../Controlador";
 import { Expresion } from "../../Interfaces/Expresion";
 import { Instruccion } from "../../Interfaces/Instruccion";
-import TablaSimbolos from "../../TablaSimbolos/TablaSimbolos";
-import Break from "../SentenciadeTransferencia/Break";
-import Continue from "../SentenciadeTransferencia/Continue";
+import {TablaSimbolos} from "../../TablaSimbolos/TablaSimbolos";
+import {Break} from "../SentenciadeTransferencia/Break";
+import {Continue} from "../SentenciadeTransferencia/Continue";
 
 
 
 
-export default class DoWhile implements Instruccion{
+export class DoWhile implements Instruccion{
     public condicion: Expresion;
     public lista_instrucciones: Array<Instruccion>;
     public linea: number;

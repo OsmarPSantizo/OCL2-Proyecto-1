@@ -1,12 +1,10 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Nodo_1 = __importDefault(require("../AST/Nodo"));
-const Simbolo_1 = __importDefault(require("../TablaSimbolos/Simbolo"));
-const TablaSimbolos_1 = __importDefault(require("../TablaSimbolos/TablaSimbolos"));
-class Funcion extends Simbolo_1.default {
+exports.Funcion = void 0;
+const Nodo_1 = require("../AST/Nodo");
+const Simbolo_1 = require("../TablaSimbolos/Simbolo");
+const TablaSimbolos_1 = require("../TablaSimbolos/TablaSimbolos");
+class Funcion extends Simbolo_1.Simbolo {
     // con el booleano vamos a saber si es un métdodo true o false
     constructor(simbolo, tipo, identificador, lista_params, metodo, lista_instrucciones, linea, columna) {
         super(simbolo, tipo, identificador, null, lista_params, metodo);
@@ -24,7 +22,7 @@ class Funcion extends Simbolo_1.default {
     }
     ejecutar(controlador, ts) {
         //con esto mandamos a ejecutar las instrucciones ya que las validaciones para llegar hasta aca se hacen en la llamada
-        let ts_local = new TablaSimbolos_1.default(ts);
+        let ts_local = new TablaSimbolos_1.TablaSimbolos(ts);
         if (controlador.tablas.some(x => ts_local === ts_local)) {
         }
         else {
@@ -39,34 +37,34 @@ class Funcion extends Simbolo_1.default {
         return null;
     }
     recorrer() {
-        let padre = new Nodo_1.default("Funcion", "");
+        let padre = new Nodo_1.Nodo("Funcion", "");
         if (this.tipo.nombre_tipo == undefined) {
-            padre.AddHijo(new Nodo_1.default("VOID", ""));
+            padre.AddHijo(new Nodo_1.Nodo("VOID", ""));
         }
         else {
-            padre.AddHijo(new Nodo_1.default(this.tipo.nombre_tipo, ""));
+            padre.AddHijo(new Nodo_1.Nodo(this.tipo.nombre_tipo, ""));
         }
-        padre.AddHijo(new Nodo_1.default(this.identificador, ""));
-        padre.AddHijo(new Nodo_1.default("(", ""));
+        padre.AddHijo(new Nodo_1.Nodo(this.identificador, ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
         //Agregar nodos parametros solo si hay
         if (this.lista_params == undefined) {
         }
         else {
-            let hijo_parametros = new Nodo_1.default("Parametros", "");
+            let hijo_parametros = new Nodo_1.Nodo("Parametros", "");
             for (let para of this.lista_params) {
-                hijo_parametros.AddHijo(new Nodo_1.default("parametro", ""));
+                hijo_parametros.AddHijo(new Nodo_1.Nodo("parametro", ""));
             }
             padre.AddHijo(hijo_parametros);
         }
-        padre.AddHijo(new Nodo_1.default(")", ""));
-        padre.AddHijo(new Nodo_1.default("{", ""));
-        let hijo_instrucciones = new Nodo_1.default("Instrucciones", "");
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
+        padre.AddHijo(new Nodo_1.Nodo("{", ""));
+        let hijo_instrucciones = new Nodo_1.Nodo("Instrucciones", "");
         for (let inst of this.lista_instrucciones) {
             hijo_instrucciones.AddHijo(inst.recorrer());
         }
         padre.AddHijo(hijo_instrucciones);
-        padre.AddHijo(new Nodo_1.default("}", ""));
+        padre.AddHijo(new Nodo_1.Nodo("}", ""));
         return padre;
     }
 }
-exports.default = Funcion;
+exports.Funcion = Funcion;

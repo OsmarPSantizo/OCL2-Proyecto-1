@@ -1,11 +1,11 @@
-import Nodo from "../../AST/Nodo";
-import Controlador from "../../Controlador";
+import {Nodo} from "../../AST/Nodo";
+import {Controlador} from "../../Controlador";
 import { Expresion } from "../../Interfaces/Expresion";
 import { Instruccion } from "../../Interfaces/Instruccion";
-import TablaSimbolos from "../../TablaSimbolos/TablaSimbolos";
+import {TablaSimbolos} from "../../TablaSimbolos/TablaSimbolos";
 
 
-export default class Retorno implements Instruccion{
+export class Retorno implements Instruccion{
 
     public valor_retorno : Expresion;
     

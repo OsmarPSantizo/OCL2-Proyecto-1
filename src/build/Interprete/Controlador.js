@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Controlador = void 0;
 class Controlador {
     constructor() {
         this.errores = new Array();
@@ -106,4 +107,4 @@ class Controlador {
         }
     }
 }
-exports.default = Controlador;
+exports.Controlador = Controlador;

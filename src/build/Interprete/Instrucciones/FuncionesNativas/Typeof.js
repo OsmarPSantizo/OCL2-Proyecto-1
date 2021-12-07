@@ -1,9 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Nodo_1 = __importDefault(require("../../AST/Nodo"));
+exports.Typeof = void 0;
+const Nodo_1 = require("../../AST/Nodo");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
 class Typeof {
     constructor(expresion, linea, columna) {
@@ -39,14 +37,14 @@ class Typeof {
         return this.get_string_tipo(tipo_enum);
     }
     recorrer() {
-        let padre = new Nodo_1.default("Typeof", "");
-        padre.AddHijo(new Nodo_1.default("typeof", ""));
-        padre.AddHijo(new Nodo_1.default("(", ""));
-        let hijo = new Nodo_1.default("exp", "");
+        let padre = new Nodo_1.Nodo("Typeof", "");
+        padre.AddHijo(new Nodo_1.Nodo("typeof", ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        let hijo = new Nodo_1.Nodo("exp", "");
         hijo.AddHijo(this.expresion.recorrer());
         padre.AddHijo(hijo);
-        padre.AddHijo(new Nodo_1.default(")", ""));
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
         return padre;
     }
 }
-exports.default = Typeof;
+exports.Typeof = Typeof;

@@ -1,10 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Errores_1 = __importDefault(require("../AST/Errores"));
-const Nodo_1 = __importDefault(require("../AST/Nodo"));
+exports.Asignacion = void 0;
+const Errores_1 = require("../AST/Errores");
+const Nodo_1 = require("../AST/Nodo");
 const Tipo_1 = require("../TablaSimbolos/Tipo");
 class Asignacion {
     constructor(indentificador, valor, linea, columna) {
@@ -48,7 +46,7 @@ class Asignacion {
                     (_h = ts.getSimbolo(this.identificador)) === null || _h === void 0 ? void 0 : _h.setValor(valor);
                 }
                 else {
-                    let error = new Errores_1.default("Semantico", `La variable ${this.identificador} no es del mismo tipo, entonces no se le puede asignar un valor`, this.linea, this.columna);
+                    let error = new Errores_1.Errores("Semantico", `La variable ${this.identificador} no es del mismo tipo, entonces no se le puede asignar un valor`, this.linea, this.columna);
                     controlador.errores.push(error);
                     controlador.append(`ERROR: Semántico, La variable ${this.identificador} no es del mismo tipo, entonces no se le puede asignar un valor. En la linea ${this.linea} y columna ${this.columna}`);
                     return null;
@@ -56,18 +54,18 @@ class Asignacion {
             }
         }
         else {
-            let error = new Errores_1.default("Semantico", `La variable ${this.identificador} no ha sido declarada, entonces no se puede asignar un valor`, this.linea, this.columna);
+            let error = new Errores_1.Errores("Semantico", `La variable ${this.identificador} no ha sido declarada, entonces no se puede asignar un valor`, this.linea, this.columna);
             controlador.errores.push(error);
             controlador.append(`ERROR: Semántico, La variable ${this.identificador} no ha sido declarada, entonces no se puede asignar un valor. En la linea ${this.linea} y columna ${this.columna}`);
             return null;
         }
     }
     recorrer() {
-        let padre = new Nodo_1.default("ASIGNACION", "");
-        padre.AddHijo(new Nodo_1.default(this.identificador, ""));
-        padre.AddHijo(new Nodo_1.default("=", ""));
+        let padre = new Nodo_1.Nodo("ASIGNACION", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.identificador, ""));
+        padre.AddHijo(new Nodo_1.Nodo("=", ""));
         padre.AddHijo(this.valor.recorrer());
         return padre;
     }
 }
-exports.default = Asignacion;
+exports.Asignacion = Asignacion;

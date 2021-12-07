@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Nodo = void 0;
 class Nodo {
     /**
      * @constructor Creamos un nuevo nodo a graficar del ast
@@ -59,4 +60,4 @@ class Nodo {
         return r;
     }
 }
-exports.default = Nodo;
+exports.Nodo = Nodo;

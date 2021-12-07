@@ -1,9 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Nodo_1 = __importDefault(require("../AST/Nodo"));
+exports.WriteLine = void 0;
+const Nodo_1 = require("../AST/Nodo");
 const Tipo_1 = require("../TablaSimbolos/Tipo");
 class WriteLine {
     constructor(expresion, linea, columna) {
@@ -19,14 +17,14 @@ class WriteLine {
         }
     }
     recorrer() {
-        let padre = new Nodo_1.default("Writeline", ""); //se le asigna el nombre a identificar
-        padre.AddHijo(new Nodo_1.default("Writeline", "")); // writeline("Hola mundo");
-        padre.AddHijo(new Nodo_1.default("(", ""));
-        let hijo = new Nodo_1.default("exp", "");
+        let padre = new Nodo_1.Nodo("Writeline", ""); //se le asigna el nombre a identificar
+        padre.AddHijo(new Nodo_1.Nodo("Writeline", "")); // writeline("Hola mundo");
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        let hijo = new Nodo_1.Nodo("exp", "");
         hijo.AddHijo(this.expresion.recorrer()); // exp -> primitivo -> "hola mundo"
         padre.AddHijo(hijo);
-        padre.AddHijo(new Nodo_1.default(")", "")); // Writeline --> writeline->( exp -> primitivo -> "hola mundo")
+        padre.AddHijo(new Nodo_1.Nodo(")", "")); // Writeline --> writeline->( exp -> primitivo -> "hola mundo")
         return padre;
     }
 }
-exports.default = WriteLine;
+exports.WriteLine = WriteLine;

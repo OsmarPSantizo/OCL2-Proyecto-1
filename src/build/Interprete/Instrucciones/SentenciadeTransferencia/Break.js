@@ -1,9 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Nodo_1 = __importDefault(require("../../AST/Nodo"));
+exports.Break = void 0;
+const Nodo_1 = require("../../AST/Nodo");
 class Break {
     constructor() {
     }
@@ -11,7 +9,7 @@ class Break {
         return this;
     }
     recorrer() {
-        return new Nodo_1.default("Break", "");
+        return new Nodo_1.Nodo("Break", "");
     }
 }
-exports.default = Break;
+exports.Break = Break;

@@ -1,9 +1,9 @@
-import Nodo from "../../AST/Nodo";
-import Controlador from "../../Controlador";
+import {Nodo} from "../../AST/Nodo";
+import {Controlador} from "../../Controlador";
 import { Instruccion } from "../../Interfaces/Instruccion";
-import TablaSimbolos from "../../TablaSimbolos/TablaSimbolos";
+import {TablaSimbolos} from "../../TablaSimbolos/TablaSimbolos";
 
-export default class Break implements Instruccion{
+export  class Break implements Instruccion{
     constructor(){
 
     

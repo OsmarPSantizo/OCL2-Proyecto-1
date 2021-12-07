@@ -1,10 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Errores_1 = __importDefault(require("../../AST/Errores"));
-const Nodo_1 = __importDefault(require("../../AST/Nodo"));
+exports.Truncate = void 0;
+const Errores_1 = require("../../AST/Errores");
+const Nodo_1 = require("../../AST/Nodo");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
 class Truncate {
     constructor(expresion, linea, columna) {
@@ -30,21 +28,21 @@ class Truncate {
             return Math.trunc(valor);
         }
         else {
-            let error = new Errores_1.default("Semantico", `La expresión no es de tipo int o double`, this.linea, this.columna);
+            let error = new Errores_1.Errores("Semantico", `La expresión no es de tipo int o double`, this.linea, this.columna);
             controlador.errores.push(error);
             controlador.append(`ERROR: Semántico, La expresión no es de tipo int o double. En la linea ${this.linea} y columna ${this.columna}`);
             return Tipo_1.tipo.ERROR;
         }
     }
     recorrer() {
-        let padre = new Nodo_1.default("Truncate", "");
-        padre.AddHijo(new Nodo_1.default("truncate", ""));
-        padre.AddHijo(new Nodo_1.default("(", ""));
-        let hijo = new Nodo_1.default("exp", "");
+        let padre = new Nodo_1.Nodo("Truncate", "");
+        padre.AddHijo(new Nodo_1.Nodo("truncate", ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        let hijo = new Nodo_1.Nodo("exp", "");
         hijo.AddHijo(this.expresion.recorrer());
         padre.AddHijo(hijo);
-        padre.AddHijo(new Nodo_1.default(")", ""));
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
         return padre;
     }
 }
-exports.default = Truncate;
+exports.Truncate = Truncate;

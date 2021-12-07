@@ -1,10 +1,10 @@
-import Nodo from "../AST/Nodo";
-import Controlador from "../Controlador";
+import{ Nodo} from "../AST/Nodo";
+import {Controlador} from "../Controlador";
 import { Expresion } from "../Interfaces/Expresion";
-import TablaSimbolos from "../TablaSimbolos/TablaSimbolos";
-import Tipo, { tipo } from "../TablaSimbolos/Tipo";
+import {TablaSimbolos} from "../TablaSimbolos/TablaSimbolos";
+import  { Tipo, tipo } from "../TablaSimbolos/Tipo";
 
-export default class Primitivo implements Expresion{
+export class Primitivo implements Expresion{
 
     public valor_primitivo : any;
     public linea : number;

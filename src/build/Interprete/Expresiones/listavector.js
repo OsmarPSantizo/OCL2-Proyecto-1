@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.listavector = void 0;
 const Tipo_1 = require("../TablaSimbolos/Tipo");
 class listavector {
     constructor(listaexpresiones, linea, columna) {
@@ -34,4 +35,4 @@ class listavector {
         throw new Error("Method not implemented.");
     }
 }
-exports.default = listavector;
+exports.listavector = listavector;

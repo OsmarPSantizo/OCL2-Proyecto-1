@@ -1,6 +1,6 @@
 import {lista_errores} from "./Lista_Errores"
 
-export default class Errores{
+export class Errores{
     public tipo : string;
     public descripcion: string;
     public linea : number;

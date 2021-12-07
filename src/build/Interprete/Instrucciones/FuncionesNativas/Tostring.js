@@ -1,10 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Errores_1 = __importDefault(require("../../AST/Errores"));
-const Nodo_1 = __importDefault(require("../../AST/Nodo"));
+exports.Tostring = void 0;
+const Errores_1 = require("../../AST/Errores");
+const Nodo_1 = require("../../AST/Nodo");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
 class Tostring {
     constructor(expresion, linea, columna) {
@@ -30,21 +28,21 @@ class Tostring {
             return valor.toString();
         }
         else {
-            let error = new Errores_1.default("Semantico", `La expresión no es de tipo int, double o booleano`, this.linea, this.columna);
+            let error = new Errores_1.Errores("Semantico", `La expresión no es de tipo int, double o booleano`, this.linea, this.columna);
             controlador.errores.push(error);
             controlador.append(`ERROR: Semántico, La expresión no es de tipo int, double o booleano. En la linea ${this.linea} y columna ${this.columna}`);
             return Tipo_1.tipo.ERROR;
         }
     }
     recorrer() {
-        let padre = new Nodo_1.default("Tostring", "");
-        padre.AddHijo(new Nodo_1.default("toString", ""));
-        padre.AddHijo(new Nodo_1.default("(", ""));
-        let hijo = new Nodo_1.default("exp", "");
+        let padre = new Nodo_1.Nodo("Tostring", "");
+        padre.AddHijo(new Nodo_1.Nodo("toString", ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        let hijo = new Nodo_1.Nodo("exp", "");
         hijo.AddHijo(this.expresion.recorrer());
         padre.AddHijo(hijo);
-        padre.AddHijo(new Nodo_1.default(")", ""));
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
         return padre;
     }
 }
-exports.default = Tostring;
+exports.Tostring = Tostring;

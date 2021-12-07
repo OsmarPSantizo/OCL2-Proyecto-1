@@ -1,32 +1,11 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Errores_1 = __importDefault(require("../../AST/Errores"));
-const Nodo_1 = __importDefault(require("../../AST/Nodo"));
+exports.Relacional = void 0;
+const Errores_1 = require("../../AST/Errores");
+const Nodo_1 = require("../../AST/Nodo");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
-const Operacion_1 = __importStar(require("./Operacion"));
-class Relacional extends Operacion_1.default {
+const Operacion_1 = require("./Operacion");
+class Relacional extends Operacion_1.Operacion {
     constructor(exp1, signo_operador, exp2, linea, columna, expU) {
         super(exp1, signo_operador, exp2, linea, columna, expU);
     }
@@ -104,7 +83,7 @@ class Relacional extends Operacion_1.default {
                         return valor_exp1 == num_ascci1;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -119,7 +98,7 @@ class Relacional extends Operacion_1.default {
                         return valor_exp1 == num_ascci1;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -135,7 +114,7 @@ class Relacional extends Operacion_1.default {
                         return num_ascci1 == valor_exp2;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -154,7 +133,7 @@ class Relacional extends Operacion_1.default {
                         return num_bool_exp1 == num_bool_exp2;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -165,7 +144,7 @@ class Relacional extends Operacion_1.default {
                         return valor_exp1 == valor_exp2;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -182,7 +161,7 @@ class Relacional extends Operacion_1.default {
                         return valor_exp1 != num_ascci1;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -197,7 +176,7 @@ class Relacional extends Operacion_1.default {
                         return valor_exp1 != num_ascci1;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -213,7 +192,7 @@ class Relacional extends Operacion_1.default {
                         return num_ascci1 != valor_exp2;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -232,7 +211,7 @@ class Relacional extends Operacion_1.default {
                         return num_bool_exp1 != num_bool_exp2;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -243,7 +222,7 @@ class Relacional extends Operacion_1.default {
                         return valor_exp1 != valor_exp2;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -260,7 +239,7 @@ class Relacional extends Operacion_1.default {
                         return valor_exp1 < num_ascci1;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -275,7 +254,7 @@ class Relacional extends Operacion_1.default {
                         return valor_exp1 < num_ascci1;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -291,7 +270,7 @@ class Relacional extends Operacion_1.default {
                         return num_ascci1 < valor_exp2;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -310,7 +289,7 @@ class Relacional extends Operacion_1.default {
                         return num_bool_exp1 < num_bool_exp2;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -321,7 +300,7 @@ class Relacional extends Operacion_1.default {
                         return valor_exp1 < valor_exp2;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -338,7 +317,7 @@ class Relacional extends Operacion_1.default {
                         return valor_exp1 <= num_ascci1;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -353,7 +332,7 @@ class Relacional extends Operacion_1.default {
                         return valor_exp1 <= num_ascci1;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -369,7 +348,7 @@ class Relacional extends Operacion_1.default {
                         return num_ascci1 <= valor_exp2;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -388,7 +367,7 @@ class Relacional extends Operacion_1.default {
                         return num_bool_exp1 <= num_bool_exp2;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -399,7 +378,7 @@ class Relacional extends Operacion_1.default {
                         return valor_exp1 <= valor_exp2;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -416,7 +395,7 @@ class Relacional extends Operacion_1.default {
                         return valor_exp1 > num_ascci1;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -431,7 +410,7 @@ class Relacional extends Operacion_1.default {
                         return valor_exp1 > num_ascci1;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -447,7 +426,7 @@ class Relacional extends Operacion_1.default {
                         return num_ascci1 > valor_exp2;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -466,7 +445,7 @@ class Relacional extends Operacion_1.default {
                         return num_bool_exp1 > num_bool_exp2;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -477,7 +456,7 @@ class Relacional extends Operacion_1.default {
                         return valor_exp1 > valor_exp2;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -494,7 +473,7 @@ class Relacional extends Operacion_1.default {
                         return valor_exp1 >= num_ascci1;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -509,7 +488,7 @@ class Relacional extends Operacion_1.default {
                         return valor_exp1 >= num_ascci1;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -525,7 +504,7 @@ class Relacional extends Operacion_1.default {
                         return num_ascci1 >= valor_exp2;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -544,7 +523,7 @@ class Relacional extends Operacion_1.default {
                         return num_bool_exp1 >= num_bool_exp2;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -555,7 +534,7 @@ class Relacional extends Operacion_1.default {
                         return valor_exp1 >= valor_exp2;
                     }
                     else {
-                        let error = new Errores_1.default("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
+                        let error = new Errores_1.Errores("Semantico", `Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`, this.linea, this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
@@ -566,11 +545,11 @@ class Relacional extends Operacion_1.default {
         }
     }
     recorrer() {
-        let padre = new Nodo_1.default("CONDICION", "");
+        let padre = new Nodo_1.Nodo("CONDICION", "");
         padre.AddHijo(this.exp1.recorrer());
-        padre.AddHijo(new Nodo_1.default(this.signo_operador, ""));
+        padre.AddHijo(new Nodo_1.Nodo(this.signo_operador, ""));
         padre.AddHijo(this.exp2.recorrer());
         return padre;
     }
 }
-exports.default = Relacional;
+exports.Relacional = Relacional;
