@@ -7,14 +7,8 @@ exports.Ast = void 0;
 const Declaracion_1 = require("../Instrucciones/Declaracion");
 const Funcion_1 = require("../Instrucciones/Funcion");
 const StartWith_1 = __importDefault(require("../Instrucciones/StartWith"));
-<<<<<<< HEAD
-const Errores_1 = __importDefault(require("./Errores"));
-const Nodo_1 = __importDefault(require("./Nodo"));
-console.log('AST');
-=======
 const Errores_1 = require("./Errores");
 const Nodo_1 = require("./Nodo");
->>>>>>> 152fa861614fe3c0c243b9ba29764154e8a9a7c4
 class Ast {
     constructor(lista_instrucciones) {
         this.lista_instrucciones = lista_instrucciones;

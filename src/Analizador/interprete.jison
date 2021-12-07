@@ -13,7 +13,7 @@ escape      \\{escapechar}
 aceptacion  [^\"\\]  // (^) indica que acepta todo
 cadena      (\" ({escape}|{aceptacion})*\")
 
-//--> Caracter
+//--> Caracter 
 escapechar2  [\'\"\\nrt]
 escape2      \\{escapechar2}
 aceptacion2  [^\'\\]  // (^) indica que acepta todo
@@ -24,66 +24,74 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 
 /* Comentarios */
 "//".*              {/* Ignoramos los comentarios simples */}
-"/*"((\*+[^/*])|([^*]))*\**"*/"     {/*Ignorar comentarios con multiples lineas*/}
+"/*"((\*+[^/*])|([^*]))*\**"*/"     {/*Ignorar comentarios con multiples lineas*/}  
 
 /* Simbolos del programa */
+ 
+
+
+"++"                 { console.log("Reconocio : " + yytext);  return 'INCRE' } 
+"--"                 { console.log("Reconocio : " + yytext);  return 'DECRE' } 
+"=="                 { console.log("Reconocio : " + yytext);  return 'IGUALIGUAL' } 
+"!="                  { console.log("Reconocio : " + yytext);  return 'DIFERENTE' } 
 
 
 
-"++"                 { console.log("Reconocio : " + yytext);  return 'INCRE' }
-"--"                 { console.log("Reconocio : " + yytext);  return 'DECRE' }
-"=="                 { console.log("Reconocio : " + yytext);  return 'IGUALIGUAL' }
-"!="                  { console.log("Reconocio : " + yytext);  return 'DIFERENTE' }
-
-
-
-"("                  { console.log("Reconocio : " + yytext);  return 'PARA' }
-")"                  { console.log("Reconocio : " + yytext);  return 'PARC' }
-"["                  { console.log("Reconocio : " + yytext);  return 'CORA' }
-"]"                  { console.log("Reconocio : " + yytext);  return 'CORC' }
-"{"                  { console.log("Reconocio : " + yytext);  return 'LLAVA' }
-"}"                  { console.log("Reconocio : " + yytext);  return 'LLAVC' }
-","                  { console.log("Reconocio : " + yytext);  return 'COMA' }
-";"                  { console.log("Reconocio : " + yytext);  return 'PYC' }
-"="                 { console.log("Reconocio : " + yytext);  return 'IGUAL' }
-"?"                 { console.log("Reconocio : " + yytext);  return 'INTERROGACION' }
-":"                 { console.log("Reconocio : " + yytext);  return 'DOSPUNTOS' }
+"("                  { console.log("Reconocio : " + yytext);  return 'PARA' } 
+")"                  { console.log("Reconocio : " + yytext);  return 'PARC' } 
+"["                  { console.log("Reconocio : " + yytext);  return 'CORA' } 
+"]"                  { console.log("Reconocio : " + yytext);  return 'CORC' } 
+"{"                  { console.log("Reconocio : " + yytext);  return 'LLAVA' } 
+"}"                  { console.log("Reconocio : " + yytext);  return 'LLAVC' } 
+","                  { console.log("Reconocio : " + yytext);  return 'COMA' } 
+";"                  { console.log("Reconocio : " + yytext);  return 'PYC' } 
+"="                 { console.log("Reconocio : " + yytext);  return 'IGUAL' } 
+"?"                 { console.log("Reconocio : " + yytext);  return 'INTERROGACION' } 
+":"                 { console.log("Reconocio : " + yytext);  return 'DOSPUNTOS' } 
 
 
 /* Operadores aritmeticos */
-"+"                  { console.log("Reconocio : " + yytext);  return 'MAS' }
-"-"                  { console.log("Reconocio : " + yytext);  return 'MENOS' }
+"+"                  { console.log("Reconocio : " + yytext);  return 'MAS' } 
+"-"                  { console.log("Reconocio : " + yytext);  return 'MENOS' } 
 "*"                  { console.log("Reconocio : " + yytext);  return 'MULTI' }
-"/"                  { console.log("Reconocio : " + yytext);  return 'DIV' }
-"^"                  { console.log("Reconocio : " + yytext);  return 'POT' }
-"!"                  { console.log("Reconocio : " + yytext);  return 'NOT' }
-"%"                  { console.log("Reconocio : " + yytext);  return 'MOD' }
+"/"                  { console.log("Reconocio : " + yytext);  return 'DIV' } 
+"%"                  { console.log("Reconocio : " + yytext);  return 'MOD' } 
+/* Operadores nativos */
+"pow"                  { console.log("Reconocio : " + yytext);  return 'POW' } 
+"sqrt"                  { console.log("Reconocio : " + yytext);  return 'SQRT' } 
+"sin"                  { console.log("Reconocio : " + yytext);  return 'SIN' } 
+"cos"                  { console.log("Reconocio : " + yytext);  return 'COS' } 
+"tan"                  { console.log("Reconocio : " + yytext);  return 'TAN' } 
+
 /* Operadores relacionales */
-"<="                  { console.log("Reconocio : " + yytext);  return 'MENORIGUAL' }
-"<"                  { console.log("Reconocio : " + yytext);  return 'MENORQUE' }
-">="                  { console.log("Reconocio : " + yytext);  return 'MAYORIGUAL' }
-">"                  { console.log("Reconocio : " + yytext);  return 'MAYORQUE' }
+"<="                  { console.log("Reconocio : " + yytext);  return 'MENORIGUAL' } 
+"<"                  { console.log("Reconocio : " + yytext);  return 'MENORQUE' } 
+">="                  { console.log("Reconocio : " + yytext);  return 'MAYORIGUAL' } 
+">"                  { console.log("Reconocio : " + yytext);  return 'MAYORQUE' } 
 
 
 
 /* Operadores logicos */
 
-"||"                  { console.log("Reconocio : " + yytext);  return 'OR' }
-"&&"                  { console.log("Reconocio : " + yytext);  return 'AND' }
-"!"                  { console.log("Reconocio : " + yytext);  return 'NOT' }
+"||"                  { console.log("Reconocio : " + yytext);  return 'OR' } 
+"&&"                  { console.log("Reconocio : " + yytext);  return 'AND' } 
+"!"                  { console.log("Reconocio : " + yytext);  return 'NOT' } 
 
 
 /* Palabras reservadas */
-
+"evaluar"             {console.log("Reconocio: "+yytext); return 'EVALUAR'}
 "true"             {console.log("Reconocio: "+yytext); return 'TRUE'}
 "false"             {console.log("Reconocio: "+yytext); return 'FALSE'}
 
+"null"                {console.log("Reconocio: "+yytext); return 'NULL'}
 "int"             {console.log("Reconocio: "+yytext); return 'INT'}
-"string"             {console.log("Reconocio: "+yytext); return 'STRING'}
 "double"             {console.log("Reconocio: "+yytext); return 'DOUBLE'}
-"char"             {console.log("Reconocio: "+yytext); return 'CHAR'}
 "boolean"             {console.log("Reconocio: "+yytext); return 'BOOLEAN'}
+"char"             {console.log("Reconocio: "+yytext); return 'CHAR'}
+"string"             {console.log("Reconocio: "+yytext); return 'STRING'}
+
 "void"                {console.log("Reconocio: "+yytext); return 'VOID'}
+
 
 "writeline"             {console.log("Reconocio: "+yytext); return 'WRITELINE'}
 "tolower"             {console.log("Reconocio: "+yytext); return 'TOLOWER'}
@@ -97,20 +105,20 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 "else"                    {console.log("Reconocio: "+yytext); return 'ELSE'}
 "while"                    {console.log("Reconocio: "+yytext); return 'WHILE'}
 "break"                    {console.log("Reconocio: "+yytext); return 'BREAK'}
-"switch"                  {console.log("Reconocio: "+yytext); return 'SWITCH'}
-"case"                    {console.log("Reconocio: "+yytext); return 'CASE'}
-"do"                    {console.log("Reconocio: "+yytext); return 'DO'}
-"default"                 {console.log("Reconocio: "+yytext); return 'DEFAULT'}
-"for"                     {console.log("Reconocio: "+yytext); return 'FOR'}
-"dynamiclist"             {console.log("Reconocio: "+yytext); return 'DYNAMICLIST'}
-"new"                     {console.log("Reconocio: "+yytext); return 'NEW'}
-"append"                  {console.log("Reconocio: "+yytext); return 'APPEND'}
-"setvalue"                {console.log("Reconocio: "+yytext); return 'SETVALUE'}
-"getvalue"                {console.log("Reconocio: "+yytext); return 'GETVALUE'}
-"continue"                {console.log("Reconocio: "+yytext); return 'CONTINUE'}
-"return"                {console.log("Reconocio: "+yytext); return 'RETURN'}
-"start"                {console.log("Reconocio: "+yytext); return 'START'}
-"with"                {console.log("Reconocio: "+yytext); return 'WITH'}
+"switch"                  {console.log("Reconocio: "+yytext); return 'SWITCH'} 
+"case"                    {console.log("Reconocio: "+yytext); return 'CASE'} 
+"do"                    {console.log("Reconocio: "+yytext); return 'DO'} 
+"default"                 {console.log("Reconocio: "+yytext); return 'DEFAULT'} 
+"for"                     {console.log("Reconocio: "+yytext); return 'FOR'} 
+"dynamiclist"             {console.log("Reconocio: "+yytext); return 'DYNAMICLIST'} 
+"new"                     {console.log("Reconocio: "+yytext); return 'NEW'} 
+"append"                  {console.log("Reconocio: "+yytext); return 'APPEND'} 
+"setvalue"                {console.log("Reconocio: "+yytext); return 'SETVALUE'} 
+"getvalue"                {console.log("Reconocio: "+yytext); return 'GETVALUE'} 
+"continue"                {console.log("Reconocio: "+yytext); return 'CONTINUE'} 
+"return"                {console.log("Reconocio: "+yytext); return 'RETURN'} 
+"start"                {console.log("Reconocio: "+yytext); return 'START'} 
+"with"                {console.log("Reconocio: "+yytext); return 'WITH'} 
 
 
 //SIMBOLOS ER
@@ -125,7 +133,7 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 [\s\r\n\t]            {/*Espacios se ignoran */ }
 
 <<EOF>>               return 'EOF'
-.                     {console.log("Error Lexico " + yytext
+.                     {console.log("Error Lexico " + yytext 
                         + "linea "+ yylineno
                         + "columna " +(yylloc.last_column+1));
 
@@ -139,56 +147,50 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 
 //AREA DE IMPORTS
 %{
+    const evaluar = require('../Interprete/Evaluar');
+    const aritmetica = require('../Interprete/Expresiones/Operaciones/Aritmetica');
+    const primitivo = require('../Interprete/Expresiones/Primitivo');
     
-       
-        const {aritmetica} = require('../Expresiones/Operaciones/Aritmetica');
-        const {primitivo} = require('../Expresiones/Primitivo');
-    
-        
-        const {relacional} = require('../Expresiones/Operaciones/Relacionales')
-        const {logica} = require('../Expresiones/Operaciones/Logicas')
-        const {writeline} = require('../Instrucciones/Writeline');
-        const {tolower} = require('../Instrucciones/Tolower');
-        const {toupper} = require('../Instrucciones/Toupper');
-        const {truncate} = require('../Instrucciones/FuncionesNativas/Truncate');
-        const {round} = require('../Instrucciones/FuncionesNativas/Round');
-        const {typeofF} = require('../Instrucciones/FuncionesNativas/Typeof');
-        const {tostringg} = require('../Instrucciones/FuncionesNativas/Tostring');
-        const {casteos} = require('../Instrucciones/FuncionesNativas/Casteos');
-        const {declaracion} = require('../Instrucciones/Declaracion');
-        const {declvectores} = require('../Instrucciones/DeclaracionVectores');
-        const {accvectores} = require('../Expresiones/AccesoVector');
-        const {asignacion} = require('../Instrucciones/Asignacion');
-        const {Ifs} = require('../Instrucciones/SentenciasdeControl/Ifs');
-        const {While }= require('../Instrucciones/SentenciasCiclicas/While');
-        const {Dowhilee }= require('../Instrucciones/SentenciasCiclicas/DoWhile');
-        const {ast} = require('../AST/Ast');
-        const {errores} = require('../AST/Errores');
-        const {tipo} = require('../TablaSimbolos/Tipo');
-        const {simbolo} = require('../TablaSimbolos/Simbolo');
-        const {identificador} = require('../Expresiones/identificador');
-        const {ternario} = require('../Expresiones/Ternario');
-        const {parar} = require('../Instrucciones/SentenciadeTransferencia/Break');
-        const {retornar} = require('../Instrucciones/SentenciadeTransferencia/Return');
-        const {continuar} = require('../Instrucciones/SentenciadeTransferencia/Continue');
-        const {Switch} = require('../Instrucciones/SentenciasdeControl/Switch');
-        const {caso} = require('../Instrucciones/SentenciasdeControl/caso');
-        const {For} = require('../Instrucciones/SentenciasCiclicas/For');
-        const {funcion} = require('../Instrucciones/Funcion');
-        const {llamada} = require('../Instrucciones/Llamada');
-        const {startwith} = require('../Instrucciones/StartWith');
+    const relacional = require('../Interprete/Expresiones/Operaciones/Relacionales')
+    const logica = require('../Interprete/Expresiones/Operaciones/Logicas')
 
-
-
-
-
+    const writeline = require('../Interprete/Instrucciones/Writeline');
+    const tolower = require('../Interprete/Instrucciones/Tolower');
+    const toupper = require('../Interprete/Instrucciones/Toupper');
+    const truncate = require('../Interprete/Instrucciones/FuncionesNativas/Truncate');
+    const round = require('../Interprete/Instrucciones/FuncionesNativas/Round');
+    const typeofF = require('../Interprete/Instrucciones/FuncionesNativas/Typeof');
+    const tostringg = require('../Interprete/Instrucciones/FuncionesNativas/Tostring');
+    const casteos = require('../Interprete/Instrucciones/FuncionesNativas/Casteos');
+    const declaracion = require('../Interprete/Instrucciones/Declaracion');
+    const declvectores = require('../Interprete/Instrucciones/DeclaracionVectores');
+    const accvectores = require('../Interprete/Expresiones/AccesoVector');
+    const asignacion = require('../Interprete/Instrucciones/Asignacion');
+    const Ifs = require('../Interprete/Instrucciones/SentenciasdeControl/Ifs');
+    const While = require('../Interprete/Instrucciones/SentenciasCiclicas/While');
+    const Dowhilee = require('../Interprete/Instrucciones/SentenciasCiclicas/DoWhile');
+    const ast = require('../Interprete/AST/Ast');
+    const errores = require('../Interprete/AST/Errores');
+    const tipo = require('../Interprete/TablaSimbolos/Tipo');
+    const simbolo = require('../Interprete/TablaSimbolos/Simbolo');
+    const identificador = require('../Interprete/Expresiones/identificador');
+    const ternario = require('../Interprete/Expresiones/Ternario');
+    const parar = require('../Interprete/Instrucciones/SentenciadeTransferencia/Break');
+    const retornar = require('../Interprete/Instrucciones/SentenciadeTransferencia/Return');
+    const continuar = require('../Interprete/Instrucciones/SentenciadeTransferencia/Continue');
+    const Switch = require('../Interprete/Instrucciones/SentenciasdeControl/Switch');
+    const caso = require('../Interprete/Instrucciones/SentenciasdeControl/caso');
+    const For = require('../Interprete/Instrucciones/SentenciasCiclicas/For');
+    const funcion = require('../Interprete/Instrucciones/Funcion');
+    const llamada = require('../Interprete/Instrucciones/Llamada');
+    const startwith = require('../Interprete/Instrucciones/StartWith');
 
 
 %}
 
 /* PRECEDENCIA */
 
-%right 'INTERROGACION'
+%right 'INTERROGACION' 
 %right 'PARA'
 %left 'OR'
 %left 'AND'
@@ -228,17 +230,17 @@ instruccion : declaracion {$$ = $1;}
             | llamada PYC    {$$ = $1;}
             | startwith PYC  {$$ = $1;}
             | decl_vectores  {$$ = $1;}
-            | decl_list_din
-            | agregar_lista
-            | modi_lista
-            | error {console.log("Error Sintactico "  + yytext
+            | decl_list_din  
+            | agregar_lista  
+            | modi_lista 
+            | error {console.log("Error Sintactico "  + yytext 
                            + " linea: " + this._$.first_line
                            +" columna: "+ this._$.first_column);
-
-                           new errores.default("Sintactico", "No se esperaba el caracter "+
+                           
+                           new errores.default("Sintactico", "No se esperaba el caracter "+ 
                                            this._$.first_line, this._$.first_column);
                            }
-
+            
             ;
 
 declaracion : tipo lista_ids IGUAL e PYC    {$$ = new declaracion.default($1,$2,$4,@1.first_line,@1.last_column);}
@@ -261,12 +263,12 @@ decl_vectores: tipo lista_ids CORA CORC IGUAL NEW tipo CORA e CORC PYC          
 
 lista_valores: lista_valores COMA e        {$$ = $1; $$.push($3);}
              | e                           {$$ = new Array(); $$.push($1);}
-             ;
+             ;          
 
 modi_vector: ID CORA e CORC IGUAL e PYC
            ;
-
-
+        
+ 
 //lista dinamica
 
 decl_list_din : DYNAMICLIST MENORQUE tipo MAYORQUE ID IGUAL NEW DYNAMICLIST MENORQUE tipo MAYORQUE PYC
@@ -284,7 +286,7 @@ modi_lista : SETVALUE PARA e COMA e COMA e PARC PYC
 
 lista_ids : lista_ids COMA ID           {$$ = $1; $$.push($3);}
           | ID                          {$$ = new Array(); $$.push($1);}
-          ;
+          ; 
 
 /// Writeline
 writeline : WRITELINE PARA e PARC PYC  {$$ = new writeline.default($3,@1.first_line,@1.last_column);}
@@ -343,7 +345,7 @@ actualizacion_for : ID DECRE    {$$ = new asignacion.default($1, new aritmetica.
 sent_do_while : DO LLAVA instrucciones LLAVC WHILE PARA e PARC {$$ = new Dowhilee.default($7,$3,@1.first_line,@1.last_column);}
               ;
 
-
+        
 
 /// Metodos y funciones
 
@@ -389,8 +391,8 @@ e
     | DECIMAL                   {$$ = new primitivo.default(Number($1),'DOBLE',@1.first_line,@1.last_column);}
     | ENTERO                    {$$ = new primitivo.default(Number($1),'ENTERO',@1.first_line,@1.last_column);}
     | ID                        {$$ = new identificador.default($1,@1.first_line,@1.last_column);}
-    | CADENA                    {$1 = $1.slice(1,$1.length-1);$$ = new primitivo($1,'CADENA',@1.first_line,@1.last_column);}
-    | CARACTER                  {$1 = $1.slice(1,$1.length-1);$$ = new primitivo($1,'CARACTER',@1.first_line,@1.last_column);}
+    | CADENA                    {$1 = $1.slice(1,$1.length-1);$$ = new primitivo.default($1,'CADENA',@1.first_line,@1.last_column);}
+    | CARACTER                  {$1 = $1.slice(1,$1.length-1);$$ = new primitivo.default($1,'CARACTER',@1.first_line,@1.last_column);}
     | TRUE                      {$$ = new primitivo.default(true,'BOOLEAN',@1.first_line,@1.last_column);}
     | FALSE                     {$$ = new primitivo.default(false,'BOOLEAN',@1.first_line,@1.last_column);}
     | e INTERROGACION e DOSPUNTOS e {$$ = new ternario.default($1,$3,$5,@1.first_line,@1.last_column);}
@@ -408,3 +410,5 @@ e
     | TYPEOF PARA e PARC     {$$ = new typeofF.default($3,@1.first_line,@1.last_column);}
     | TOSTRING PARA e PARC     {$$ = new tostringg.default($3,@1.first_line,@1.last_column);}
     ;
+
+

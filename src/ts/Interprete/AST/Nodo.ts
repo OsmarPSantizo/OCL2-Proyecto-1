@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-console.log('NODO')
-export default class Nodo{
-=======
 export class Nodo{
->>>>>>> 152fa861614fe3c0c243b9ba29764154e8a9a7c4
     public token : string;
     public lexema :string;
     public hijos :Array<Nodo>;
@@ -41,7 +36,7 @@ export class Nodo{
      * @function GraficarSintactico Hace la estructura de la gráfica
      * @returns retorna la cadena total de la grafica
      */
-
+    
     public GraficarSintactico():string{
         let grafica: string = `digraph {\n\n${this.GraficarNodos(this,"0")}\n\n}`
         return grafica;
