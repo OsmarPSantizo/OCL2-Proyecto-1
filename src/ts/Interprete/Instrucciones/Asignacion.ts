@@ -1,13 +1,13 @@
 
-import Errores from "../AST/Errores";
-import Nodo from "../AST/Nodo";
-import Controlador from "../Controlador";
+import {Errores} from "../AST/Errores";
+import {Nodo }from "../AST/Nodo";
+import {Controlador} from "../Controlador";
 import { Expresion } from "../Interfaces/Expresion";
 import { Instruccion } from "../Interfaces/Instruccion";
-import TablaSimbolos from "../TablaSimbolos/TablaSimbolos";
+import {TablaSimbolos }from "../TablaSimbolos/TablaSimbolos";
 import { tipo } from "../TablaSimbolos/Tipo";
 
-export default class Asignacion implements Instruccion{
+export  class Asignacion implements Instruccion{
     public identificador: string;
     public valor: Expresion;
     public linea: number;

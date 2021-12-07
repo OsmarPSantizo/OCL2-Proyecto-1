@@ -1,9 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Nodo_1 = __importDefault(require("../../AST/Nodo"));
+exports.Casteos = void 0;
+const Nodo_1 = require("../../AST/Nodo");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
 class Casteos {
     constructor(tipoo, expresion, linea, columna) {
@@ -90,14 +88,14 @@ class Casteos {
         return valor_exp;
     }
     recorrer() {
-        let padre = new Nodo_1.default("Casteo", "");
-        padre.AddHijo(new Nodo_1.default("(", ""));
-        padre.AddHijo(new Nodo_1.default(this.tipoo.nombre_tipo, ""));
-        padre.AddHijo(new Nodo_1.default(")", ""));
-        let hijo = new Nodo_1.default("exp", "");
+        let padre = new Nodo_1.Nodo("Casteo", "");
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        padre.AddHijo(new Nodo_1.Nodo(this.tipoo.nombre_tipo, ""));
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
+        let hijo = new Nodo_1.Nodo("exp", "");
         hijo.AddHijo(this.expresion.recorrer());
         padre.AddHijo(hijo);
         return padre;
     }
 }
-exports.default = Casteos;
+exports.Casteos = Casteos;

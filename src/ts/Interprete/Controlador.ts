@@ -1,10 +1,17 @@
+<<<<<<< HEAD
 import Errores from "./AST/Errores.js";
 import Simbolo from "./TablaSimbolos/Simbolo.js";
 import TablaSimbolos from "./TablaSimbolos/TablaSimbolos.js";
+=======
+import {Errores} from "./AST/Errores";
+import {Simbolo} from "./TablaSimbolos/Simbolo";
+import {TablaSimbolos} from "./TablaSimbolos/TablaSimbolos";
+
+>>>>>>> 152fa861614fe3c0c243b9ba29764154e8a9a7c4
 
 console.log('controlador jeje');
 
-export default class Controlador{
+export  class Controlador{
 
     public errores: Array<Errores>;
     public consola : string;

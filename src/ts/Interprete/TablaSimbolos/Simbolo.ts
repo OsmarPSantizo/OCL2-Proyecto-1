@@ -1,8 +1,8 @@
-import Tipo from "./Tipo";
+import {Tipo} from "./Tipo";
 
 
 
-export default class Simbolo{
+export  class Simbolo{
 
     public simbolo: number;
     public tipo : Tipo;

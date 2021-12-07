@@ -1,10 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Errores_1 = __importDefault(require("../AST/Errores"));
-const Nodo_1 = __importDefault(require("../AST/Nodo"));
+exports.Identificador = void 0;
+const Errores_1 = require("../AST/Errores");
+const Nodo_1 = require("../AST/Nodo");
 const Tipo_1 = require("../TablaSimbolos/Tipo");
 class Identificador {
     constructor(identificador, linea, columna) {
@@ -29,16 +27,16 @@ class Identificador {
         }
         else {
             //reportar error semántico
-            let error = new Errores_1.default("Semantico", `La variable no existe`, this.linea, this.columna);
+            let error = new Errores_1.Errores("Semantico", `La variable no existe`, this.linea, this.columna);
             controlador.errores.push(error);
             controlador.append(`ERROR: Semántico, La variable no existe. En la linea ${this.linea} y columna ${this.columna}`);
             return null;
         }
     }
     recorrer() {
-        let padre = new Nodo_1.default("Identificador", "");
-        padre.AddHijo(new Nodo_1.default(this.identificador, ""));
+        let padre = new Nodo_1.Nodo("Identificador", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.identificador, ""));
         return padre;
     }
 }
-exports.default = Identificador;
+exports.Identificador = Identificador;

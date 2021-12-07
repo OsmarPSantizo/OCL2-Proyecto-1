@@ -1,15 +1,15 @@
-import Errores from "../../AST/Errores";
-import Nodo from "../../AST/Nodo";
-import Controlador from "../../Controlador";
+import {Errores} from "../../AST/Errores";
+import {Nodo} from "../../AST/Nodo";
+import {Controlador} from "../../Controlador";
 import { Expresion } from "../../Interfaces/Expresion";
 import { Instruccion } from "../../Interfaces/Instruccion";
-import TablaSimbolos from "../../TablaSimbolos/TablaSimbolos";
+import {TablaSimbolos} from "../../TablaSimbolos/TablaSimbolos";
 import { tipo } from "../../TablaSimbolos/Tipo";
-import Break from "../SentenciadeTransferencia/Break";
-import Continue from "../SentenciadeTransferencia/Continue";
-import Retorno from "../SentenciadeTransferencia/Return";
+import {Break} from "../SentenciadeTransferencia/Break";
+import {Continue} from "../SentenciadeTransferencia/Continue";
+import {Retorno} from "../SentenciadeTransferencia/Return";
 
-export default class Ifs implements Instruccion{
+export class Ifs implements Instruccion{
     public condicion : Expresion;
     public lista_instrucciones_ifs : Array<Instruccion>;
     public lista_instrucciones_elses : Array<Instruccion>;

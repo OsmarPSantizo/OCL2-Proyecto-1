@@ -1,8 +1,8 @@
 
-import Nodo from "../../AST/Nodo";
-import Controlador from "../../Controlador";
+import {Nodo} from "../../AST/Nodo";
+import {Controlador} from "../../Controlador";
 import { Expresion } from "../../Interfaces/Expresion";
-import TablaSimbolos from "../../TablaSimbolos/TablaSimbolos";
+import {TablaSimbolos} from "../../TablaSimbolos/TablaSimbolos";
 import { tipo } from "../../TablaSimbolos/Tipo";
 
 export enum Operador{
@@ -25,7 +25,7 @@ export enum Operador{
     X
 }
 
-export default class Operacion implements Expresion{
+export class Operacion implements Expresion{
     public exp1: Expresion;
     public exp2: Expresion;
     public expU: boolean; 

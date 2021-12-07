@@ -1,16 +1,16 @@
 
-import Errores from "../../AST/Errores";
-import Nodo from "../../AST/Nodo";
-import Controlador from "../../Controlador";
+import {Errores} from "../../AST/Errores";
+import {Nodo }from "../../AST/Nodo";
+import {Controlador} from "../../Controlador";
 import { Expresion } from "../../Interfaces/Expresion";
 import { Instruccion } from "../../Interfaces/Instruccion";
-import TablaSimbolos from "../../TablaSimbolos/TablaSimbolos";
-import Break from "../SentenciadeTransferencia/Break";
-import Caso from "./Caso";
+import {TablaSimbolos }from "../../TablaSimbolos/TablaSimbolos";
+import {Break} from "../SentenciadeTransferencia/Break";
+import {Caso} from "./Caso";
 
 
 
-export default class Switch implements Instruccion{
+export class Switch implements Instruccion{
     public condicion: Expresion;
     public lista_casos : Array<Caso>;
     public inst_default: Instruccion;

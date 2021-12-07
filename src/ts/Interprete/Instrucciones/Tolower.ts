@@ -1,15 +1,15 @@
-import Errores from "../AST/Errores";
-import Nodo from "../AST/Nodo";
-import Controlador from "../Controlador";
+import {Errores} from "../AST/Errores";
+import{ Nodo} from "../AST/Nodo";
+import {Controlador} from "../Controlador";
 import { Expresion } from "../Interfaces/Expresion";
-import TablaSimbolos from "../TablaSimbolos/TablaSimbolos";
-import Tipo, { tipo } from "../TablaSimbolos/Tipo";
+import {TablaSimbolos} from "../TablaSimbolos/TablaSimbolos";
+import  { Tipo,tipo } from "../TablaSimbolos/Tipo";
 
 
 
 
 
-export default class Tolower implements Expresion{
+export class Tolower implements Expresion{
     public expresion : Expresion;
     public linea : number;
     public columna: number;

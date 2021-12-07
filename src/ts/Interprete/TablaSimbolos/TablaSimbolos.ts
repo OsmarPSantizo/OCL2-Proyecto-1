@@ -4,11 +4,11 @@
      */
 
     
-import Simbolo from "./Simbolo";
+import {Simbolo} from "./Simbolo";
  
 
 
-export default class TablaSimbolos{
+export class TablaSimbolos{
     public ant: TablaSimbolos;
     public tabla: Map<string,Simbolo>;
 

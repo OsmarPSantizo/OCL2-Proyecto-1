@@ -1,10 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Nodo_1 = __importDefault(require("../AST/Nodo"));
-const Tipo_1 = __importDefault(require("../TablaSimbolos/Tipo"));
+exports.Primitivo = void 0;
+const Nodo_1 = require("../AST/Nodo");
+const Tipo_1 = require("../TablaSimbolos/Tipo");
 class Primitivo {
     /**
      *
@@ -13,7 +11,7 @@ class Primitivo {
         this.valor_primitivo = valor_primitivo;
         this.linea = linea;
         this.columna = columna;
-        this.tipo = new Tipo_1.default(tipo);
+        this.tipo = new Tipo_1.Tipo(tipo);
     }
     getTipo(controlador, ts) {
         return this.tipo.n_tipo;
@@ -22,9 +20,9 @@ class Primitivo {
         return this.valor_primitivo;
     }
     recorrer() {
-        let padre = new Nodo_1.default("Primitivo", ""); //Primitivo -> "hola mundo"
-        padre.AddHijo(new Nodo_1.default(this.valor_primitivo.toString(), ""));
+        let padre = new Nodo_1.Nodo("Primitivo", ""); //Primitivo -> "hola mundo"
+        padre.AddHijo(new Nodo_1.Nodo(this.valor_primitivo.toString(), ""));
         return padre;
     }
 }
-exports.default = Primitivo;
+exports.Primitivo = Primitivo;

@@ -1,15 +1,15 @@
-import Errores from "../../AST/Errores";
-import Nodo from "../../AST/Nodo";
-import Controlador from "../../Controlador";
+import {Errores} from "../../AST/Errores";
+import {Nodo} from "../../AST/Nodo";
+import {Controlador} from "../../Controlador";
 import { Expresion } from "../../Interfaces/Expresion";
 import { Instruccion } from "../../Interfaces/Instruccion";
-import TablaSimbolos from "../../TablaSimbolos/TablaSimbolos";
+import {TablaSimbolos} from "../../TablaSimbolos/TablaSimbolos";
 import { tipo } from "../../TablaSimbolos/Tipo";
-import Break from "../SentenciadeTransferencia/Break";
-import Continue from "../SentenciadeTransferencia/Continue";
+import {Break} from "../SentenciadeTransferencia/Break";
+import {Continue} from "../SentenciadeTransferencia/Continue";
 
 
-export default class For implements Instruccion {
+export class For implements Instruccion {
     public declarar_asignacion: Instruccion;
     public condicion : Expresion;
     public actualizacion : Instruccion;

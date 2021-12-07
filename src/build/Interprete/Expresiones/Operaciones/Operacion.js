@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Operador = void 0;
+exports.Operacion = exports.Operador = void 0;
 var Operador;
 (function (Operador) {
     Operador[Operador["SUMA"] = 0] = "SUMA";
@@ -94,4 +94,4 @@ class Operacion {
         throw new Error("Method not implemented.");
     }
 }
-exports.default = Operacion;
+exports.Operacion = Operacion;

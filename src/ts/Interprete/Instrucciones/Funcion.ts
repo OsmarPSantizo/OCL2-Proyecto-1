@@ -1,16 +1,16 @@
-import Errores from "../AST/Errores";
-import Nodo from "../AST/Nodo";
-import Controlador from "../Controlador";
+import {Errores} from "../AST/Errores";
+import {Nodo} from "../AST/Nodo";
+import {Controlador} from "../Controlador";
 import { Instruccion } from "../Interfaces/Instruccion";
-import Simbolo from "../TablaSimbolos/Simbolo";
-import TablaSimbolos from "../TablaSimbolos/TablaSimbolos";
+import {Simbolo} from "../TablaSimbolos/Simbolo";
+import {TablaSimbolos} from "../TablaSimbolos/TablaSimbolos";
 
-import Tipo from "../TablaSimbolos/Tipo";
-
-
+import {Tipo} from "../TablaSimbolos/Tipo";
 
 
-export default class Funcion extends Simbolo implements Instruccion{
+
+
+export class Funcion extends Simbolo implements Instruccion{
     public lista_instrucciones : Array<Instruccion>;
     public linea : number;
     public columna : number;

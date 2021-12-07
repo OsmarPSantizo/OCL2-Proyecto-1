@@ -1,8 +1,8 @@
-import Nodo from "../AST/Nodo";
-import Controlador from "../Controlador";
+import {Nodo} from "../AST/Nodo";
+import {Controlador }from "../Controlador";
 import { Instruccion } from "../Interfaces/Instruccion";
-import TablaSimbolos from "../TablaSimbolos/TablaSimbolos";
-import Llamada from "./Llamada";
+import {TablaSimbolos} from "../TablaSimbolos/TablaSimbolos";
+import {Llamada} from "./Llamada";
 
 
 

@@ -1,9 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Errores_1 = __importDefault(require("../AST/Errores"));
+exports.AccesoVector = void 0;
+const Errores_1 = require("../AST/Errores");
 const Tipo_1 = require("../TablaSimbolos/Tipo");
 class AccesoVector {
     constructor(id, indice, linea, columna) {
@@ -33,7 +31,7 @@ class AccesoVector {
                 }
             }
             else {
-                let error = new Errores_1.default("Semantico", `El vector ${this.id} no ha sido declarada, entonces no se puede asignar un valor`, this.linea, this.columna);
+                let error = new Errores_1.Errores("Semantico", `El vector ${this.id} no ha sido declarada, entonces no se puede asignar un valor`, this.linea, this.columna);
                 controlador.errores.push(error);
                 controlador.append(`ERROR: Semántico, El vector ${this.id} no ha sido declarada, entonces no se puede asignar un valor. En la linea ${this.linea} y columna ${this.columna}`);
             }
@@ -43,4 +41,4 @@ class AccesoVector {
         throw new Error("Method not implemented.");
     }
 }
-exports.default = AccesoVector;
+exports.AccesoVector = AccesoVector;

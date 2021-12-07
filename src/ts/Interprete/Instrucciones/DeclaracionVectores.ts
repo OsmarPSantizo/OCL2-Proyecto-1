@@ -1,15 +1,15 @@
-import Errores from "../AST/Errores";
-import Nodo from "../AST/Nodo";
-import Controlador from "../Controlador";
+import {Errores} from "../AST/Errores";
+import {Nodo} from "../AST/Nodo";
+import {Controlador }from "../Controlador";
 import { Expresion } from "../Interfaces/Expresion";
 import { Instruccion } from "../Interfaces/Instruccion";
-import Simbolo from "../TablaSimbolos/Simbolo";
-import TablaSimbolos from "../TablaSimbolos/TablaSimbolos";
-import Tipo, { tipo } from "../TablaSimbolos/Tipo";
+import {Simbolo} from "../TablaSimbolos/Simbolo";
+import {TablaSimbolos} from "../TablaSimbolos/TablaSimbolos";
+import  {Tipo, tipo  } from "../TablaSimbolos/Tipo";
 
 
 
-export default class DeclararcionVectores implements Instruccion{
+export class DeclararcionVectores implements Instruccion{
 
     public tipo_declara : Number;
     public type : Tipo;

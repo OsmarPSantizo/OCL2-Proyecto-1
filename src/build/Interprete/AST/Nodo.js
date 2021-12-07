@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+<<<<<<< HEAD
 console.log('NODO');
+=======
+exports.Nodo = void 0;
+>>>>>>> 152fa861614fe3c0c243b9ba29764154e8a9a7c4
 class Nodo {
     /**
      * @constructor Creamos un nuevo nodo a graficar del ast
@@ -60,4 +64,4 @@ class Nodo {
         return r;
     }
 }
-exports.default = Nodo;
+exports.Nodo = Nodo;

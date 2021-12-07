@@ -1,16 +1,16 @@
 
-import Errores from "../AST/Errores";
-import Nodo from "../AST/Nodo";
-import Controlador from "../Controlador";
+import {Errores} from "../AST/Errores";
+import {Nodo} from "../AST/Nodo";
+import {Controlador} from "../Controlador";
 import { Expresion } from "../Interfaces/Expresion";
 import { Instruccion } from "../Interfaces/Instruccion";
-import Simbolo from "../TablaSimbolos/Simbolo";
-import TablaSimbolos from "../TablaSimbolos/TablaSimbolos";
-import Tipo, { tipo } from "../TablaSimbolos/Tipo";
+import {Simbolo} from "../TablaSimbolos/Simbolo";
+import {TablaSimbolos} from "../TablaSimbolos/TablaSimbolos";
+import  { Tipo,tipo } from "../TablaSimbolos/Tipo";
 
 
 
-export default class Declaracion implements Instruccion{
+export  class Declaracion implements Instruccion{
     //int x,y,z = 0;
     //int a = 9;
     //boolean verdadero;

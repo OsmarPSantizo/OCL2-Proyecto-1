@@ -1,16 +1,16 @@
-import Controlador from "../Controlador";
-import Declaracion from "../Instrucciones/Declaracion";
-import Funcion from "../Instrucciones/Funcion";
+import {Controlador} from "../Controlador";
+import {Declaracion} from "../Instrucciones/Declaracion";
+import {Funcion }from "../Instrucciones/Funcion";
 import StartWith from "../Instrucciones/StartWith";
 import { Instruccion } from "../Interfaces/Instruccion";
-import TablaSimbolos from "../TablaSimbolos/TablaSimbolos";
-import Errores from "./Errores";
-import Nodo from "./Nodo";
+import {TablaSimbolos} from "../TablaSimbolos/TablaSimbolos";
+import {Errores} from "./Errores";
+import {Nodo} from "./Nodo";
 
 
 console.log('AST');
 
-export default class Ast implements Instruccion{
+export class Ast implements Instruccion{
     public lista_instrucciones : Array<Instruccion>;
 
     constructor(lista_instrucciones : Array<Instruccion>){

@@ -3,6 +3,7 @@
  * @class Esta clase va guardar la tabla de símbolos del programa, es decir, qeu guarda todas las variables, metodos y funciones
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TablaSimbolos = void 0;
 class TablaSimbolos {
     //en la tabla vamos a ir guardando el nombre y todo lo que tiene 
     //x , (x,0,entero)
@@ -51,4 +52,4 @@ class TablaSimbolos {
         return false;
     }
 }
-exports.default = TablaSimbolos;
+exports.TablaSimbolos = TablaSimbolos;

@@ -84,7 +84,7 @@ performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* actio
 var $0 = $$.length - 1;
 switch (yystate) {
 case 1:
-this.$ = new ast($$[$0-1]); return this.$
+this.$ = new Ast($$[$0-1]); return this.$
 break;
 case 2: case 54:
 this.$ = $$[$0-1]; this.$.push($$[$0]);
@@ -96,25 +96,25 @@ case 4: case 5: case 6: case 7: case 8: case 13: case 14: case 18: case 21:
 this.$ = $$[$0];
 break;
 case 9:
-this.$ = new parar();
+this.$ = new Break();
 break;
 case 10:
-this.$ = new continuar();
+this.$ = new Continue();
 break;
 case 11:
-this.$ = new retornar(null);
+this.$ = new Retorno(null);
 break;
 case 12:
-this.$ = new retornar($$[$0-1]);
+this.$ = new Retorno($$[$0-1]);
 break;
 case 15: case 19: case 20: case 91:
 this.$ = $$[$0-1];
 break;
 case 16:
-this.$ = new asignacion($$[$0-2], new aritmetica(new identificador($$[$0-2],_$[$0-2].first_line,_$[$0-2].last_column),'-',new primitivo(1,'ENTERO',_$[$0-2].first_line,_$[$0-2].last_column),_$[$0-2].first_line,_$[$0-2].last_column,false),_$[$0-2].first_line,_$[$0-2].last_column);
+this.$ = new Asignacion($$[$0-2], new Aritmetica(new Aritmetica($$[$0-2],_$[$0-2].first_line,_$[$0-2].last_column),'-',new Primitivo(1,'ENTERO',_$[$0-2].first_line,_$[$0-2].last_column),_$[$0-2].first_line,_$[$0-2].last_column,false),_$[$0-2].first_line,_$[$0-2].last_column);
 break;
 case 17:
-this.$ = new asignacion($$[$0-2], new aritmetica(new identificador($$[$0-2],_$[$0-2].first_line,_$[$0-2].last_column),'+',new primitivo(1,'ENTERO',_$[$0-2].first_line,_$[$0-2].last_column),_$[$0-2].first_line,_$[$0-2].last_column,false),_$[$0-2].first_line,_$[$0-2].last_column);
+this.$ = new Asignacion($$[$0-2], new Aritmetica(new Aritmetica($$[$0-2],_$[$0-2].first_line,_$[$0-2].last_column),'+',new Primitivo(1,'ENTERO',_$[$0-2].first_line,_$[$0-2].last_column),_$[$0-2].first_line,_$[$0-2].last_column,false),_$[$0-2].first_line,_$[$0-2].last_column);
 break;
 case 25:
 console.log("Error Sintactico "  + yytext
@@ -123,40 +123,40 @@ console.log("Error Sintactico "  + yytext
 
                            new errores("Sintactico", "No se esperaba el caracter "+
                                            this._$.first_line, this._$.first_column);
-
+                           
 break;
 case 26:
-this.$ = new declaracion($$[$0-4],$$[$0-3],$$[$0-1],_$[$0-4].first_line,_$[$0-4].last_column);
+this.$ = new Declaracion($$[$0-4],$$[$0-3],$$[$0-1],_$[$0-4].first_line,_$[$0-4].last_column); 
 break;
 case 27:
-this.$ = new declaracion($$[$0-2],$$[$0-1],null,_$[$0-2].first_line,_$[$0-2].last_column);
+this.$ = new Declaracion($$[$0-2],$$[$0-1],null,_$[$0-2].first_line,_$[$0-2].last_column);
 break;
 case 28:
-this.$ = new tipo("DOBLE");
+this.$ = new Tipo("DOBLE");
 break;
 case 29:
-this.$ = new tipo("ENTERO");
+this.$ = new Tipo("ENTERO");
 break;
 case 30:
-this.$ = new tipo("CADENA");
+this.$ = new Tipo("CADENA");
 break;
 case 31:
-this.$ = new tipo("CARACTER");
+this.$ = new Tipo("CARACTER");
 break;
 case 32:
-this.$ = new tipo("BOOLEAN");
+this.$ = new Tipo("BOOLEAN");
 break;
 case 33:
-this.$ = new declvectores(1,$$[$0-10],$$[$0-9],$$[$0-2],_$[$0-10].first_line,_$[$0-10].last_column);
+this.$ = new DeclararcionVectores(1,$$[$0-10],$$[$0-9],$$[$0-2],_$[$0-10].first_line,_$[$0-10].last_column);
 break;
 case 34:
-this.$ = new declvectores(2,$$[$0-8],$$[$0-7],$$[$0-2],_$[$0-8].first_line,_$[$0-8].last_column);
+this.$ = new DeclararcionVectores(2,$$[$0-8],$$[$0-7],$$[$0-2],_$[$0-8].first_line,_$[$0-8].last_column);
 break;
 case 36: case 43:
 this.$ = $$[$0-2]; this.$.push($$[$0]);
 break;
 case 45:
-this.$ = new writeline($$[$0-2],_$[$0-4].first_line,_$[$0-4].last_column);
+this.$ = new WriteLine($$[$0-2],_$[$0-4].first_line,_$[$0-4].last_column);
 break;
 case 46:
 this.$ = new tolower($$[$0-2],_$[$0-4].first_line,_$[$0-4].last_column);
@@ -213,16 +213,16 @@ case 65:
 this.$ = new Dowhilee($$[$0-1],$$[$0-5],_$[$0-7].first_line,_$[$0-7].last_column);
 break;
 case 66:
-this.$ = new funcion(2, $$[$0-7], $$[$0-6], $$[$0-4], false, $$[$0-1], _$[$0-7].first_line, _$[$0-7].last_column);
+this.$ = new Funcion(2, $$[$0-7], $$[$0-6], $$[$0-4], false, $$[$0-1], _$[$0-7].first_line, _$[$0-7].last_column);
 break;
 case 67:
-this.$ = new funcion(2, $$[$0-6], $$[$0-5], [], false, $$[$0-1], _$[$0-6].first_line, _$[$0-6].last_column);
+this.$ = new Funcion(2, $$[$0-6], $$[$0-5], [], false, $$[$0-1], _$[$0-6].first_line, _$[$0-6].last_column);
 break;
 case 68:
-this.$ = new funcion(3, $$[$0-7], $$[$0-6], $$[$0-4], true, $$[$0-1], _$[$0-7].first_line, _$[$0-7].last_column);
+this.$ = new Funcion(3, $$[$0-7], $$[$0-6], $$[$0-4], true, $$[$0-1], _$[$0-7].first_line, _$[$0-7].last_column);
 break;
 case 69:
-this.$ = new funcion(3, $$[$0-6], $$[$0-5], [], true, $$[$0-1], _$[$0-6].first_line, _$[$0-6].last_column);
+this.$ = new Funcion(3, $$[$0-6], $$[$0-5], [], true, $$[$0-1], _$[$0-6].first_line, _$[$0-6].last_column);
 break;
 case 70:
 this.$ = $$[$0-3]; this.$.push(new simbolo(6, $$[$0-1], $$[$0], null));
@@ -231,91 +231,91 @@ case 71:
 this.$ = new Array(); this.$.push(new simbolo(6, $$[$0-1], $$[$0], null));
 break;
 case 72:
-this.$ = new llamada($$[$0-3],$$[$0-1],_$[$0-3].first_line, _$[$0-3].last_column);
+this.$ = new Llamada($$[$0-3],$$[$0-1],_$[$0-3].first_line, _$[$0-3].last_column);
 break;
 case 73:
-this.$ = new llamada($$[$0-2],[],_$[$0-2].first_line, _$[$0-2].last_column);
+this.$ = new Llamada($$[$0-2],[],_$[$0-2].first_line, _$[$0-2].last_column);
 break;
 case 74:
-this.$ = new startwith($$[$0],_$[$0-2].first_line, _$[$0-2].last_column);
+this.$ = new StartWith($$[$0],_$[$0-2].first_line, _$[$0-2].last_column);
 break;
 case 75:
-this.$ = new aritmetica($$[$0-2], '+', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
+this.$ = new Aritmetica($$[$0-2], '+', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
 break;
 case 76:
-this.$ = new aritmetica($$[$0-2], '-', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
+this.$ = new Aritmetica($$[$0-2], '-', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
 break;
 case 77:
-this.$ = new aritmetica($$[$0-2], '*', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
+this.$ = new Aritmetica($$[$0-2], '*', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
 break;
 case 78:
-this.$ = new aritmetica($$[$0-2], '/', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
+this.$ = new Aritmetica($$[$0-2], '/', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
 break;
 case 79:
-this.$ = new aritmetica($$[$0-2], '^', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
+this.$ = new Aritmetica($$[$0-2], '^', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
 break;
 case 80:
-this.$ = new aritmetica($$[$0-2], '%', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
+this.$ = new Aritmetica($$[$0-2], '%', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
 break;
 case 81:
-this.$ = new relacional($$[$0-2], '>=', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
+this.$ = new Relacional($$[$0-2], '>=', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
 break;
 case 82:
-this.$ = new relacional($$[$0-2], '>', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
+this.$ = new Relacional($$[$0-2], '>', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
 break;
 case 83:
-this.$ = new relacional($$[$0-2], '<=', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
+this.$ = new Relacional($$[$0-2], '<=', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
 break;
 case 84:
-this.$ = new relacional($$[$0-2], '<', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
+this.$ = new Relacional($$[$0-2], '<', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
 break;
 case 85:
-this.$ = new relacional($$[$0-2], '==', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
+this.$ = new Relacional($$[$0-2], '==', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
 break;
 case 86:
-this.$ = new relacional($$[$0-2], '!=', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
+this.$ = new Relacional($$[$0-2], '!=', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
 break;
 case 87:
-this.$ = new logica($$[$0-2],'&&', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
+this.$ = new Logica($$[$0-2],'&&', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
 break;
 case 88:
-this.$ = new logica($$[$0-2],'||', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
+this.$ = new Logica($$[$0-2],'||', $$[$0], _$[$0-2].first_line,_$[$0-2].last_column, false);
 break;
 case 89:
-this.$ = new logica($$[$0],'!', null, _$[$0-1].first_line,_$[$0-1].last_column, true);
+this.$ = new Logica($$[$0],'!', null, _$[$0-1].first_line,_$[$0-1].last_column, true);
 break;
 case 90:
-this.$ = new aritmetica($$[$0], 'UNARIO', null, _$[$0-1].first_line,_$[$0-1].last_column, true);
+this.$ = new Aritmetica($$[$0], 'UNARIO', null, _$[$0-1].first_line,_$[$0-1].last_column, true);
 break;
 case 92:
-this.$ = new primitivo(Number($$[$0]),'DOBLE',_$[$0].first_line,_$[$0].last_column);
+this.$ = new Primitivo(Number($$[$0]),'DOBLE',_$[$0].first_line,_$[$0].last_column);
 break;
 case 93:
-this.$ = new primitivo(Number($$[$0]),'ENTERO',_$[$0].first_line,_$[$0].last_column);
+this.$ = new Primitivo(Number($$[$0]),'ENTERO',_$[$0].first_line,_$[$0].last_column);
 break;
 case 94:
-this.$ = new identificador($$[$0],_$[$0].first_line,_$[$0].last_column);
+this.$ = new Identificador($$[$0],_$[$0].first_line,_$[$0].last_column);
 break;
 case 95:
-$$[$0] = $$[$0].slice(1,$$[$0].length-1);this.$ = new primitivo($$[$0],'CADENA',_$[$0].first_line,_$[$0].last_column);
+$$[$0] = $$[$0].slice(1,$$[$0].length-1);this.$ = new Primitivo($$[$0],'CADENA',_$[$0].first_line,_$[$0].last_column);
 break;
 case 96:
-$$[$0] = $$[$0].slice(1,$$[$0].length-1);this.$ = new primitivo($$[$0],'CARACTER',_$[$0].first_line,_$[$0].last_column);
+$$[$0] = $$[$0].slice(1,$$[$0].length-1);this.$ = new Primitivo($$[$0],'CARACTER',_$[$0].first_line,_$[$0].last_column);
 break;
 case 97:
-this.$ = new primitivo(true,'BOOLEAN',_$[$0].first_line,_$[$0].last_column);
+this.$ = new Primitivo(true,'BOOLEAN',_$[$0].first_line,_$[$0].last_column);
 break;
 case 98:
-this.$ = new primitivo(false,'BOOLEAN',_$[$0].first_line,_$[$0].last_column);
+this.$ = new Primitivo(false,'BOOLEAN',_$[$0].first_line,_$[$0].last_column);
 break;
 case 99:
 this.$ = new ternario($$[$0-4],$$[$0-2],$$[$0],_$[$0-4].first_line,_$[$0-4].last_column);
 break;
 case 100:
-this.$ = new aritmetica(new identificador($$[$0-1],_$[$0-1].first_line,_$[$0-1].last_column),'+',new primitivo(1,'ENTERO',_$[$0-1].first_line,_$[$0-1].last_column),_$[$0-1].first_line,_$[$0-1].last_column,false);
+this.$ = new aritmetica(new identificador($$[$0-1],_$[$0-1].first_line,_$[$0-1].last_column),'+',new Primitivo(1,'ENTERO',_$[$0-1].first_line,_$[$0-1].last_column),_$[$0-1].first_line,_$[$0-1].last_column,false);
 break;
 case 101:
-this.$ = new aritmetica(new identificador($$[$0-1],_$[$0-1].first_line,_$[$0-1].last_column),'-',new primitivo(1,'ENTERO',_$[$0-1].first_line,_$[$0-1].last_column),_$[$0-1].first_line,_$[$0-1].last_column,false);
+this.$ = new aritmetica(new identificador($$[$0-1],_$[$0-1].first_line,_$[$0-1].last_column),'-',new Primitivo(1,'ENTERO',_$[$0-1].first_line,_$[$0-1].last_column),_$[$0-1].first_line,_$[$0-1].last_column,false);
 break;
 case 102:
 this.$ = new casteos($$[$0-2],$$[$0], _$[$0-3].first_line,_$[$0-3].last_column);
@@ -593,53 +593,48 @@ _handle_error:
     return true;
 }};
 
-<<<<<<< HEAD
-//    const primitivo = require(['./src/build/interprete/expresiones/primitivo'])
-=======
     
        
-        const {aritmetica} = require('../ts/Interprete/Expresiones/Operaciones/Aritmetica');
-        const {primitivo} = require('../ts/Interprete/Expresiones/Primitivo');
-        
-        const {relacional} = require('../ts/Interprete/Expresiones/Operaciones/Relacionales')
-        const {logica} = require('../ts/Interprete/Expresiones/Operaciones/Logicas')
-        const {writeline} = require('../ts/Interprete/Instrucciones/Writeline');
-        const {tolower} = require('../ts/Interprete/Instrucciones/Tolower');
-        const {toupper} = require('../ts/Interprete/Instrucciones/Toupper');
-        const {truncate} = require('../ts/Interprete/Instrucciones/FuncionesNativas/Truncate');
-        const {round} = require('../ts/Interprete/Instrucciones/FuncionesNativas/Round');
-        const {typeofF} = require('../ts/Interprete/Instrucciones/FuncionesNativas/Typeof');
-        const {tostringg} = require('../ts/Interprete/Instrucciones/FuncionesNativas/Tostring');
-        const {casteos} = require('../ts/Interprete/Instrucciones/FuncionesNativas/Casteos');
-        const {declaracion} = require('../ts/Interprete/Instrucciones/Declaracion');
-        const {declvectores} = require('../ts/Interprete/Instrucciones/DeclaracionVectores');
-        const {accvectores} = require('../ts/Interprete/Expresiones/AccesoVector');
-        const {asignacion} = require('../ts/Interprete/Instrucciones/Asignacion');
-        const {Ifs} = require('../ts/Interprete/Instrucciones/SentenciasdeControl/Ifs');
-        const {While }= require('../ts/Interprete/Instrucciones/SentenciasCiclicas/While');
-        const {Dowhilee }= require('../ts/Interprete/Instrucciones/SentenciasCiclicas/DoWhile');
-        const {ast} = require('../ts/Interprete/AST/Ast');
-        const {errores} = require('../ts/Interprete/AST/Errores');
-        const {tipo} = require('../ts/Interprete/TablaSimbolos/Tipo');
-        const {simbolo} = require('../ts/Interprete/TablaSimbolos/Simbolo');
-        const {identificador} = require('../ts/Interprete/Expresiones/identificador');
-        const {ternario} = require('../ts/Interprete/Expresiones/Ternario');
-        const {parar} = require('../ts/Interprete/Instrucciones/SentenciadeTransferencia/Break');
-        const {retornar} = require('../ts/Interprete/Instrucciones/SentenciadeTransferencia/Return');
-        const {continuar} = require('../ts/Interprete/Instrucciones/SentenciadeTransferencia/Continue');
-        const {Switch} = require('../ts/Interprete/Instrucciones/SentenciasdeControl/Switch');
-        const {caso} = require('../ts/Interprete/Instrucciones/SentenciasdeControl/caso');
-        const {For} = require('../ts/Interprete/Instrucciones/SentenciasCiclicas/For');
-        const {funcion} = require('../ts/Interprete/Instrucciones/Funcion');
-        const {llamada} = require('../ts/Interprete/Instrucciones/Llamada');
-        const {startwith} = require('../ts/Interprete/Instrucciones/StartWith');
+        const {Aritmetica} = require('../Expresiones/Operaciones/Aritmetica');
+        const {Primitivo} = require('../Expresiones/Primitivo');
+        const {Relacional} = require('../Expresiones/Operaciones/Relacionales')
+        const {Logicas} = require('../Expresiones/Operaciones/Logicas')
+        const {WriteLine} = require('../Instrucciones/Writeline');
+        const {Tolower} = require('../Instrucciones/Tolower');
+        const {Toupper} = require('../Instrucciones/Toupper');
+        const {Truncate} = require('../Instrucciones/FuncionesNativas/Truncate');
+        const {Round} = require('../Instrucciones/FuncionesNativas/Round');
+        const {Typeof} = require('../Instrucciones/FuncionesNativas/Typeof');
+        const {Tostring} = require('../Instrucciones/FuncionesNativas/Tostring');
+        const {Casteos} = require('../Instrucciones/FuncionesNativas/Casteos');
+        const {Declaracion} = require('../Instrucciones/Declaracion');
+        const {DeclararcionVectores} = require('../Instrucciones/DeclaracionVectores');
+        const {AccesoVector} = require('../Expresiones/AccesoVector');
+        const {Asignacion} = require('../Instrucciones/Asignacion');
+        const {Ifs} = require('../Instrucciones/SentenciasdeControl/Ifs');
+        const {While }= require('../Instrucciones/SentenciasCiclicas/While');
+        const {DoWhile}= require('../Instrucciones/SentenciasCiclicas/DoWhile');
+        const {Ast} = require('../AST/Ast');
+        const {Errores} = require('../AST/Errores');
+        const {Tipo} = require('../TablaSimbolos/Tipo');
+        const {Simbolo} = require('../TablaSimbolos/Simbolo');
+        const {Identificador} = require('../Expresiones/identificador');
+        const {Ternario} = require('../Expresiones/Ternario');
+        const {Break} = require('../Instrucciones/SentenciadeTransferencia/Break');
+        const {Retorno} = require('../Instrucciones/SentenciadeTransferencia/Return');
+        const {Continue} = require('../Instrucciones/SentenciadeTransferencia/Continue');
+        const {Switch} = require('../Instrucciones/SentenciasdeControl/Switch');
+        const {Caso} = require('../Instrucciones/SentenciasdeControl/caso');
+        const {For} = require('../Instrucciones/SentenciasCiclicas/For');
+        const {Funcion} = require('../Instrucciones/Funcion');
+        const {Llamada} = require('../Instrucciones/Llamada');
+        const {StartWith} = require('../Instrucciones/StartWith');
 
 
 
 
 
 
->>>>>>> 152fa861614fe3c0c243b9ba29764154e8a9a7c4
 
 /* generated by jison-lex 0.3.4 */
 var lexer = (function(){
@@ -973,63 +968,63 @@ case 0:/* Ignoramos los comentarios simples */
 break;
 case 1:/*Ignorar comentarios con multiples lineas*/
 break;
-case 2: console.log("Reconocio : " + yy_.yytext);  return 22
+case 2: console.log("Reconocio : " + yy_.yytext);  return 22 
 break;
-case 3: console.log("Reconocio : " + yy_.yytext);  return 21
+case 3: console.log("Reconocio : " + yy_.yytext);  return 21 
 break;
-case 4: console.log("Reconocio : " + yy_.yytext);  return 82
+case 4: console.log("Reconocio : " + yy_.yytext);  return 82 
 break;
-case 5: console.log("Reconocio : " + yy_.yytext);  return 83
+case 5: console.log("Reconocio : " + yy_.yytext);  return 83 
 break;
-case 6: console.log("Reconocio : " + yy_.yytext);  return 50
+case 6: console.log("Reconocio : " + yy_.yytext);  return 50 
 break;
-case 7: console.log("Reconocio : " + yy_.yytext);  return 51
+case 7: console.log("Reconocio : " + yy_.yytext);  return 51 
 break;
-case 8: console.log("Reconocio : " + yy_.yytext);  return 38
+case 8: console.log("Reconocio : " + yy_.yytext);  return 38 
 break;
-case 9: console.log("Reconocio : " + yy_.yytext);  return 39
+case 9: console.log("Reconocio : " + yy_.yytext);  return 39 
 break;
-case 10: console.log("Reconocio : " + yy_.yytext);  return 41
+case 10: console.log("Reconocio : " + yy_.yytext);  return 41 
 break;
-case 11: console.log("Reconocio : " + yy_.yytext);  return 43
+case 11: console.log("Reconocio : " + yy_.yytext);  return 43 
 break;
-case 12: console.log("Reconocio : " + yy_.yytext);  return 44
+case 12: console.log("Reconocio : " + yy_.yytext);  return 44 
 break;
-case 13: console.log("Reconocio : " + yy_.yytext);  return 13
+case 13: console.log("Reconocio : " + yy_.yytext);  return 13 
 break;
-case 14: console.log("Reconocio : " + yy_.yytext);  return 32
+case 14: console.log("Reconocio : " + yy_.yytext);  return 32 
 break;
-case 15: console.log("Reconocio : " + yy_.yytext);  return 93
+case 15: console.log("Reconocio : " + yy_.yytext);  return 93 
 break;
-case 16: console.log("Reconocio : " + yy_.yytext);  return 63
+case 16: console.log("Reconocio : " + yy_.yytext);  return 63 
 break;
-case 17: console.log("Reconocio : " + yy_.yytext);  return 74
+case 17: console.log("Reconocio : " + yy_.yytext);  return 74 
 break;
-case 18: console.log("Reconocio : " + yy_.yytext);  return 75
+case 18: console.log("Reconocio : " + yy_.yytext);  return 75 
 break;
-case 19: console.log("Reconocio : " + yy_.yytext);  return 76
+case 19: console.log("Reconocio : " + yy_.yytext);  return 76 
 break;
-case 20: console.log("Reconocio : " + yy_.yytext);  return 77
+case 20: console.log("Reconocio : " + yy_.yytext);  return 77 
 break;
-case 21: console.log("Reconocio : " + yy_.yytext);  return 78
+case 21: console.log("Reconocio : " + yy_.yytext);  return 78 
 break;
-case 22: console.log("Reconocio : " + yy_.yytext);  return 86
+case 22: console.log("Reconocio : " + yy_.yytext);  return 86 
 break;
-case 23: console.log("Reconocio : " + yy_.yytext);  return 79
+case 23: console.log("Reconocio : " + yy_.yytext);  return 79 
 break;
-case 24: console.log("Reconocio : " + yy_.yytext);  return 81
+case 24: console.log("Reconocio : " + yy_.yytext);  return 81 
 break;
-case 25: console.log("Reconocio : " + yy_.yytext);  return 47
+case 25: console.log("Reconocio : " + yy_.yytext);  return 47 
 break;
-case 26: console.log("Reconocio : " + yy_.yytext);  return 80
+case 26: console.log("Reconocio : " + yy_.yytext);  return 80 
 break;
-case 27: console.log("Reconocio : " + yy_.yytext);  return 48
+case 27: console.log("Reconocio : " + yy_.yytext);  return 48 
 break;
-case 28: console.log("Reconocio : " + yy_.yytext);  return 85
+case 28: console.log("Reconocio : " + yy_.yytext);  return 85 
 break;
-case 29: console.log("Reconocio : " + yy_.yytext);  return 84
+case 29: console.log("Reconocio : " + yy_.yytext);  return 84 
 break;
-case 30: console.log("Reconocio : " + yy_.yytext);  return 86
+case 30: console.log("Reconocio : " + yy_.yytext);  return 86 
 break;
 case 31:console.log("Reconocio: "+yy_.yytext); return 91
 break;
@@ -1107,11 +1102,7 @@ case 67:console.log("Reconocio: "+yy_.yytext); return 89
 break;
 case 68:console.log("Reconocio: "+yy_.yytext); return 90
 break;
-<<<<<<< HEAD
-case 70:/*Espacios se ignoran */
-=======
 case 69:/*Espacios se ignoran */ 
->>>>>>> 152fa861614fe3c0c243b9ba29764154e8a9a7c4
 break;
 case 70:return 5
 break;
@@ -1123,7 +1114,7 @@ case 71:console.log("Error Lexico " + yy_.yytext
                                 + ' no forma parte del lenguaje',
                                 yy_.yylineno+1,
                                 yy_.yylloc.last_column+1);
-
+                        
 break;
 }
 },

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Errores = void 0;
 const Lista_Errores_1 = require("./Lista_Errores");
 console.log('Errores');
 class Errores {
@@ -13,4 +14,4 @@ class Errores {
         }
     }
 }
-exports.default = Errores;
+exports.Errores = Errores;

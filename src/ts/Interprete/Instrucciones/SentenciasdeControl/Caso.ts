@@ -1,14 +1,14 @@
-import Nodo from "../../AST/Nodo";
-import Controlador from "../../Controlador";
+import {Nodo} from "../../AST/Nodo";
+import {Controlador} from "../../Controlador";
 import { Expresion } from "../../Interfaces/Expresion";
 import { Instruccion } from "../../Interfaces/Instruccion";
-import TablaSimbolos from "../../TablaSimbolos/TablaSimbolos";
-import Break from "../SentenciadeTransferencia/Break";
+import {TablaSimbolos} from "../../TablaSimbolos/TablaSimbolos";
+import {Break} from "../SentenciadeTransferencia/Break";
 
 
 
 
-export default class Caso implements Instruccion{
+export class Caso implements Instruccion{
 
     public valor: Expresion;  // Aquí guardaría "Case: #"
     public instrucciones : Array<Instruccion>; // Y aquí todas las instrucciones, writeline,break, tec

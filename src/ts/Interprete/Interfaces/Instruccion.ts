@@ -1,6 +1,6 @@
-import Nodo from "../AST/Nodo";
-import Controlador from "../Controlador";
-import TablaSimbolos from "../TablaSimbolos/TablaSimbolos";
+import {Nodo} from "../AST/Nodo";
+import {Controlador} from "../Controlador";
+import {TablaSimbolos} from "../TablaSimbolos/TablaSimbolos";
 
     /**
      * @function ejecutar ejecuta las instrucciones

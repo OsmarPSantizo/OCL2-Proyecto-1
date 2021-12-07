@@ -12,7 +12,7 @@ export enum tipo{
  *  @class me permite llevar el control de los tipos del programa, ENTERO,DOBLE,CADENA,CARACTER,BOOLEAN,
  */
 
-export default class Tipo{
+export class Tipo{
     public nombre_tipo : string;
     public n_tipo : tipo;
 

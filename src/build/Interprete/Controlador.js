@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+<<<<<<< HEAD
 console.log('controlador jeje');
+=======
+exports.Controlador = void 0;
+>>>>>>> 152fa861614fe3c0c243b9ba29764154e8a9a7c4
 class Controlador {
     constructor() {
         this.errores = new Array();
@@ -107,4 +111,4 @@ class Controlador {
         }
     }
 }
-exports.default = Controlador;
+exports.Controlador = Controlador;

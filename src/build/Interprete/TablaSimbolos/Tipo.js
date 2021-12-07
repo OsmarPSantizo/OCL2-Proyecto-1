@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.tipo = void 0;
+exports.Tipo = exports.tipo = void 0;
 var tipo;
 (function (tipo) {
     tipo[tipo["ENTERO"] = 0] = "ENTERO";
@@ -46,4 +46,4 @@ class Tipo {
         }
     }
 }
-exports.default = Tipo;
+exports.Tipo = Tipo;
