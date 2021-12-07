@@ -6,7 +6,7 @@ import {Llamada} from "./Llamada";
 
 
 
-export default class StartWith implements Instruccion{
+export  class StartWith implements Instruccion{
 
     public llamada : Llamada;
     public linea : number;

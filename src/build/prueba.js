@@ -20,4 +20,5 @@ ejecutarCodigo(`void probandoaritmetica (){
     writeline(var1);
     
     }
-    `);
+    
+    start with probandoaritmetica();`);
