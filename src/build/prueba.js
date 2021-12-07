@@ -13,11 +13,14 @@ function ejecutarCodigo(entrada) {
         ts_html += controlador.graficar_ts(controlador, tablitas, "2");
     }
     console.log(ts_html);
+    console.log(controlador);
 }
 ejecutarCodigo(`void probandoaritmetica (){
     int var1 = 1;
+    string var2 = "Tigre";
     
     writeline(var1);
+    writeline(var2);
     
     }
     
