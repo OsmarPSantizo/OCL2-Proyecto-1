@@ -16,13 +16,9 @@ function ejecutarCodigo(entrada) {
 }
 ejecutarCodigo(`void probandoaritmetica (){
     int var1 = 1;
-<<<<<<< HEAD
-    writeline(var1);
-=======
 
     writeline(var1);
 
->>>>>>> 63866d51174ae1eb4ae85c5199262063fbcefd6e
-    }
+}
     
     start with probandoaritmetica();`);
