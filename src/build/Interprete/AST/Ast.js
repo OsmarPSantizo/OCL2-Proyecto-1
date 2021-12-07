@@ -1,12 +1,9 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Ast = void 0;
 const Declaracion_1 = require("../Instrucciones/Declaracion");
 const Funcion_1 = require("../Instrucciones/Funcion");
-const StartWith_1 = __importDefault(require("../Instrucciones/StartWith"));
+const StartWith_1 = require("../Instrucciones/StartWith");
 const Errores_1 = require("./Errores");
 const Nodo_1 = require("./Nodo");
 class Ast {
@@ -31,7 +28,7 @@ class Ast {
         }
         //era pasada ejecutamos las demás instrucciones
         for (let instruccion of this.lista_instrucciones) {
-            if (instruccion instanceof StartWith_1.default && !bandera_start) {
+            if (instruccion instanceof StartWith_1.StartWith && !bandera_start) {
                 instruccion.ejecutar(controlador, ts);
                 bandera_start = true;
             }

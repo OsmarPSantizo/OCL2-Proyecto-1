@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.StartWith = void 0;
 const Nodo_1 = require("../AST/Nodo");
 class StartWith {
     constructor(llamada, linea, columna) {
@@ -14,4 +15,4 @@ class StartWith {
         return new Nodo_1.Nodo("START WITH", "");
     }
 }
-exports.default = StartWith;
+exports.StartWith = StartWith;
