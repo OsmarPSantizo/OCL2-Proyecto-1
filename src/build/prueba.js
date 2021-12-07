@@ -17,6 +17,7 @@ function ejecutarCodigo(entrada) {
 ejecutarCodigo(`void probandoaritmetica (){
     int var1 = 1;
     writeline(var1);
+
     }
     
     start with probandoaritmetica();`);
