@@ -93,7 +93,8 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 "boolean"             {console.log("Reconocio: "+yytext); return 'BOOLEAN'}
 "void"                {console.log("Reconocio: "+yytext); return 'VOID'}
 
-"writeline"             {console.log("Reconocio: "+yytext); return 'WRITELINE'}
+"println"             {console.log("Reconocio: "+yytext); return 'PRINTLN'}
+"print"             {console.log("Reconocio: "+yytext); return 'PRINT'}
 "tolowercase"             {console.log("Reconocio: "+yytext); return 'TOLOWER'}
 "touppercase"             {console.log("Reconocio: "+yytext); return 'TOUPPER'}
 "toInt"             {console.log("Reconocio: "+yytext); return 'TOINT'}
@@ -154,7 +155,8 @@ caracter      (\' ({escape2}|{aceptacion2})\')
         const {Primitivo} = require('../Expresiones/Primitivo');
         const {Relacional} = require('../Expresiones/Operaciones/Relacionales')
         const {Logicas} = require('../Expresiones/Operaciones/Logicas')
-        const {WriteLine} = require('../Instrucciones/Writeline');
+        const {Println} = require('../Instrucciones/Println');
+        const {Print} = require('../Instrucciones/Print');
         const {Tolower} = require('../Instrucciones/Tolower');
         const {Toupper} = require('../Instrucciones/Toupper');
         const {ToInt} = require('../Instrucciones/FuncionesNativas/ToInt');
@@ -219,7 +221,7 @@ instrucciones : instrucciones instruccion   {$$ = $1; $$.push($2);}
             ;
 
 instruccion : declaracion {$$ = $1;}
-            | writeline   {$$ = $1;}
+            | impresion   {$$ = $1;}
             | asignacion  {$$ = $1;}
             | sent_if     {$$ = $1;}
             | sent_while  {$$ = $1;}
@@ -294,8 +296,9 @@ lista_ids : lista_ids COMA ID           {$$ = $1; $$.push($3);}
           | ID                          {$$ = new Array(); $$.push($1);}
           ;
 
-/// Writeline
-writeline : WRITELINE PARA e PARC PYC  {$$ = new WriteLine($3,@1.first_line,@1.last_column);}
+/// Impresión
+impresion : PRINTLN PARA e PARC PYC  {$$ = new Println($3,@1.first_line,@1.last_column);}
+          | PRINT PARA e PARC PYC {$$ = new Print($3,@1.first_line,@1.last_column);}
           ;
 
         

@@ -11,6 +11,9 @@ class Controlador {
     append(cadena) {
         this.consola = this.consola + cadena + "\n";
     }
+    appendwln(cadena) {
+        this.consola = this.consola + cadena;
+    }
     mostrarerr(controlador, errores) {
         if (errores.descripcion != null) {
             console.log(errores.descripcion.toString());

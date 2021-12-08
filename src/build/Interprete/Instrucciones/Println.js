@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WriteLine = void 0;
+exports.Println = void 0;
 const Nodo_1 = require("../AST/Nodo");
 const Tipo_1 = require("../TablaSimbolos/Tipo");
-class WriteLine {
+class Println {
     constructor(expresion, linea, columna) {
         this.expresion = expresion;
         this.linea = linea;
@@ -17,14 +17,14 @@ class WriteLine {
         }
     }
     recorrer() {
-        let padre = new Nodo_1.Nodo("Writeline", ""); //se le asigna el nombre a identificar
-        padre.AddHijo(new Nodo_1.Nodo("Writeline", "")); // writeline("Hola mundo");
+        let padre = new Nodo_1.Nodo("Println", ""); //se le asigna el nombre a identificar
+        padre.AddHijo(new Nodo_1.Nodo("Println", "")); // Println("Hola mundo");
         padre.AddHijo(new Nodo_1.Nodo("(", ""));
         let hijo = new Nodo_1.Nodo("exp", "");
         hijo.AddHijo(this.expresion.recorrer()); // exp -> primitivo -> "hola mundo"
         padre.AddHijo(hijo);
-        padre.AddHijo(new Nodo_1.Nodo(")", "")); // Writeline --> writeline->( exp -> primitivo -> "hola mundo")
+        padre.AddHijo(new Nodo_1.Nodo(")", "")); // Println --> Println->( exp -> primitivo -> "hola mundo")
         return padre;
     }
 }
-exports.WriteLine = WriteLine;
+exports.Println = Println;
