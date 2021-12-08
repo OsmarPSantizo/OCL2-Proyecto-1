@@ -53,8 +53,8 @@ Instrucciones
 	Llamada a funciones   
 	Distintas funciones nativas
 		tipo.Parse(string)
-		toInt
-		toDouble
+		toInt                      ✓
+		toDouble 
 		String
 		typeof                     ✓
 	Funciones

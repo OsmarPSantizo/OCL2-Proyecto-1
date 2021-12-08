@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Truncate = void 0;
+exports.ToInt = void 0;
 const Errores_1 = require("../../AST/Errores");
 const Nodo_1 = require("../../AST/Nodo");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
-class Truncate {
+class ToInt {
     constructor(expresion, linea, columna) {
         this.expresion = expresion;
         this.linea = linea;
@@ -35,8 +35,8 @@ class Truncate {
         }
     }
     recorrer() {
-        let padre = new Nodo_1.Nodo("Truncate", "");
-        padre.AddHijo(new Nodo_1.Nodo("truncate", ""));
+        let padre = new Nodo_1.Nodo("ToInt", "");
+        padre.AddHijo(new Nodo_1.Nodo("toint", ""));
         padre.AddHijo(new Nodo_1.Nodo("(", ""));
         let hijo = new Nodo_1.Nodo("exp", "");
         hijo.AddHijo(this.expresion.recorrer());
@@ -45,4 +45,4 @@ class Truncate {
         return padre;
     }
 }
-exports.Truncate = Truncate;
+exports.ToInt = ToInt;

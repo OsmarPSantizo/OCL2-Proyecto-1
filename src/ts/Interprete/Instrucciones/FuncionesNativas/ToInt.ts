@@ -9,7 +9,7 @@ import { tipo } from "../../TablaSimbolos/Tipo";
 
 
 
-export class Truncate implements Expresion{
+export class ToInt implements Expresion{
     public expresion : Expresion;
     public linea : number;
     public columna: number;
@@ -48,8 +48,8 @@ export class Truncate implements Expresion{
 
     }
     recorrer(): Nodo{
-        let padre = new Nodo("Truncate",""); 
-        padre.AddHijo(new Nodo("truncate","")); 
+        let padre = new Nodo("ToInt",""); 
+        padre.AddHijo(new Nodo("toint","")); 
         padre.AddHijo(new Nodo("(",""));
 
         let hijo = new Nodo("exp","");

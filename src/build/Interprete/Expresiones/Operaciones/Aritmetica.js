@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Aritmetica = void 0;
+const Errores_1 = require("../../AST/Errores");
 const Nodo_1 = require("../../AST/Nodo");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
 const Operacion_1 = require("./Operacion");
@@ -337,12 +338,10 @@ class Aritmetica extends Operacion_1.Operacion {
                         return valor_exp1 + valor_exp2;
                     }
                     else if (tipo_exp2 == Tipo_1.tipo.BOOLEAN) {
-                        // 1 + true == 1 + 1 = 2
-                        let num_boleano = 1;
-                        if (valor_exp2 == false) {
-                            num_boleano = 0;
-                        }
-                        return valor_exp1 + num_boleano;
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer sumas entre int y boolean`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer sumas entre int y boolean. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
                     }
                     else if (tipo_exp2 == Tipo_1.tipo.CARACTER) {
                         //1 + 'A' == 1 + 65 = 66
@@ -353,7 +352,9 @@ class Aritmetica extends Operacion_1.Operacion {
                         return valor_exp1 + valor_exp2;
                     }
                     else {
-                        // Todo: reportar error semántico
+                        let error = new Errores_1.Errores("Semantico", `No se puede hacer la suma debido a los tipos`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer la suma debido a los tipos. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }
                 }
@@ -365,12 +366,10 @@ class Aritmetica extends Operacion_1.Operacion {
                         return valor_exp1 + valor_exp2; // 1.1+2.5 = 3.6
                     }
                     else if (tipo_exp2 == Tipo_1.tipo.BOOLEAN) {
-                        // 1.5 + true == 1.5 + 1 = 2.5
-                        let num_boleano = 1;
-                        if (valor_exp2 == false) {
-                            num_boleano = 0;
-                        }
-                        return valor_exp1 + num_boleano;
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer sumas entre double y boolean`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer sumas entre double y boolean. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
                     }
                     else if (tipo_exp2 == Tipo_1.tipo.CARACTER) {
                         //1.5 + 'A' == 1.5 + 65 = 66.5
@@ -381,7 +380,9 @@ class Aritmetica extends Operacion_1.Operacion {
                         return valor_exp1 + valor_exp2;
                     }
                     else {
-                        // Todo: reportar error semántico
+                        let error = new Errores_1.Errores("Semantico", `No se puede hacer la suma debido a conflicto en los tipos`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer la suma debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }
                 }
@@ -391,16 +392,36 @@ class Aritmetica extends Operacion_1.Operacion {
                         num_bool_exp1 = 0;
                     }
                     if (tipo_exp2 == Tipo_1.tipo.ENTERO) {
-                        return num_bool_exp1 + valor_exp2; // 1+2.5 = 3.5
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer sumas entre boolean e int`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer sumas entre boolean e int. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
                     }
                     else if (tipo_exp2 == Tipo_1.tipo.DOBLE) {
-                        return num_bool_exp1 + valor_exp2; // 1+2.5 = 3.5
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer sumas entre boolean y double`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer sumas entre boolean y double. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                    }
+                    else if (tipo_exp2 == Tipo_1.tipo.BOOLEAN) {
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer sumas entre boolean y boolean`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer sumas entre boolean y boolean. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                    }
+                    else if (tipo_exp2 == Tipo_1.tipo.CARACTER) {
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer sumas entre boolean y char`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer sumas entre boolean y char. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
                     }
                     else if (tipo_exp2 == Tipo_1.tipo.CADENA) {
                         return valor_exp1 + valor_exp2; // true + hola = "truehola"
                     }
                     else {
-                        // Todo: reportar error semántico
+                        let error = new Errores_1.Errores("Semantico", `No se puede hacer la suma debido a conflicto en los tipos`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer la suma debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }
                 }
@@ -418,8 +439,16 @@ class Aritmetica extends Operacion_1.Operacion {
                     else if (tipo_exp2 == Tipo_1.tipo.CADENA) {
                         return valor_exp1 + valor_exp2; // 'A' + hola = "Ahola"
                     }
+                    else if (tipo_exp2 == Tipo_1.tipo.BOOLEAN) {
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer sumas entre char y boolean`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer sumas entre char y boolean. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                    }
                     else {
-                        // Todo: reportar error semántico
+                        let error = new Errores_1.Errores("Semantico", `No se puede hacer la suma debido a conflicto en los tipos`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer la suma debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }
                 }
@@ -428,7 +457,9 @@ class Aritmetica extends Operacion_1.Operacion {
                         return valor_exp1 + valor_exp2;
                     }
                     else {
-                        // Todo: reportar error semántico
+                        let error = new Errores_1.Errores("Semantico", `No se puede hacer la suma debido a conflicto en los tipos`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer la suma debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }
                 }
@@ -440,11 +471,10 @@ class Aritmetica extends Operacion_1.Operacion {
                         return valor_exp1 - valor_exp2;
                     }
                     else if (tipo_exp2 == Tipo_1.tipo.BOOLEAN) {
-                        let num_boleano = 1;
-                        if (valor_exp2 == false) {
-                            num_boleano = 0;
-                        }
-                        return valor_exp1 - num_boleano;
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer restas entre int y boolean`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer restas entre int y boolean. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
                     }
                     else if (tipo_exp2 == Tipo_1.tipo.CARACTER) {
                         let num_ascci = valor_exp2.charCodeAt(0);
@@ -453,7 +483,16 @@ class Aritmetica extends Operacion_1.Operacion {
                     else if (tipo_exp2 == Tipo_1.tipo.DOBLE) {
                         return valor_exp1 - valor_exp2;
                     }
+                    else if (tipo_exp2 == Tipo_1.tipo.CADENA) {
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer restas entre int y string`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer restas entre int y string En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                    }
                     else {
+                        let error = new Errores_1.Errores("Semantico", `No se puede hacer la resta debido a conflicto en los tipos`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer la resta debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }
                 }
@@ -465,36 +504,41 @@ class Aritmetica extends Operacion_1.Operacion {
                         return valor_exp1 - valor_exp2;
                     }
                     else if (tipo_exp2 == Tipo_1.tipo.BOOLEAN) {
-                        let num_boleano = 1;
-                        if (valor_exp2 == false) {
-                            num_boleano = 0;
-                        }
-                        return valor_exp1 - num_boleano;
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer restas entre double y boolean`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer restas entre double y boolean. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                        ;
                     }
                     else if (tipo_exp2 == Tipo_1.tipo.CARACTER) {
                         let num_ascci = valor_exp2.charCodeAt(0);
                         return valor_exp1 - num_ascci;
                     }
+                    else if (tipo_exp2 == Tipo_1.tipo.CADENA) {
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer restas entre double y string`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer restas entre double y string. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                        ;
+                    }
                     else {
+                        let error = new Errores_1.Errores("Semantico", `No se puede hacer la resta debido a conflicto en los tipos`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer la resta debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }
                 }
                 else if (tipo_exp1 == Tipo_1.tipo.BOOLEAN) {
-                    if (tipo_exp2 == Tipo_1.tipo.ENTERO) {
-                        let num_boleano = 1;
-                        if (valor_exp2 == false) {
-                            num_boleano = 0;
-                        }
-                        return num_boleano - valor_exp2;
-                    }
-                    else if (tipo_exp2 == Tipo_1.tipo.DOBLE) {
-                        let num_boleano = 1;
-                        if (valor_exp2 == false) {
-                            num_boleano = 0;
-                        }
-                        return num_boleano - valor_exp2;
+                    if (tipo_exp2 == Tipo_1.tipo.ENTERO || tipo_exp2 == Tipo_1.tipo.DOBLE || tipo_exp2 == Tipo_1.tipo.BOOLEAN || tipo_exp2 == Tipo_1.tipo.CARACTER || tipo_exp2 == Tipo_1.tipo.CADENA) {
+                        let error = new Errores_1.Errores("Semantico", `No se puede hacer restas con boolean`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer restas con boolean. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
                     }
                     else {
+                        let error = new Errores_1.Errores("Semantico", `No se puede hacer la resta debido a conflicto en los tipos`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer la resta debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }
                 }
@@ -507,7 +551,27 @@ class Aritmetica extends Operacion_1.Operacion {
                         let num_ascci = valor_exp1.charCodeAt(0);
                         return num_ascci - valor_exp2;
                     }
+                    else if (tipo_exp2 == Tipo_1.tipo.CARACTER) {
+                        let num_ascci = valor_exp1.charCodeAt(0);
+                        let num_ascci2 = valor_exp2.charCodeAt(0);
+                        return num_ascci - num_ascci2;
+                    }
+                    else if (tipo_exp2 == Tipo_1.tipo.BOOLEAN) {
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer restas entre char y boolean`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer restas entre char y boolean. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                    }
+                    else if (tipo_exp2 == Tipo_1.tipo.CADENA) {
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer restas entre char y string`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer restas entre char y string. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                    }
                     else {
+                        let error = new Errores_1.Errores("Semantico", `No se puede hacer la resta debido a conflicto en los tipos`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer la resta debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }
                 }
@@ -525,7 +589,22 @@ class Aritmetica extends Operacion_1.Operacion {
                     else if (tipo_exp2 == Tipo_1.tipo.DOBLE) {
                         return valor_exp1 * valor_exp2;
                     }
+                    else if (tipo_exp2 == Tipo_1.tipo.BOOLEAN) {
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer multiplicaciones entre int y boolean`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer multiplicaciones entre int y boolean. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                    }
+                    else if (tipo_exp2 == Tipo_1.tipo.CADENA) {
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer multiplicaciones entre int y string`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer multiplicaciones entre int y string. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                    }
                     else {
+                        let error = new Errores_1.Errores("Semantico", `No se puede hacer la multiplicacion debido a conflicto en los tipos`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer la multiplicacion debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }
                 }
@@ -540,7 +619,22 @@ class Aritmetica extends Operacion_1.Operacion {
                         let num_ascci = valor_exp2.charCodeAt(0);
                         return valor_exp1 * num_ascci;
                     }
+                    else if (tipo_exp2 == Tipo_1.tipo.BOOLEAN) {
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer multiplicaciones entre doble y boolean`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer multiplicaciones entre doble y boolean. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                    }
+                    else if (tipo_exp2 == Tipo_1.tipo.CADENA) {
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer multiplicaciones entre doble y string`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer multiplicaciones entre doble y string. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                    }
                     else {
+                        let error = new Errores_1.Errores("Semantico", `No se puede hacer la multiplicacion debido a conflicto en los tipos`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer la multiplicacion debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }
                 }
@@ -553,7 +647,22 @@ class Aritmetica extends Operacion_1.Operacion {
                         let num_ascci = valor_exp1.charCodeAt(0);
                         return num_ascci * valor_exp2;
                     }
+                    else if (tipo_exp2 == Tipo_1.tipo.BOOLEAN) {
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer multiplicaciones entre char y boolean`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer multiplicaciones entre char y boolean. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                    }
+                    else if (tipo_exp2 == Tipo_1.tipo.CADENA) {
+                        let error = new Errores_1.Errores("Semantico", `No se pueden hacer multiplicaciones entre char y string`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer multiplicaciones entre char y string. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                    }
                     else {
+                        let error = new Errores_1.Errores("Semantico", `No se puede hacer la multiplicacion debido a conflicto en los tipos`, this.linea, this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer la multiplicacion debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }
                 }
@@ -601,7 +710,6 @@ class Aritmetica extends Operacion_1.Operacion {
                 break;
             //POTENCIA
             case Operacion_1.Operador.POT:
-                console.log("Aveeeeer");
                 if (tipo_exp1 == Tipo_1.tipo.ENTERO) {
                     if (tipo_exp2 == Tipo_1.tipo.ENTERO) {
                         return valor_exp1 ** valor_exp2;

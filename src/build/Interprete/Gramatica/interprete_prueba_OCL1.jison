@@ -96,7 +96,7 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 "writeline"             {console.log("Reconocio: "+yytext); return 'WRITELINE'}
 "tolowercase"             {console.log("Reconocio: "+yytext); return 'TOLOWER'}
 "touppercase"             {console.log("Reconocio: "+yytext); return 'TOUPPER'}
-"truncate"             {console.log("Reconocio: "+yytext); return 'TRUNCATE'}
+"toInt"             {console.log("Reconocio: "+yytext); return 'TOINT'}
 "round"             {console.log("Reconocio: "+yytext); return 'ROUND'}
 "typeof"             {console.log("Reconocio: "+yytext); return 'TYPEOF'}
 "tostring"             {console.log("Reconocio: "+yytext); return 'TOSTRING'}
@@ -138,7 +138,7 @@ caracter      (\' ({escape2}|{aceptacion2})\')
                         + "linea "+ yylineno
                         + "columna " +(yylloc.last_column+1));
 
-                        new errores('Lexico','El caracter '+ yytext
+                        new Errores('Lexico','El caracter '+ yytext
                                 + ' no forma parte del lenguaje',
                                 yylineno+1,
                                 yylloc.last_column+1);
@@ -157,7 +157,7 @@ caracter      (\' ({escape2}|{aceptacion2})\')
         const {WriteLine} = require('../Instrucciones/Writeline');
         const {Tolower} = require('../Instrucciones/Tolower');
         const {Toupper} = require('../Instrucciones/Toupper');
-        const {Truncate} = require('../Instrucciones/FuncionesNativas/Truncate');
+        const {ToInt} = require('../Instrucciones/FuncionesNativas/ToInt');
         const {Round} = require('../Instrucciones/FuncionesNativas/Round');
         const {Typeof} = require('../Instrucciones/FuncionesNativas/Typeof');
         const {Tostring} = require('../Instrucciones/FuncionesNativas/Tostring');
@@ -416,7 +416,7 @@ e
     | startwith
     | e PNT TOUPPER PARA PARC {$$ = new Toupper($1,@1.first_line,@1.last_column);}
     | e PNT TOLOWER PARA PARC {$$ = new Tolower($1,@1.first_line,@1.last_column);}
-    | TRUNCATE PARA e PARC     {$$ = new Truncate($3,@1.first_line,@1.last_column);}
+    | TOINT PARA e PARC     {$$ = new ToInt($3,@1.first_line,@1.last_column);}
     | ROUND PARA e PARC     {$$ = new Round($3,@1.first_line,@1.last_column);}
     | TYPEOF PARA e PARC     {$$ = new Typeof($3,@1.first_line,@1.last_column);}
     | TOSTRING PARA e PARC     {$$ = new Tostring($3,@1.first_line,@1.last_column);}
