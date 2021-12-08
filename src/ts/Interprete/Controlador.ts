@@ -22,6 +22,10 @@ export  class Controlador{
         this.consola = this.consola + cadena +"\n";
     }
 
+    appendwln(cadena:string){
+        this.consola = this.consola + cadena 
+    }
+
 
     mostrarerr(controlador:Controlador, errores:Errores):string{
         

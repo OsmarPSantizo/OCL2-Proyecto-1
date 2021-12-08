@@ -19,6 +19,7 @@ ejecutarCodigo(`void probandoaritmetica (){
         int var1 = 1;
         int punteo = 0;
         string animal = "Tigre";
+<<<<<<< HEAD
         writeline("Portencia con pow: " +pow(2,3));
         writeline("Raiz cuadrada con sqrt: " +sqrt(2));
         writeline("Seno: " +sin(1));
@@ -32,6 +33,20 @@ ejecutarCodigo(`void probandoaritmetica (){
         writeline(var1 + true);
 
 
+=======
+        println("Portencia con pow: " +pow(2,3));
+        println("Raiz cuadrada con sqrt: " +sqrt(2));
+        print("Seno: " +sin(1));
+        println("Coseno: " +cos(134));
+        println("Tangente: " +tan(12));
+        println("Concatenacion con el &: "+ "para" & "caidismo");
+        println("Repeticion: "+"Cadena"^3);
+        println(animal.toUppercase());
+        print(animal.toLowercase());
+        println(typeof(tostring(2*2)));
+        
+        
+>>>>>>> 603079253d56c27904286f65c5ead66189cbc12c
         }
 
         start with probandoaritmetica();`);

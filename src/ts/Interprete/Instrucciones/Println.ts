@@ -6,7 +6,7 @@ import {TablaSimbolos} from "../TablaSimbolos/TablaSimbolos";
 import { tipo } from "../TablaSimbolos/Tipo";
 
 
-export class WriteLine implements Instruccion{
+export class Println implements Instruccion{
 
     public expresion : Expresion;
     public linea : number;
@@ -25,19 +25,20 @@ export class WriteLine implements Instruccion{
 
             let valor = this.expresion.getValor(controlador,ts);
             
+            
             controlador.append(valor);
         }
     }
     recorrer(): Nodo{
-        let padre = new Nodo("Writeline",""); //se le asigna el nombre a identificar
-        padre.AddHijo(new Nodo("Writeline","")); // writeline("Hola mundo");
+        let padre = new Nodo("Println",""); //se le asigna el nombre a identificar
+        padre.AddHijo(new Nodo("Println","")); // Println("Hola mundo");
         padre.AddHijo(new Nodo("(",""));
 
         let hijo = new Nodo("exp","");
         hijo.AddHijo(this.expresion.recorrer()); // exp -> primitivo -> "hola mundo"
 
         padre.AddHijo(hijo);
-        padre.AddHijo(new Nodo(")","")); // Writeline --> writeline->( exp -> primitivo -> "hola mundo")
+        padre.AddHijo(new Nodo(")","")); // Println --> Println->( exp -> primitivo -> "hola mundo")
         return padre;
     }
 
