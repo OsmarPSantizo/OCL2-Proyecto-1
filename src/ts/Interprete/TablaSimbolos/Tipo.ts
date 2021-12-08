@@ -16,8 +16,10 @@ export class Tipo{
     public nombre_tipo : string;
     public n_tipo : tipo;
 
+
+
     /**
-     * 
+     *
      */
     constructor(nombre_tipo:string){
         this.nombre_tipo = nombre_tipo;
@@ -42,6 +44,6 @@ export class Tipo{
         }
     }
 
-    
+
 
 }

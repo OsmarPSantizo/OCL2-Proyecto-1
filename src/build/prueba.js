@@ -28,9 +28,10 @@ ejecutarCodigo(`void probandoaritmetica (){
         writeline("Repeticion: "+"Cadena"^3);
         writeline(animal.toUppercase());
         writeline(animal.toLowercase());
-        writeline(typeof(tostring(2*2));
-        
-        
+        writeline(typeof(tostring(2*2)));
+        writeline(var1 + true);
+
+
         }
-        
+
         start with probandoaritmetica();`);
