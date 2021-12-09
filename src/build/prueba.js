@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Controlador_1 = require("./Interprete/Controlador");
 const TablaSimbolos_1 = require("./Interprete/TablaSimbolos/TablaSimbolos");
-const gramatica = require('./Interprete/Gramatica/interprete_prueba_OCL1');
+const gramatica = require('./Interprete/Gramatica/gramatica');
 const ejecutarCodigo = (entrada) => {
     const ast = gramatica.parse(entrada);
     const controlador = new Controlador_1.Controlador();

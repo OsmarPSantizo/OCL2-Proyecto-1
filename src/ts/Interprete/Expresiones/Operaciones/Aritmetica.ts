@@ -44,7 +44,7 @@ export class Aritmetica extends Operacion implements Expresion{
 //SUMA
             case Operador.SUMA:
                 if(tipo_exp1 == tipo.ENTERO){
-                    if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.BOOLEAN || tipo_exp2 == tipo.CARACTER){
+                    if(tipo_exp2 == tipo.ENTERO ||  tipo_exp2 == tipo.CARACTER){
                         return tipo.ENTERO;
                     }else if(tipo_exp2 == tipo.DOBLE ){
                         return tipo.DOBLE;
@@ -52,27 +52,25 @@ export class Aritmetica extends Operacion implements Expresion{
                         return tipo.CADENA;
                     }
                 }else if(tipo_exp1 == tipo.DOBLE){
-                    if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE || tipo_exp2 == tipo.BOOLEAN || tipo_exp2 == tipo.CARACTER){
+                    if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE || tipo_exp2 == tipo.CARACTER){
                         return tipo.DOBLE;
                     }else if(tipo_exp2 == tipo.CADENA ){
                         return tipo.CADENA;
                     }
                 }else if(tipo_exp1 == tipo.BOOLEAN){
-                    if(tipo_exp2 == tipo.ENTERO){
+                    if(tipo_exp2 == tipo.CADENA ){
+                        return tipo.CADENA;
+                    }if(tipo_exp2 == tipo.BOOLEAN){
+                        return tipo.BOOLEAN
+                    } else{
+                        return tipo.ERROR;
+                    }
+                }else if(tipo_exp1 == tipo.CARACTER){
+                    if(tipo_exp2 == tipo.ENTERO ||  tipo_exp2 == tipo.CARACTER){
                         return tipo.ENTERO;
                     }else if(tipo_exp2 == tipo.DOBLE ){
                         return tipo.DOBLE;
                     }else if(tipo_exp2 == tipo.CADENA ){
-                        return tipo.CADENA;
-                    }else{
-                        return tipo.ERROR;
-                    }
-                }else if(tipo_exp1 == tipo.CARACTER){
-                    if(tipo_exp2 == tipo.ENTERO){
-                        return tipo.ENTERO;
-                    }else if(tipo_exp2 == tipo.DOBLE ){
-                        return tipo.DOBLE;
-                    }else if(tipo_exp2 == tipo.CADENA || tipo_exp2 == tipo.CARACTER ){
                         return tipo.CADENA;
                     }else{
                         return tipo.ERROR;
@@ -88,7 +86,7 @@ export class Aritmetica extends Operacion implements Expresion{
 // RESTA
             case Operador.RESTA:
                 if(tipo_exp1 == tipo.ENTERO){
-                    if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.BOOLEAN || tipo_exp2 == tipo.CARACTER){
+                    if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.CARACTER){
                         return tipo.ENTERO;
                     }else if(tipo_exp2 == tipo.DOBLE){
                         return tipo.DOBLE;
@@ -96,21 +94,16 @@ export class Aritmetica extends Operacion implements Expresion{
                         return tipo.ERROR;
                     }
                 }else if(tipo_exp1 == tipo.DOBLE){
-                    if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE || tipo_exp2 == tipo.BOOLEAN || tipo_exp2 == tipo.CARACTER){
+                    if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE || tipo_exp2 == tipo.CARACTER){
                         return tipo.DOBLE;
                     }else{
                         return tipo.ERROR;
                     }
                 }else if(tipo_exp1 == tipo.BOOLEAN){
-                    if(tipo_exp2 == tipo.ENTERO){
-                        return tipo.ENTERO;
-                    }else if(tipo_exp2 == tipo.DOBLE){
-                        return tipo.DOBLE
-                    }else{
-                        return tipo.ERROR;
-                    }
+                    return tipo.ERROR
+
                 }else if (tipo_exp1 == tipo.CARACTER){
-                    if(tipo_exp2 == tipo.ENTERO){
+                    if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.CARACTER){
                         return tipo.ENTERO
                     }else if(tipo_exp2 == tipo.DOBLE){
                         return tipo.DOBLE
@@ -136,7 +129,7 @@ export class Aritmetica extends Operacion implements Expresion{
                         return tipo.ERROR
                     }
                 }else if(tipo_exp1 == tipo.CARACTER){
-                    if(tipo_exp2 == tipo.ENTERO){
+                    if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.CARACTER){
                         return tipo.ENTERO
                     }else if(tipo_exp2 == tipo.DOBLE){
                         return tipo.DOBLE
@@ -148,8 +141,10 @@ export class Aritmetica extends Operacion implements Expresion{
 //DIVISON
             case Operador.DIVISION:
                 if(tipo_exp1 == tipo.ENTERO){
-                    if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE|| tipo_exp2 == tipo.CARACTER){
-                        return tipo.DOBLE;
+                    if(tipo_exp2 == tipo.ENTERO ||  tipo_exp2 == tipo.CARACTER){
+                        return tipo.ENTERO;
+                    }else if(tipo_exp2 == tipo.DOBLE){
+                        return tipo.DOBLE
                     }else{
                         return tipo.ERROR
                     }
@@ -160,9 +155,11 @@ export class Aritmetica extends Operacion implements Expresion{
                         return tipo.ERROR
                     }
                 }else if(tipo_exp1 == tipo.CARACTER){
-                    if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE){
-                        return tipo.DOBLE;
-                    }else{
+                    if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.CARACTER){
+                        return tipo.ENTERO;
+                    }else if(tipo_exp2 == tipo.DOBLE){
+                        return tipo.DOBLE
+                    } else{
                         return tipo.ERROR;
                     }
                 }
@@ -206,18 +203,24 @@ export class Aritmetica extends Operacion implements Expresion{
 //MODULO
             case Operador.MOD:
                 if(tipo_exp1 == tipo.ENTERO){
-                    if(tipo_exp2 == tipo.ENTERO){
-                        return tipo.DOBLE;
+                    if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.CARACTER){
+                        return tipo.ENTERO;
                     }else if(tipo_exp2 == tipo.DOBLE){
                         return tipo.DOBLE
                     }else{
                         return tipo.ERROR
                     }
                 }else if(tipo_exp1 == tipo.DOBLE){
-                    if(tipo_exp2 == tipo.ENTERO){
+                    if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE || tipo_exp2 == tipo.CARACTER){
                         return tipo.DOBLE;
+                    }else{
+                        return tipo.ERROR
+                    }
+                }else if(tipo_exp1 == tipo.CARACTER){
+                    if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.CARACTER){
+                        return tipo.ENTERO
                     }else if(tipo_exp2 == tipo.DOBLE){
-                        return tipo.DOBLE;
+                        return tipo.DOBLE
                     }else{
                         return tipo.ERROR
                     }
@@ -366,7 +369,7 @@ export class Aritmetica extends Operacion implements Expresion{
                         let error = new Errores("Semantico",`No se pueden hacer sumas entre boolean y boolean`,this.linea,this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, No se pueden hacer sumas entre boolean y boolean. En la linea ${this.linea} y columna ${this.columna}`);
-                        return null;
+                        
                     }else if (tipo_exp2 == tipo.CARACTER){
                         let error = new Errores("Semantico",`No se pueden hacer sumas entre boolean y char`,this.linea,this.columna);
                         controlador.errores.push(error);
@@ -595,7 +598,21 @@ export class Aritmetica extends Operacion implements Expresion{
                     }else if(tipo_exp2 == tipo.CARACTER){
                         let num_ascci = valor_exp1.charCodeAt(0);
                         return valor_exp1 / num_ascci;
+                    }else if(tipo_exp2 == tipo.BOOLEAN){
+                        let error = new Errores("Semantico",`No se pueden hacer divisiones entre entero y booleano`,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer divisiones entre entero y booleano. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                    }else if(tipo_exp2 == tipo.CADENA){
+                        let error = new Errores("Semantico",`No se pueden hacer divisiones entre entero y string`,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer divisiones entre entero y string. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+
                     }else{
+                        let error = new Errores("Semantico",`No se puede hacer la division debido a conflicto en los tipos`,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer la division debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }
                 }else if(tipo_exp1 == tipo.DOBLE){
@@ -606,14 +623,38 @@ export class Aritmetica extends Operacion implements Expresion{
                     }else if(tipo_exp2 == tipo.CARACTER){
                         let num_ascci = valor_exp1.charCodeAt(0);
                         return valor_exp1 / num_ascci;
+                    }else if(tipo_exp2 == tipo.BOOLEAN){
+                        let error = new Errores("Semantico",`No se pueden hacer divisiones entre doble y booleano`,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer divisiones entre doble y booleano. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                    }else if(tipo_exp2 == tipo.CADENA){
+                        let error = new Errores("Semantico",`No se pueden hacer divisiones entre doble y string`,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer divisiones entre doble y string. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
                     }else{
+                        let error = new Errores("Semantico",`No se puede hacer la division debido a conflicto en los tipos`,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer la division debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }
                 }else if(tipo_exp1 == tipo.CARACTER){
-                    if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE){
-                        return tipo.ENTERO;
-                    }else{
-                        return tipo.ERROR;
+                    if(tipo_exp2 == tipo.ENTERO){
+                        let num_ascci = valor_exp1.charCodeAt(0);
+                        return num_ascci / valor_exp2;
+                    }else if(tipo_exp2 == tipo.DOBLE){
+                        let num_ascci = valor_exp1.charCodeAt(0);
+                        return num_ascci / valor_exp2
+                    }else if(tipo_exp2 == tipo.CARACTER){
+                        let num_ascci = valor_exp1.charCodeAt(0);
+                        let num_ascci2 = valor_exp2.charCodeAt(0);
+                        return num_ascci / num_ascci2
+                    } else{
+                        let error = new Errores("Semantico",`No se puede hacer la division debido a conflicto en los tipos`,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer la division debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
                     }
                 }
                 break;
@@ -627,7 +668,10 @@ export class Aritmetica extends Operacion implements Expresion{
                     }else if(tipo_exp2 == tipo.DOBLE){
                         return valor_exp1 ** valor_exp2;
                     }else{
-                        return null
+                        let error = new Errores("Semantico",`No se puede hacer la potencia debido a conflicto en los tipos`,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer la potencia debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
                     }
                 }else if(tipo_exp1 == tipo.DOBLE){
                     if(tipo_exp2 == tipo.ENTERO){
@@ -635,6 +679,9 @@ export class Aritmetica extends Operacion implements Expresion{
                     }else if(tipo_exp2 == tipo.DOBLE){
                         return valor_exp1 ** valor_exp2;
                     }else{
+                        let error = new Errores("Semantico",`No se puede hacer la potencia debido a conflicto en los tipos`,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer la potencia debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }
                 }else if (tipo_exp1 == tipo.CADENA){
@@ -660,15 +707,55 @@ export class Aritmetica extends Operacion implements Expresion{
                         return valor_exp1 % valor_exp2;
                     }else if(tipo_exp2 == tipo.DOBLE){
                         return valor_exp1 % valor_exp2;
-                    }else{
+                    }else if(tipo_exp2 == tipo.CARACTER){
+                        let num_ascci = valor_exp2.charCodeAt(0);
+                        return valor_exp1 % num_ascci
+                    }else if(tipo_exp2 == tipo.BOOLEAN){
+                        let error = new Errores("Semantico",`No se pueden hacer modulos entre int y boolean`,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer modulos entre int y boolean. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                    }else if(tipo_exp2 == tipo.CADENA){
+                        let error = new Errores("Semantico",`No se pueden hacer modulos entre int y string`,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden hacer modulos entre int y string. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                    }
+                    else{
+                        let error = new Errores("Semantico",`No se puede hacer el modulo debido a conflicto en los tipos`,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer el modulo debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }
                 }else if(tipo_exp1 == tipo.DOBLE){
-                    if(tipo_exp2 == tipo.ENTERO){
+                    if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE){
                         return valor_exp1 % valor_exp2;
-                    }else if(tipo_exp2 == tipo.DOBLE){
-                        return valor_exp1 % valor_exp2;
+                    }else if(tipo_exp2 == tipo.CARACTER){
+                        let num_ascci = valor_exp2.charCodeAt(0);
+                        return valor_exp1 % num_ascci;
                     }else{
+                        let error = new Errores("Semantico",`No se puede hacer el modulo debido a conflicto en los tipos`,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer el modulo debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
+                        return null;
+                    }
+                }else if(tipo_exp1 == tipo.CARACTER){
+                    console.log("hsdkfhksdj")
+                    if(tipo_exp2 == tipo.ENTERO){
+                        let num_ascci = valor_exp1.charCodeAt(0)
+                        return num_ascci % valor_exp2
+                    }else if(tipo_exp2 == tipo.DOBLE){
+                        let num_ascci = valor_exp1.charCodeAt(0)
+                        return num_ascci % valor_exp2
+                    }else if(tipo_exp2 == tipo.CARACTER){
+                        let num_ascci = valor_exp1.charCodeAt(0)
+                        let num_ascci2 = valor_exp2.charCodeAt(0)
+                        return num_ascci % num_ascci2
+                    }else{
+                        
+                        let error = new Errores("Semantico",`No se puede hacer el modulo debido a conflicto en los tipos`,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer el modulo debido a conflicto en los tipos. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }
                 }

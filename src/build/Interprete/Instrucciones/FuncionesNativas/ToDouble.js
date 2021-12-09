@@ -1,10 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ToInt = void 0;
+exports.ToDouble = void 0;
 const Errores_1 = require("../../AST/Errores");
-const Nodo_1 = require("../../AST/Nodo");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
-class ToInt {
+class ToDouble {
     constructor(expresion, linea, columna) {
         this.expresion = expresion;
         this.linea = linea;
@@ -12,11 +11,8 @@ class ToInt {
     }
     getTipo(controlador, ts) {
         let tipoexp = this.expresion.getTipo(controlador, ts);
-        if (tipoexp == Tipo_1.tipo.DOBLE) {
-            return Tipo_1.tipo.ENTERO;
-        }
-        else {
-            return Tipo_1.tipo.ERROR;
+        if (tipoexp == Tipo_1.tipo.ENTERO) {
+            return Tipo_1.tipo.DOBLE;
         }
     }
     getValor(controlador, ts) {
@@ -24,7 +20,7 @@ class ToInt {
         let tipo_valor;
         tipo_valor = this.expresion.getTipo(controlador, ts);
         valor = this.expresion.getValor(controlador, ts);
-        if (tipo_valor == Tipo_1.tipo.DOBLE) {
+        if (tipo_valor == Tipo_1.tipo.ENTERO) {
             return Math.trunc(valor);
         }
         else {
@@ -35,14 +31,7 @@ class ToInt {
         }
     }
     recorrer() {
-        let padre = new Nodo_1.Nodo("ToInt", "");
-        padre.AddHijo(new Nodo_1.Nodo("toint", ""));
-        padre.AddHijo(new Nodo_1.Nodo("(", ""));
-        let hijo = new Nodo_1.Nodo("exp", "");
-        hijo.AddHijo(this.expresion.recorrer());
-        padre.AddHijo(hijo);
-        padre.AddHijo(new Nodo_1.Nodo(")", ""));
-        return padre;
+        throw new Error("Method not implemented.");
     }
 }
-exports.ToInt = ToInt;
+exports.ToDouble = ToDouble;

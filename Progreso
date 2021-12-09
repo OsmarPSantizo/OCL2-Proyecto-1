@@ -39,9 +39,9 @@ Logicas
 Cadenas
 	Concatenacion          ✓
 	Repetición             ✓
-	Acceso a una posición  
-	Acceso a una porción
-	Tamaño de una cadena
+	Acceso a una posición  ✓
+	Acceso a una porción   ✓
+	Tamaño de una cadena   ✓
 	Cadena en mayúsculas   ✓
 	Cadena en minúsculas   ✓
 
@@ -52,10 +52,10 @@ Instrucciones
 	Declaraciones y asignaciones   ✓
 	Llamada a funciones   
 	Distintas funciones nativas
-		tipo.Parse(string)
+		tipo.Parse(string)		
 		toInt                      ✓
-		toDouble 
-		String
+		toDouble                   ✓
+		String					   ✓
 		typeof                     ✓
 	Funciones
 

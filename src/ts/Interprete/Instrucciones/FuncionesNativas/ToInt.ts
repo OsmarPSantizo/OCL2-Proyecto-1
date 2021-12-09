@@ -22,8 +22,8 @@ export class ToInt implements Expresion{
     }
 
     getTipo(controlador: Controlador, ts:TablaSimbolos):tipo{
-        let valor = this.expresion.getValor(controlador,ts);
-        if(this.expresion.getTipo(controlador,ts)==tipo.ENTERO ||this.expresion.getTipo(controlador,ts)==tipo.DOBLE){
+        let tipoexp = this.expresion.getTipo(controlador,ts);
+        if(tipoexp==tipo.DOBLE){
             return  tipo.ENTERO
         }else{
             return tipo.ERROR
@@ -37,12 +37,12 @@ export class ToInt implements Expresion{
         tipo_valor = this.expresion.getTipo(controlador,ts);
         valor = this.expresion.getValor(controlador,ts);
 
-        if(tipo_valor ==tipo.ENTERO || tipo_valor == tipo.DOBLE){
+        if(tipo_valor == tipo.DOBLE){
             return Math.trunc(valor)
         }else{
-            let error = new Errores("Semantico",`La expresión no es de tipo int o double`,this.linea,this.columna);
+            let error = new Errores("Semantico",`La expresión no es de tipo double`,this.linea,this.columna);
             controlador.errores.push(error);
-            controlador.append(`ERROR: Semántico, La expresión no es de tipo int o double. En la linea ${this.linea} y columna ${this.columna}`);
+            controlador.append(`ERROR: Semántico, La expresión no es de tipo double. En la linea ${this.linea} y columna ${this.columna}`);
             return tipo.ERROR;
         }
 

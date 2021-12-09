@@ -98,9 +98,14 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 "tolowercase"             {console.log("Reconocio: "+yytext); return 'TOLOWER'}
 "touppercase"             {console.log("Reconocio: "+yytext); return 'TOUPPER'}
 "toInt"             {console.log("Reconocio: "+yytext); return 'TOINT'}
+"toDouble"             {console.log("Reconocio: "+yytext); return 'TODOUBLE'}
 "round"             {console.log("Reconocio: "+yytext); return 'ROUND'}
 "typeof"             {console.log("Reconocio: "+yytext); return 'TYPEOF'}
 "tostring"             {console.log("Reconocio: "+yytext); return 'TOSTRING'}
+"subString"             {console.log("Reconocio: "+yytext); return 'SUBSTR'}
+"caracterOfPosition"             {console.log("Reconocio: "+yytext); return 'CARAOFPOS'}
+"length"             {console.log("Reconocio: "+yytext); return 'CARALENGHT'}
+"parse"             {console.log("Reconocio: "+yytext); return 'PARSE'}
 
 "if"                    {console.log("Reconocio: "+yytext); return 'IF'}
 "else"                    {console.log("Reconocio: "+yytext); return 'ELSE'}
@@ -120,6 +125,7 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 "return"                {console.log("Reconocio: "+yytext); return 'RETURN'} 
 "start"                {console.log("Reconocio: "+yytext); return 'START'} 
 "with"                {console.log("Reconocio: "+yytext); return 'WITH'}
+
 
 
 
@@ -160,9 +166,14 @@ caracter      (\' ({escape2}|{aceptacion2})\')
         const {Tolower} = require('../Instrucciones/Tolower');
         const {Toupper} = require('../Instrucciones/Toupper');
         const {ToInt} = require('../Instrucciones/FuncionesNativas/ToInt');
+        const {ToDouble} = require('../Instrucciones/FuncionesNativas/ToDouble');
         const {Round} = require('../Instrucciones/FuncionesNativas/Round');
         const {Typeof} = require('../Instrucciones/FuncionesNativas/Typeof');
         const {Tostring} = require('../Instrucciones/FuncionesNativas/Tostring');
+        const {SubString} = require('../Instrucciones/SubString')
+        const {TipoParse} = require('../Instrucciones/FuncionesNativas/TipoParse')
+        const {CharOfPosition} = require('../Instrucciones/CharOfPosition')
+        const {LenghtC} = require('../Instrucciones/LenghtC')
         const {Casteos} = require('../Instrucciones/FuncionesNativas/Casteos');
         const {Declaracion} = require('../Instrucciones/Declaracion');
         const {DeclararcionVectores} = require('../Instrucciones/DeclaracionVectores');
@@ -363,8 +374,8 @@ funciones : tipo ID PARA lista_parametros PARC LLAVA instrucciones LLAVC  {$$ = 
           | VOID ID PARA PARC LLAVA instrucciones LLAVC                   {$$ = new Funcion(3, $1, $2, [], true, $6, @1.first_line, @1.last_column);}
           ;
 
-lista_parametros : lista_parametros COMA tipo ID  {$$ = $1; $$.push(new simbolo(6, $3, $4, null));}
-                 | tipo ID                        {$$ = new Array(); $$.push(new simbolo(6, $1, $2, null));}
+lista_parametros : lista_parametros COMA tipo ID  {$$ = $1; $$.push(new Simbolo(6, $3, $4, null));}
+                 | tipo ID                        {$$ = new Array(); $$.push(new Simbolo(6, $1, $2, null));}
                  ;
 
 /// Llamadas
@@ -396,10 +407,10 @@ e
     | e MENORQUE e              {$$ = new Relacional($1, '<', $3, @1.first_line,@1.last_column, false);}
     | e IGUALIGUAL e            {$$ = new Relacional($1, '==', $3, @1.first_line,@1.last_column, false);}
     | e DIFERENTE e             {$$ = new Relacional($1, '!=', $3, @1.first_line,@1.last_column, false);}
-    | e AND e                   {$$ = new Logica($1,'&&', $3, @1.first_line,@1.last_column, false);}
+    | e AND e                   {$$ = new Logicas($1,'&&', $3, @1.first_line,@1.last_column, false);}
     | e ANDD e                  {$$ = new Aritmetica($1,'+', $3, @1.first_line,@1.last_column, false);}
-    | e OR e                    {$$ = new Logica($1,'||', $3, @1.first_line,@1.last_column, false);}
-    | NOT e                     {$$ = new Logica($2,'!', null, @1.first_line,@1.last_column, true);}
+    | e OR e                    {$$ = new Logicas($1,'||', $3, @1.first_line,@1.last_column, false);}
+    | NOT e                     {$$ = new Logicas($2,'!', null, @1.first_line,@1.last_column, true);}
     | MENOS e %prec UMINUS      {$$ = new Aritmetica($2, 'UNARIO', null, @1.first_line,@1.last_column, true);}
     | PARA e PARC               {$$ = $2;}
     | DECIMAL                   {$$ = new Primitivo(Number($1),'DOBLE',@1.first_line,@1.last_column);}
@@ -409,7 +420,7 @@ e
     | CARACTER                  {$1 = $1.slice(1,$1.length-1);$$ = new Primitivo($1,'CARACTER',@1.first_line,@1.last_column);}
     | TRUE                      {$$ = new Primitivo(true,'BOOLEAN',@1.first_line,@1.last_column);}
     | FALSE                     {$$ = new Primitivo(false,'BOOLEAN',@1.first_line,@1.last_column);}
-    | e INTERROGACION e DOSPUNTOS e {$$ = new ternario($1,$3,$5,@1.first_line,@1.last_column);}
+    | e INTERROGACION e DOSPUNTOS e {$$ = new Ternario($1,$3,$5,@1.first_line,@1.last_column);}
     | ID INCRE                  {$$ = new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false);}
     | ID DECRE                  {$$ = new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false);}
     | PARA tipo PARC e          {$$ = new Casteos($2,$4, @1.first_line,@1.last_column);}
@@ -419,8 +430,14 @@ e
     | startwith
     | e PNT TOUPPER PARA PARC {$$ = new Toupper($1,@1.first_line,@1.last_column);}
     | e PNT TOLOWER PARA PARC {$$ = new Tolower($1,@1.first_line,@1.last_column);}
+    | e PNT SUBSTR PARA e COMA e PARC   {$$ = new  SubString($1,$5,$7,@1.first_line,@1.last_column);}
+    | e PNT CARAOFPOS PARA e PARC   {$$ = new  CharOfPosition($1,$5,@1.first_line,@1.last_column);}
+    | e PNT CARALENGHT PARA PARC {$$ = new LenghtC($1,@1.first_line,@1.last_column);}
     | TOINT PARA e PARC     {$$ = new ToInt($3,@1.first_line,@1.last_column);}
+    | TODOUBLE PARA e PARC     {$$ = new ToDouble($3,@1.first_line,@1.last_column);}
     | ROUND PARA e PARC     {$$ = new Round($3,@1.first_line,@1.last_column);}
     | TYPEOF PARA e PARC     {$$ = new Typeof($3,@1.first_line,@1.last_column);}
-    | TOSTRING PARA e PARC     {$$ = new Tostring($3,@1.first_line,@1.last_column);}
+    | STRING PARA e PARC     {$$ = new Tostring($3,@1.first_line,@1.last_column);}
+    | BOOLEAN PNT PARSE PARA e PARC  {$$ = new TipoParse($5,"booleano",@1.first_line,@1.last_column);}
+    
     ;
