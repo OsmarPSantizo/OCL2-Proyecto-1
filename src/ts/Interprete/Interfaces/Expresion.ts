@@ -10,16 +10,18 @@ export interface Expresion{
      * @param controlador llevamos todo el control del programa
      * @param ts accede a la tabla de símbolos
      */
-
     getTipo(controlador : Controlador,ts: TablaSimbolos): tipo;
+
+
     /**
      * @function getValor nos devuelve el valor de la expresion
      * @param controlador llevamos todo el control del programa
      * @param ts accede a la tabla de símbolos
      */
-
-
     getValor(controlador : Controlador,ts: TablaSimbolos): any;
 
+    /**
+     * @function recorrer crea y recorre el subarbol de la expresión.
+     */
     recorrer() : Nodo;
 }

@@ -2,3 +2,10 @@ array ::= [] | element
 element ::= value | value , element
 
 array ::= array | NUMBER
+
+
+
+
+IF:
+    | if lparen EXPR rparen INSTRUCCION
+    | if lparen EXPR rparen llave LISTA_INSTRUCCIONES rllave
