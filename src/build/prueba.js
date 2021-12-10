@@ -16,19 +16,11 @@ const ejecutarCodigo = (entrada) => {
     console.log(controlador.consola);
 };
 ejecutarCodigo(`void probandoaritmetica (){
-    int var1 = 1;
-    int punteo = 0;
-    string animal = "Tigre";
-    println("Portencia con pow: " +pow(2,3));
-    println("Raiz cuadrada con sqrt: " +sqrt(2));
-    print("Seno: " +sin(1));
-    println("Coseno: " +cos(134));
-    println("Tangente: " +tan(12));
-    
-    println("Concatenacion con el &: "+ "para" & "caidismo");
-    println("Repeticion: "+"Cadena"^3);
-    println(animal.toUppercase());
-    print(animal.toLowercase());
+    int i = 0;
+while (i < 5) {
+  println(i);
+  i++;
+}
         
         
         }
