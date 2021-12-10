@@ -45,9 +45,9 @@ export class TipoParse implements Expresion{
         tipo_valor = this.expresion.getTipo(controlador,ts);
         valor = this.expresion.getValor(controlador,ts);
         if(this.tiponum == 'int'){
-            return tipo.ENTERO
+            return parseInt(valor);
         }else if(this.tiponum == 'doble'){
-            return tipo.DOBLE
+            return parseFloat(valor);
         }else if(this.tiponum == 'booleano'){
             if(valor == "1"){
                 return true

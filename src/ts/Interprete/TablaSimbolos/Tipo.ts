@@ -5,7 +5,8 @@ export enum tipo{
     CARACTER,
     CADENA,
     ERROR,
-    VOID
+    VOID,
+    NULL
 }
 
 /**
@@ -35,6 +36,8 @@ export class Tipo{
             return tipo.BOOLEAN;
         }else if(this.nombre_tipo == 'VOID'){
             return tipo.VOID;
+        }else if(this.nombre_tipo == 'NULL'){
+            return tipo.NULL
         }else{
             return tipo.ERROR;
         }

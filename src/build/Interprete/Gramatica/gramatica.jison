@@ -1,6 +1,6 @@
 /* Definición lexica */
 %lex
-%options case-insensitive
+%options case-sensitive
 %option yylineno
 
 //Expresiones regulares
@@ -88,6 +88,7 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 
 "int"             {console.log("Reconocio: "+yytext); return 'INT'}
 "string"             {console.log("Reconocio: "+yytext); return 'STRING'}
+"String"             {console.log("Reconocio: "+yytext); return 'STRINGT'}
 "double"             {console.log("Reconocio: "+yytext); return 'DOUBLE'}
 "char"             {console.log("Reconocio: "+yytext); return 'CHAR'}
 "boolean"             {console.log("Reconocio: "+yytext); return 'BOOLEAN'}
@@ -95,8 +96,8 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 
 "println"             {console.log("Reconocio: "+yytext); return 'PRINTLN'}
 "print"             {console.log("Reconocio: "+yytext); return 'PRINT'}
-"tolowercase"             {console.log("Reconocio: "+yytext); return 'TOLOWER'}
-"touppercase"             {console.log("Reconocio: "+yytext); return 'TOUPPER'}
+"toLowercase"             {console.log("Reconocio: "+yytext); return 'TOLOWER'}
+"toUppercase"             {console.log("Reconocio: "+yytext); return 'TOUPPER'}
 "toInt"             {console.log("Reconocio: "+yytext); return 'TOINT'}
 "toDouble"             {console.log("Reconocio: "+yytext); return 'TODOUBLE'}
 "round"             {console.log("Reconocio: "+yytext); return 'ROUND'}
@@ -125,6 +126,7 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 "return"                {console.log("Reconocio: "+yytext); return 'RETURN'} 
 "start"                {console.log("Reconocio: "+yytext); return 'START'} 
 "with"                {console.log("Reconocio: "+yytext); return 'WITH'}
+"main"                {console.log("Reconocio: "+yytext); return 'MAIN'}
 
 
 
@@ -371,7 +373,7 @@ sent_do_while : DO LLAVA instrucciones LLAVC WHILE PARA e PARC {$$ = new DoWhile
 funciones : tipo ID PARA lista_parametros PARC LLAVA instrucciones LLAVC  {$$ = new Funcion(2, $1, $2, $4, false, $7, @1.first_line, @1.last_column);}
           | tipo ID PARA PARC LLAVA instrucciones LLAVC                   {$$ = new Funcion(2, $1, $2, [], false, $6, @1.first_line, @1.last_column);}
           | VOID ID PARA lista_parametros PARC LLAVA instrucciones LLAVC  {$$ = new Funcion(3, $1, $2, $4, true, $7, @1.first_line, @1.last_column);}
-          | VOID ID PARA PARC LLAVA instrucciones LLAVC                   {$$ = new Funcion(3, $1, $2, [], true, $6, @1.first_line, @1.last_column);}
+          | VOID ID PARA PARC LLAVA instrucciones LLAVC                   {$$ = new Funcion(3, $1, $2, [], true, $6, @1.first_line, @1.last_column); }
           ;
 
 lista_parametros : lista_parametros COMA tipo ID  {$$ = $1; $$.push(new Simbolo(6, $3, $4, null));}
@@ -421,8 +423,8 @@ e
     | TRUE                      {$$ = new Primitivo(true,'BOOLEAN',@1.first_line,@1.last_column);}
     | FALSE                     {$$ = new Primitivo(false,'BOOLEAN',@1.first_line,@1.last_column);}
     | e INTERROGACION e DOSPUNTOS e {$$ = new Ternario($1,$3,$5,@1.first_line,@1.last_column);}
-    | ID INCRE                  {$$ = new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false);}
-    | ID DECRE                  {$$ = new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false);}
+    | ID INCRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
+    | ID DECRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
     | PARA tipo PARC e          {$$ = new Casteos($2,$4, @1.first_line,@1.last_column);}
     | ID CORA e CORC  {$$ = new AccesoVector($1, $3,@1.first_line,@1.last_column);}
     | GETVALUE PARA e COMA e PARC // Para obtener valor de la lista
@@ -437,7 +439,9 @@ e
     | TODOUBLE PARA e PARC     {$$ = new ToDouble($3,@1.first_line,@1.last_column);}
     | ROUND PARA e PARC     {$$ = new Round($3,@1.first_line,@1.last_column);}
     | TYPEOF PARA e PARC     {$$ = new Typeof($3,@1.first_line,@1.last_column);}
-    | STRING PARA e PARC     {$$ = new Tostring($3,@1.first_line,@1.last_column);}
+    | STRINGT PARA e PARC     {$$ = new Tostring($3,@1.first_line,@1.last_column);}
     | BOOLEAN PNT PARSE PARA e PARC  {$$ = new TipoParse($5,"booleano",@1.first_line,@1.last_column);}
+    | INT PNT PARSE PARA e PARC  {$$ = new TipoParse($5,"int",@1.first_line,@1.last_column);}
+    | DOUBLE PNT PARSE PARA e PARC  {$$ = new TipoParse($5,"doble",@1.first_line,@1.last_column);}
     
     ;

@@ -32,15 +32,13 @@ export class Ast implements Instruccion{
         
         //Vamos a recorrer las instrucciones que vienen desde la gramática
 
-
-
         //2da pasada. Se ejecuta las declaraciones de variables
         for(let instruccion of this.lista_instrucciones){
             if(instruccion instanceof Declaracion){
                 instruccion.ejecutar(controlador,ts);
             }
         }
-        //era pasada ejecutamos las demás instrucciones
+        //3era pasada ejecutamos las demás instrucciones
         for(let instruccion of this.lista_instrucciones){
             if(instruccion instanceof StartWith && !bandera_start){
                 instruccion.ejecutar(controlador,ts);

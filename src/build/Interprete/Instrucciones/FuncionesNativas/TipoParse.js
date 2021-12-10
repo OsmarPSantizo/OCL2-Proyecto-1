@@ -33,10 +33,10 @@ class TipoParse {
         tipo_valor = this.expresion.getTipo(controlador, ts);
         valor = this.expresion.getValor(controlador, ts);
         if (this.tiponum == 'int') {
-            return Tipo_1.tipo.ENTERO;
+            return parseInt(valor);
         }
         else if (this.tiponum == 'doble') {
-            return Tipo_1.tipo.DOBLE;
+            return parseFloat(valor);
         }
         else if (this.tiponum == 'booleano') {
             if (valor == "1") {

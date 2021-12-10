@@ -880,17 +880,44 @@ class Aritmetica extends Operacion_1.Operacion {
                 if (tipo_exp1 == Tipo_1.tipo.ENTERO) {
                     return Math.sin(valor_exp1);
                 }
+                else if (tipo_exp1 === Tipo_1.tipo.DOBLE) {
+                    return Math.sin(valor_exp1);
+                }
+                else {
+                    let error = new Errores_1.Errores("Semantico", `Solo se puede utilizar int o double`, this.linea, this.columna);
+                    controlador.errores.push(error);
+                    controlador.append(`ERROR: Solo se puede utilizar int o double. En la linea ${this.linea} y columna ${this.columna}`);
+                    return null;
+                }
                 break;
             //COSENO
             case Operacion_1.Operador.COS:
                 if (tipo_exp1 == Tipo_1.tipo.ENTERO) {
                     return Math.cos(valor_exp1);
                 }
+                else if (tipo_exp1 == Tipo_1.tipo.DOBLE) {
+                    return Math.cos(valor_exp1);
+                }
+                else {
+                    let error = new Errores_1.Errores("Semantico", `Solo se puede utilizar int o double`, this.linea, this.columna);
+                    controlador.errores.push(error);
+                    controlador.append(`ERROR: Solo se puede utilizar int o double. En la linea ${this.linea} y columna ${this.columna}`);
+                    return null;
+                }
                 break;
             //TANGENTE
             case Operacion_1.Operador.TAN:
                 if (tipo_exp1 == Tipo_1.tipo.ENTERO) {
                     return Math.tan(valor_exp1);
+                }
+                else if (tipo_exp1 == Tipo_1.tipo.DOBLE) {
+                    return Math.tan(valor_exp1);
+                }
+                else {
+                    let error = new Errores_1.Errores("Semantico", `Solo se puede utilizar int o double`, this.linea, this.columna);
+                    controlador.errores.push(error);
+                    controlador.append(`ERROR: Solo se puede utilizar int o double. En la linea ${this.linea} y columna ${this.columna}`);
+                    return null;
                 }
                 break;
         }

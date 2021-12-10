@@ -776,6 +776,13 @@ export class Aritmetica extends Operacion implements Expresion{
             case Operador.SIN:
                 if(tipo_exp1 == tipo.ENTERO){
                     return Math.sin(valor_exp1);
+                }else if(tipo_exp1 === tipo.DOBLE){
+                    return Math.sin(valor_exp1);
+                }else{
+                    let error = new Errores("Semantico",`Solo se puede utilizar int o double`,this.linea,this.columna);
+                    controlador.errores.push(error);
+                    controlador.append(`ERROR: Solo se puede utilizar int o double. En la linea ${this.linea} y columna ${this.columna}`);
+                    return null;
                 }
                 break;
 
@@ -783,6 +790,13 @@ export class Aritmetica extends Operacion implements Expresion{
             case Operador.COS:
                 if(tipo_exp1 == tipo.ENTERO){
                     return Math.cos(valor_exp1);
+                }else if(tipo_exp1 == tipo.DOBLE){
+                    return Math.cos(valor_exp1)
+                }else{
+                    let error = new Errores("Semantico",`Solo se puede utilizar int o double`,this.linea,this.columna);
+                    controlador.errores.push(error);
+                    controlador.append(`ERROR: Solo se puede utilizar int o double. En la linea ${this.linea} y columna ${this.columna}`);
+                    return null;
                 }
                 break;
 
@@ -790,6 +804,13 @@ export class Aritmetica extends Operacion implements Expresion{
             case Operador.TAN:
                 if(tipo_exp1 == tipo.ENTERO){
                     return Math.tan(valor_exp1);
+                }else if (tipo_exp1 == tipo.DOBLE){
+                    return Math.tan(valor_exp1);
+                }else{
+                    let error = new Errores("Semantico",`Solo se puede utilizar int o double`,this.linea,this.columna);
+                    controlador.errores.push(error);
+                    controlador.append(`ERROR: Solo se puede utilizar int o double. En la linea ${this.linea} y columna ${this.columna}`);
+                    return null;
                 }
                 break;
 

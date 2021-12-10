@@ -15,9 +15,6 @@ var tipo;
  *  @class me permite llevar el control de los tipos del programa, ENTERO,DOBLE,CADENA,CARACTER,BOOLEAN,
  */
 class Tipo {
-    /**
-     *
-     */
     constructor(nombre_tipo) {
         this.nombre_tipo = nombre_tipo;
         this.n_tipo = this.gettipo();

@@ -26,7 +26,7 @@ class Ast {
                 instruccion.ejecutar(controlador, ts);
             }
         }
-        //era pasada ejecutamos las demás instrucciones
+        //3era pasada ejecutamos las demás instrucciones
         for (let instruccion of this.lista_instrucciones) {
             if (instruccion instanceof StartWith_1.StartWith && !bandera_start) {
                 instruccion.ejecutar(controlador, ts);

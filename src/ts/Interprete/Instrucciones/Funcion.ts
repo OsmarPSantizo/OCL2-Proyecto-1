@@ -20,7 +20,6 @@ export class Funcion extends Simbolo implements Instruccion{
         this.lista_instrucciones = lista_instrucciones;
         this.linea = linea;
         this.columna = columna;
-
     }
         //Se crea un método para agregar el símbolo de la función a la tabla de símbolos
     agregarFuncionTS( ts:TablaSimbolos){
@@ -35,18 +34,13 @@ export class Funcion extends Simbolo implements Instruccion{
         //con esto mandamos a ejecutar las instrucciones ya que las validaciones para llegar hasta aca se hacen en la llamada
         let ts_local = new TablaSimbolos(ts);
         if(controlador.tablas.some(x=> ts_local === ts_local)){
-            
 
         }else{
             controlador.tablas.push(ts_local)
             
         }
-
-
         for(let inst of this.lista_instrucciones){
             let retorno = inst.ejecutar(controlador, ts_local);
-            
-
             if(retorno != null){
                 return retorno;
             }
