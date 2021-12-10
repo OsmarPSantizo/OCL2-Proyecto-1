@@ -30,55 +30,55 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 
 
 
-"++"                 { console.log("Reconocio : " + yytext);  return 'INCRE' } 
-"--"                 { console.log("Reconocio : " + yytext);  return 'DECRE' } 
-"=="                 { console.log("Reconocio : " + yytext);  return 'IGUALIGUAL' } 
-"!="                  { console.log("Reconocio : " + yytext);  return 'DIFERENTE' } 
+"++"                 { console.log("Reconocio : " + yytext);  return 'INCRE' }
+"--"                 { console.log("Reconocio : " + yytext);  return 'DECRE' }
+"=="                 { console.log("Reconocio : " + yytext);  return 'IGUALIGUAL' }
+"!="                  { console.log("Reconocio : " + yytext);  return 'DIFERENTE' }
 
 
 
-"("                  { console.log("Reconocio : " + yytext);  return 'PARA' } 
-")"                  { console.log("Reconocio : " + yytext);  return 'PARC' } 
-"["                  { console.log("Reconocio : " + yytext);  return 'CORA' } 
-"]"                  { console.log("Reconocio : " + yytext);  return 'CORC' } 
-"{"                  { console.log("Reconocio : " + yytext);  return 'LLAVA' } 
-"}"                  { console.log("Reconocio : " + yytext);  return 'LLAVC' } 
-","                  { console.log("Reconocio : " + yytext);  return 'COMA' } 
-"."                  { console.log("Reconocio : " + yytext);  return 'PNT' } 
-";"                  { console.log("Reconocio : " + yytext);  return 'PYC' } 
-"="                 { console.log("Reconocio : " + yytext);  return 'IGUAL' } 
-"?"                 { console.log("Reconocio : " + yytext);  return 'INTERROGACION' } 
-":"                 { console.log("Reconocio : " + yytext);  return 'DOSPUNTOS' } 
+"("                  { console.log("Reconocio : " + yytext);  return 'PARA' }
+")"                  { console.log("Reconocio : " + yytext);  return 'PARC' }
+"["                  { console.log("Reconocio : " + yytext);  return 'CORA' }
+"]"                  { console.log("Reconocio : " + yytext);  return 'CORC' }
+"{"                  { console.log("Reconocio : " + yytext);  return 'LLAVA' }
+"}"                  { console.log("Reconocio : " + yytext);  return 'LLAVC' }
+","                  { console.log("Reconocio : " + yytext);  return 'COMA' }
+"."                  { console.log("Reconocio : " + yytext);  return 'PNT' }
+";"                  { console.log("Reconocio : " + yytext);  return 'PYC' }
+"="                 { console.log("Reconocio : " + yytext);  return 'IGUAL' }
+"?"                 { console.log("Reconocio : " + yytext);  return 'INTERROGACION' }
+":"                 { console.log("Reconocio : " + yytext);  return 'DOSPUNTOS' }
 
 
 
 /* Operadores aritmeticos */
-"+"                  { console.log("Reconocio : " + yytext);  return 'MAS' } 
-"-"                  { console.log("Reconocio : " + yytext);  return 'MENOS' } 
+"+"                  { console.log("Reconocio : " + yytext);  return 'MAS' }
+"-"                  { console.log("Reconocio : " + yytext);  return 'MENOS' }
 "*"                  { console.log("Reconocio : " + yytext);  return 'MULTI' }
-"/"                  { console.log("Reconocio : " + yytext);  return 'DIV' } 
-"^"                  { console.log("Reconocio : " + yytext);  return 'POT' } 
-"pow"                  { console.log("Reconocio : " + yytext);  return 'POT' } 
-"!"                  { console.log("Reconocio : " + yytext);  return 'NOT' } 
-"%"                  { console.log("Reconocio : " + yytext);  return 'MOD' } 
-"sqrt"                  { console.log("Reconocio : " + yytext);  return 'SQRT' } 
-"sin"                  { console.log("Reconocio : " + yytext);  return 'SIN' } 
-"cos"                  { console.log("Reconocio : " + yytext);  return 'COS' } 
-"tan"                  { console.log("Reconocio : " + yytext);  return 'TAN' } 
+"/"                  { console.log("Reconocio : " + yytext);  return 'DIV' }
+"^"                  { console.log("Reconocio : " + yytext);  return 'POT' }
+"pow"                  { console.log("Reconocio : " + yytext);  return 'POT' }
+"!"                  { console.log("Reconocio : " + yytext);  return 'NOT' }
+"%"                  { console.log("Reconocio : " + yytext);  return 'MOD' }
+"sqrt"                  { console.log("Reconocio : " + yytext);  return 'SQRT' }
+"sin"                  { console.log("Reconocio : " + yytext);  return 'SIN' }
+"cos"                  { console.log("Reconocio : " + yytext);  return 'COS' }
+"tan"                  { console.log("Reconocio : " + yytext);  return 'TAN' }
 /* Operadores relacionales */
-"<="                  { console.log("Reconocio : " + yytext);  return 'MENORIGUAL' } 
-"<"                  { console.log("Reconocio : " + yytext);  return 'MENORQUE' } 
-">="                  { console.log("Reconocio : " + yytext);  return 'MAYORIGUAL' } 
-">"                  { console.log("Reconocio : " + yytext);  return 'MAYORQUE' } 
+"<="                  { console.log("Reconocio : " + yytext);  return 'MENORIGUAL' }
+"<"                  { console.log("Reconocio : " + yytext);  return 'MENORQUE' }
+">="                  { console.log("Reconocio : " + yytext);  return 'MAYORIGUAL' }
+">"                  { console.log("Reconocio : " + yytext);  return 'MAYORQUE' }
 
 
 
 /* Operadores logicos */
 
-"||"                  { console.log("Reconocio : " + yytext);  return 'OR' } 
-"&&"                  { console.log("Reconocio : " + yytext);  return 'AND' } 
-"&"                 { console.log("Reconocio : " + yytext);  return 'ANDD' } 
-"!"                  { console.log("Reconocio : " + yytext);  return 'NOT' } 
+"||"                  { console.log("Reconocio : " + yytext);  return 'OR' }
+"&&"                  { console.log("Reconocio : " + yytext);  return 'AND' }
+"&"                 { console.log("Reconocio : " + yytext);  return 'ANDD' }
+"!"                  { console.log("Reconocio : " + yytext);  return 'NOT' }
 
 
 /* Palabras reservadas */
@@ -112,19 +112,20 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 "else"                    {console.log("Reconocio: "+yytext); return 'ELSE'}
 "while"                    {console.log("Reconocio: "+yytext); return 'WHILE'}
 "break"                    {console.log("Reconocio: "+yytext); return 'BREAK'}
-"switch"                  {console.log("Reconocio: "+yytext); return 'SWITCH'} 
-"case"                    {console.log("Reconocio: "+yytext); return 'CASE'} 
-"do"                    {console.log("Reconocio: "+yytext); return 'DO'} 
-"default"                 {console.log("Reconocio: "+yytext); return 'DEFAULT'} 
-"for"                     {console.log("Reconocio: "+yytext); return 'FOR'} 
-"dynamiclist"             {console.log("Reconocio: "+yytext); return 'DYNAMICLIST'} 
-"new"                     {console.log("Reconocio: "+yytext); return 'NEW'} 
-"append"                  {console.log("Reconocio: "+yytext); return 'APPEND'} 
-"setvalue"                {console.log("Reconocio: "+yytext); return 'SETVALUE'} 
-"getvalue"                {console.log("Reconocio: "+yytext); return 'GETVALUE'} 
-"continue"                {console.log("Reconocio: "+yytext); return 'CONTINUE'} 
-"return"                {console.log("Reconocio: "+yytext); return 'RETURN'} 
-"start"                {console.log("Reconocio: "+yytext); return 'START'} 
+"switch"                  {console.log("Reconocio: "+yytext); return 'SWITCH'}
+"case"                    {console.log("Reconocio: "+yytext); return 'CASE'}
+"do"                    {console.log("Reconocio: "+yytext); return 'DO'}
+"default"                 {console.log("Reconocio: "+yytext); return 'DEFAULT'}
+"for"                     {console.log("Reconocio: "+yytext); return 'FOR'}
+"dynamiclist"             {console.log("Reconocio: "+yytext); return 'DYNAMICLIST'}
+"new"                     {console.log("Reconocio: "+yytext); return 'NEW'}
+"append"                  {console.log("Reconocio: "+yytext); return 'APPEND'}
+"setvalue"                {console.log("Reconocio: "+yytext); return 'SETVALUE'}
+"getvalue"                {console.log("Reconocio: "+yytext); return 'GETVALUE'}
+"continue"                {console.log("Reconocio: "+yytext); return 'CONTINUE'}
+"return"                {console.log("Reconocio: "+yytext); return 'RETURN'}
+"struct"                {console.log("Reconocio: "+yytext); return 'STRUCT'}
+"start"                {console.log("Reconocio: "+yytext); return 'START'}
 "with"                {console.log("Reconocio: "+yytext); return 'WITH'}
 "main"                {console.log("Reconocio: "+yytext); return 'MAIN'}
 
@@ -157,8 +158,8 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 
 //AREA DE IMPORTS
 %{
-    
-       
+
+
         const {Aritmetica} = require('../Expresiones/Operaciones/Aritmetica');
         const {Primitivo} = require('../Expresiones/Primitivo');
         const {Relacional} = require('../Expresiones/Operaciones/Relacionales')
@@ -214,7 +215,7 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 %right 'PARA'
 %right 'PNT'
 %left 'OR'
-%left 'ANDD' 'AND' 
+%left 'ANDD' 'AND'
 %right 'NOT'
 %left 'IGUALIGUAL' 'DIFERENTE' 'MENORQUE' 'MENORIGUAL' 'MAYORQUE' 'MAYORIGUAL'
 %left 'MAS' 'MENOS'
@@ -233,27 +234,25 @@ instrucciones : instrucciones instruccion   {$$ = $1; $$.push($2);}
             | instruccion                   {$$ = new Array(); $$.push($1);}
             ;
 
-instruccion : declaracion {$$ = $1;}
-            | impresion   {$$ = $1;}
-            | asignacion  {$$ = $1;}
-            | sent_if     {$$ = $1;}
-            | sent_while  {$$ = $1;}
-            | BREAK PYC   {$$ = new Break();}
-            | CONTINUE PYC {$$ = new Continue();}
-            | RETURN PYC   {$$ = new Retorno(null);}
-            | RETURN e PYC {$$ = new Retorno($2);}
-            | sent_switch {$$ = $1;}
-            | sent_for    {$$ = $1;}
-            | sent_do_while PYC {$$ = $1;}
-            | ID DECRE PYC   {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
-            | ID INCRE PYC   {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
-            | funciones      {$$ = $1;}
-            | llamada PYC    {$$ = $1;}
-            | startwith PYC  {$$ = $1;}
-            | decl_vectores  {$$ = $1;}
-            | decl_list_din
-            | agregar_lista
-            | modi_lista
+instruccion : declaracion { $$ = $1; }
+            | impresion   { $$ = $1; }
+            | asignacion  { $$ = $1; }
+            | sent_if     { $$ = $1; }
+            | sent_while  { $$ = $1; }
+            | BREAK PYC   { $$ = new Break(); }
+            | CONTINUE PYC { $$ = new Continue(); }
+            | RETURN PYC   { $$ = new Retorno(null); }
+            | RETURN e PYC { $$ = new Retorno($2); }
+            | sent_switch { $$ = $1; }
+            | sent_for    { $$ = $1; }
+            | sent_do_while PYC {$$ = $1; }
+            | ID DECRE PYC   { $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column); }
+            | ID INCRE PYC   { $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column); }
+            | funciones      { $$ = $1;}
+            | llamada PYC    { $$ = $1;}
+            | startwith PYC  { $$ = $1;}
+            | decl_vectores  { $$ = $1;}
+            | modi_vector    { $$ = $1; }
             | error {console.log("Error Sintactico "  + yytext
                            + " linea: " + this._$.first_line
                            +" columna: "+ this._$.first_column);
@@ -277,33 +276,19 @@ tipo : DOUBLE       {$$ = new Tipo("DOBLE");}
 /// Estructuras de datos
 //Vectores
 
-decl_vectores: tipo lista_ids CORA CORC IGUAL NEW tipo CORA e CORC PYC          {$$ = new DeclararcionVectores(1,$1,$2,$9,@1.first_line,@1.last_column);}
-             | tipo lista_ids CORA CORC IGUAL LLAVA lista_valores LLAVC PYC     {$$ = new DeclararcionVectores(2,$1,$2,$7,@1.first_line,@1.last_column);}
-             | tipo lista_ids CORA CORC IGUAL e PYC
+decl_vectores:
+              tipo CORA CORC lista_ids IGUAL CORA lista_valores CORC PYC     {$$ = new DeclararcionVectores($1,$2,$7,@1.first_line,@1.last_column);}
+             | tipo CORA CORC lista_ids IGUAL e PYC
              ;
 
 lista_valores: lista_valores COMA e        {$$ = $1; $$.push($3);}
              | e                           {$$ = new Array(); $$.push($1);}
              ;
 
-modi_vector: ID CORA e CORC IGUAL e PYC
+modi_vector: ID CORA e CORC IGUAL e PYC { console.log($2) }
            ;
 
-
-//lista dinamica
-
-decl_list_din : DYNAMICLIST MENORQUE tipo MAYORQUE ID IGUAL NEW DYNAMICLIST MENORQUE tipo MAYORQUE PYC
-              | DYNAMICLIST MENORQUE tipo MAYORQUE ID IGUAL e PYC
-              ;
-
-agregar_lista : APPEND PARA e COMA e PARC PYC
-              ;
-
-
-modi_lista : SETVALUE PARA e COMA e COMA e PARC PYC
-           ;
-
-
+// Lista de IDs
 
 lista_ids : lista_ids COMA ID           {$$ = $1; $$.push($3);}
           | ID                          {$$ = new Array(); $$.push($1);}
@@ -314,10 +299,20 @@ impresion : PRINTLN PARA e PARC PYC  {$$ = new Println($3,@1.first_line,@1.last_
           | PRINT PARA e PARC PYC {$$ = new Print($3,@1.first_line,@1.last_column);}
           ;
 
-        
+
 /// Asignacion
 asignacion : ID IGUAL e PYC {$$ = new Asignacion($1,$3,@1.first_line,@1.last_column);}
             ;
+
+// Struct
+
+struct : STRUCT ID LLAVA lista_atributos LLAVC {  }
+;
+
+acceso_struct: id PNT e PYC {}
+;
+
+
 /// Sentencias de control
 //IF
 sent_if : IF PARA e PARC LLAVA instrucciones LLAVC  {$$ = new Ifs($3,$6,[],@1.first_line,@1.last_column);}
@@ -397,11 +392,11 @@ e
     | e MULTI e                 {$$ = new Aritmetica($1, '*', $3, @1.first_line,@1.last_column, false);}
     | e DIV e                   {$$ = new Aritmetica($1, '/', $3, @1.first_line,@1.last_column, false);}
     | e POT e                   {$$ = new Aritmetica($1, '^', $3, @1.first_line,@1.last_column, false);}
-    | POT PARA e COMA e PARC    {$$ = new Aritmetica($3, '^', $5, @1.first_line,@1.last_column, false);}                  
-    | SQRT PARA e PARC          {$$ = new Aritmetica($3, 'sqrt', $3, @1.first_line,@1.last_column, false);}                  
-    | SIN PARA e PARC           {$$ = new Aritmetica($3, 'sin', $3, @1.first_line,@1.last_column, false);}                  
-    | COS PARA e PARC           {$$ = new Aritmetica($3, 'cos', $3, @1.first_line,@1.last_column, false);}                  
-    | TAN PARA e PARC           {$$ = new Aritmetica($3, 'tan', $3, @1.first_line,@1.last_column, false);}  
+    | POT PARA e COMA e PARC    {$$ = new Aritmetica($3, '^', $5, @1.first_line,@1.last_column, false);}
+    | SQRT PARA e PARC          {$$ = new Aritmetica($3, 'sqrt', $3, @1.first_line,@1.last_column, false);}
+    | SIN PARA e PARC           {$$ = new Aritmetica($3, 'sin', $3, @1.first_line,@1.last_column, false);}
+    | COS PARA e PARC           {$$ = new Aritmetica($3, 'cos', $3, @1.first_line,@1.last_column, false);}
+    | TAN PARA e PARC           {$$ = new Aritmetica($3, 'tan', $3, @1.first_line,@1.last_column, false);}
     | e MOD e                   {$$ = new Aritmetica($1, '%', $3, @1.first_line,@1.last_column, false);}
     | e MAYORIGUAL e            {$$ = new Relacional($1, '>=', $3, @1.first_line,@1.last_column, false);}
     | e MAYORQUE e              {$$ = new Relacional($1, '>', $3, @1.first_line,@1.last_column, false);}
@@ -443,5 +438,6 @@ e
     | BOOLEAN PNT PARSE PARA e PARC  {$$ = new TipoParse($5,"booleano",@1.first_line,@1.last_column);}
     | INT PNT PARSE PARA e PARC  {$$ = new TipoParse($5,"int",@1.first_line,@1.last_column);}
     | DOUBLE PNT PARSE PARA e PARC  {$$ = new TipoParse($5,"doble",@1.first_line,@1.last_column);}
-    
+    | e CORA inicio DOSPUNTOS fin CRC PYC { $$ = console.log($$) }
+
     ;
