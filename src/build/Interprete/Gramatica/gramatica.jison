@@ -181,6 +181,8 @@ caracter      (\' ({escape2}|{aceptacion2})\')
         const {Casteos} = require('../Instrucciones/FuncionesNativas/Casteos');
         const {Declaracion} = require('../Instrucciones/Declaracion');
         const {DeclaracionVectores} = require('../Instrucciones/DeclaracionVectores');
+        const {SliceVector} = require('../Instrucciones/Vector/SliceVector');
+
         const {AccesoVector} = require('../Expresiones/AccesoVector');
         const {Asignacion} = require('../Instrucciones/Asignacion');
         const {Ifs} = require('../Instrucciones/SentenciasdeControl/Ifs');
@@ -417,8 +419,8 @@ e
     | ID INCRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
     | ID DECRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
     | PARA tipo PARC e          {$$ = new Casteos($2,$4, @1.first_line,@1.last_column);}
+    | ID CORA e DOSPUNTOS e CORC { $$ = new SliceVector( $1, $3, $5, @1.first_line,@1.last_column ); }
     | ID CORA e CORC  { $$ = new AccesoVector($1, $3, $3, false ,@1.first_line,@1.last_column); }
-    | ID CORA e DOSPUNTOS e CRC PYC { $$ = new SliceVector(  ); }
     | GETVALUE PARA e COMA e PARC // Para obtener valor de la lista
     | llamada
     | startwith

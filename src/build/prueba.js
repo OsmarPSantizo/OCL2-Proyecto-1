@@ -16,10 +16,11 @@ const ejecutarCodigo = (entrada) => {
     console.log(controlador.consola);
 };
 ejecutarCodigo(`
-        void probandoaritmetica (){
-            int[] arr1 = [12, 32, 43, 54];
+    void probandoaritmetica (){
+        int[] arr1 = [12, 32, 43, 54];
 
-            println(arr1[1 : 3]);
-        }
+        println(arr1[begin : end]);
+    }
 
-        start with probandoaritmetica();`);
+    start with probandoaritmetica();
+`);
