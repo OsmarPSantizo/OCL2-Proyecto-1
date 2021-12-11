@@ -34,19 +34,13 @@ export class DeclaracionVectores implements Instruccion{
         console.log('DECLARACION VECTOR');
 
         for(let id of this.listaIds){
-            //1er paso. Verificar si existe en la tabla actual
+            // Verificar si existe en la tabla actual
             if(ts.existeEnActual(id)){
                 let error = new Errores("Semantico",`La variable ${id} ya existe en el entorno actual, no se puede declarar otra vez.`,this.linea,this.columna);
                 controlador.errores.push(error);
                 controlador.append(`ERROR: Semántico, La variable ${id} ya existe en el entorno actual, no se puede declarar otra vez. En la linea ${this.linea} y columna ${this.columna}`);
                 continue;
             }
-
-            /*
-                Declaración de tipo:
-                <TIPO><ID> '[' ']' = '[' <LISTAVALORES> ']' ';'
-            */
-
 
             let valores = [];
 

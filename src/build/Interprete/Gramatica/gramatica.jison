@@ -278,7 +278,8 @@ lista_valores: lista_valores COMA e        {$$ = $1; $$.push($3);}
              | e                           {$$ = new Array(); $$.push($1);}
              ;
 
-modi_vector: ID CORA e CORC IGUAL e PYC { console.log($2) }
+
+modi_vector: ID CORA e CORC IGUAL e PYC {  }
            ;
 
 // Lista de IDs

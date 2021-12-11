@@ -23,22 +23,22 @@ export  class Controlador{
     }
 
     appendwln(cadena:string){
-        this.consola = this.consola + cadena 
+        this.consola = this.consola + cadena
     }
 
 
     mostrarerr(controlador:Controlador, errores:Errores):string{
-        
+
         if(errores.descripcion != null){
             console.log(errores.descripcion .toString())
             return errores.descripcion .toString();
         }else{
             return '---';
         }
-        
 
 
-        
+
+
     }
 
     graficar_ts(controlador:Controlador, ts:TablaSimbolos, tipo:string): string{
@@ -47,38 +47,38 @@ export  class Controlador{
         if (tipo == "1"){
             while(ts != null){
                 ts.tabla.forEach((sim: Simbolo, key : string) =>{
-                    cuerpohtml += "<tr>\n" +  
+                    cuerpohtml += "<tr>\n" +
                     "<td>" + this.getidentificador(sim) + "</td>\n"+
-                    "<td>" + this.getRol(sim) + "</td>\n"+ 
-                    "<td>" + this.getTipo(sim) +"</td>\n"  + 
+                    "<td>" + this.getRol(sim) + "</td>\n"+
+                    "<td>" + this.getTipo(sim) +"</td>\n"  +
                     "<td>" + this.getAmbito()+ "</td>\n"+
                     "<td>" + this.parametros(sim) +"</td>\n"+
-                    
+
                     "</tr>\n" ;
                     contador = contador+1;
                 })
-    
+
                 ts = ts.ant;
             }
         }else if((tipo == "2")){
             while(ts != null){
                 ts.tabla.forEach((sim: Simbolo, key : string) =>{
-                    cuerpohtml += "<tr>\n" +  
+                    cuerpohtml += "<tr>\n" +
                     "<td>" + this.getidentificador(sim) + "</td>\n"+
-                    "<td>" + this.getRol(sim) + "</td>\n"+ 
-                    "<td>" + this.getTipo(sim) +"</td>\n"  + 
+                    "<td>" + this.getRol(sim) + "</td>\n"+
+                    "<td>" + this.getTipo(sim) +"</td>\n"  +
                     "<td>Local</td>\n"+
                     "<td>" + this.parametros(sim) +"</td>\n"+
-                    
+
                     "</tr>\n" ;
                     contador = contador+1;
                 })
-    
+
                 ts = ts.ant;
             }
         }
-        
-        
+
+
         return cuerpohtml;
 
 
@@ -87,7 +87,7 @@ export  class Controlador{
 
     getidentificador(sim:Simbolo):string{
         if(sim.identificador != null){
-            return sim.identificador.toString(); 
+            return sim.identificador.toString();
         }else{
             return '---';
         }
@@ -98,7 +98,7 @@ export  class Controlador{
         }else{
             return sim.tipo.nombre_tipo.toLowerCase();
         }
-        
+
     }
 
     getRol(sim:Simbolo):string{
@@ -122,7 +122,7 @@ export  class Controlador{
             case 6:
                 rol = "parametro"
                 break;
-            
+
         }
         return rol;
     }
@@ -141,5 +141,3 @@ export  class Controlador{
     }
 
 }
-
-

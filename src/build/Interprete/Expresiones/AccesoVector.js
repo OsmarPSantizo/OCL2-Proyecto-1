@@ -11,6 +11,18 @@ class AccesoVector {
         this.columna = columna;
     }
     getTipo(controlador, ts) {
+        let valorIndice = this.indice.getValor(controlador, ts);
+        let simAux = ts.getSimbolo(this.id);
+        if ((simAux === null || simAux === void 0 ? void 0 : simAux.simbolo) == 4) {
+            let valoresVector = simAux.valor;
+            if (valorIndice < 0 || valorIndice >= valoresVector.length) {
+                // Indice es mayor o menor al tamaño del arreglo
+                let error = new Errores_1.Errores("Semántico", `Indice fuera de rango en el vector ${this.id}.`, this.linea, this.columna);
+                controlador.errores.push(error);
+                controlador.append(`ERROR: Semántico, índice fuera de rango en el vector ${this.id}. En la linea ${this.linea} y columna ${this.columna}.`);
+                return Tipo_1.tipo.ERROR;
+            }
+        }
         // Válida si el index es un entero.
         if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.ENTERO) {
             return Tipo_1.tipo.ENTERO;
@@ -23,15 +35,10 @@ class AccesoVector {
         let valorIndice = this.indice.getValor(controlador, ts);
         let tipo_valor = this.indice.getTipo(controlador, ts);
         if (tipo_valor == Tipo_1.tipo.ENTERO) {
-            /*
-                Si existe, vamos ala tambla de simbolos a traer el simbolo,
-                se valida si es de tipo 4 (Arreglo).
-
-            */
             if (ts.existe(this.id)) {
-                let sim = ts.getSimbolo(this.id);
-                if ((sim === null || sim === void 0 ? void 0 : sim.simbolo) == 4) {
-                    let valoresVector = sim.valor;
+                let simAux = ts.getSimbolo(this.id);
+                if ((simAux === null || simAux === void 0 ? void 0 : simAux.simbolo) == 4) {
+                    let valoresVector = simAux.valor;
                     let valorAcceso = valoresVector[valorIndice];
                     return valorAcceso;
                 }
@@ -39,7 +46,7 @@ class AccesoVector {
             else {
                 let error = new Errores_1.Errores("Semantico", `El vector ${this.id} no ha sido declarada, entonces no se puede asignar un valor`, this.linea, this.columna);
                 controlador.errores.push(error);
-                controlador.append(`ERROR: Semántico, El vector ${this.id} no ha sido declarada, entonces no se puede asignar un valor. En la linea ${this.linea} y columna ${this.columna}`);
+                controlador.append(`ERROR: Semántico, El vector ${this.id} no ha sido declarada, entonces no se puede asignar un valor. En la linea ${this.linea} y columna ${this.columna}.`);
             }
         }
     }

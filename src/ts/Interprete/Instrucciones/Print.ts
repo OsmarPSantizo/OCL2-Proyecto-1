@@ -16,6 +16,7 @@ export class Print implements Instruccion{
         this.expresion = expresion;
         this.linea = linea;
         this.columna = columna;
+
     }
 
 

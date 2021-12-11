@@ -20,12 +20,11 @@ export class Println implements Instruccion{
 
     ejecutar(controlador: Controlador,ts : TablaSimbolos){
         let tipo_valor = this.expresion.getTipo(controlador,ts);
-        
+
         if(tipo_valor == tipo.ENTERO || tipo_valor == tipo.DOBLE || tipo_valor == tipo.CARACTER || tipo_valor == tipo.CADENA || tipo_valor == tipo.BOOLEAN){
 
             let valor = this.expresion.getValor(controlador,ts);
-            
-            
+
             controlador.append(valor);
         }
     }
