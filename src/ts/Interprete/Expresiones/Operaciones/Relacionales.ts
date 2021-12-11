@@ -77,11 +77,24 @@ export  class Relacional extends Operacion implements Expresion{
         valor_exp2 = this.exp2.getValor(controlador,ts); // 2.5
         
         switch (this.operador){
+// IGUAL IGUAL
             case Operador.IGUALIGUAL:
                 if(tipo_exp1 == tipo.DOBLE){
                     if(tipo_exp2 == tipo.DOBLE || tipo_exp2 == tipo.ENTERO ){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el igual igual con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el igual igual con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 == valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el igual igual con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el igual igual con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci1 = valor_exp2.charCodeAt(0);    
                         return valor_exp1 == num_ascci1
                     }else{
@@ -92,8 +105,20 @@ export  class Relacional extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.ENTERO){
                     if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el igual igual con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el igual igual con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 == valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el igual igual con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el igual igual con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci1 = valor_exp2.charCodeAt(0);    
                         return valor_exp1 == num_ascci1
                     }else{
@@ -104,11 +129,29 @@ export  class Relacional extends Operacion implements Expresion{
                     }
 
                 }else if(tipo_exp1 == tipo.CARACTER){
+                    if(valor_exp1 == null || valor_exp2 == null){
+                        let error = new Errores("Semantico",`No se puede hacer el igual igual con un null `,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer el igual igual con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                        break;
+                    }
                     let num_ascci1 = valor_exp1.charCodeAt(0);
                     if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el igual igual con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el igual igual con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci2 = valor_exp2.charCodeAt(0);
                         return num_ascci1 == num_ascci2;
                     }else if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el igual igual con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el igual igual con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return num_ascci1 == valor_exp2
                     }else{
                         let error = new Errores("Semantico",`Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`,this.linea,this.columna);
@@ -126,6 +169,12 @@ export  class Relacional extends Operacion implements Expresion{
                         if(valor_exp2 == false){
                             num_bool_exp2 = 0;
                         }
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el igual igual con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el igual igual con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return num_bool_exp1 == num_bool_exp2
                     }else{
                         let error = new Errores("Semantico",`Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`,this.linea,this.columna);
@@ -135,6 +184,12 @@ export  class Relacional extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.CADENA){
                     if(tipo_exp2 == tipo.CADENA){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el igual igual con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el igual igual con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 == valor_exp2;
                     }else{
                         let error = new Errores("Semantico",`Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`,this.linea,this.columna);
@@ -144,11 +199,24 @@ export  class Relacional extends Operacion implements Expresion{
                     }
                 }
                 break
+// DIFERENTE
             case Operador.DIFERENCIA:
                 if(tipo_exp1 == tipo.DOBLE){
-                    if(tipo_exp2 == tipo.DOBLE || tipo_exp2 == tipo.ENTERO ){                        
+                    if(tipo_exp2 == tipo.DOBLE || tipo_exp2 == tipo.ENTERO ){   
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el diferente que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el diferente que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }                     
                         return valor_exp1 != valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el diferente que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el diferente que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }   
                         let num_ascci1 = valor_exp2.charCodeAt(0);    
                         return valor_exp1 != num_ascci1
                     }else{
@@ -159,8 +227,20 @@ export  class Relacional extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.ENTERO){
                     if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el diferente que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el diferente que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }   
                         return valor_exp1 != valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el diferente que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el diferente que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }   
                         let num_ascci1 = valor_exp2.charCodeAt(0);    
                         return valor_exp1 != num_ascci1;
                     }else{
@@ -171,11 +251,23 @@ export  class Relacional extends Operacion implements Expresion{
                     }
 
                 }else if(tipo_exp1 == tipo.CARACTER){
+                    if(valor_exp1 == null || valor_exp2 == null){
+                        let error = new Errores("Semantico",`No se puede hacer el diferente que con un null `,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer el diferente que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                        break;
+                    }   
                     let num_ascci1 = valor_exp1.charCodeAt(0);
                     if(tipo_exp2 == tipo.CARACTER){
                         let num_ascci2 = valor_exp2.charCodeAt(0);
                         return num_ascci1 != num_ascci2;
                     }else if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el diferente que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el diferente que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }   
                         return num_ascci1 != valor_exp2;
                     }else{
                         let error = new Errores("Semantico",`Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`,this.linea,this.columna);
@@ -193,6 +285,12 @@ export  class Relacional extends Operacion implements Expresion{
                         if(valor_exp2 == false){
                             num_bool_exp2 = 0;
                         }
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el diferente que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el diferente que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }   
                         return num_bool_exp1 != num_bool_exp2;
                     }else{
                         let error = new Errores("Semantico",`Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`,this.linea,this.columna);
@@ -202,6 +300,12 @@ export  class Relacional extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.CADENA){
                     if(tipo_exp2 == tipo.CADENA){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el diferente que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el diferente que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }   
                         return valor_exp1 != valor_exp2;
                     }else{
                         let error = new Errores("Semantico",`Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`,this.linea,this.columna);
@@ -211,12 +315,25 @@ export  class Relacional extends Operacion implements Expresion{
                     }
                 }
                 break;
+// MENOR QUE
             case Operador.MENORQUE:
                 if(tipo_exp1 == tipo.DOBLE){
                     if(tipo_exp2 == tipo.DOBLE || tipo_exp2 == tipo.ENTERO ){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el menor que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el menor que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }   
                         
                         return valor_exp1 < valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el menor que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el menor que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }  
                         let num_ascci1 = valor_exp2.charCodeAt(0);    
                         return valor_exp1 < num_ascci1
                     }else{
@@ -227,8 +344,20 @@ export  class Relacional extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.ENTERO){
                     if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el menor que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el menor que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }  
                         return valor_exp1 < valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el menor que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el menor que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }  
                         let num_ascci1 = valor_exp2.charCodeAt(0);    
                         return valor_exp1 < num_ascci1
                     }else{
@@ -239,11 +368,29 @@ export  class Relacional extends Operacion implements Expresion{
                     }
 
                 }else if(tipo_exp1 == tipo.CARACTER){
+                    if(valor_exp1 == null || valor_exp2 == null){
+                        let error = new Errores("Semantico",`No se puede hacer el menor que con un null `,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer el menor que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                        break;
+                    }  
                     let num_ascci1 = valor_exp1.charCodeAt(0);
                     if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el menor que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el menor que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }  
                         let num_ascci2 = valor_exp2.charCodeAt(0);
                         return num_ascci1 < num_ascci2;
                     }else if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el menor que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el menor que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }  
                         return num_ascci1 < valor_exp2
                     }else{
                         let error = new Errores("Semantico",`Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`,this.linea,this.columna);
@@ -261,6 +408,12 @@ export  class Relacional extends Operacion implements Expresion{
                         if(valor_exp2 == false){
                             num_bool_exp2 = 0;
                         }
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el menor que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el menor que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }  
                         return num_bool_exp1 < num_bool_exp2
                     }else{
                         let error = new Errores("Semantico",`Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`,this.linea,this.columna);
@@ -270,6 +423,12 @@ export  class Relacional extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.CADENA){
                     if(tipo_exp2 == tipo.CADENA){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el menor que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el menor que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }  
                         return valor_exp1 < valor_exp2;
                     }else{
                         let error = new Errores("Semantico",`Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`,this.linea,this.columna);
@@ -280,11 +439,24 @@ export  class Relacional extends Operacion implements Expresion{
 
                 }
                 break;
+// MENOR IGUAL
             case Operador.MENORIGUAL:
                 if(tipo_exp1 == tipo.DOBLE){
                     if(tipo_exp2 == tipo.DOBLE || tipo_exp2 == tipo.ENTERO ){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el menor igual que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el menor igual que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }  
                         return valor_exp1 <= valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el menor igual que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el menor igual que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }  
                         let num_ascci1 = valor_exp2.charCodeAt(0);    
                         return valor_exp1 <= num_ascci1
                     }else{
@@ -295,8 +467,20 @@ export  class Relacional extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.ENTERO){
                     if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el menor igual que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el menor igual que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }  
                         return valor_exp1 <= valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el menor igual que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el menor igual que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }  
                         let num_ascci1 = valor_exp2.charCodeAt(0);    
                         return valor_exp1 <= num_ascci1
                     }else{
@@ -307,11 +491,29 @@ export  class Relacional extends Operacion implements Expresion{
                     }
 
                 }else if(tipo_exp1 == tipo.CARACTER){
+                    if(valor_exp1 == null || valor_exp2 == null){
+                        let error = new Errores("Semantico",`No se puede hacer el menor igual que con un null `,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer el menor igual que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                        break;
+                    }  
                     let num_ascci1 = valor_exp1.charCodeAt(0);
                     if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el menor igual que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el menor igual que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }  
                         let num_ascci2 = valor_exp2.charCodeAt(0);
                         return num_ascci1 <= num_ascci2;
                     }else if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el menor igual que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el menor igual que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }  
                         return num_ascci1 <= valor_exp2
                     }else{
                         let error = new Errores("Semantico",`Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`,this.linea,this.columna);
@@ -329,6 +531,12 @@ export  class Relacional extends Operacion implements Expresion{
                         if(valor_exp2 == false){
                             num_bool_exp2 = 0;
                         }
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el menor igual que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el menor igual que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }  
                         return num_bool_exp1 <= num_bool_exp2
                     }else{
                         let error = new Errores("Semantico",`Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`,this.linea,this.columna);
@@ -338,6 +546,12 @@ export  class Relacional extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.CADENA){
                     if(tipo_exp2 == tipo.CADENA){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el menor igual que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el menor igual que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }  
                         return valor_exp1 <= valor_exp2;
                     }else{
                         let error = new Errores("Semantico",`Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`,this.linea,this.columna);
@@ -348,11 +562,24 @@ export  class Relacional extends Operacion implements Expresion{
 
                 }
                 break;
+//MAYOR QUE
             case Operador.MAYORQUE:
                 if(tipo_exp1 == tipo.DOBLE){
                     if(tipo_exp2 == tipo.DOBLE || tipo_exp2 == tipo.ENTERO ){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el mayor que que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el mayor que que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }  
                         return valor_exp1 > valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el mayor que que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el mayor que que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci1 = valor_exp2.charCodeAt(0);    
                         return valor_exp1 > num_ascci1
                     }else{
@@ -363,8 +590,20 @@ export  class Relacional extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.ENTERO){
                     if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el mayor que que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el mayor que que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 > valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el mayor que que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el mayor que que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci1 = valor_exp2.charCodeAt(0);    
                         return valor_exp1 > num_ascci1
                     }else{
@@ -375,11 +614,29 @@ export  class Relacional extends Operacion implements Expresion{
                     }
 
                 }else if(tipo_exp1 == tipo.CARACTER){
+                    if(valor_exp1 == null || valor_exp2 == null){
+                        let error = new Errores("Semantico",`No se puede hacer el mayor que que con un null `,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede hacer el mayor que que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                        break;
+                    }
                     let num_ascci1 = valor_exp1.charCodeAt(0);
                     if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el mayor que que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el mayor que que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci2 = valor_exp2.charCodeAt(0);
                         return num_ascci1 > num_ascci2;
                     }else if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el mayor que que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el mayor que que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return num_ascci1 > valor_exp2
                     }else{
                         let error = new Errores("Semantico",`Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`,this.linea,this.columna);
@@ -397,6 +654,12 @@ export  class Relacional extends Operacion implements Expresion{
                         if(valor_exp2 == false){
                             num_bool_exp2 = 0;
                         }
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el mayor que que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el mayor que que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return num_bool_exp1 > num_bool_exp2
                     }else{
                         let error = new Errores("Semantico",`Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`,this.linea,this.columna);
@@ -406,6 +669,12 @@ export  class Relacional extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.CADENA){
                     if(tipo_exp2 == tipo.CADENA){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el mayor que que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el mayor que que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 > valor_exp2;
                     }else{
                         let error = new Errores("Semantico",`Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`,this.linea,this.columna);
@@ -416,11 +685,24 @@ export  class Relacional extends Operacion implements Expresion{
 
                 }
                 break;
+//MAYOR IGUAL
             case Operador.MAYORIGUAL:
                 if(tipo_exp1 == tipo.DOBLE){
                     if(tipo_exp2 == tipo.DOBLE || tipo_exp2 == tipo.ENTERO ){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el mayor igual que que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el mayor igual que que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 >= valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el mayor igual que que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el mayor igual que que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci1 = valor_exp2.charCodeAt(0);    
                         return valor_exp1 >= num_ascci1
                     }else{
@@ -431,8 +713,20 @@ export  class Relacional extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.ENTERO){
                     if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el mayor igual que que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el mayor igual que que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 >= valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el mayor igual que que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el mayor igual que que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci1 = valor_exp2.charCodeAt(0);    
                         return valor_exp1 >= num_ascci1
                     }else{
@@ -445,9 +739,21 @@ export  class Relacional extends Operacion implements Expresion{
                 }else if(tipo_exp1 == tipo.CARACTER){
                     let num_ascci1 = valor_exp1.charCodeAt(0);
                     if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el mayor igual que que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el mayor igual que que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci2 = valor_exp2.charCodeAt(0);
                         return num_ascci1 >= num_ascci2;
                     }else if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el mayor igual que que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el mayor igual que que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return num_ascci1 >= valor_exp2
                     }else{
                         let error = new Errores("Semantico",`Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`,this.linea,this.columna);
@@ -465,6 +771,12 @@ export  class Relacional extends Operacion implements Expresion{
                         if(valor_exp2 == false){
                             num_bool_exp2 = 0;
                         }
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el mayor igual que que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el mayor igual que que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return num_bool_exp1 >= num_bool_exp2
                     }else{
                         let error = new Errores("Semantico",`Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`,this.linea,this.columna);
@@ -474,6 +786,12 @@ export  class Relacional extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.CADENA){
                     if(tipo_exp2 == tipo.CADENA){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se puede hacer el mayor igual que que con un null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se puede hacer el mayor igual que que con un null. En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 >= valor_exp2;
                     }else{
                         let error = new Errores("Semantico",`Los tipos son incompatibles. Solo se pueden hacer operaciones entre entero-doble-caracter`,this.linea,this.columna);

@@ -306,8 +306,20 @@ export class Aritmetica extends Operacion implements Expresion{
             case Operador.SUMA:
                 if(tipo_exp1 == tipo.ENTERO){
                     if(tipo_exp2 == tipo.ENTERO){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer sumas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 + valor_exp2; // 1+2.5 = 3.5
                     }else if(tipo_exp2 == tipo.DOBLE ){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer sumas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 + valor_exp2;
                     }else if(tipo_exp2 == tipo.BOOLEAN){
                         let error = new Errores("Semantico",`No se pueden hacer sumas entre int y boolean`,this.linea,this.columna);
@@ -315,10 +327,22 @@ export class Aritmetica extends Operacion implements Expresion{
                         controlador.append(`ERROR: Semántico, No se pueden hacer sumas entre int y boolean. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer sumas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         //1 + 'A' == 1 + 65 = 66
                         let num_ascci = valor_exp2.charCodeAt(0);
                         return valor_exp1 + num_ascci;
                     }else if(tipo_exp2 == tipo.CADENA){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer sumas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 + valor_exp2;
                     }else{
                         let error = new Errores("Semantico",`No se puede hacer la suma debido a los tipos`,this.linea,this.columna);
@@ -328,8 +352,20 @@ export class Aritmetica extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.DOBLE){
                     if(tipo_exp2 == tipo.ENTERO){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer sumas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 + valor_exp2; // 1+2.5 = 3.5
                     }else if(tipo_exp2 == tipo.DOBLE ){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer sumas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 + valor_exp2; // 1.1+2.5 = 3.6
                     }else if(tipo_exp2 == tipo.BOOLEAN){
                         let error = new Errores("Semantico",`No se pueden hacer sumas entre double y boolean`,this.linea,this.columna);
@@ -337,10 +373,22 @@ export class Aritmetica extends Operacion implements Expresion{
                         controlador.append(`ERROR: Semántico, No se pueden hacer sumas entre double y boolean. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer sumas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         //1.5 + 'A' == 1.5 + 65 = 66.5
                         let num_ascci = valor_exp2.charCodeAt(0);
                         return valor_exp1 + num_ascci;
                     }else if(tipo_exp2 == tipo.CADENA){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer sumas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 + valor_exp2;
                     }else{
                         let error = new Errores("Semantico",`No se puede hacer la suma debido a conflicto en los tipos`,this.linea,this.columna);
@@ -350,11 +398,13 @@ export class Aritmetica extends Operacion implements Expresion{
                     }
 
                 }else if(tipo_exp1 == tipo.BOOLEAN){
+
                     let num_bool_exp1 = 1;
                     if(valor_exp1 == false){
                         num_bool_exp1 = 0;
                     }
                     if(tipo_exp2 == tipo.ENTERO){
+
                         let error = new Errores("Semantico",`No se pueden hacer sumas entre boolean e int`,this.linea,this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, No se pueden hacer sumas entre boolean e int. En la linea ${this.linea} y columna ${this.columna}`);
@@ -376,6 +426,12 @@ export class Aritmetica extends Operacion implements Expresion{
                         controlador.append(`ERROR: Semántico, No se pueden hacer sumas entre boolean y char. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }else if(tipo_exp2 == tipo.CADENA){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer sumas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 + valor_exp2; // true + hola = "truehola"
                     }else{
                         let error = new Errores("Semantico",`No se puede hacer la suma debido a conflicto en los tipos`,this.linea,this.columna);
@@ -386,12 +442,36 @@ export class Aritmetica extends Operacion implements Expresion{
                 }else if(tipo_exp1 == tipo.CARACTER){  // 'A' + 1  == 65+1 = 66
                     let num_ascci = valor_exp1.charCodeAt(0);  
                     if(tipo_exp2 == tipo.ENTERO){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer sumas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return num_ascci + valor_exp2;
                     }else if(tipo_exp2 == tipo.DOBLE ){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer sumas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return num_ascci + valor_exp2; 
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer sumas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 + valor_exp2; // 'A' + 'A' = AA
                     }else if(tipo_exp2 == tipo.CADENA){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer sumas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 + valor_exp2; // 'A' + hola = "Ahola"
                     }else if (tipo_exp2 == tipo.BOOLEAN){
                         let error = new Errores("Semantico",`No se pueden hacer sumas entre char y boolean`,this.linea,this.columna);
@@ -406,6 +486,12 @@ export class Aritmetica extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.CADENA){
                     if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE || tipo_exp2 == tipo.BOOLEAN || tipo_exp2 == tipo.CARACTER || tipo_exp2 == tipo.CADENA){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer sumas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 + valor_exp2;
                     }else{
                         let error = new Errores("Semantico",`No se puede hacer la suma debido a conflicto en los tipos`,this.linea,this.columna);
@@ -421,6 +507,12 @@ export class Aritmetica extends Operacion implements Expresion{
             case Operador.RESTA:
                 if(tipo_exp1 == tipo.ENTERO){
                     if(tipo_exp2 == tipo.ENTERO){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer restas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer restas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 - valor_exp2;
                     }else if(tipo_exp2 == tipo.BOOLEAN){
                         let error = new Errores("Semantico",`No se pueden hacer restas entre int y boolean`,this.linea,this.columna);
@@ -428,9 +520,21 @@ export class Aritmetica extends Operacion implements Expresion{
                         controlador.append(`ERROR: Semántico, No se pueden hacer restas entre int y boolean. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer restas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer restas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp2.charCodeAt(0);
                         return valor_exp1 - num_ascci;
                     }else if(tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer restas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer restas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 - valor_exp2;
                     }else if (tipo_exp2 == tipo.CADENA){
                         let error = new Errores("Semantico",`No se pueden hacer restas entre int y string`,this.linea,this.columna);
@@ -446,8 +550,20 @@ export class Aritmetica extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.DOBLE){
                     if(tipo_exp2 == tipo.ENTERO){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer restas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 - valor_exp2;
                     }else if (tipo_exp2 == tipo.DOBLE)  {
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer restas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer restas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 - valor_exp2;
                     }else if(tipo_exp2 == tipo.BOOLEAN){
                         let error = new Errores("Semantico",`No se pueden hacer restas entre double y boolean`,this.linea,this.columna);
@@ -455,6 +571,12 @@ export class Aritmetica extends Operacion implements Expresion{
                         controlador.append(`ERROR: Semántico, No se pueden hacer restas entre double y boolean. En la linea ${this.linea} y columna ${this.columna}`);
                         return null;;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer restas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer restas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp2.charCodeAt(0);
                         return valor_exp1 - num_ascci;
                     }else if(tipo_exp2 == tipo.CADENA){
@@ -483,12 +605,30 @@ export class Aritmetica extends Operacion implements Expresion{
                     }
                 }else if (tipo_exp1 == tipo.CARACTER){
                     if(tipo_exp2 == tipo.ENTERO){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer restas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer restas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp1.charCodeAt(0);
                         return num_ascci - valor_exp2;
                     }else if(tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer restas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer restas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp1.charCodeAt(0);
                         return num_ascci - valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer restas con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer restas con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp1.charCodeAt(0);
                         let num_ascci2 = valor_exp2.charCodeAt(0);
                         return num_ascci - num_ascci2;
@@ -516,11 +656,29 @@ export class Aritmetica extends Operacion implements Expresion{
             case Operador.MULTIPLICACION:
                 if(tipo_exp1 == tipo.ENTERO){
                     if(tipo_exp2 == tipo.ENTERO){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer multiplicaciones con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer multiplicaciones con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 * valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer multiplicaciones con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer multiplicaciones con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp2.charCodeAt(0);
                         return valor_exp1 * num_ascci;
                     }else if(tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer multiplicaciones con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer multiplicaciones con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 * valor_exp2;
                     }else if (tipo_exp2 == tipo.BOOLEAN){
                         let error = new Errores("Semantico",`No se pueden hacer multiplicaciones entre int y boolean`,this.linea,this.columna);
@@ -540,10 +698,28 @@ export class Aritmetica extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.DOBLE){
                     if(tipo_exp2 == tipo.ENTERO){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer multiplicaciones con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer multiplicaciones con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 * valor_exp2;
                     }else if(tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer multiplicaciones con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer multiplicaciones con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 * valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer multiplicaciones con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer multiplicaciones con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp2.charCodeAt(0);
                         return valor_exp1 * num_ascci;
                     }else if (tipo_exp2 == tipo.BOOLEAN){
@@ -564,9 +740,21 @@ export class Aritmetica extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.CARACTER){
                     if(tipo_exp2 == tipo.ENTERO){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer multiplicaciones con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer multiplicaciones con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp1.charCodeAt(0);
                         return num_ascci * valor_exp2;
                     }else if(tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer multiplicaciones con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer multiplicaciones con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp1.charCodeAt(0);
                         return num_ascci * valor_exp2;
                     }else if (tipo_exp2 == tipo.BOOLEAN){
@@ -592,10 +780,28 @@ export class Aritmetica extends Operacion implements Expresion{
             case Operador.DIVISION:
                 if(tipo_exp1 == tipo.ENTERO){
                     if(tipo_exp2 == tipo.ENTERO){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer divisiones con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer divisiones con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 / valor_exp2;
                     }else if(tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer divisiones con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer divisiones con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 / valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer divisiones con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer divisiones con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp1.charCodeAt(0);
                         return valor_exp1 / num_ascci;
                     }else if(tipo_exp2 == tipo.BOOLEAN){
@@ -617,10 +823,28 @@ export class Aritmetica extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.DOBLE){
                     if(tipo_exp2 == tipo.ENTERO){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer divisiones con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer divisiones con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 / valor_exp2;
                     }else if(tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer divisiones con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer divisiones con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 / valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer divisiones con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer divisiones con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp1.charCodeAt(0);
                         return valor_exp1 / num_ascci;
                     }else if(tipo_exp2 == tipo.BOOLEAN){
@@ -641,12 +865,30 @@ export class Aritmetica extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.CARACTER){
                     if(tipo_exp2 == tipo.ENTERO){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer divisiones con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer divisiones con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp1.charCodeAt(0);
                         return num_ascci / valor_exp2;
                     }else if(tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer divisiones con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer divisiones con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp1.charCodeAt(0);
                         return num_ascci / valor_exp2
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer divisiones con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer divisiones con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp1.charCodeAt(0);
                         let num_ascci2 = valor_exp2.charCodeAt(0);
                         return num_ascci / num_ascci2
@@ -664,8 +906,20 @@ export class Aritmetica extends Operacion implements Expresion{
                 
                 if(tipo_exp1 == tipo.ENTERO){
                     if(tipo_exp2 == tipo.ENTERO){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer potencias con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer potencias con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 ** valor_exp2;
                     }else if(tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer potencias con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer potencias con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 ** valor_exp2;
                     }else{
                         let error = new Errores("Semantico",`No se puede hacer la potencia debido a conflicto en los tipos`,this.linea,this.columna);
@@ -675,8 +929,20 @@ export class Aritmetica extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.DOBLE){
                     if(tipo_exp2 == tipo.ENTERO){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer potencias con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer potencias con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 ** valor_exp2;
                     }else if(tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer potencias con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer potencias con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 ** valor_exp2;
                     }else{
                         let error = new Errores("Semantico",`No se puede hacer la potencia debido a conflicto en los tipos`,this.linea,this.columna);
@@ -686,9 +952,15 @@ export class Aritmetica extends Operacion implements Expresion{
                     }
                 }else if (tipo_exp1 == tipo.CADENA){
                     
-                    if(tipo_exp2 == tipo.ENTERO)
-                    
+                    if(tipo_exp2 == tipo.ENTERO){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer potencias con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer potencias con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                     return valor_exp1.repeat(valor_exp2)
+                    }
                 }
                 break;
 
@@ -697,6 +969,12 @@ export class Aritmetica extends Operacion implements Expresion{
             case Operador.SQRT:
                 
                 if(tipo_exp1 == tipo.ENTERO){
+                    if(valor_exp1 == null){
+                        let error = new Errores("Semantico",`No se pueden sacar raiz cuadrada de un null `,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se pueden sacar raiz cuadrada de un nul . En la linea ${this.linea} y columna ${this.columna}`);
+                        break;
+                    }
                     return Math.sqrt(valor_exp1);
                 }
                 break;
@@ -704,10 +982,28 @@ export class Aritmetica extends Operacion implements Expresion{
             case Operador.MOD:
                 if(tipo_exp1 == tipo.ENTERO){
                     if(tipo_exp2 == tipo.ENTERO){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer modulos con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer modulos con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 % valor_exp2;
                     }else if(tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer modulos con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer modulos con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 % valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer modulos con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer modulos con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp2.charCodeAt(0);
                         return valor_exp1 % num_ascci
                     }else if(tipo_exp2 == tipo.BOOLEAN){
@@ -729,8 +1025,20 @@ export class Aritmetica extends Operacion implements Expresion{
                     }
                 }else if(tipo_exp1 == tipo.DOBLE){
                     if(tipo_exp2 == tipo.ENTERO || tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer modulos con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer modulos con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         return valor_exp1 % valor_exp2;
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer modulos con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer modulos con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp2.charCodeAt(0);
                         return valor_exp1 % num_ascci;
                     }else{
@@ -740,14 +1048,32 @@ export class Aritmetica extends Operacion implements Expresion{
                         return null;
                     }
                 }else if(tipo_exp1 == tipo.CARACTER){
-                    console.log("hsdkfhksdj")
+                   
                     if(tipo_exp2 == tipo.ENTERO){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer modulos con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer modulos con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp1.charCodeAt(0)
                         return num_ascci % valor_exp2
                     }else if(tipo_exp2 == tipo.DOBLE){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer modulos con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer modulos con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp1.charCodeAt(0)
                         return num_ascci % valor_exp2
                     }else if(tipo_exp2 == tipo.CARACTER){
+                        if(valor_exp1 == null || valor_exp2 == null){
+                            let error = new Errores("Semantico",`No se pueden hacer modulos con null `,this.linea,this.columna);
+                            controlador.errores.push(error);
+                            controlador.append(`ERROR: Semántico, No se pueden hacer modulos con null . En la linea ${this.linea} y columna ${this.columna}`);
+                            break;
+                        }
                         let num_ascci = valor_exp1.charCodeAt(0)
                         let num_ascci2 = valor_exp2.charCodeAt(0)
                         return num_ascci % num_ascci2
@@ -775,8 +1101,20 @@ export class Aritmetica extends Operacion implements Expresion{
 //SENO
             case Operador.SIN:
                 if(tipo_exp1 == tipo.ENTERO){
+                    if(valor_exp1 == null ){
+                        let error = new Errores("Semantico",`No se puede encontrar el seno de un null `,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede encontrar el seno de un null . En la linea ${this.linea} y columna ${this.columna}`);
+                        break;
+                    }
                     return Math.sin(valor_exp1);
                 }else if(tipo_exp1 === tipo.DOBLE){
+                    if(valor_exp1 == null ){
+                        let error = new Errores("Semantico",`No se puede encontrar el seno de un null `,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede encontrar el seno de un null . En la linea ${this.linea} y columna ${this.columna}`);
+                        break;
+                    }
                     return Math.sin(valor_exp1);
                 }else{
                     let error = new Errores("Semantico",`Solo se puede utilizar int o double`,this.linea,this.columna);
@@ -789,8 +1127,20 @@ export class Aritmetica extends Operacion implements Expresion{
 //COSENO
             case Operador.COS:
                 if(tipo_exp1 == tipo.ENTERO){
+                    if(valor_exp1 == null ){
+                        let error = new Errores("Semantico",`No se puede encontrar el coseno de un null `,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede encontrar el coseno de un null . En la linea ${this.linea} y columna ${this.columna}`);
+                        break;
+                    }
                     return Math.cos(valor_exp1);
                 }else if(tipo_exp1 == tipo.DOBLE){
+                    if(valor_exp1 == null ){
+                        let error = new Errores("Semantico",`No se puede encontrar el coseno de un null `,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede encontrar el coseno de un null . En la linea ${this.linea} y columna ${this.columna}`);
+                        break;
+                    }
                     return Math.cos(valor_exp1)
                 }else{
                     let error = new Errores("Semantico",`Solo se puede utilizar int o double`,this.linea,this.columna);
@@ -803,8 +1153,20 @@ export class Aritmetica extends Operacion implements Expresion{
 //TANGENTE
             case Operador.TAN:
                 if(tipo_exp1 == tipo.ENTERO){
+                    if(valor_exp1 == null ){
+                        let error = new Errores("Semantico",`No se puede encontrar la tangente de un null `,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede encontrar la tangente de un null . En la linea ${this.linea} y columna ${this.columna}`);
+                        break;
+                    }
                     return Math.tan(valor_exp1);
                 }else if (tipo_exp1 == tipo.DOBLE){
+                    if(valor_exp1 == null ){
+                        let error = new Errores("Semantico",`No se puede encontrar la tangente de un null `,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, No se puede encontrar la tangente de un null . En la linea ${this.linea} y columna ${this.columna}`);
+                        break;
+                    }
                     return Math.tan(valor_exp1);
                 }else{
                     let error = new Errores("Semantico",`Solo se puede utilizar int o double`,this.linea,this.columna);
