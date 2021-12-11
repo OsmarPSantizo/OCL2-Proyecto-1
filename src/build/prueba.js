@@ -19,7 +19,7 @@ ejecutarCodigo(`
     void probandoaritmetica (){
         int[] arr1 = [12, 32, 43, 54];
 
-        println(arr1[begin : end]);
+        println(arr1[1 : 3]);
     }
 
     start with probandoaritmetica();
