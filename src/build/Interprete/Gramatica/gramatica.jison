@@ -179,7 +179,7 @@ caracter      (\' ({escape2}|{aceptacion2})\')
         const {LenghtC} = require('../Instrucciones/LenghtC')
         const {Casteos} = require('../Instrucciones/FuncionesNativas/Casteos');
         const {Declaracion} = require('../Instrucciones/Declaracion');
-        const {DeclararcionVectores} = require('../Instrucciones/DeclaracionVectores');
+        const {DeclaracionVectores} = require('../Instrucciones/DeclaracionVectores');
         const {AccesoVector} = require('../Expresiones/AccesoVector');
         const {Asignacion} = require('../Instrucciones/Asignacion');
         const {Ifs} = require('../Instrucciones/SentenciasdeControl/Ifs');
@@ -200,13 +200,6 @@ caracter      (\' ({escape2}|{aceptacion2})\')
         const {Funcion} = require('../Instrucciones/Funcion');
         const {Llamada} = require('../Instrucciones/Llamada');
         const {StartWith} = require('../Instrucciones/StartWith');
-
-
-
-
-
-
-
 %}
 
 /* PRECEDENCIA */
@@ -237,6 +230,7 @@ instrucciones : instrucciones instruccion   {$$ = $1; $$.push($2);}
 instruccion : declaracion { $$ = $1; }
             | impresion   { $$ = $1; }
             | asignacion  { $$ = $1; }
+            | decl_vectores  { $$ = $1;}
             | sent_if     { $$ = $1; }
             | sent_while  { $$ = $1; }
             | BREAK PYC   { $$ = new Break(); }
@@ -248,11 +242,10 @@ instruccion : declaracion { $$ = $1; }
             | sent_do_while PYC {$$ = $1; }
             | ID DECRE PYC   { $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column); }
             | ID INCRE PYC   { $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column); }
+            | modi_vector    { $$ = $1; }
             | funciones      { $$ = $1;}
             | llamada PYC    { $$ = $1;}
             | startwith PYC  { $$ = $1;}
-            | decl_vectores  { $$ = $1;}
-            | modi_vector    { $$ = $1; }
             | error {console.log("Error Sintactico "  + yytext
                            + " linea: " + this._$.first_line
                            +" columna: "+ this._$.first_column);
@@ -277,7 +270,7 @@ tipo : DOUBLE       {$$ = new Tipo("DOBLE");}
 //Vectores
 
 decl_vectores:
-              tipo CORA CORC lista_ids IGUAL CORA lista_valores CORC PYC     {$$ = new DeclararcionVectores($1,$2,$7,@1.first_line,@1.last_column);}
+              tipo CORA CORC lista_ids IGUAL CORA lista_valores CORC PYC     {$$ = new DeclaracionVectores($1,$4,$7,@1.first_line,@1.last_column);}
              | tipo CORA CORC lista_ids IGUAL e PYC
              ;
 
@@ -306,11 +299,11 @@ asignacion : ID IGUAL e PYC {$$ = new Asignacion($1,$3,@1.first_line,@1.last_col
 
 // Struct
 
-struct : STRUCT ID LLAVA lista_atributos LLAVC {  }
-;
+// struct : STRUCT ID LLAVA lista_atributos LLAVC {  }
+// ;
 
-acceso_struct: id PNT e PYC {}
-;
+// acceso_struct: id PNT e PYC {}
+// ;
 
 
 /// Sentencias de control
@@ -421,7 +414,7 @@ e
     | ID INCRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
     | ID DECRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
     | PARA tipo PARC e          {$$ = new Casteos($2,$4, @1.first_line,@1.last_column);}
-    | ID CORA e CORC  {$$ = new AccesoVector($1, $3,@1.first_line,@1.last_column);}
+    | ID CORA e CORC  { $$ = new AccesoVector($1, $3,@1.first_line,@1.last_column); }
     | GETVALUE PARA e COMA e PARC // Para obtener valor de la lista
     | llamada
     | startwith

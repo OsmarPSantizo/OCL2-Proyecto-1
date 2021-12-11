@@ -11,6 +11,7 @@ class AccesoVector {
         this.columna = columna;
     }
     getTipo(controlador, ts) {
+        // Válida si el index es un entero.
         if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.ENTERO) {
             return Tipo_1.tipo.ENTERO;
         }
@@ -19,15 +20,20 @@ class AccesoVector {
         }
     }
     getValor(controlador, ts) {
-        let valor_indice = this.indice.getValor(controlador, ts);
+        let valorIndice = this.indice.getValor(controlador, ts);
         let tipo_valor = this.indice.getTipo(controlador, ts);
         if (tipo_valor == Tipo_1.tipo.ENTERO) {
+            /*
+                Si existe, vamos ala tambla de simbolos a traer el simbolo,
+                se valida si es de tipo 4 (Arreglo).
+
+            */
             if (ts.existe(this.id)) {
                 let sim = ts.getSimbolo(this.id);
                 if ((sim === null || sim === void 0 ? void 0 : sim.simbolo) == 4) {
-                    let valores_vector = sim.valor;
-                    let valor_acceso = valores_vector[valor_indice];
-                    return valor_acceso;
+                    let valoresVector = sim.valor;
+                    let valorAcceso = valoresVector[valorIndice];
+                    return valorAcceso;
                 }
             }
             else {

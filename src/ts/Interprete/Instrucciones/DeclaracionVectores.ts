@@ -5,32 +5,35 @@ import { Expresion } from "../Interfaces/Expresion";
 import { Instruccion } from "../Interfaces/Instruccion";
 import {Simbolo} from "../TablaSimbolos/Simbolo";
 import {TablaSimbolos} from "../TablaSimbolos/TablaSimbolos";
-import  {Tipo, tipo  } from "../TablaSimbolos/Tipo";
+import  {Tipo } from "../TablaSimbolos/Tipo";
 
 
 
-export class DeclararcionVectores implements Instruccion{
+export class DeclaracionVectores implements Instruccion{
 
     public type : Tipo;
-    public lista_ids : Array<string>
-    public expresion : Expresion;
+    public listaIds : Array<string>
+    public listaExpresiones : Array<Expresion>;
 
     public linea: number;
     public columna: number;
 
-    constructor (type: Tipo, lista_ids:Array<string>, expresion:any, linea:number, columna:number){
+    constructor (type: Tipo, listaIds:Array<string>, listaExpresiones: Array<Expresion>, linea:number, columna:number){
         this.type = type;
-        this.lista_ids = lista_ids;
-        this.expresion = expresion;
+        this.listaIds = listaIds;
+        this.listaExpresiones = listaExpresiones;
         this.linea = linea;
-        this.columna = columna
+        this.columna = columna;
+        console.log('Lista Expresiones', this.listaExpresiones);
     }
 
 
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
 
-        for(let id of this.lista_ids){
+        console.log('DECLARACION VECTOR');
+
+        for(let id of this.listaIds){
             //1er paso. Verificar si existe en la tabla actual
             if(ts.existeEnActual(id)){
                 let error = new Errores("Semantico",`La variable ${id} ya existe en el entorno actual, no se puede declarar otra vez.`,this.linea,this.columna);
@@ -44,11 +47,10 @@ export class DeclararcionVectores implements Instruccion{
                 <TIPO><ID> '[' ']' = '[' <LISTAVALORES> ']' ';'
             */
 
-            let listaExpresiones = this.expresion.getValor(controlador,ts);
 
-            let valores = []
+            let valores = [];
 
-            for(let exp of listaExpresiones){ //{1,2,3}
+            for(let exp of this.listaExpresiones){ //{1,2,3}
 
                 let valor = exp.getValor(controlador,ts);
                 let tipoValor = exp.getTipo(controlador,ts);

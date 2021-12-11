@@ -9,7 +9,7 @@ import { tipo } from "../TablaSimbolos/Tipo";
 
 
 
-export class SliceVector implements Instruccion{
+export class SliceVector implements Expresion{
 
     public expresion: Expresion;
     public inicio : Expresion;
@@ -24,12 +24,15 @@ export class SliceVector implements Instruccion{
         this.linea = linea
         this.columna = columna
     }
+    getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {
+        throw new Error("Method not implemented.");
+    }
+    getValor(controlador: Controlador, ts: TablaSimbolos) {
+        let tipo_valor = this.expresion.getValor(controlador, ts);
+        let valor = this.expresion.getValor(controlador, ts);
+        let inicio = this.expresion.getValor(controlador, ts);
+        let final = this.expresion.getValor(controlador, ts);
 
-    ejecutar(controlador: Controlador, ts: TablaSimbolos) {
-        let listaExpresiones = this.expresion.getValor(controlador,ts);
-        listaExpresiones.forEach( ( exp ) => {
-
-        } );
     }
 
     recorrer(): Nodo {

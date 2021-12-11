@@ -25,7 +25,8 @@ const ejecutarCodigo = (entrada:string) =>{
     console.log(controlador.consola);
 }
 
-    ejecutarCodigo(`void probandoaritmetica (){
+ejecutarCodigo(`void probandoaritmetica (){
+        int[] arr1 = [12, 32, 43, 54];
         int var1 = 1;
         int punteo = 0;
         string animal = "Tigre";
@@ -38,9 +39,9 @@ const ejecutarCodigo = (entrada:string) =>{
         println("Repeticion: "+"Cadena"^3);
         println(animal.toUppercase());
         print(animal.toLowercase());
-        println(typeof(tostring(2*2)));
-        
-        
+
+
+
         }
-        
+
         start with probandoaritmetica();`);

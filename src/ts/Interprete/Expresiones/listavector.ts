@@ -5,7 +5,7 @@ import {TablaSimbolos }from "../TablaSimbolos/TablaSimbolos";
 import { tipo } from "../TablaSimbolos/Tipo";
 
 
-export class listavector implements Expresion{
+export class ListaVector implements Expresion{
 
     public listExpresiones : Array<Expresion>;
     linea : number;
