@@ -57,6 +57,27 @@ class Declaracion {
                     else if (this.type.n_tipo == Tipo_1.tipo.DOBLE && tipo_valor == Tipo_1.tipo.CARACTER) { // casteo char a double
                         let nuevo_simbolo = new Simbolo_1.Simbolo(1, this.type, id, valor);
                         ts.agregar(id, nuevo_simbolo);
+                        // Esto es para aceptar el nullo en las declaraciones
+                    }
+                    else if (this.type.n_tipo == Tipo_1.tipo.ENTERO && tipo_valor == Tipo_1.tipo.NULLL) {
+                        let nuevo_simbolo = new Simbolo_1.Simbolo(1, this.type, id, valor);
+                        ts.agregar(id, nuevo_simbolo);
+                    }
+                    else if (this.type.n_tipo == Tipo_1.tipo.DOBLE && tipo_valor == Tipo_1.tipo.NULLL) {
+                        let nuevo_simbolo = new Simbolo_1.Simbolo(1, this.type, id, valor);
+                        ts.agregar(id, nuevo_simbolo);
+                    }
+                    else if (this.type.n_tipo == Tipo_1.tipo.BOOLEAN && tipo_valor == Tipo_1.tipo.NULLL) {
+                        let nuevo_simbolo = new Simbolo_1.Simbolo(1, this.type, id, valor);
+                        ts.agregar(id, nuevo_simbolo);
+                    }
+                    else if (this.type.n_tipo == Tipo_1.tipo.CARACTER && tipo_valor == Tipo_1.tipo.NULLL) {
+                        let nuevo_simbolo = new Simbolo_1.Simbolo(1, this.type, id, valor);
+                        ts.agregar(id, nuevo_simbolo);
+                    }
+                    else if (this.type.n_tipo == Tipo_1.tipo.CADENA && tipo_valor == Tipo_1.tipo.NULLL) {
+                        let nuevo_simbolo = new Simbolo_1.Simbolo(1, this.type, id, valor);
+                        ts.agregar(id, nuevo_simbolo);
                     }
                     else {
                         let error = new Errores_1.Errores("Semantico", `La variable ${id} posee un tipo no valido.`, this.linea, this.columna);

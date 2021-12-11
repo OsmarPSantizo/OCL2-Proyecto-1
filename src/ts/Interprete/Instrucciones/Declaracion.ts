@@ -71,7 +71,25 @@ export  class Declaracion implements Instruccion{
                     }else if(this.type.n_tipo == tipo.DOBLE && tipo_valor == tipo.CARACTER){ // casteo char a double
                         let nuevo_simbolo = new Simbolo(1,this.type, id, valor);
                         ts.agregar(id,nuevo_simbolo);
-                    }else{
+
+                        // Esto es para aceptar el nullo en las declaraciones
+                    }else if (this.type.n_tipo == tipo.ENTERO && tipo_valor == tipo.NULLL){
+                        let nuevo_simbolo = new Simbolo(1,this.type, id,valor);
+                        ts.agregar(id, nuevo_simbolo)
+                    }else if (this.type.n_tipo == tipo.DOBLE && tipo_valor == tipo.NULLL){
+                        let nuevo_simbolo = new Simbolo(1,this.type, id,valor);
+                        ts.agregar(id, nuevo_simbolo)
+                    }else if (this.type.n_tipo == tipo.BOOLEAN && tipo_valor == tipo.NULLL){
+                        let nuevo_simbolo = new Simbolo(1,this.type, id,valor);
+                        ts.agregar(id, nuevo_simbolo)
+                    }else if (this.type.n_tipo == tipo.CARACTER && tipo_valor == tipo.NULLL){
+                        let nuevo_simbolo = new Simbolo(1,this.type, id,valor);
+                        ts.agregar(id, nuevo_simbolo)
+                    }else if (this.type.n_tipo == tipo.CADENA && tipo_valor == tipo.NULLL){
+                        let nuevo_simbolo = new Simbolo(1,this.type, id,valor);
+                        ts.agregar(id, nuevo_simbolo)
+                    }
+                    else{
                         let error = new Errores("Semantico",`La variable ${id} posee un tipo no valido.`,this.linea,this.columna);
                         controlador.errores.push(error);
                         controlador.append(`ERROR: Semántico, La variable ${id}  posee un tipo no valido. En la linea ${this.linea} y columna ${this.columna}`);

@@ -268,7 +268,6 @@ tipo : DOUBLE       {$$ = new Tipo("DOBLE");}
      | STRING       {$$ = new Tipo("CADENA");}
      | CHAR         {$$ = new Tipo("CARACTER");}
      | BOOLEAN      {$$ = new Tipo("BOOLEAN");}
-     | NULLL      {$$ = new Tipo("NULL");}
      ;
 /// Estructuras de datos
 //Vectores
@@ -412,6 +411,7 @@ e
     | ENTERO                    {$$ = new Primitivo(Number($1),'ENTERO',@1.first_line,@1.last_column);}
     | ID                        {$$ = new Identificador($1,@1.first_line,@1.last_column);}
     | CADENA                    {$1 = $1.slice(1,$1.length-1);$$ = new Primitivo($1,'CADENA',@1.first_line,@1.last_column);}
+    | NULLL                     {$$ = new Primitivo(null,'NULL',@1.first_line,@1.last_column);}
     | CARACTER                  {$1 = $1.slice(1,$1.length-1);$$ = new Primitivo($1,'CARACTER',@1.first_line,@1.last_column);}
     | TRUE                      {$$ = new Primitivo(true,'BOOLEAN',@1.first_line,@1.last_column);}
     | FALSE                     {$$ = new Primitivo(false,'BOOLEAN',@1.first_line,@1.last_column);}
