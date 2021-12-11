@@ -1,5 +1,6 @@
 import {Controlador} from "../Controlador";
 import {Declaracion} from "../Instrucciones/Declaracion";
+import { Fmain } from "../Instrucciones/Fmain";
 import {Funcion }from "../Instrucciones/Funcion";
 import {StartWith} from "../Instrucciones/StartWith";
 import { Instruccion } from "../Interfaces/Instruccion";
@@ -40,7 +41,7 @@ export class Ast implements Instruccion{
         }
         //3era pasada ejecutamos las demás instrucciones
         for(let instruccion of this.lista_instrucciones){
-            if(instruccion instanceof StartWith && !bandera_start){
+            if(instruccion instanceof Fmain && !bandera_start){
                 instruccion.ejecutar(controlador,ts);
                 bandera_start = true;
             
