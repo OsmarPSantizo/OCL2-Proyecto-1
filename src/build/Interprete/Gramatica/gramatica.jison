@@ -93,6 +93,7 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 "char"             {console.log("Reconocio: "+yytext); return 'CHAR'}
 "boolean"             {console.log("Reconocio: "+yytext); return 'BOOLEAN'}
 "void"                {console.log("Reconocio: "+yytext); return 'VOID'}
+"null"                {console.log("Reconocio: "+yytext); return 'NULLL'}
 
 "println"             {console.log("Reconocio: "+yytext); return 'PRINTLN'}
 "print"             {console.log("Reconocio: "+yytext); return 'PRINT'}
@@ -265,6 +266,7 @@ tipo : DOUBLE       {$$ = new Tipo("DOBLE");}
      | STRING       {$$ = new Tipo("CADENA");}
      | CHAR         {$$ = new Tipo("CARACTER");}
      | BOOLEAN      {$$ = new Tipo("BOOLEAN");}
+     | NULLL      {$$ = new Tipo("NULL");}
      ;
 /// Estructuras de datos
 //Vectores
