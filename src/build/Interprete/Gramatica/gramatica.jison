@@ -203,6 +203,7 @@ caracter      (\' ({escape2}|{aceptacion2})\')
         const {Funcion} = require('../Instrucciones/Funcion');
         const {Llamada} = require('../Instrucciones/Llamada');
         const {StartWith} = require('../Instrucciones/StartWith');
+        const {Fmain} = require('../Instrucciones/Fmain');
 %}
 
 /* PRECEDENCIA */
@@ -366,6 +367,7 @@ funciones : tipo ID PARA lista_parametros PARC LLAVA instrucciones LLAVC  {$$ = 
           | tipo ID PARA PARC LLAVA instrucciones LLAVC                   {$$ = new Funcion(2, $1, $2, [], false, $6, @1.first_line, @1.last_column);}
           | VOID ID PARA lista_parametros PARC LLAVA instrucciones LLAVC  {$$ = new Funcion(3, $1, $2, $4, true, $7, @1.first_line, @1.last_column);}
           | VOID ID PARA PARC LLAVA instrucciones LLAVC                   {$$ = new Funcion(3, $1, $2, [], true, $6, @1.first_line, @1.last_column); }
+          | VOID MAIN PARA PARC LLAVA instrucciones LLAVC                 {$$ = new Fmain(3, $1, $2, [], true, $6, @1.first_line, @1.last_column); }
           ;
 
 lista_parametros : lista_parametros COMA tipo ID  {$$ = $1; $$.push(new Simbolo(6, $3, $4, null));}

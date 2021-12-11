@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Ast = void 0;
 const Declaracion_1 = require("../Instrucciones/Declaracion");
+const Fmain_1 = require("../Instrucciones/Fmain");
 const Funcion_1 = require("../Instrucciones/Funcion");
-const StartWith_1 = require("../Instrucciones/StartWith");
 const Errores_1 = require("./Errores");
 const Nodo_1 = require("./Nodo");
 class Ast {
@@ -28,7 +28,7 @@ class Ast {
         }
         //3era pasada ejecutamos las demás instrucciones
         for (let instruccion of this.lista_instrucciones) {
-            if (instruccion instanceof StartWith_1.StartWith && !bandera_start) {
+            if (instruccion instanceof Fmain_1.Fmain && !bandera_start) {
                 instruccion.ejecutar(controlador, ts);
                 bandera_start = true;
             }
