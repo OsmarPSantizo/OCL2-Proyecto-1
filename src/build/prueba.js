@@ -15,10 +15,15 @@ const ejecutarCodigo = (entrada) => {
     console.log(ts_html);
     console.log(controlador.consola);
 };
-ejecutarCodigo(`void probandoaritmetica (){
-        int[] arr1 = [12, 32, 43, 54];
+ejecutarCodigo(`
+        void probandoaritmetica (){
+            int[] arr1 = [12, 32, 43, 54];
 
-        println("Vector en el index 7: " & arr1[3]);
+            println("Valor del vector en el índice 7: " & arr1[3]);
+
+            arr1[3] = 2;
+
+            println("Valor del vector en el índice 7: " & arr1[3]);
         }
 
         start with probandoaritmetica();`);

@@ -279,7 +279,7 @@ lista_valores: lista_valores COMA e        {$$ = $1; $$.push($3);}
              ;
 
 
-modi_vector: ID CORA e CORC IGUAL e PYC {  }
+modi_vector: ID CORA e CORC IGUAL e PYC { $$ = new AccesoVector( $1, $3, $6, true ,@1.first_line,@1.last_column ); }
            ;
 
 // Lista de IDs
@@ -415,7 +415,7 @@ e
     | ID INCRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
     | ID DECRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
     | PARA tipo PARC e          {$$ = new Casteos($2,$4, @1.first_line,@1.last_column);}
-    | ID CORA e CORC  { $$ = new AccesoVector($1, $3,@1.first_line,@1.last_column); }
+    | ID CORA e CORC  { $$ = new AccesoVector($1, $3, $3, false ,@1.first_line,@1.last_column); }
     | GETVALUE PARA e COMA e PARC // Para obtener valor de la lista
     | llamada
     | startwith

@@ -4,11 +4,30 @@ exports.AccesoVector = void 0;
 const Errores_1 = require("../AST/Errores");
 const Tipo_1 = require("../TablaSimbolos/Tipo");
 class AccesoVector {
-    constructor(id, indice, linea, columna) {
+    constructor(id, indice, valor, modificar, linea, columna) {
         this.id = id;
         this.indice = indice;
         this.linea = linea;
         this.columna = columna;
+        this.valor = valor;
+        this.modificar = modificar;
+    }
+    ejecutar(controlador, ts) {
+        console.log('Modificando vector.');
+        if (this.modificar) {
+            let valorIndice = this.indice.getValor(controlador, ts);
+            let valoresVector = this.getValoresVector(ts);
+            let nuevoValor = this.valor.getValor(controlador, ts);
+            valoresVector[valorIndice] = nuevoValor;
+        }
+    }
+    getValoresVector(ts) {
+        let simAux = ts.getSimbolo(this.id);
+        if ((simAux === null || simAux === void 0 ? void 0 : simAux.simbolo) == 4) {
+            let valoresVector = simAux.valor;
+            return valoresVector;
+        }
+        return null;
     }
     getTipo(controlador, ts) {
         let valorIndice = this.indice.getValor(controlador, ts);
@@ -36,12 +55,9 @@ class AccesoVector {
         let tipo_valor = this.indice.getTipo(controlador, ts);
         if (tipo_valor == Tipo_1.tipo.ENTERO) {
             if (ts.existe(this.id)) {
-                let simAux = ts.getSimbolo(this.id);
-                if ((simAux === null || simAux === void 0 ? void 0 : simAux.simbolo) == 4) {
-                    let valoresVector = simAux.valor;
-                    let valorAcceso = valoresVector[valorIndice];
-                    return valorAcceso;
-                }
+                let valoresVector = this.getValoresVector(ts);
+                let valorAcceso = valoresVector[valorIndice];
+                return valorAcceso;
             }
             else {
                 let error = new Errores_1.Errores("Semantico", `El vector ${this.id} no ha sido declarada, entonces no se puede asignar un valor`, this.linea, this.columna);

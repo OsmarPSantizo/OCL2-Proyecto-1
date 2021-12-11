@@ -10,10 +10,8 @@ class DeclaracionVectores {
         this.listaExpresiones = listaExpresiones;
         this.linea = linea;
         this.columna = columna;
-        console.log('Lista Expresiones', this.listaExpresiones);
     }
     ejecutar(controlador, ts) {
-        console.log('DECLARACION VECTOR');
         for (let id of this.listaIds) {
             // Verificar si existe en la tabla actual
             if (ts.existeEnActual(id)) {

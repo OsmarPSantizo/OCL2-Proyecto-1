@@ -25,10 +25,15 @@ const ejecutarCodigo = (entrada:string) =>{
     console.log(controlador.consola);
 }
 
-ejecutarCodigo(`void probandoaritmetica (){
-        int[] arr1 = [12, 32, 43, 54];
+ejecutarCodigo(`
+        void probandoaritmetica (){
+            int[] arr1 = [12, 32, 43, 54];
 
-        println("Valor del vector en el índice 7: " & arr1[3]);
+            println("Valor del vector en el índice 7: " & arr1[3]);
+
+            arr1[3] = 2;
+
+            println("Valor del vector en el índice 7: " & arr1[3]);
         }
 
         start with probandoaritmetica();`);

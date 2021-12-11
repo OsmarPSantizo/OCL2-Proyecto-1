@@ -24,14 +24,11 @@ export class DeclaracionVectores implements Instruccion{
         this.listaExpresiones = listaExpresiones;
         this.linea = linea;
         this.columna = columna;
-        console.log('Lista Expresiones', this.listaExpresiones);
     }
 
 
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
-
-        console.log('DECLARACION VECTOR');
 
         for(let id of this.listaIds){
             // Verificar si existe en la tabla actual
