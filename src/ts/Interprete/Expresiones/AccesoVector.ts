@@ -55,19 +55,14 @@ export class AccesoVector implements Expresion, Instruccion{
 
     getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {
         let valorIndice = this.indice.getValor(controlador,ts);
-        let simAux = ts.getSimbolo(this.id);
+        let valoresVector = this.getValoresVector( ts );
 
-        if(simAux?.simbolo == 4){
-
-            let valoresVector = simAux.valor;
-
-            if( valorIndice < 0 || valorIndice >= valoresVector.length) {
-                // Indice es mayor o menor al tamaño del arreglo
-                let error = new Errores("Semántico", `Indice fuera de rango en el vector ${this.id}.`, this.linea, this.columna);
-                controlador.errores.push(error);
-                controlador.append(`ERROR: Semántico, índice fuera de rango en el vector ${this.id}. En la linea ${this.linea} y columna ${this.columna}.`);
-                return tipo.ERROR;
-            }
+        if( valorIndice < 0 || valorIndice >= valoresVector.length) {
+            // Indice es mayor o menor al tamaño del arreglo
+            let error = new Errores("Semántico", `Indice fuera de rango en el vector ${this.id}.`, this.linea, this.columna);
+            controlador.errores.push(error);
+            controlador.append(`ERROR: Semántico, índice fuera de rango en el vector ${this.id}. En la linea ${this.linea} y columna ${this.columna}.`);
+            return tipo.ERROR;
         }
 
         // Válida si el index es un entero.

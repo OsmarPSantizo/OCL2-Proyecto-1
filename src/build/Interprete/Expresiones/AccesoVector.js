@@ -31,16 +31,13 @@ class AccesoVector {
     }
     getTipo(controlador, ts) {
         let valorIndice = this.indice.getValor(controlador, ts);
-        let simAux = ts.getSimbolo(this.id);
-        if ((simAux === null || simAux === void 0 ? void 0 : simAux.simbolo) == 4) {
-            let valoresVector = simAux.valor;
-            if (valorIndice < 0 || valorIndice >= valoresVector.length) {
-                // Indice es mayor o menor al tamaño del arreglo
-                let error = new Errores_1.Errores("Semántico", `Indice fuera de rango en el vector ${this.id}.`, this.linea, this.columna);
-                controlador.errores.push(error);
-                controlador.append(`ERROR: Semántico, índice fuera de rango en el vector ${this.id}. En la linea ${this.linea} y columna ${this.columna}.`);
-                return Tipo_1.tipo.ERROR;
-            }
+        let valoresVector = this.getValoresVector(ts);
+        if (valorIndice < 0 || valorIndice >= valoresVector.length) {
+            // Indice es mayor o menor al tamaño del arreglo
+            let error = new Errores_1.Errores("Semántico", `Indice fuera de rango en el vector ${this.id}.`, this.linea, this.columna);
+            controlador.errores.push(error);
+            controlador.append(`ERROR: Semántico, índice fuera de rango en el vector ${this.id}. En la linea ${this.linea} y columna ${this.columna}.`);
+            return Tipo_1.tipo.ERROR;
         }
         // Válida si el index es un entero.
         if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.ENTERO) {

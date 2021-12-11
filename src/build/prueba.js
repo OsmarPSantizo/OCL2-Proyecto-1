@@ -19,11 +19,7 @@ ejecutarCodigo(`
         void probandoaritmetica (){
             int[] arr1 = [12, 32, 43, 54];
 
-            println("Valor del vector en el índice 7: " & arr1[3]);
-
-            arr1[3] = 2;
-
-            println("Valor del vector en el índice 7: " & arr1[3]);
+            println(arr1[1 : 3]);
         }
 
         start with probandoaritmetica();`);
