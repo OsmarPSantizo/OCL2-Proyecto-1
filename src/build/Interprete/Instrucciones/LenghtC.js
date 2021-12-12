@@ -11,7 +11,7 @@ class LenghtC {
     }
     getTipo(controlador, ts) {
         if (this.expresion.getTipo(controlador, ts) == Tipo_1.tipo.CADENA) {
-            return Tipo_1.tipo.CADENA;
+            return Tipo_1.tipo.ENTERO;
         }
         else {
             return Tipo_1.tipo.ERROR;
