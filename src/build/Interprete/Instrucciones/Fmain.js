@@ -11,6 +11,9 @@ class Fmain extends Simbolo_1.Simbolo {
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     agregarFuncionTS(ts) {
         if (!(ts.existe("main"))) {
             ts.agregar("main", this);

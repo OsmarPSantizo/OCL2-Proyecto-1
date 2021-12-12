@@ -8,6 +8,9 @@ export  class Break implements Instruccion{
 
     
     }
+    traducir(controlador: Controlador, ts: TablaSimbolos) {
+        throw new Error("Method not implemented.");
+    }
 
     ejecutar(controlador : Controlador, ts: TablaSimbolos){
         return this;

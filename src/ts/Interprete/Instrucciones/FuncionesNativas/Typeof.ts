@@ -1,4 +1,3 @@
-import {Errores} from "../../AST/Errores";
 import {Nodo} from "../../AST/Nodo";
 import {Controlador} from "../../Controlador";
 import { Expresion } from "../../Interfaces/Expresion";

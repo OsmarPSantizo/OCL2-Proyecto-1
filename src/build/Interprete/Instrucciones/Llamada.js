@@ -12,6 +12,9 @@ class Llamada {
         this.columna = columna;
         this.linea = linea;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     getTipo(controlador, ts) {
         let simbolo_funcion = ts.getSimbolo(this.identificador);
         return simbolo_funcion.tipo.n_tipo;

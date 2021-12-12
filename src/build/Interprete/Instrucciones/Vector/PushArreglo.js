@@ -15,7 +15,7 @@ class PushArreglo {
     }
     getValoresVector(ts) {
         let simAux = ts.getSimbolo(this.id);
-        if ((simAux === null || simAux === void 0 ? void 0 : simAux.simbolo) == 4) {
+        if ((simAux === null || simAux === void 0 ? void 0 : simAux.simbolo) === 4) {
             let valoresVector = simAux.valor;
             return valoresVector;
         }

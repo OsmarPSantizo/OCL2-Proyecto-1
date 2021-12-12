@@ -30,6 +30,9 @@ export  class Declaracion implements Instruccion{
         this.columna = columna;
         
     }
+    traducir(controlador: Controlador, ts: TablaSimbolos) {
+        throw new Error("Method not implemented.");
+    }
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos){
         for(let id of this.lista_ids){

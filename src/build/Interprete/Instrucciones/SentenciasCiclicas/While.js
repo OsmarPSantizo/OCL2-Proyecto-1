@@ -14,6 +14,9 @@ class While {
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador, ts) {
         let temp = controlador.sent_ciclica;
         controlador.sent_ciclica = true;

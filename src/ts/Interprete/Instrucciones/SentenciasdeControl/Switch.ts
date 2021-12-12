@@ -24,6 +24,9 @@ export class Switch implements Instruccion{
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador: Controlador, ts: TablaSimbolos) {
+        throw new Error("Method not implemented.");
+    }
 
     ejecutar( controlador : Controlador, ts:TablaSimbolos){
         let ts_local = new TablaSimbolos(ts);

@@ -16,4 +16,6 @@ export interface Instruccion{
      */
 
     recorrer(): Nodo
+
+    traducir(controlador: Controlador, ts:TablaSimbolos):any;
 }

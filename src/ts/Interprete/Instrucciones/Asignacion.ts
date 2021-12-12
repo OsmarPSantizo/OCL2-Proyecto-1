@@ -21,6 +21,9 @@ export  class Asignacion implements Instruccion{
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador: Controlador, ts: TablaSimbolos) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador : Controlador, ts: TablaSimbolos){
         //hay que revisar si existe en la tabla de símbolos
         

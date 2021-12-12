@@ -25,6 +25,9 @@ export class Ifs implements Instruccion{
         this.columna = columna;
         this.linea = linea;
     }
+    traducir(controlador: Controlador, ts: TablaSimbolos) {
+        throw new Error("Method not implemented.");
+    }
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos){
         

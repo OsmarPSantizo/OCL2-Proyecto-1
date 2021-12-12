@@ -23,6 +23,9 @@ export class DoWhile implements Instruccion{
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador: Controlador, ts: TablaSimbolos) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
         let temp = controlador.sent_ciclica;
         controlador.sent_ciclica = true;

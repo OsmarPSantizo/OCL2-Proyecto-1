@@ -22,6 +22,9 @@ export class Caso implements Instruccion{
         this.column = column;
 
     }
+    traducir(controlador: Controlador, ts: TablaSimbolos) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador : Controlador, ts:TablaSimbolos){
         let ts_local = new TablaSimbolos(ts);
         if(controlador.tablas.some(x=> x === ts_local)){

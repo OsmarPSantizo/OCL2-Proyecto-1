@@ -18,6 +18,9 @@ export class Print implements Instruccion{
         this.columna = columna;
 
     }
+    traducir(controlador: Controlador, ts: TablaSimbolos) {
+        throw new Error("Method not implemented.");
+    }
 
 
 

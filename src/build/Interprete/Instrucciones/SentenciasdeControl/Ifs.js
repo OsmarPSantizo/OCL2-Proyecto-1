@@ -16,6 +16,9 @@ class Ifs {
         this.columna = columna;
         this.linea = linea;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador, ts) {
         let ts_local = new TablaSimbolos_1.TablaSimbolos(ts); //Creamos una tabla de simbolos local que se ejecute solo dentro del if
         //PAra agregar las tablas locales

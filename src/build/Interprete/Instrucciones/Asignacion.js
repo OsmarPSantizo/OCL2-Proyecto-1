@@ -11,6 +11,9 @@ class Asignacion {
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador, ts) {
         //hay que revisar si existe en la tabla de símbolos
         var _a, _b, _c, _d, _e, _f, _g, _h;

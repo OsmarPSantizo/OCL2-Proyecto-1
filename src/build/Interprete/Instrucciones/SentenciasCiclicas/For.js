@@ -16,6 +16,9 @@ class For {
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador, ts) {
         let ts_local = new TablaSimbolos_1.TablaSimbolos(ts);
         if (controlador.tablas.some(x => x === ts_local)) {

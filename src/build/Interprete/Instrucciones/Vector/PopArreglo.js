@@ -12,7 +12,6 @@ class PopArreglo {
     getTipo(controlador, ts) {
         let simAux = ts.getSimbolo(this.id);
         let nombreTipo = simAux.tipo.nombre_tipo;
-        console.log("TIPO", nombreTipo);
         switch (nombreTipo) {
             case 'ENTERO':
                 return Tipo_1.tipo.ENTERO;

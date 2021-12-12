@@ -13,6 +13,9 @@ class Declaracion {
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador, ts) {
         for (let id of this.lista_ids) {
             //1er paso. Verificar si existe en la tabla actual

@@ -10,6 +10,9 @@ class Ast {
     constructor(lista_instrucciones) {
         this.lista_instrucciones = lista_instrucciones;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador, ts) {
         let bandera_start = false;
         //1era pasada vamos a guardar las funciones y métodos del programa

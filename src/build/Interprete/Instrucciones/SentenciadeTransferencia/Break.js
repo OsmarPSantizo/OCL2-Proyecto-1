@@ -5,6 +5,9 @@ const Nodo_1 = require("../../AST/Nodo");
 class Break {
     constructor() {
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador, ts) {
         return this;
     }

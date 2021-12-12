@@ -11,6 +11,9 @@ class DeclaracionVectores {
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador, ts) {
         for (let id of this.listaIds) {
             // Verificar si existe en la tabla actual

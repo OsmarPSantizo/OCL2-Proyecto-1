@@ -12,6 +12,9 @@ class Funcion extends Simbolo_1.Simbolo {
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     //Se crea un método para agregar el símbolo de la función a la tabla de símbolos
     agregarFuncionTS(ts) {
         if (!(ts.existe(this.identificador))) {
