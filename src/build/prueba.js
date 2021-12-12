@@ -18,8 +18,13 @@ const ejecutarCodigo = (entrada) => {
 ejecutarCodigo(`
     void probandoaritmetica (){
         int[] arr1 = [12, 32, 43, 54];
-
+        string animal = "tigre";
         println(arr1[1 : 3]);
+
+        println("gola");
+
+        println( animal.length());
+
     }
 
     start with probandoaritmetica();
