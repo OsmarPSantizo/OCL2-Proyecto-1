@@ -108,6 +108,8 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 "caracterOfPosition"             {console.log("Reconocio: "+yytext); return 'CARAOFPOS'}
 "length"             {console.log("Reconocio: "+yytext); return 'CARALENGHT'}
 "parse"             {console.log("Reconocio: "+yytext); return 'PARSE'}
+"push"             {console.log("Reconocio: "+yytext); return 'PUSH'}
+"pop"             {console.log("Reconocio: "+yytext); return 'POP'}
 
 "if"                    {console.log("Reconocio: "+yytext); return 'IF'}
 "else"                    {console.log("Reconocio: "+yytext); return 'ELSE'}
@@ -182,6 +184,8 @@ caracter      (\' ({escape2}|{aceptacion2})\')
         const {Declaracion} = require('../Instrucciones/Declaracion');
         const {DeclaracionVectores} = require('../Instrucciones/DeclaracionVectores');
         const {SliceVector} = require('../Instrucciones/Vector/SliceVector');
+        const {PushArreglo} = require('../Instrucciones/Vector/PushArreglo');
+        const {PopArreglo} = require('../Instrucciones/Vector/PopArreglo');
 
         const {AccesoVector} = require('../Expresiones/AccesoVector');
         const {Asignacion} = require('../Instrucciones/Asignacion');
@@ -247,6 +251,7 @@ instruccion : declaracion { $$ = $1; }
             | ID DECRE PYC   { $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column); }
             | ID INCRE PYC   { $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column); }
             | modi_vector    { $$ = $1; }
+            | push_vector    { $$ = $1; }
             | funciones      { $$ = $1;}
             | llamada PYC    { $$ = $1;}
             | startwith PYC  { $$ = $1;}
@@ -285,6 +290,10 @@ lista_valores: lista_valores COMA e        {$$ = $1; $$.push($3);}
 
 modi_vector: ID CORA e CORC IGUAL e PYC { $$ = new AccesoVector( $1, $3, $6, true ,@1.first_line,@1.last_column ); }
            ;
+
+push_vector:
+         ID PNT PUSH PARA e PARC PYC {$$ = new PushArreglo($1, $5, @1.first_line,@1.last_column);}
+;
 
 // Lista de IDs
 
@@ -418,7 +427,9 @@ e
     | TRUE                      {$$ = new Primitivo(true,'BOOLEAN',@1.first_line,@1.last_column);}
     | FALSE                     {$$ = new Primitivo(false,'BOOLEAN',@1.first_line,@1.last_column);}
     | e INTERROGACION e DOSPUNTOS e {$$ = new Ternario($1,$3,$5,@1.first_line,@1.last_column);}
-    | ID PNT CARALENGHT PARA PARC {$$ = new LenghtC($1,@1.first_line,@1.last_column);}
+    | ID PNT CARALENGHT PARA PARC {$$ = new LenghtC($1, @1.first_line,@1.last_column);}
+
+    | ID PNT POP PARA PARC {$$ = new PopArreglo($1, @1.first_line,@1.last_column);}
     | ID INCRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
     | ID DECRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
     | PARA tipo PARC e          {$$ = new Casteos($2,$4, @1.first_line,@1.last_column);}

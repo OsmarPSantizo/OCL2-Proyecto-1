@@ -36,9 +36,9 @@ class Ast {
                 instruccion.ejecutar(controlador, ts);
             }
             else if (bandera_start) {
-                let error = new Errores_1.Errores("Semantico", `Solo se puede colocar un startwith.`, 0, 0);
+                let error = new Errores_1.Errores("Semantico", `Solo se puede colocar un main.`, 0, 0);
                 controlador.errores.push(error);
-                controlador.append(`ERROR: Semántico, Solo se puede colocar un startwith.`);
+                controlador.append(`ERROR: Semántico, Solo se puede colocar un main.`);
                 console.log("no se puede");
             }
         }
