@@ -19,31 +19,14 @@ export class LenghtC implements Expresion{
         this.columna = columna;
     }
 
-
     getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {
         return tipo.CADENA;
-    }
-
-    getValoresVector(ts: TablaSimbolos) {
-
-        let simAux = ts.getSimbolo(this.id);
-
-        if(simAux?.simbolo == 4){
-
-            let valoresVector = simAux.valor;
-            return valoresVector;
-
-        }
-
-        return null;
-
     }
 
     getValor(controlador: Controlador, ts: TablaSimbolos) {
 
         let simbolo = ts.getSimbolo( this.id );
         let valorSimbolo: any = simbolo.getValor();
-        console.log('VALOR SIMBOLO:', valorSimbolo);
 
         if( simbolo.simbolo === 1 || simbolo.simbolo === 4) {
 
@@ -60,7 +43,7 @@ export class LenghtC implements Expresion{
 
     }
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        return;
     }
 
 }
