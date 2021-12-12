@@ -17,51 +17,21 @@ const ejecutarCodigo = (entrada) => {
 };
 ejecutarCodigo(`
 
-int ackerman(int m, int n)
-{    
-    if (m == 0){
-        return n + 1;
-    }else if (m > 0 && n == 0){
-        return ackerman(m - 1, 1);
-    }else{
-        return ackerman(m - 1, ackerman(m, n - 1));
+    void main(){
+        int[] arr1 = [12, 32, 43, 54];
+        string animal = "tigre";
+        int poppedItem = arr1.pop();
+        println("El valor eliminado del arreglo es: " & poppedItem);
+        poppedItem = arr1.pop();
+        println("El valor eliminado del arreglo es: " & poppedItem);
+        println(arr1);
+        arr1.push(102);
+        println(arr1);
+        arr1.push(199);
+        println(arr1);
+        println("El tamaño de la cadena es: " & animal.length());
+        println("El tamaño del arreglo es: " & arr1.length());
     }
-}
-
-void hanoi( int discos, int origen, int auxiliar, int destino)
-{
-    if (discos == 1){
-        println("Mover de " & origen & " a " & destino);
-    }else{
-        hanoi(discos - 1, origen, destino, auxiliar);
-        println("Mover de " & origen & " a " & destino);
-        hanoi(discos - 1, auxiliar, origen, destino);
-    }
-}
-
-int factorial(int num)
-{
-    if (num == 1){
-        return 1;
-    }else{
-        return num * factorial(num - 1);
-    }
-}
-
-void main()
-{
-    println("=====================================================");
-    println("===========FUNCIONES RECURSIVAS======================");
-    println("=====================================================");
-    println("");
-
-    println("==============FACTORIAL==============================");
-    println(factorial(5));
-    println("===============ACKERMAN==============================");
-    println(ackerman(3, 5));
-    println("===============HANOI=================================");
-    hanoi(3, 1, 2, 3);
-}
 
 
 `);
