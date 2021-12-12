@@ -128,8 +128,6 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 "continue"                {console.log("Reconocio: "+yytext); return 'CONTINUE'}
 "return"                {console.log("Reconocio: "+yytext); return 'RETURN'}
 "struct"                {console.log("Reconocio: "+yytext); return 'STRUCT'}
-"start"                {console.log("Reconocio: "+yytext); return 'START'}
-"with"                {console.log("Reconocio: "+yytext); return 'WITH'}
 "main"                {console.log("Reconocio: "+yytext); return 'MAIN'}
 
 
@@ -186,7 +184,6 @@ caracter      (\' ({escape2}|{aceptacion2})\')
         const {SliceVector} = require('../Instrucciones/Vector/SliceVector');
         const {PushArreglo} = require('../Instrucciones/Vector/PushArreglo');
         const {PopArreglo} = require('../Instrucciones/Vector/PopArreglo');
-
         const {AccesoVector} = require('../Expresiones/AccesoVector');
         const {Asignacion} = require('../Instrucciones/Asignacion');
         const {Ifs} = require('../Instrucciones/SentenciasdeControl/Ifs');
@@ -206,7 +203,6 @@ caracter      (\' ({escape2}|{aceptacion2})\')
         const {For} = require('../Instrucciones/SentenciasCiclicas/For');
         const {Funcion} = require('../Instrucciones/Funcion');
         const {Llamada} = require('../Instrucciones/Llamada');
-        const {StartWith} = require('../Instrucciones/StartWith');
         const {Fmain} = require('../Instrucciones/Fmain');
 %}
 
@@ -254,7 +250,6 @@ instruccion : declaracion { $$ = $1; }
             | push_vector    { $$ = $1; }
             | funciones      { $$ = $1;}
             | llamada PYC    { $$ = $1;}
-            | startwith PYC  { $$ = $1;}
             | error {console.log("Error Sintactico "  + yytext
                            + " linea: " + this._$.first_line
                            +" columna: "+ this._$.first_column);
@@ -390,9 +385,6 @@ llamada : ID PARA lista_valores PARC       {$$ = new Llamada($1,$3,@1.first_line
         ;
 
 
-startwith : START WITH llamada     {$$ = new StartWith($3,@1.first_line, @1.last_column);}
-          ;
-
 
 e
     : e MAS e                   {$$ = new Aritmetica($1, '+', $3, @1.first_line,@1.last_column, false);}
@@ -428,7 +420,6 @@ e
     | FALSE                     {$$ = new Primitivo(false,'BOOLEAN',@1.first_line,@1.last_column);}
     | e INTERROGACION e DOSPUNTOS e {$$ = new Ternario($1,$3,$5,@1.first_line,@1.last_column);}
     | ID PNT CARALENGHT PARA PARC {$$ = new LenghtC($1, @1.first_line,@1.last_column);}
-
     | ID PNT POP PARA PARC {$$ = new PopArreglo($1, @1.first_line,@1.last_column);}
     | ID INCRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
     | ID DECRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
@@ -437,7 +428,6 @@ e
     | ID CORA e CORC  { $$ = new AccesoVector($1, $3, $3, false ,@1.first_line,@1.last_column); }
     | GETVALUE PARA e COMA e PARC // Para obtener valor de la lista
     | llamada
-    | startwith
     | e PNT TOUPPER PARA PARC {$$ = new Toupper($1,@1.first_line,@1.last_column);}
     | e PNT TOLOWER PARA PARC {$$ = new Tolower($1,@1.first_line,@1.last_column);}
     | e PNT SUBSTR PARA e COMA e PARC   {$$ = new  SubString($1,$5,$7,@1.first_line,@1.last_column);}

@@ -2,7 +2,6 @@ import {Controlador} from "../Controlador";
 import {Declaracion} from "../Instrucciones/Declaracion";
 import { Fmain } from "../Instrucciones/Fmain";
 import {Funcion }from "../Instrucciones/Funcion";
-import {StartWith} from "../Instrucciones/StartWith";
 import { Instruccion } from "../Interfaces/Instruccion";
 import {TablaSimbolos} from "../TablaSimbolos/TablaSimbolos";
 import {Errores} from "./Errores";
