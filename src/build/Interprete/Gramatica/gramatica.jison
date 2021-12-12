@@ -235,6 +235,8 @@ instruccion : declaracion { $$ = $1; }
             | impresion   { $$ = $1; }
             | asignacion  { $$ = $1; }
             | decl_vectores  { $$ = $1;}
+            | push_vector    { $$ = $1; }
+            | pop_vector    { $$ = $1; }
             | sent_if     { $$ = $1; }
             | sent_while  { $$ = $1; }
             | BREAK PYC   { $$ = new Break(); }
@@ -247,7 +249,6 @@ instruccion : declaracion { $$ = $1; }
             | ID DECRE PYC   { $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column); }
             | ID INCRE PYC   { $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column); }
             | modi_vector    { $$ = $1; }
-            | push_vector    { $$ = $1; }
             | funciones      { $$ = $1;}
             | llamada PYC    { $$ = $1;}
             | error {console.log("Error Sintactico "  + yytext
@@ -288,6 +289,10 @@ modi_vector: ID CORA e CORC IGUAL e PYC { $$ = new AccesoVector( $1, $3, $6, tru
 
 push_vector:
          ID PNT PUSH PARA e PARC PYC {$$ = new PushArreglo($1, $5, @1.first_line,@1.last_column);}
+;
+
+pop_vector:
+         ID PNT POP PARA PARC PYC {$$ = new PopArreglo($1, @1.first_line,@1.last_column);}
 ;
 
 // Lista de IDs

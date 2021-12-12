@@ -2,12 +2,13 @@ import { Errores } from "../../AST/Errores";
 import { Nodo } from "../../AST/Nodo";
 import { Controlador } from "../../Controlador";
 import { Expresion } from "../../Interfaces/Expresion";
+import { Instruccion } from "../../Interfaces/Instruccion";
 import { TablaSimbolos } from "../../TablaSimbolos/TablaSimbolos";
 import { tipo } from "../../TablaSimbolos/Tipo";
 
 
 
-export class PopArreglo implements Expresion{
+export class PopArreglo implements Expresion, Instruccion{
 
     public id : string;
     public linea: number;
@@ -17,6 +18,28 @@ export class PopArreglo implements Expresion{
         this.id = id;
         this.linea = linea;
         this.columna = columna;
+    }
+
+    ejecutar(controlador: Controlador, ts: TablaSimbolos) {
+        console.log('POP');
+        let simbolo = ts.getSimbolo( this.id );
+
+        if( simbolo.simbolo === 1 || simbolo.simbolo === 4) {
+            let poppedValue = this.getPoppedValue( ts );
+            console.log('poppedValue', poppedValue);
+            poppedValue
+
+        } else {
+
+            let error = new Errores("Semantico",`La expresión no es de tipo iterable, no se puede realizar la función pop.`,this.linea,this.columna);
+            controlador.errores.push(error);
+            controlador.append(`ERROR: Semántico, La expresión no es de tipo iterable, no se puede realizar la función pop. En la linea ${this.linea} y columna ${this.columna}`);
+
+        }
+    }
+
+    traducir(controlador: Controlador, ts: TablaSimbolos) {
+        throw new Error("Method not implemented.");
     }
 
 
@@ -52,6 +75,7 @@ export class PopArreglo implements Expresion{
     }
 
     getValor(controlador: Controlador, ts: TablaSimbolos) {
+        console.log('POP2');
         let simbolo = ts.getSimbolo( this.id );
 
         if( simbolo.simbolo === 1 || simbolo.simbolo === 4) {

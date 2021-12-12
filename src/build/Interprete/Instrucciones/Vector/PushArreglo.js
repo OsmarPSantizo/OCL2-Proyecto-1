@@ -10,9 +10,23 @@ class PushArreglo {
         this.columna = columna;
         this.valor = valor;
     }
-    getTipo(controlador, ts) {
-        return Tipo_1.tipo.CADENA;
+    ejecutar(controlador, ts) {
+        let simbolo = ts.getSimbolo(this.id);
+        let vector = this.getValoresVector(ts);
+        let newValue = this.valor.getValor(controlador, ts);
+        if (simbolo.simbolo === 1 || simbolo.simbolo === 4) {
+            vector.push(newValue);
+        }
+        else {
+            let error = new Errores_1.Errores("Semantico", `La expresión no es de tipo cadena, solo se puede usar Lenght con cadenas`, this.linea, this.columna);
+            controlador.errores.push(error);
+            controlador.append(`ERROR: Semántico, La expresión no es de tipo cadena. En la linea ${this.linea} y columna ${this.columna}`);
+            return Tipo_1.tipo.ERROR;
+        }
     }
+    // getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {
+    //     return tipo.CADENA;
+    // }
     getValoresVector(ts) {
         let simAux = ts.getSimbolo(this.id);
         if ((simAux === null || simAux === void 0 ? void 0 : simAux.simbolo) === 4) {
@@ -21,19 +35,23 @@ class PushArreglo {
         }
         return null;
     }
-    getValor(controlador, ts) {
-        let simbolo = ts.getSimbolo(this.id);
-        let valorSimbolo = simbolo.getValor();
-        let newValue = this.valor.getValor(controlador, ts);
-        if (simbolo.simbolo === 1 || simbolo.simbolo === 4) {
-            return valorSimbolo.push(newValue);
-        }
-        else {
-            let error = new Errores_1.Errores("Semantico", `La expresión no es de tipo cadena, solo se puede usar Lenght con cadenas`, this.linea, this.columna);
-            controlador.errores.push(error);
-            controlador.append(`ERROR: Semántico, La expresión no es de tipo cadena. En la linea ${this.linea} y columna ${this.columna}`);
-            return Tipo_1.tipo.ERROR;
-        }
+    // getValor(controlador: Controlador, ts: TablaSimbolos) {
+    //     let simbolo = ts.getSimbolo( this.id );
+    //     let vector =  this.getValoresVector( ts );
+    //     console.log('Vector:', vector);
+    //     let newValue = this.valor.getValor( controlador, ts );
+    //     console.log('Nuevo Valor:', newValue);
+    //     if( simbolo.simbolo === 1 || simbolo.simbolo === 4) {
+    //         return vector.push(newValue);
+    //     } else {
+    //         let error = new Errores("Semantico",`La expresión no es de tipo cadena, solo se puede usar Lenght con cadenas`,this.linea,this.columna);
+    //         controlador.errores.push(error);
+    //         controlador.append(`ERROR: Semántico, La expresión no es de tipo cadena. En la linea ${this.linea} y columna ${this.columna}`);
+    //         return tipo.ERROR;
+    //     }
+    // }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
     }
     recorrer() {
         throw new Error("Method not implemented.");
