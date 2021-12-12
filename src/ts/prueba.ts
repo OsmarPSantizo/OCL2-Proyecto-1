@@ -26,16 +26,17 @@ const ejecutarCodigo = (entrada:string) =>{
 }
 
 ejecutarCodigo(`
-    void probandoaritmetica (){
+
+    void main(){
         int[] arr1 = [12, 32, 43, 54];
         string animal = "tigre";
         println(arr1[1 : 3]);
 
         println("gola");
 
-        println( animal.length());
-
+        println("El tamaño de la cadena es: " & animal.length());
+        println("El tamaño del arreglo es: " & arr1.length());
     }
 
-    start with probandoaritmetica();
+
 `);

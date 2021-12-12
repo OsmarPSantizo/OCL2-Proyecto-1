@@ -9,39 +9,55 @@ import { tipo } from "../TablaSimbolos/Tipo";
 
 export class LenghtC implements Expresion{
 
-    public expresion : Expresion;
+    public id : string;
     public linea: number;
     public columna: number;
 
-    constructor (expresion: Expresion, linea:number, columna:number){
-        this.expresion = expresion;
+    constructor (id: string, linea:number, columna:number){
+        this.id = id;
         this.linea = linea;
         this.columna = columna;
     }
 
 
     getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {
-        if(this.expresion.getTipo(controlador,ts)==tipo.CADENA){
-            return tipo.ENTERO
-        }else{
-            return tipo.ERROR
-        }
+        return tipo.CADENA;
     }
+
+    getValoresVector(ts: TablaSimbolos) {
+
+        let simAux = ts.getSimbolo(this.id);
+
+        if(simAux?.simbolo == 4){
+
+            let valoresVector = simAux.valor;
+            return valoresVector;
+
+        }
+
+        return null;
+
+    }
+
     getValor(controlador: Controlador, ts: TablaSimbolos) {
-        let valor;
-        let tipo_valor:tipo;
 
-        tipo_valor = this.expresion.getTipo(controlador,ts);
-        valor = this.expresion.getValor(controlador,ts);
+        let simbolo = ts.getSimbolo( this.id );
+        let valorSimbolo: any = simbolo.getValor();
+        console.log('VALOR SIMBOLO:', valorSimbolo);
 
-        if(tipo_valor == tipo.CADENA){
-            return valor.length
-        }else{
+        if( simbolo.simbolo === 1 || simbolo.simbolo === 4) {
+
+            return valorSimbolo.length;
+
+        } else {
+
             let error = new Errores("Semantico",`La expresión no es de tipo cadena, solo se puede usar Lenght con cadenas`,this.linea,this.columna);
             controlador.errores.push(error);
             controlador.append(`ERROR: Semántico, La expresión no es de tipo cadena. En la linea ${this.linea} y columna ${this.columna}`);
             return tipo.ERROR;
+
         }
+
     }
     recorrer(): Nodo {
         throw new Error("Method not implemented.");

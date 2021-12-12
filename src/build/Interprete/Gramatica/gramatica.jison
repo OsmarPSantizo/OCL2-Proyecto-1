@@ -418,6 +418,7 @@ e
     | TRUE                      {$$ = new Primitivo(true,'BOOLEAN',@1.first_line,@1.last_column);}
     | FALSE                     {$$ = new Primitivo(false,'BOOLEAN',@1.first_line,@1.last_column);}
     | e INTERROGACION e DOSPUNTOS e {$$ = new Ternario($1,$3,$5,@1.first_line,@1.last_column);}
+    | ID PNT CARALENGHT PARA PARC {$$ = new LenghtC($1,@1.first_line,@1.last_column);}
     | ID INCRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
     | ID DECRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
     | PARA tipo PARC e          {$$ = new Casteos($2,$4, @1.first_line,@1.last_column);}
@@ -430,7 +431,6 @@ e
     | e PNT TOLOWER PARA PARC {$$ = new Tolower($1,@1.first_line,@1.last_column);}
     | e PNT SUBSTR PARA e COMA e PARC   {$$ = new  SubString($1,$5,$7,@1.first_line,@1.last_column);}
     | e PNT CARAOFPOS PARA e PARC   {$$ = new  CharOfPosition($1,$5,@1.first_line,@1.last_column);}
-    | e PNT CARALENGHT PARA PARC {$$ = new LenghtC($1,@1.first_line,@1.last_column);}
     | TOINT PARA e PARC     {$$ = new ToInt($3,@1.first_line,@1.last_column);}
     | TODOUBLE PARA e PARC     {$$ = new ToDouble($3,@1.first_line,@1.last_column);}
     | ROUND PARA e PARC     {$$ = new Round($3,@1.first_line,@1.last_column);}
