@@ -22,7 +22,7 @@ export class LenghtC implements Expresion{
 
     getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {
         if(this.expresion.getTipo(controlador,ts)==tipo.CADENA){
-            return tipo.CADENA
+            return tipo.ENTERO
         }else{
             return tipo.ERROR
         }
