@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PushArreglo = void 0;
 const Errores_1 = require("../../AST/Errores");
-const Tipo_1 = require("../../TablaSimbolos/Tipo");
 class PushArreglo {
     constructor(id, valor, linea, columna) {
         this.id = id;
@@ -21,7 +20,6 @@ class PushArreglo {
             let error = new Errores_1.Errores("Semantico", `La expresión no es de tipo cadena, solo se puede usar Lenght con cadenas`, this.linea, this.columna);
             controlador.errores.push(error);
             controlador.append(`ERROR: Semántico, La expresión no es de tipo cadena. En la linea ${this.linea} y columna ${this.columna}`);
-            return Tipo_1.tipo.ERROR;
         }
     }
     // getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {

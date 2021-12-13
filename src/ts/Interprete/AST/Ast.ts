@@ -58,6 +58,12 @@ export class Ast implements Instruccion{
             
                      
         }
+        if(bandera_start == false){
+            let error = new Errores("Semantico",`Se debe colocar un void main() para correr el programa.`,0,0);
+                controlador.errores.push(error);
+                controlador.append(`ERROR: Semántico, Se debe colocar un void main() para correr el programa.`);
+               
+        }
     }
     recorrer():Nodo{
         let raiz = new Nodo("INICIO","");

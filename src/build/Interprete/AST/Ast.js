@@ -45,6 +45,11 @@ class Ast {
                 console.log("no se puede");
             }
         }
+        if (bandera_start == false) {
+            let error = new Errores_1.Errores("Semantico", `Se debe colocar un void main() para correr el programa.`, 0, 0);
+            controlador.errores.push(error);
+            controlador.append(`ERROR: Semántico, Se debe colocar un void main() para correr el programa.`);
+        }
     }
     recorrer() {
         let raiz = new Nodo_1.Nodo("INICIO", "");

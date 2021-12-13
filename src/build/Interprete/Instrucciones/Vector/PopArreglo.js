@@ -21,7 +21,6 @@ class PopArreglo {
             let error = new Errores_1.Errores("Semantico", `La expresión no es de tipo iterable, no se puede realizar la función pop.`, this.linea, this.columna);
             controlador.errores.push(error);
             controlador.append(`ERROR: Semántico, La expresión no es de tipo iterable, no se puede realizar la función pop. En la linea ${this.linea} y columna ${this.columna}`);
-            return Tipo_1.tipo.ERROR;
         }
     }
     traducir(controlador, ts) {

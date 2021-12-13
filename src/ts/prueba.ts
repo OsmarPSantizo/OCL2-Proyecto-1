@@ -40,6 +40,7 @@ ejecutarCodigo(`
         arr1.pop();
         println(arr1);
 
+        
         println("El tamaño de la cadena es: " & animal.length());
         println("El tamaño del arreglo es: " & arr1.length());
     }

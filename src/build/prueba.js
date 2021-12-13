@@ -22,13 +22,15 @@ ejecutarCodigo(`
         string animal = "tigre";
         int poppedItem = arr1.pop();
         println("El valor eliminado del arreglo es: " & poppedItem);
-        poppedItem = arr1.pop();
-        println("El valor eliminado del arreglo es: " & poppedItem);
         println(arr1);
         arr1.push(102);
         println(arr1);
         arr1.push(199);
         println(arr1);
+        arr1.pop();
+        println(arr1);
+
+        
         println("El tamaño de la cadena es: " & animal.length());
         println("El tamaño del arreglo es: " & arr1.length());
     }
