@@ -131,7 +131,6 @@ export class Llamada implements Instruccion , Expresion{
                     let simbolo = new Simbolo(aux.simbolo, aux.tipo, aux_id,aux_valor_exp);
                     ts_local.agregar(aux_id, simbolo);
                     
-
                 }
             }
             return true;
