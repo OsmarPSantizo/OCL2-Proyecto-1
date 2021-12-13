@@ -10,7 +10,8 @@ var tipo;
     tipo[tipo["CADENA"] = 4] = "CADENA";
     tipo[tipo["ERROR"] = 5] = "ERROR";
     tipo[tipo["VOID"] = 6] = "VOID";
-    tipo[tipo["NULLL"] = 7] = "NULLL";
+    tipo[tipo["STRUCT"] = 7] = "STRUCT";
+    tipo[tipo["NULLL"] = 8] = "NULLL";
 })(tipo = exports.tipo || (exports.tipo = {}));
 /**
  *  @class me permite llevar el control de los tipos del programa, ENTERO,DOBLE,CADENA,CARACTER,BOOLEAN,
@@ -38,6 +39,9 @@ class Tipo {
         }
         else if (this.nombre_tipo == 'VOID') {
             return tipo.VOID;
+        }
+        else if (this.nombre_tipo.includes('STRUCT')) {
+            return tipo.STRUCT;
         }
         else if (this.nombre_tipo == 'NULL') {
             return tipo.NULLL;

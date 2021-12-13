@@ -127,7 +127,7 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 "getvalue"                {console.log("Reconocio: "+yytext); return 'GETVALUE'}
 "continue"                {console.log("Reconocio: "+yytext); return 'CONTINUE'}
 "return"                {console.log("Reconocio: "+yytext); return 'RETURN'}
-"struct"                {console.log("Reconocio: "+yytext); return 'STRUCT'}
+"struct"                {console.log("Reconocio: "+yytext); return 'STRUCTC'}
 "main"                {console.log("Reconocio: "+yytext); return 'MAIN'}
 
 
@@ -180,11 +180,18 @@ caracter      (\' ({escape2}|{aceptacion2})\')
         const {LenghtC} = require('../Instrucciones/LenghtC')
         const {Casteos} = require('../Instrucciones/FuncionesNativas/Casteos');
         const {Declaracion} = require('../Instrucciones/Declaracion');
+
+        // Vectores
         const {DeclaracionVectores} = require('../Instrucciones/DeclaracionVectores');
         const {SliceVector} = require('../Instrucciones/Vector/SliceVector');
         const {PushArreglo} = require('../Instrucciones/Vector/PushArreglo');
         const {PopArreglo} = require('../Instrucciones/Vector/PopArreglo');
         const {AccesoVector} = require('../Expresiones/AccesoVector');
+
+        // Structs
+        const { DefinicionStruct } = require('../Instrucciones/Struct/DefinicionStruct');
+        const { AccesoStruct } = require('../Expresiones/Struct/AccesoStruct')
+
         const {Asignacion} = require('../Instrucciones/Asignacion');
         const {Ifs} = require('../Instrucciones/SentenciasdeControl/Ifs');
         const {While }= require('../Instrucciones/SentenciasCiclicas/While');
@@ -233,6 +240,7 @@ instrucciones : instrucciones instruccion   {$$ = $1; $$.push($2);}
 
 instruccion : declaracion { $$ = $1; }
             | impresion   { $$ = $1; }
+            | struct      { $$ = $1; }
             | asignacion  { $$ = $1; }
             | decl_vectores  { $$ = $1;}
             | push_vector    { $$ = $1; }
@@ -267,7 +275,7 @@ declaracion : tipo lista_ids IGUAL e PYC    {$$ = new Declaracion($1,$2,$4,@1.fi
 
 tipo : DOUBLE       {$$ = new Tipo("DOBLE");}
      | INT          {$$ = new Tipo("ENTERO");}
-     | STRING       {$$ = new Tipo("CADENA");}
+     | STRINGT       {$$ = new Tipo("CADENA");}
      | CHAR         {$$ = new Tipo("CARACTER");}
      | BOOLEAN      {$$ = new Tipo("BOOLEAN");}
      ;
@@ -301,22 +309,20 @@ pop_vector:
 
 // Struct
 
-struct : STRUCT ID LLAVA list_atributos LLAVC {  }
+struct:
+        STRUCTC ID LLAVA lista_atributos LLAVC { $$ = new DefinicionStruct($2, $4, @1.first_line, @1.last_column) }
 ;
 
-list_atributos : list_atributos COMA tipo ID  {$$ = $1; $$.push(new Simbolo(7, $3, $4, null));}
-                | tipo ID                        {$$ = new Array(); $$.push(new Simbolo(7, $1, $2, null));}
-;
-
-acceso_struct: ID PNT e PYC {}
+lista_atributos : lista_atributos PYC tipo ID PYC {$$ = $1; $$.push(new Simbolo(7, $3, $4, null));}
+                | tipo ID                {$$ = new Array(); $$.push(new Simbolo(7, $1, $2, null));}
 ;
 
 /*
    Creación de variable con struct:
    NOMBRE_STRUCT ID = NOMBRE_STRUCT(LISTA_VALORES);
 */
-variable_struct: ID ID IGUAL ID PARA lista_valores PARC PYC {}
-;
+// variable_struct: ID ID IGUAL ID PARA lista_valores PARC PYC {}
+// ;
 
 // Lista de IDs
 
@@ -439,16 +445,17 @@ e
     | TRUE                      {$$ = new Primitivo(true,'BOOLEAN',@1.first_line,@1.last_column);}
     | FALSE                     {$$ = new Primitivo(false,'BOOLEAN',@1.first_line,@1.last_column);}
     | e INTERROGACION e DOSPUNTOS e {$$ = new Ternario($1,$3,$5,@1.first_line,@1.last_column);}
+    | ID PNT e { $$ = new AccesoStruct($1, $3, false, @1.first_line, @1.last_column) }
     | ID PNT CARALENGHT PARA PARC {$$ = new LenghtC($1, @1.first_line,@1.last_column);}
     | ID PNT POP PARA PARC {$$ = new PopArreglo($1, @1.first_line,@1.last_column);}
     | ID INCRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
     | ID DECRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
     | PARA tipo PARC e          {$$ = new Casteos($2,$4, @1.first_line,@1.last_column);}
 
-    | ID PNT e { console.log( $3 ); }
 
     | ID CORA e DOSPUNTOS e CORC { $$ = new SliceVector( $1, $3, $5, @1.first_line,@1.last_column ); }
     | ID CORA e CORC  { $$ = new AccesoVector($1, $3, $3, false ,@1.first_line,@1.last_column); }
+
     | GETVALUE PARA e COMA e PARC // Para obtener valor de la lista
     | llamada
     | e PNT TOUPPER PARA PARC {$$ = new Toupper($1,@1.first_line,@1.last_column);}
@@ -459,7 +466,7 @@ e
     | TODOUBLE PARA e PARC     {$$ = new ToDouble($3,@1.first_line,@1.last_column);}
     | ROUND PARA e PARC     {$$ = new Round($3,@1.first_line,@1.last_column);}
     | TYPEOF PARA e PARC     {$$ = new Typeof($3,@1.first_line,@1.last_column);}
-    | STRINGT PARA e PARC     {$$ = new Tostring($3,@1.first_line,@1.last_column);}
+    | STRING PARA e PARC     {$$ = new Tostring($3,@1.first_line,@1.last_column);}
     | BOOLEAN PNT PARSE PARA e PARC  {$$ = new TipoParse($5,"booleano",@1.first_line,@1.last_column);}
     | INT PNT PARSE PARA e PARC  {$$ = new TipoParse($5,"int",@1.first_line,@1.last_column);}
     | DOUBLE PNT PARSE PARA e PARC  {$$ = new TipoParse($5,"doble",@1.first_line,@1.last_column);}

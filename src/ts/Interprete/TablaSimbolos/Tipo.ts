@@ -6,6 +6,7 @@ export enum tipo{
     CADENA,
     ERROR,
     VOID,
+    STRUCT,
     NULLL
 }
 
@@ -36,6 +37,8 @@ export class Tipo{
             return tipo.BOOLEAN;
         }else if(this.nombre_tipo == 'VOID'){
             return tipo.VOID;
+        }else if(this.nombre_tipo.includes('STRUCT')){
+            return tipo.STRUCT;
         }else if(this.nombre_tipo == 'NULL'){
             return tipo.NULLL
         }else{
