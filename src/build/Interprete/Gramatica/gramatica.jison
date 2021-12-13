@@ -271,8 +271,12 @@ tipo : DOUBLE       {$$ = new Tipo("DOBLE");}
      | CHAR         {$$ = new Tipo("CARACTER");}
      | BOOLEAN      {$$ = new Tipo("BOOLEAN");}
      ;
-/// Estructuras de datos
-//Vectores
+
+
+
+// Estructuras de datos
+
+// Vectores
 
 decl_vectores:
               tipo CORA CORC lista_ids IGUAL CORA lista_valores CORC PYC     {$$ = new DeclaracionVectores($1,$4,$7,@1.first_line,@1.last_column);}
@@ -295,6 +299,25 @@ pop_vector:
          ID PNT POP PARA PARC PYC {$$ = new PopArreglo($1, @1.first_line,@1.last_column);}
 ;
 
+// Struct
+
+struct : STRUCT ID LLAVA list_atributos LLAVC {  }
+;
+
+list_atributos : list_atributos COMA tipo ID  {$$ = $1; $$.push(new Simbolo(7, $3, $4, null));}
+                | tipo ID                        {$$ = new Array(); $$.push(new Simbolo(7, $1, $2, null));}
+;
+
+acceso_struct: ID PNT e PYC {}
+;
+
+/*
+   Creación de variable con struct:
+   NOMBRE_STRUCT ID = NOMBRE_STRUCT(LISTA_VALORES);
+*/
+variable_struct: ID ID IGUAL ID PARA lista_valores PARC PYC {}
+;
+
 // Lista de IDs
 
 lista_ids : lista_ids COMA ID           {$$ = $1; $$.push($3);}
@@ -310,14 +333,6 @@ impresion : PRINTLN PARA e PARC PYC  {$$ = new Println($3,@1.first_line,@1.last_
 /// Asignacion
 asignacion : ID IGUAL e PYC {$$ = new Asignacion($1,$3,@1.first_line,@1.last_column);}
             ;
-
-// Struct
-
-// struct : STRUCT ID LLAVA lista_atributos LLAVC {  }
-// ;
-
-// acceso_struct: id PNT e PYC {}
-// ;
 
 
 /// Sentencias de control
@@ -429,6 +444,9 @@ e
     | ID INCRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
     | ID DECRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
     | PARA tipo PARC e          {$$ = new Casteos($2,$4, @1.first_line,@1.last_column);}
+
+    | ID PNT e { console.log( $3 ); }
+
     | ID CORA e DOSPUNTOS e CORC { $$ = new SliceVector( $1, $3, $5, @1.first_line,@1.last_column ); }
     | ID CORA e CORC  { $$ = new AccesoVector($1, $3, $3, false ,@1.first_line,@1.last_column); }
     | GETVALUE PARA e COMA e PARC // Para obtener valor de la lista
