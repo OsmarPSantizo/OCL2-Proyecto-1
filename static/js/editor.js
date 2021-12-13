@@ -1,7 +1,9 @@
 // Imports
 
 
-
+const  TablaSimbolos  = require("../../src/build/Interprete/TablaSimbolos/TablaSimbolos");
+const  gramatica  = require("../../src/build/Interprete/Gramatica/gramatica"); 
+const  Controlador  = require("../../src/build/Interprete/Controlador");
 // elements and global variables
 
 const tabs = document.getElementById('tabs');
@@ -20,10 +22,12 @@ var editorList = [];
 
 
 // events
-
+parseButton.addEventListener("click", () =>{
+    parseInput();
+} );
 document.addEventListener('DOMContentLoaded', () => {
     let editor = document.getElementById('editor');
-
+    
     createEditor( editor );
 
     tablinks = document.getElementsByClassName("tablinks");
@@ -32,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 }, false);
+
 
 
 addButton.addEventListener('click', () => {
@@ -102,14 +107,23 @@ const createEditor = ( editor ) => {
     editorList.push(newEditor);
     currentEditor = newEditor;
 
-    currentEditor.setValue(`
-    void probandoaritmetica (){
+    currentEditor.setValue(`    void main(){
+        int[] arr1 = [12, 32, 43, 54];
+        string animal = "tigre";
+        int poppedItem = arr1.pop();
+        println("El valor eliminado del arreglo es: " & poppedItem);
+        println(arr1);
+        arr1.push(102);
+        println(arr1);
+        arr1.push(199);
+        println(arr1);
+        arr1.pop();
+        println(arr1);
 
-        writeline("hola");
-
+        
+        println("El tamaño de la cadena es: " & animal.length());
+        println("El tamaño del arreglo es: " & arr1.length());
     }
-
-        start with probandoaritmetic
     `);
     console.log(editorList);
 }
@@ -172,10 +186,11 @@ function readSingleFile(e) {
 const parseInput = () => {
     console.log('parsing...');
     let editorValue = currentEditor.getValue();
+        const ast = gramatica.parse(editorValue);
+        const controlador = new Controlador.Controlador();
+        const ts_global = new TablaSimbolos.TablaSimbolos(null);
+        ast.ejecutar(controlador,ts_global);
 
-    //ejecutarCodigo( editorValue );
-    //recorrer( editorValue );
-
-    terminal.value = result;
-    console.log( editorValue );
+    terminal.value = controlador.consola;
+    console.log( controlador);
 }
