@@ -15,7 +15,8 @@ export  class Simbolo{
 
     /**
      *
-     * @param simbolo        1 -> variable, 2 -> función, 3 -> método, 4 -> arreglo
+     * @param simbolo        1 -> variable, 2 -> función, 3 -> método, 4 -> arreglo, 5 -> struct
+     *                       6 -> parametros, 7 -> atributos
      * @param tipo           Tipo de variable
      * @param identificador  ID de la variable
      * @param valor          Valor de la variable
