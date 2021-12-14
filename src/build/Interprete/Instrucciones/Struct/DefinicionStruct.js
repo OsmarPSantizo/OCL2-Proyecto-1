@@ -13,8 +13,6 @@ class DefinicionStruct {
     }
     ejecutar(controlador, ts) {
         if (ts.existeEnActual(this.nombreStruct)) {
-            let simbolo = ts.getSimbolo(this.nombreStruct);
-            console.log('SIMBOLO EXISTENTE:', simbolo);
             let error = new Errores_1.Errores("Semantico", `El Struct ${this.nombreStruct} ya existe en el entorno actual, no se puede definir otra vez.`, this.linea, this.columna);
             controlador.errores.push(error);
             controlador.append(`ERROR: Semántico, el Struct ${this.nombreStruct} ya existe en el entorno actual, no se puede definir otra vez. En la linea ${this.linea} y columna ${this.columna}`);
@@ -22,7 +20,6 @@ class DefinicionStruct {
         }
         let tipo = new Tipo_1.Tipo('STRUCT ' + this.nombreStruct);
         let nuevoSimbolo = new Simbolo_1.Simbolo(5, tipo, this.nombreStruct, this.listaAtributos);
-        console.log('NUEVO STRUCT:', nuevoSimbolo);
         ts.agregar(this.nombreStruct, nuevoSimbolo);
     }
     traducir(controlador, ts) {

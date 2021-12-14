@@ -107,21 +107,14 @@ const createEditor = ( editor ) => {
     editorList.push(newEditor);
     currentEditor = newEditor;
 
-    currentEditor.setValue(`    void main(){
-        int[] arr1 = [12, 32, 43, 54];
-        string animal = "tigre";
-        int poppedItem = arr1.pop();
-        println("El valor eliminado del arreglo es: " & poppedItem);
-        println(arr1);
-        arr1.push(102);
-        println(arr1);
-        arr1.push(199);
-        println(arr1);
-        arr1.pop();
-        println(arr1);
-        
-        println("El tamaño de la cadena es: " & animal.length());
-        println("El tamaño del arreglo es: " & arr1.length());
+    currentEditor.setValue(`void main(){
+        struct animal {
+            String nombre;
+            int edad;
+        }
+
+        animal animal1 = animal("Bobby", 5);
+        println(animal1.edad);
     }
     `);
 }
