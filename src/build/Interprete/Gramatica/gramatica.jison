@@ -190,7 +190,8 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 
         // Structs
         const { DefinicionStruct } = require('../Instrucciones/Struct/DefinicionStruct');
-        const { AccesoStruct } = require('../Expresiones/Struct/AccesoStruct')
+        const { DeclaracionStruct } = require('../Instrucciones/Struct/DeclaracionStruct')
+        const { AccesoStruct } = require('../Expresiones/AccesoStruct')
 
         const {Asignacion} = require('../Instrucciones/Asignacion');
         const {Ifs} = require('../Instrucciones/SentenciasdeControl/Ifs');
@@ -242,7 +243,8 @@ instruccion : declaracion { $$ = $1; }
             | impresion   { $$ = $1; }
             | struct      { $$ = $1; }
             | asignacion  { $$ = $1; }
-            | decl_vectores  { $$ = $1;}
+            | decl_vectores  { $$ = $1; }
+            | decl_struct  { $$ = $1; }
             | push_vector    { $$ = $1; }
             | pop_vector    { $$ = $1; }
             | sent_if     { $$ = $1; }
@@ -313,16 +315,14 @@ struct:
         STRUCTC ID LLAVA lista_atributos LLAVC { $$ = new DefinicionStruct($2, $4, @1.first_line, @1.last_column) }
 ;
 
+decl_struct:
+        ID  ID IGUAL ID PARA lista_valores PARC PYC { $$ = new DeclaracionStruct( $1, $2, $4, $6, @1.first_line, @1.last_column );  }
+;
+
 lista_atributos : lista_atributos PYC tipo ID PYC {$$ = $1; $$.push(new Simbolo(7, $3, $4, null));}
                 | tipo ID                {$$ = new Array(); $$.push(new Simbolo(7, $1, $2, null));}
 ;
 
-/*
-   Creación de variable con struct:
-   NOMBRE_STRUCT ID = NOMBRE_STRUCT(LISTA_VALORES);
-*/
-// variable_struct: ID ID IGUAL ID PARA lista_valores PARC PYC {}
-// ;
 
 // Lista de IDs
 
@@ -438,6 +438,7 @@ e
     | PARA e PARC               {$$ = $2;}
     | DECIMAL                   {$$ = new Primitivo(Number($1),'DOBLE',@1.first_line,@1.last_column);}
     | ENTERO                    {$$ = new Primitivo(Number($1),'ENTERO',@1.first_line,@1.last_column);}
+    | ID PNT ID                 { $$ = new AccesoStruct($1, $3, @1.first_line, @1.last_column); }
     | ID                        {$$ = new Identificador($1,@1.first_line,@1.last_column);}
     | CADENA                    {$1 = $1.slice(1,$1.length-1);$$ = new Primitivo($1,'CADENA',@1.first_line,@1.last_column);}
     | NULLL                     {$$ = new Primitivo(null,'NULL',@1.first_line,@1.last_column);}
@@ -445,7 +446,6 @@ e
     | TRUE                      {$$ = new Primitivo(true,'BOOLEAN',@1.first_line,@1.last_column);}
     | FALSE                     {$$ = new Primitivo(false,'BOOLEAN',@1.first_line,@1.last_column);}
     | e INTERROGACION e DOSPUNTOS e {$$ = new Ternario($1,$3,$5,@1.first_line,@1.last_column);}
-    | ID PNT e { $$ = new AccesoStruct($1, $3, false, @1.first_line, @1.last_column) }
     | ID PNT CARALENGHT PARA PARC {$$ = new LenghtC($1, @1.first_line,@1.last_column);}
     | ID PNT POP PARA PARC {$$ = new PopArreglo($1, @1.first_line,@1.last_column);}
     | ID INCRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
