@@ -19,7 +19,7 @@ ejecutarCodigo(`
 
     void main(){
         int[] arr1 = [12, 32, 43, 54];
-        string animal = "tigre";
+        String animal = "tigre";
         int poppedItem = arr1.pop();
         println("El valor eliminado del arreglo es: " & poppedItem);
         println(arr1);

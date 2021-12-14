@@ -188,6 +188,11 @@ const parseInput = () => {
         const controlador = new Controlador.Controlador();
         const ts_global = new TablaSimbolos.TablaSimbolos(null);
         ast.ejecutar(controlador,ts_global);
+        let ts_html = controlador.graficar_ts(controlador, ts_global, "1");
+    for (let tablitas of controlador.tablas) {
+        ts_html += controlador.graficar_ts(controlador, tablitas, "2");
+    }
+    console.log(ts_html);
 
     terminal.value = controlador.consola;
 }
