@@ -35,12 +35,13 @@ class Toupper {
         }
     }
     recorrer() {
-        let padre = new Nodo_1.Nodo("Tolower", "");
-        padre.AddHijo(new Nodo_1.Nodo("Tolower", ""));
-        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        let padre = new Nodo_1.Nodo("toUppercase", "");
         let hijo = new Nodo_1.Nodo("exp", "");
         hijo.AddHijo(this.expresion.recorrer());
         padre.AddHijo(hijo);
+        padre.AddHijo(new Nodo_1.Nodo(".", ""));
+        padre.AddHijo(new Nodo_1.Nodo("toUppercase", ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
         padre.AddHijo(new Nodo_1.Nodo(")", ""));
         return padre;
     }

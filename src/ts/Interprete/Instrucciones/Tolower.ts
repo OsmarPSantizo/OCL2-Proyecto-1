@@ -48,14 +48,14 @@ export class Tolower implements Expresion{
 
     }
     recorrer(): Nodo{
-        let padre = new Nodo("Tolower",""); 
-        padre.AddHijo(new Nodo("Tolower","")); 
-        padre.AddHijo(new Nodo("(",""));
-
+        let padre = new Nodo("toLowercase",""); 
         let hijo = new Nodo("exp","");
+        
         hijo.AddHijo(this.expresion.recorrer()); 
-
         padre.AddHijo(hijo);
+        padre.AddHijo(new Nodo(".","")); 
+        padre.AddHijo(new Nodo("toLowercase",""));
+        padre.AddHijo(new Nodo("(","")); 
         padre.AddHijo(new Nodo(")","")); 
         return padre;
     

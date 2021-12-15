@@ -12,7 +12,9 @@ const openInput = document.getElementById('open');
 const addButton = document.getElementById('new');
 const tabsContainer = document.getElementById('tab-container');
 const parseButton = document.getElementById('parseButton');
+const generateAst = document.getElementById('generateAst');
 const terminal = document.getElementById('terminal');
+const terminalast = document.getElementById('terminalast');
 
 var counter = 1;
 var currentEditor = 'editor';
@@ -24,7 +26,14 @@ var editorList = [];
 // events
 parseButton.addEventListener("click", () =>{
     parseInput();
+    
 } );
+
+generateAst.addEventListener("click", () =>{
+    generarAst();
+} );
+
+
 document.addEventListener('DOMContentLoaded', () => {
     let editor = document.getElementById('editor');
 
@@ -177,15 +186,26 @@ function readSingleFile(e) {
 const parseInput = () => {
     console.log('parsing...');
     let editorValue = currentEditor.getValue();
-        const ast = gramatica.parse(editorValue);
-        const controlador = new Controlador.Controlador();
-        const ts_global = new TablaSimbolos.TablaSimbolos(null);
-        ast.ejecutar(controlador,ts_global);
-        let ts_html = controlador.graficar_ts(controlador, ts_global, "1");
+    const ast = gramatica.parse(editorValue);
+    const controlador = new Controlador.Controlador();
+    const ts_global = new TablaSimbolos.TablaSimbolos(null);
+    ast.ejecutar(controlador,ts_global);
+    let ts_html = controlador.graficar_ts(controlador, ts_global, "1");
     for (let tablitas of controlador.tablas) {
         ts_html += controlador.graficar_ts(controlador, tablitas, "2");
     }
     console.log(ts_html);
 
     terminal.value = controlador.consola;
+}
+
+
+const generarAst = () => {
+    console.log('Generando AST');
+    let editorValue = currentEditor.getValue();
+    const ast = gramatica.parse(editorValue);
+    const nodo_ast = ast.recorrer();
+    const grafo = nodo_ast.GraficarSintactico();
+    terminalast.value = grafo;
+    console.log(grafo);
 }

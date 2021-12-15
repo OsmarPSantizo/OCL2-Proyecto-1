@@ -38,7 +38,7 @@ export class Nodo{
      */
     
     public GraficarSintactico():string{
-        let grafica: string = `digraph {\n\n${this.GraficarNodos(this,"0")}\n\n}`
+        let grafica: string = `digraph {\n${this.GraficarNodos(this,"0")}\n}`
         return grafica;
     }
 

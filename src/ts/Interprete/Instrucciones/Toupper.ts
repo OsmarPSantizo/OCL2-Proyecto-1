@@ -48,16 +48,18 @@ export class Toupper implements Expresion{
 
     }
     recorrer(): Nodo{
-        let padre = new Nodo("Tolower",""); 
-        padre.AddHijo(new Nodo("Tolower","")); 
-        padre.AddHijo(new Nodo("(",""));
-
+        let padre = new Nodo("toUppercase",""); 
         let hijo = new Nodo("exp","");
+        
         hijo.AddHijo(this.expresion.recorrer()); 
-
         padre.AddHijo(hijo);
+        padre.AddHijo(new Nodo(".","")); 
+        padre.AddHijo(new Nodo("toUppercase",""));
+        padre.AddHijo(new Nodo("(","")); 
         padre.AddHijo(new Nodo(")","")); 
         return padre;
+    
+    
     }
 
 }

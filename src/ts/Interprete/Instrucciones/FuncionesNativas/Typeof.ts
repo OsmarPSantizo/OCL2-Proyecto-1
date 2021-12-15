@@ -44,7 +44,7 @@ export  class Typeof implements Expresion{
         return this.get_string_tipo(tipo_enum);
     }
     recorrer(): Nodo{
-        let padre = new Nodo("Typeof",""); 
+        let padre = new Nodo("typeof",""); 
         padre.AddHijo(new Nodo("typeof","")); 
         padre.AddHijo(new Nodo("(",""));
 

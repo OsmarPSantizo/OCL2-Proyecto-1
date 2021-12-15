@@ -69,7 +69,16 @@ export class TipoParse implements Expresion{
         }
     }
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("tipo.Parse",""); 
+        padre.AddHijo(new Nodo(this.tiponum,"")); 
+        padre.AddHijo(new Nodo("(",""));
+
+        let hijo = new Nodo("exp","");
+        hijo.AddHijo(this.expresion.recorrer()); 
+
+        padre.AddHijo(hijo);
+        padre.AddHijo(new Nodo(")","")); 
+        return padre;
     }
 
 }

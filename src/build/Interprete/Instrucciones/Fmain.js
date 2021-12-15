@@ -37,7 +37,15 @@ class Fmain extends Simbolo_1.Simbolo {
         return null;
     }
     recorrer() {
-        return new Nodo_1.Nodo("MAIN", "");
+        let padre = new Nodo_1.Nodo("Main", "");
+        padre.AddHijo(new Nodo_1.Nodo("{", ""));
+        let hijo_instrucciones = new Nodo_1.Nodo("Instrucciones", "");
+        for (let inst of this.lista_instrucciones) {
+            hijo_instrucciones.AddHijo(inst.recorrer());
+        }
+        padre.AddHijo(hijo_instrucciones);
+        padre.AddHijo(new Nodo_1.Nodo("}", ""));
+        return padre;
     }
 }
 exports.Fmain = Fmain;

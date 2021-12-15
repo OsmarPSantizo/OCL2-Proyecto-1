@@ -19,7 +19,7 @@ ejecutarCodigo(`
 
     void main(){
         int[] arr1 = [12, 32, 43, 54];
-        String animal = "tigre";
+        string animal = "tigre";
         int poppedItem = arr1.pop();
         println("El valor eliminado del arreglo es: " & poppedItem);
         println(arr1);
@@ -34,21 +34,6 @@ ejecutarCodigo(`
         println("El tamaño de la cadena es: " & animal.length());
         println("El tamaño del arreglo es: " & arr1.length());
     }
-
-
-`);
-const GenerarAst = (entrada) => {
-    const ast = gramatica.parse(entrada);
-    const nodo_ast = ast.recorrer();
-    const grafo = nodo_ast.GraficarSintactico();
-    console.log(grafo);
-};
-GenerarAst(`
-
-void main(){
-    String animal = "tigre";
-    println(animal);
-}
 
 
 `);

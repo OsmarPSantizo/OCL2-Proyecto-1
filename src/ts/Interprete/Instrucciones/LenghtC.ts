@@ -43,7 +43,13 @@ export class LenghtC implements Expresion{
 
     }
     recorrer(): Nodo {
-        return;
+        let padre = new Nodo("length",""); 
+        padre.AddHijo(new Nodo(this.id,"")); 
+        padre.AddHijo(new Nodo(".",""));
+        padre.AddHijo(new Nodo("length","")); 
+        padre.AddHijo(new Nodo("(","")); 
+        padre.AddHijo(new Nodo(")","")); 
+        return padre;
     }
 
 }
