@@ -22,6 +22,9 @@ export class DefinicionStruct implements Instruccion{
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
+        throw new Error("Method not implemented.");
+    }
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
 
@@ -38,9 +41,7 @@ export class DefinicionStruct implements Instruccion{
         ts.agregar(this.nombreStruct, nuevoSimbolo);
     }
 
-    traducir(controlador: Controlador, ts: TablaSimbolos) {
-        throw new Error("Method not implemented.");
-    }
+    
 
     recorrer(): Nodo {
         throw new Error("Method not implemented.");

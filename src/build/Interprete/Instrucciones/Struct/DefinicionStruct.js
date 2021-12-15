@@ -11,6 +11,9 @@ class DefinicionStruct {
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador, ts) {
         if (ts.existeEnActual(this.nombreStruct)) {
             let error = new Errores_1.Errores("Semantico", `El Struct ${this.nombreStruct} ya existe en el entorno actual, no se puede definir otra vez.`, this.linea, this.columna);
@@ -21,9 +24,6 @@ class DefinicionStruct {
         let tipo = new Tipo_1.Tipo('STRUCT ' + this.nombreStruct);
         let nuevoSimbolo = new Simbolo_1.Simbolo(5, tipo, this.nombreStruct, this.listaAtributos);
         ts.agregar(this.nombreStruct, nuevoSimbolo);
-    }
-    traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
     }
     recorrer() {
         throw new Error("Method not implemented.");

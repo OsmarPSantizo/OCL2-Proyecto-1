@@ -12,9 +12,10 @@ export class Retorno implements Instruccion{
     constructor(valor_retorno:Expresion){
         this.valor_retorno = valor_retorno;
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos) {
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
         throw new Error("Method not implemented.");
     }
+    
 
     ejecutar(controlador:Controlador, ts:TablaSimbolos){
         // Primero vemos si el valor no sea nulo

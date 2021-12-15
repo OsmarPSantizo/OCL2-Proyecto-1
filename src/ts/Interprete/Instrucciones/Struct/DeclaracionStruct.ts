@@ -27,6 +27,9 @@ export class DeclaracionStruct implements Instruccion {
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
+        throw new Error("Method not implemented.");
+    }
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
 
@@ -92,9 +95,7 @@ export class DeclaracionStruct implements Instruccion {
 
     }
 
-    traducir(controlador: Controlador, ts: TablaSimbolos) {
-        throw new Error("Method not implemented.");
-    }
+
 
 
 

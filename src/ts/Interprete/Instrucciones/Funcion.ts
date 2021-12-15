@@ -21,9 +21,10 @@ export class Funcion extends Simbolo implements Instruccion{
         this.linea = linea;
         this.columna = columna;
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos) {
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
         throw new Error("Method not implemented.");
     }
+   
         //Se crea un método para agregar el símbolo de la función a la tabla de símbolos
     agregarFuncionTS( ts:TablaSimbolos){
         if(!(ts.existe(this.identificador))){

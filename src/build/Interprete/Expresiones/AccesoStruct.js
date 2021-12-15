@@ -15,7 +15,6 @@ class AccesoStruct {
         return Tipo_1.tipo.STRUCT;
     }
     getValor(controlador, ts) {
-        console.log('Obteniendo valor en acceso struct');
         let atributos = this.getAtributosStruct(ts);
         let valorAtributo = ts.getSimbolo(this.valor);
         // let valorAtributo = this.valor.getValor( controlador, ts );

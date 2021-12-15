@@ -27,9 +27,10 @@ export class AccesoVector implements Expresion, Instruccion{
         this.modificar = modificar;
 
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos) {
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
         throw new Error("Method not implemented.");
     }
+    
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
         console.log('Modificando vector.');

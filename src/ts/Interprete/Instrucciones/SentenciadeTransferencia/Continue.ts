@@ -8,9 +8,10 @@ export  class Continue implements Instruccion{
     constructor(){
 
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos) {
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
         throw new Error("Method not implemented.");
     }
+    
 
 
     ejecutar(controlador: Controlador, ts:TablaSimbolos){

@@ -14,6 +14,9 @@ class DeclaracionStruct {
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador, ts) {
         // Verifying if instance is the same as Struct
         if (this.structId !== this.structInstanceId) {
@@ -64,9 +67,6 @@ class DeclaracionStruct {
         console.log('NUEVA VARIABLE STRUCT:', nuevoSimbolo);
         console.log('VALORES NUEVOS:', newVariableValues);
         console.log('VALORES ORIGINALES:', storedStruct.valor);
-    }
-    traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
     }
     recorrer() {
         throw new Error("Method not implemented.");

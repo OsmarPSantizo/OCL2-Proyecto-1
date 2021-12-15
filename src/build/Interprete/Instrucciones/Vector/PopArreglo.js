@@ -9,6 +9,9 @@ class PopArreglo {
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador, ts) {
         console.log('POP');
         let simbolo = ts.getSimbolo(this.id);
@@ -22,9 +25,6 @@ class PopArreglo {
             controlador.errores.push(error);
             controlador.append(`ERROR: Semántico, La expresión no es de tipo iterable, no se puede realizar la función pop. En la linea ${this.linea} y columna ${this.columna}`);
         }
-    }
-    traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
     }
     getTipo(controlador, ts) {
         let simAux = ts.getSimbolo(this.id);

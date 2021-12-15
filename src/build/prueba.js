@@ -37,3 +37,18 @@ ejecutarCodigo(`
 
 
 `);
+const GenerarAst = (entrada) => {
+    const ast = gramatica.parse(entrada);
+    const nodo_ast = ast.recorrer();
+    const grafo = nodo_ast.GraficarSintactico();
+    console.log(grafo);
+};
+GenerarAst(`
+
+void main(){
+    String animal = "tigre";
+    println(animal);
+}
+
+
+`);
