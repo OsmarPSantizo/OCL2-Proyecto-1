@@ -4,6 +4,7 @@
 const  TablaSimbolos  = require("../../src/build/Interprete/TablaSimbolos/TablaSimbolos");
 const  gramatica  = require("../../src/build/Interprete/Gramatica/gramatica");
 const  Controlador  = require("../../src/build/Interprete/Controlador");
+
 // elements and global variables
 
 const tabs = document.getElementById('tabs');
@@ -15,6 +16,7 @@ const parseButton = document.getElementById('parseButton');
 const generateAst = document.getElementById('generateAst');
 const terminal = document.getElementById('terminal');
 const terminalast = document.getElementById('terminalast');
+const Simbolstable = document.getElementById('Simbolstable');
 
 var counter = 1;
 var currentEditor = 'editor';
@@ -194,7 +196,8 @@ const parseInput = () => {
     for (let tablitas of controlador.tablas) {
         ts_html += controlador.graficar_ts(controlador, tablitas, "2");
     }
-    console.log(ts_html);
+    console.log(controlador.errores);
+    document.getElementById("Simbolstable").innerHTML= ts_html // this is for show simbols table 
 
     terminal.value = controlador.consola;
 }
@@ -209,3 +212,4 @@ const generarAst = () => {
     terminalast.value = grafo;
     console.log(grafo);
 }
+
