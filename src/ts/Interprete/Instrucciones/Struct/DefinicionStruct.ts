@@ -21,6 +21,7 @@ export class DefinicionStruct implements Instruccion{
         this.listaAtributos = listaAtributos;
         this.linea = linea;
         this.columna = columna;
+
     }
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {

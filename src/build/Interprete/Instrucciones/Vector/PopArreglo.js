@@ -10,12 +10,10 @@ class PopArreglo {
         this.columna = columna;
     }
     ejecutar(controlador, ts) {
-        console.log('POP');
         let simbolo = ts.getSimbolo(this.id);
         if (simbolo.simbolo === 1 || simbolo.simbolo === 4) {
             let poppedValue = this.getPoppedValue(ts);
             console.log('poppedValue', poppedValue);
-            poppedValue;
         }
         else {
             let error = new Errores_1.Errores("Semantico", `La expresión no es de tipo iterable, no se puede realizar la función pop.`, this.linea, this.columna);
@@ -54,7 +52,6 @@ class PopArreglo {
         return null;
     }
     getValor(controlador, ts) {
-        console.log('POP2');
         let simbolo = ts.getSimbolo(this.id);
         if (simbolo.simbolo === 1 || simbolo.simbolo === 4) {
             return this.getPoppedValue(ts);

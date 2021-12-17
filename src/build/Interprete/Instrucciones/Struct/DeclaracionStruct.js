@@ -15,21 +15,21 @@ class DeclaracionStruct {
         this.columna = columna;
     }
     ejecutar(controlador, ts) {
-        // Verifying if instance is the same as Struct
+        // Verificando si el struct base es el mismo al struct a declarar
         if (this.structId !== this.structInstanceId) {
             let error = new Errores_1.Errores("Semantico", `${this.structInstanceId} no está declarado, no se puede generar la variable ${this.newVariable}.`, this.linea, this.columna);
             controlador.errores.push(error);
             controlador.append(`ERROR: Semántico, ${this.structInstanceId} no está declarado, no se puede generar la variable ${this.newVariable}. En la linea ${this.linea} y columna ${this.columna}.`);
             return;
         }
-        // Verifying if new variable already exists
+        // Verificando si la nueva variable ya existe
         if (ts.existeEnActual(this.newVariable)) {
             let error = new Errores_1.Errores("Semantico", `${this.newVariable} ya existe en el entorno actual, no se puede definir otra vez.`, this.linea, this.columna);
             controlador.errores.push(error);
             controlador.append(`ERROR: Semántico, ${this.newVariable} ya existe en el entorno actual, no se puede definir otra vez. En la linea ${this.linea} y columna ${this.columna}`);
             return;
         }
-        // Verifying if struct instance exists
+        // Verificando si el struct base existe
         if (!ts.existeEnActual(this.structId)) {
             let error = new Errores_1.Errores("Semantico", `${this.structId} no está definido.`, this.linea, this.columna);
             controlador.errores.push(error);
@@ -39,14 +39,14 @@ class DeclaracionStruct {
         let storedStruct = ts.getSimbolo(this.structId);
         let newVariableValues = [];
         storedStruct.valor.forEach(val => newVariableValues.push(Object.assign({}, val)));
-        // Attributes/Values length comparison
+        // Attributes/Values comparación de lenth
         if (storedStruct.valor.length !== this.listaValores.length) {
             let error = new Errores_1.Errores("Semantico", `La cantidad de valores declarados no coincide con el del struct ${this.structId}.`, this.linea, this.columna);
             controlador.errores.push(error);
             controlador.append(`ERROR: Semántico, la cantidad de valores declarados no coincide con el del struct ${this.structId}. En la linea ${this.linea} y columna ${this.columna}`);
             return;
         }
-        // Attributes/Values type comparison
+        // Attributes/Values comparación de tipos
         for (let i = 0; i < newVariableValues.length; i++) {
             let storedSVType = newVariableValues[i].tipo;
             let variableValueType = this.listaValores[i].getTipo(controlador, ts);
@@ -58,12 +58,19 @@ class DeclaracionStruct {
             }
             newVariableValues[i].valor = this.listaValores[i].getValor(controlador, ts);
         }
-        let tipo = new Tipo_1.Tipo(`STRUCT ${this.structId} ${this.newVariable}`);
+        /*
+            Agregando como sufijo la nueva variable a los ids de los
+            nuevos valores en la variable declarada.
+        */
+        newVariableValues.map(val => {
+            val.identificador = `${this.newVariable}_${val.identificador}`;
+        });
+        // De la forma: STRUCT animal animal1
+        // let tipo = new Tipo(`STRUCT ${this.structId} ${this.newVariable}`);
+        // De la forma: STRUCT
+        let tipo = new Tipo_1.Tipo(`STRUCT`);
         let nuevoSimbolo = new Simbolo_1.Simbolo(1, tipo, this.newVariable, newVariableValues);
         ts.agregar(this.newVariable, nuevoSimbolo);
-        console.log('NUEVA VARIABLE STRUCT:', nuevoSimbolo);
-        console.log('VALORES NUEVOS:', newVariableValues);
-        console.log('VALORES ORIGINALES:', storedStruct.valor);
     }
     traducir(controlador, ts) {
         throw new Error("Method not implemented.");

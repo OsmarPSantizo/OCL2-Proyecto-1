@@ -2,43 +2,63 @@ import {Errores} from "../AST/Errores";
 import {Nodo} from "../AST/Nodo";
 import {Controlador} from "../Controlador";
 import { Expresion } from "../Interfaces/Expresion";
+import { Instruccion } from "../Interfaces/Instruccion";
 import {TablaSimbolos} from "../TablaSimbolos/TablaSimbolos";
 import { tipo } from "../TablaSimbolos/Tipo";
 
 
-export class AccesoStruct implements Expresion{
+export class AccesoStruct implements Expresion {
 
     public id:string;
     public valor: string;
     public linea: number;
     public columna : number;
-    public modificar: Boolean;
+
+    public tipo: tipo;
 
     constructor(id:string, valor: string, linea:number, columna:number){
         this.id =  id
         this.valor = valor;
         this.linea = linea;
         this.columna = columna;
-        console.log('ACCESO STRUCT');
-        console.log('id', this.id, 'valor', this.valor);
     }
 
     getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {
-        return tipo.STRUCT;
+
+        return tipo.CADENA;
     }
 
     getValor(controlador: Controlador, ts: TablaSimbolos) {
-        let atributos = this.getAtributosStruct( ts );
-        let valorAtributo = ts.getSimbolo(this.valor);
-        // let valorAtributo = this.valor.getValor( controlador, ts );
-        console.log('Valor Atributo', valorAtributo);
-        console.log('LISTA ATRIBUTOS:', atributos);
-        return 'hola'
+
+        let atributos = this.getAtributosStruct( controlador, ts );
+
+        if( !atributos ) {
+            let error = new Errores("Semantico",`${this.id} no está definido.`,this.linea,this.columna);
+            controlador.errores.push(error);
+            controlador.append(`ERROR: Semántico, ${this.id} no está definido. En la linea ${this.linea} y columna ${this.columna}`);
+            return;
+        }
+
+        let valorAtributo = `${this.id}_${this.valor}`
+
+        for (let atributo of atributos) {
+            if( valorAtributo === atributo.identificador ) {
+                return atributo.valor;
+            }
+        }
+
+        let error = new Errores("Semantico",`${this.valor} no es un atributo de ${this.id}.`,this.linea,this.columna);
+        controlador.errores.push(error);
+        controlador.append(`ERROR: Semántico, ${this.valor} no es un atributo de ${this.id}. En la linea ${this.linea} y columna ${this.columna}`);
+        return;
+
     }
 
-    getAtributosStruct( ts ) {
+    getAtributosStruct( controlador, ts ) {
         let struct = ts.getSimbolo(this.id);
-        console.log('Struct encontrado:', struct);
+        if(!struct) {
+            return null
+        }
         return struct.valor;
     }
 

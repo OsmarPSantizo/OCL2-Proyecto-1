@@ -19,6 +19,7 @@ export class DeclaracionStruct implements Instruccion {
     public columna: number;
 
     constructor (structId: string, newVariable: string, structInstanceId: string, listaValores: Array<Expresion>, linea:number, columna:number){
+
         // De la forma: Estructura ejemplo = Estructura(varlo1, valor2);
         this.structId = structId;
         this.newVariable = newVariable;
@@ -30,7 +31,7 @@ export class DeclaracionStruct implements Instruccion {
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
 
-        // Verifying if instance is the same as Struct
+        // Verificando si el struct base es el mismo al struct a declarar
         if(this.structId !== this.structInstanceId) {
             let error = new Errores("Semantico",`${this.structInstanceId} no está declarado, no se puede generar la variable ${this.newVariable}.`,this.linea,this.columna);
             controlador.errores.push(error);
@@ -38,7 +39,7 @@ export class DeclaracionStruct implements Instruccion {
             return
         }
 
-        // Verifying if new variable already exists
+        // Verificando si la nueva variable ya existe
         if(ts.existeEnActual( this.newVariable )) {
             let error = new Errores("Semantico",`${this.newVariable} ya existe en el entorno actual, no se puede definir otra vez.`,this.linea,this.columna);
             controlador.errores.push(error);
@@ -46,7 +47,7 @@ export class DeclaracionStruct implements Instruccion {
             return
         }
 
-        // Verifying if struct instance exists
+        // Verificando si el struct base existe
         if(!ts.existeEnActual( this.structId )) {
             let error = new Errores("Semantico",`${this.structId} no está definido.`,this.linea,this.columna);
             controlador.errores.push(error);
@@ -58,7 +59,7 @@ export class DeclaracionStruct implements Instruccion {
         let newVariableValues = [];
         storedStruct.valor.forEach(val => newVariableValues.push(Object.assign({}, val)));
 
-        // Attributes/Values length comparison
+        // Attributes/Values comparación de lenth
         if(storedStruct.valor.length !== this.listaValores.length) {
             let error = new Errores("Semantico",`La cantidad de valores declarados no coincide con el del struct ${this.structId}.`,this.linea,this.columna);
             controlador.errores.push(error);
@@ -66,7 +67,7 @@ export class DeclaracionStruct implements Instruccion {
             return
         }
 
-        // Attributes/Values type comparison
+        // Attributes/Values comparación de tipos
         for(let i = 0; i < newVariableValues.length; i++) {
 
             let storedSVType = newVariableValues[ i ].tipo;
@@ -82,13 +83,22 @@ export class DeclaracionStruct implements Instruccion {
             newVariableValues[ i ].valor = this.listaValores[i].getValor(controlador, ts);
         }
 
-        let tipo = new Tipo(`STRUCT ${this.structId} ${this.newVariable}`);
+        /*
+            Agregando como sufijo la nueva variable a los ids de los
+            nuevos valores en la variable declarada.
+        */
+        newVariableValues.map( val => {
+            val.identificador = `${this.newVariable }_${val.identificador}`;
+        });
+
+        // De la forma: STRUCT animal animal1
+        // let tipo = new Tipo(`STRUCT ${this.structId} ${this.newVariable}`);
+
+        // De la forma: STRUCT
+        let tipo = new Tipo(`STRUCT`);
+
         let nuevoSimbolo = new Simbolo(1, tipo, this.newVariable, newVariableValues);
         ts.agregar(this.newVariable, nuevoSimbolo);
-
-        console.log('NUEVA VARIABLE STRUCT:', nuevoSimbolo);
-        console.log('VALORES NUEVOS:', newVariableValues)
-        console.log('VALORES ORIGINALES:', storedStruct.valor);
 
     }
 

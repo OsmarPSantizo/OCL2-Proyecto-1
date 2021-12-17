@@ -191,6 +191,7 @@ caracter      (\' ({escape2}|{aceptacion2})\')
         // Structs
         const { DefinicionStruct } = require('../Instrucciones/Struct/DefinicionStruct');
         const { DeclaracionStruct } = require('../Instrucciones/Struct/DeclaracionStruct')
+        const { ModificarStruct } = require('../Instrucciones/Struct/ModificarStruct')
         const { AccesoStruct } = require('../Expresiones/AccesoStruct')
 
         const {Asignacion} = require('../Instrucciones/Asignacion');
@@ -259,8 +260,9 @@ instruccion : declaracion { $$ = $1; }
             | ID DECRE PYC   { $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column); }
             | ID INCRE PYC   { $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column); }
             | modi_vector    { $$ = $1; }
-            | funciones      { $$ = $1;}
-            | llamada PYC    { $$ = $1;}
+            | modi_struct    { $$ = $1; }
+            | funciones      { $$ = $1; }
+            | llamada PYC    { $$ = $1; }
             | error {console.log("Error Sintactico "  + yytext
                            + " linea: " + this._$.first_line
                            +" columna: "+ this._$.first_column);
@@ -319,9 +321,16 @@ decl_struct:
         ID  ID IGUAL ID PARA lista_valores PARC PYC { $$ = new DeclaracionStruct( $1, $2, $4, $6, @1.first_line, @1.last_column );  }
 ;
 
-lista_atributos : lista_atributos PYC tipo ID PYC {$$ = $1; $$.push(new Simbolo(7, $3, $4, null));}
-                | tipo ID                {$$ = new Array(); $$.push(new Simbolo(7, $1, $2, null));}
+lista_atributos : lista_atributos tipo ID PYC {$$ = $1; $$.push(new Simbolo(7, $2, $3, null));}
+                | tipo ID PYC             {$$ = new Array(); $$.push(new Simbolo(7, $1, $2, null));}
 ;
+
+modi_struct:
+        ID PNT ID IGUAL e PYC { $$ = new ModificarStruct($1, $3, $5, @1.first_line, @1.last_column ); }
+;
+// acceso_struct:
+//         ID PNT ID PYC { $$ = new AccesoStruct( $1, $2, @1.first_line, @1.last_column ) }
+// ;
 
 
 // Lista de IDs

@@ -114,7 +114,8 @@ const createEditor = ( editor ) => {
         }
 
         animal animal1 = animal("Bobby", 5);
-        println(animal1.edad);
+        animal1.nombre = "Angel";
+        println(animal1.nombre);
     }
     `);
 }

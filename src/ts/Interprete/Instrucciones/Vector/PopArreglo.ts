@@ -21,13 +21,13 @@ export class PopArreglo implements Expresion, Instruccion{
     }
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
-        console.log('POP');
+
         let simbolo = ts.getSimbolo( this.id );
 
         if( simbolo.simbolo === 1 || simbolo.simbolo === 4) {
+
             let poppedValue = this.getPoppedValue( ts );
             console.log('poppedValue', poppedValue);
-            poppedValue
 
         } else {
 
@@ -44,6 +44,7 @@ export class PopArreglo implements Expresion, Instruccion{
 
 
     getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {
+
         let simAux = ts.getSimbolo(this.id);
         let nombreTipo: string = simAux.tipo.nombre_tipo;
         switch (nombreTipo) {
@@ -60,9 +61,11 @@ export class PopArreglo implements Expresion, Instruccion{
             default:
                 return tipo.ERROR;
         }
+
     }
 
     getPoppedValue(ts: TablaSimbolos) {
+
         let simAux = ts.getSimbolo(this.id);
 
         if(simAux?.simbolo === 4){
@@ -75,7 +78,7 @@ export class PopArreglo implements Expresion, Instruccion{
     }
 
     getValor(controlador: Controlador, ts: TablaSimbolos) {
-        console.log('POP2');
+
         let simbolo = ts.getSimbolo( this.id );
 
         if( simbolo.simbolo === 1 || simbolo.simbolo === 4) {
@@ -92,6 +95,7 @@ export class PopArreglo implements Expresion, Instruccion{
         }
 
     }
+
     recorrer(): Nodo {
         throw new Error("Method not implemented.");
     }
