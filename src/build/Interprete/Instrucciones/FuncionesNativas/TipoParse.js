@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TipoParse = void 0;
 const Errores_1 = require("../../AST/Errores");
+const Nodo_1 = require("../../AST/Nodo");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
 class TipoParse {
     constructor(expresion, tiponum, linea, columna) {
@@ -60,7 +61,14 @@ class TipoParse {
         }
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("tipo.Parse", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.tiponum, ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        let hijo = new Nodo_1.Nodo("exp", "");
+        hijo.AddHijo(this.expresion.recorrer());
+        padre.AddHijo(hijo);
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
+        return padre;
     }
 }
 exports.TipoParse = TipoParse;

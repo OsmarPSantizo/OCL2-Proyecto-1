@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToDouble = void 0;
 const Errores_1 = require("../../AST/Errores");
+const Nodo_1 = require("../../AST/Nodo");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
 class ToDouble {
     constructor(expresion, linea, columna) {
@@ -31,7 +32,14 @@ class ToDouble {
         }
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("toDouble", "");
+        padre.AddHijo(new Nodo_1.Nodo("toDouble", ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        let hijo = new Nodo_1.Nodo("exp", "");
+        hijo.AddHijo(this.expresion.recorrer());
+        padre.AddHijo(hijo);
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
+        return padre;
     }
 }
 exports.ToDouble = ToDouble;

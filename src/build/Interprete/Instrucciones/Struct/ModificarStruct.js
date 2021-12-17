@@ -10,11 +10,13 @@ class ModificarStruct {
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador, ts) {
         let atributos = this.getAtributosStruct(ts);
         let nuevoValorTipo = this.nuevoValor.getTipo(controlador, ts);
         let nuevoValorV = this.nuevoValor.getValor(controlador, ts);
-        console.log('nuevoValorTipo:', nuevoValorTipo);
         // Válida si el struct no es nulo
         if (!atributos) {
             let error = new Errores_1.Errores("Semantico", `${this.id} no está definido.`, this.linea, this.columna);
@@ -24,20 +26,20 @@ class ModificarStruct {
         }
         let valorAtributo = `${this.id}_${this.atributo}`;
         for (let atributo of atributos) {
-            console.log('Atributo actual (tipo):', atributo.tipo.n_tipo);
-            if ((valorAtributo === atributo.identificador)
-                && (nuevoValorTipo === atributo.tipo.n_tipo)) {
-                let struct = ts.getSimbolo(this.id);
-                console.log('STRUCT ANTES:', struct);
+            if ((valorAtributo === atributo.identificador)) {
+                if (!(nuevoValorTipo === atributo.tipo.n_tipo)) {
+                    let error = new Errores_1.Errores("Semantico", `${this.atributo} difiere del tipo con el mismo nombre en ${this.id}.`, this.linea, this.columna);
+                    controlador.errores.push(error);
+                    controlador.append(`ERROR: Semántico, ${this.atributo} difiere del tipo con el mismo nombre en ${this.id}. En la linea ${this.linea} y columna ${this.columna}`);
+                    return;
+                }
                 atributo.valor = nuevoValorV;
-                console.log('STRUCT DESPUES:', struct);
                 return;
             }
         }
         let error = new Errores_1.Errores("Semantico", `${this.atributo} no es un atributo de ${this.id}.`, this.linea, this.columna);
         controlador.errores.push(error);
         controlador.append(`ERROR: Semántico, ${this.atributo} no es un atributo de ${this.id}. En la linea ${this.linea} y columna ${this.columna}`);
-        return;
     }
     getAtributosStruct(ts) {
         let struct = ts.getSimbolo(this.id);
@@ -45,9 +47,6 @@ class ModificarStruct {
             return null;
         }
         return struct.valor;
-    }
-    traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
     }
     recorrer() {
         throw new Error("Method not implemented.");

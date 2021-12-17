@@ -17,9 +17,11 @@ export class Ast implements Instruccion{
     constructor(lista_instrucciones : Array<Instruccion>){
         this.lista_instrucciones = lista_instrucciones;
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos) {
+    
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
         throw new Error("Method not implemented.");
     }
+    
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos){
         let bandera_start = false;

@@ -63,6 +63,9 @@
     <div class="container">
         <button id="parseButton"  class="parse-btn btn btn-warning"> Analizar </button>
     </div>
+    <div class="container">
+        <button id="generateAst"  class="parse-btn btn btn-warning"> Generar AST </button>
+    </div>
 
     <!-- Text editor -->
     <div class="container">
@@ -71,6 +74,31 @@
             <div class="terminal-container">
                 <textarea name="terminal" style="resize:none; background-color:black;color:white;"
                 id="terminal" cols="60" rows="20" readonly></textarea>
+            </div>
+        </div>
+
+        <h3 >Tabla de Simbolos </h3>
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                  <th>Identificador</th>
+                  <th>Rol</th>
+                  <th>Tipo</th>
+                  <th>Ambito</th>
+                  <th>Parametros</th>
+                </tr>
+              </thead>
+              
+              <tbody id="Simbolstable"></tbody>
+          </table>
+
+
+
+        <div class="row">
+            <h3 >AST </h3>
+            <div class="terminal-container">
+                <textarea name="terminal" style="resize:none; background-color:black;color:white;"
+                id="terminalast" cols="40" rows="20" readonly></textarea>
             </div>
         </div>
     </div>

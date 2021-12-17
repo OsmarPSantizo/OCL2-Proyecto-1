@@ -120,7 +120,7 @@ class Nodo {
      * @returns retorna la cadena total de la grafica
      */
     GraficarSintactico() {
-        let grafica = `digraph {\n\n${this.GraficarNodos(this, "0")}\n\n}`;
+        let grafica = `digraph {\n${this.GraficarNodos(this, "0")}\n}`;
         return grafica;
     }
     /**
@@ -1939,6 +1939,9 @@ class Operacion {
         throw new Error("Method not implemented.");
     }
     recorrer() {
+        throw new Error("Method not implemented.");
+    }
+    traducir(controlador, ts) {
         throw new Error("Method not implemented.");
     }
 }
@@ -4348,9 +4351,6 @@ class Declaracion {
         this.linea = linea;
         this.columna = columna;
     }
-    traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
-    }
     ejecutar(controlador, ts) {
         for (let id of this.lista_ids) {
             //1er paso. Verificar si existe en la tabla actual
@@ -4460,6 +4460,9 @@ class Declaracion {
         }
         return padre;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
 }
 exports.Declaracion = Declaracion;
 
@@ -4552,7 +4555,15 @@ class Fmain extends Simbolo_1.Simbolo {
         return null;
     }
     recorrer() {
-        return new Nodo_1.Nodo("MAIN", "");
+        let padre = new Nodo_1.Nodo("Main", "");
+        padre.AddHijo(new Nodo_1.Nodo("{", ""));
+        let hijo_instrucciones = new Nodo_1.Nodo("Instrucciones", "");
+        for (let inst of this.lista_instrucciones) {
+            hijo_instrucciones.AddHijo(inst.recorrer());
+        }
+        padre.AddHijo(hijo_instrucciones);
+        padre.AddHijo(new Nodo_1.Nodo("}", ""));
+        return padre;
     }
 }
 exports.Fmain = Fmain;
@@ -4790,6 +4801,7 @@ exports.Round = Round;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TipoParse = void 0;
 const Errores_1 = require("../../AST/Errores");
+const Nodo_1 = require("../../AST/Nodo");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
 class TipoParse {
     constructor(expresion, tiponum, linea, columna) {
@@ -4848,16 +4860,24 @@ class TipoParse {
         }
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("tipo.Parse", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.tiponum, ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        let hijo = new Nodo_1.Nodo("exp", "");
+        hijo.AddHijo(this.expresion.recorrer());
+        padre.AddHijo(hijo);
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
+        return padre;
     }
 }
 exports.TipoParse = TipoParse;
 
-},{"../../AST/Errores":2,"../../TablaSimbolos/Tipo":53}],25:[function(require,module,exports){
+},{"../../AST/Errores":2,"../../AST/Nodo":4,"../../TablaSimbolos/Tipo":53}],25:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToDouble = void 0;
 const Errores_1 = require("../../AST/Errores");
+const Nodo_1 = require("../../AST/Nodo");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
 class ToDouble {
     constructor(expresion, linea, columna) {
@@ -4887,12 +4907,19 @@ class ToDouble {
         }
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("toDouble", "");
+        padre.AddHijo(new Nodo_1.Nodo("toDouble", ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        let hijo = new Nodo_1.Nodo("exp", "");
+        hijo.AddHijo(this.expresion.recorrer());
+        padre.AddHijo(hijo);
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
+        return padre;
     }
 }
 exports.ToDouble = ToDouble;
 
-},{"../../AST/Errores":2,"../../TablaSimbolos/Tipo":53}],26:[function(require,module,exports){
+},{"../../AST/Errores":2,"../../AST/Nodo":4,"../../TablaSimbolos/Tipo":53}],26:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToInt = void 0;
@@ -4980,8 +5007,8 @@ class Tostring {
         }
     }
     recorrer() {
-        let padre = new Nodo_1.Nodo("Tostring", "");
-        padre.AddHijo(new Nodo_1.Nodo("toString", ""));
+        let padre = new Nodo_1.Nodo("String", "");
+        padre.AddHijo(new Nodo_1.Nodo("String", ""));
         padre.AddHijo(new Nodo_1.Nodo("(", ""));
         let hijo = new Nodo_1.Nodo("exp", "");
         hijo.AddHijo(this.expresion.recorrer());
@@ -5032,7 +5059,7 @@ class Typeof {
         return this.get_string_tipo(tipo_enum);
     }
     recorrer() {
-        let padre = new Nodo_1.Nodo("Typeof", "");
+        let padre = new Nodo_1.Nodo("typeof", "");
         padre.AddHijo(new Nodo_1.Nodo("typeof", ""));
         padre.AddHijo(new Nodo_1.Nodo("(", ""));
         let hijo = new Nodo_1.Nodo("exp", "");
@@ -5049,6 +5076,7 @@ exports.Typeof = Typeof;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LenghtC = void 0;
 const Errores_1 = require("../AST/Errores");
+const Nodo_1 = require("../AST/Nodo");
 const Tipo_1 = require("../TablaSimbolos/Tipo");
 class LenghtC {
     constructor(id, linea, columna) {
@@ -5073,12 +5101,18 @@ class LenghtC {
         }
     }
     recorrer() {
-        return;
+        let padre = new Nodo_1.Nodo("length", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.id, ""));
+        padre.AddHijo(new Nodo_1.Nodo(".", ""));
+        padre.AddHijo(new Nodo_1.Nodo("length", ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
+        return padre;
     }
 }
 exports.LenghtC = LenghtC;
 
-},{"../AST/Errores":2,"../TablaSimbolos/Tipo":53}],30:[function(require,module,exports){
+},{"../AST/Errores":2,"../AST/Nodo":4,"../TablaSimbolos/Tipo":53}],30:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Llamada = void 0;
@@ -5807,6 +5841,9 @@ class DeclaracionStruct {
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador, ts) {
         // Verificando si el struct base es el mismo al struct a declarar
         if (this.structId !== this.structInstanceId) {
@@ -5865,9 +5902,6 @@ class DeclaracionStruct {
         let nuevoSimbolo = new Simbolo_1.Simbolo(1, tipo, this.newVariable, newVariableValues);
         ts.agregar(this.newVariable, nuevoSimbolo);
     }
-    traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
-    }
     recorrer() {
         throw new Error("Method not implemented.");
     }
@@ -5888,6 +5922,9 @@ class DefinicionStruct {
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador, ts) {
         if (ts.existeEnActual(this.nombreStruct)) {
             let error = new Errores_1.Errores("Semantico", `El Struct ${this.nombreStruct} ya existe en el entorno actual, no se puede definir otra vez.`, this.linea, this.columna);
@@ -5898,9 +5935,6 @@ class DefinicionStruct {
         let tipo = new Tipo_1.Tipo('STRUCT ' + this.nombreStruct);
         let nuevoSimbolo = new Simbolo_1.Simbolo(5, tipo, this.nombreStruct, this.listaAtributos);
         ts.agregar(this.nombreStruct, nuevoSimbolo);
-    }
-    traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
     }
     recorrer() {
         throw new Error("Method not implemented.");
@@ -5921,11 +5955,13 @@ class ModificarStruct {
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador, ts) {
         let atributos = this.getAtributosStruct(ts);
         let nuevoValorTipo = this.nuevoValor.getTipo(controlador, ts);
         let nuevoValorV = this.nuevoValor.getValor(controlador, ts);
-        console.log('nuevoValorTipo:', nuevoValorTipo);
         // Válida si el struct no es nulo
         if (!atributos) {
             let error = new Errores_1.Errores("Semantico", `${this.id} no está definido.`, this.linea, this.columna);
@@ -5935,20 +5971,20 @@ class ModificarStruct {
         }
         let valorAtributo = `${this.id}_${this.atributo}`;
         for (let atributo of atributos) {
-            console.log('Atributo actual (tipo):', atributo.tipo.n_tipo);
-            if ((valorAtributo === atributo.identificador)
-                && (nuevoValorTipo === atributo.tipo.n_tipo)) {
-                let struct = ts.getSimbolo(this.id);
-                console.log('STRUCT ANTES:', struct);
+            if ((valorAtributo === atributo.identificador)) {
+                if (!(nuevoValorTipo === atributo.tipo.n_tipo)) {
+                    let error = new Errores_1.Errores("Semantico", `${this.atributo} difiere del tipo con el mismo nombre en ${this.id}.`, this.linea, this.columna);
+                    controlador.errores.push(error);
+                    controlador.append(`ERROR: Semántico, ${this.atributo} difiere del tipo con el mismo nombre en ${this.id}. En la linea ${this.linea} y columna ${this.columna}`);
+                    return;
+                }
                 atributo.valor = nuevoValorV;
-                console.log('STRUCT DESPUES:', struct);
                 return;
             }
         }
         let error = new Errores_1.Errores("Semantico", `${this.atributo} no es un atributo de ${this.id}.`, this.linea, this.columna);
         controlador.errores.push(error);
         controlador.append(`ERROR: Semántico, ${this.atributo} no es un atributo de ${this.id}. En la linea ${this.linea} y columna ${this.columna}`);
-        return;
     }
     getAtributosStruct(ts) {
         let struct = ts.getSimbolo(this.id);
@@ -5956,9 +5992,6 @@ class ModificarStruct {
             return null;
         }
         return struct.valor;
-    }
-    traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
     }
     recorrer() {
         throw new Error("Method not implemented.");
@@ -5971,6 +6004,7 @@ exports.ModificarStruct = ModificarStruct;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SubString = void 0;
 const Errores_1 = require("../AST/Errores");
+const Nodo_1 = require("../AST/Nodo");
 const Tipo_1 = require("../TablaSimbolos/Tipo");
 class SubString {
     constructor(expresion, inicio, final, linea, columna) {
@@ -6007,12 +6041,23 @@ class SubString {
         }
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("tipo.Parse", "");
+        padre.AddHijo(this.expresion.recorrer());
+        padre.AddHijo(new Nodo_1.Nodo(".", ""));
+        padre.AddHijo(new Nodo_1.Nodo("substring", ""));
+        let hijo = new Nodo_1.Nodo("substring", "");
+        hijo.AddHijo(new Nodo_1.Nodo("(", ""));
+        hijo.AddHijo(this.inicio.recorrer());
+        hijo.AddHijo(this.final.recorrer());
+        hijo.AddHijo(new Nodo_1.Nodo(")", ""));
+        padre.AddHijo(hijo);
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
+        return padre;
     }
 }
 exports.SubString = SubString;
 
-},{"../AST/Errores":2,"../TablaSimbolos/Tipo":53}],46:[function(require,module,exports){
+},{"../AST/Errores":2,"../AST/Nodo":4,"../TablaSimbolos/Tipo":53}],46:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Tolower = void 0;
@@ -6050,12 +6095,13 @@ class Tolower {
         }
     }
     recorrer() {
-        let padre = new Nodo_1.Nodo("Tolower", "");
-        padre.AddHijo(new Nodo_1.Nodo("Tolower", ""));
-        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        let padre = new Nodo_1.Nodo("toLowercase", "");
         let hijo = new Nodo_1.Nodo("exp", "");
         hijo.AddHijo(this.expresion.recorrer());
         padre.AddHijo(hijo);
+        padre.AddHijo(new Nodo_1.Nodo(".", ""));
+        padre.AddHijo(new Nodo_1.Nodo("toLowercase", ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
         padre.AddHijo(new Nodo_1.Nodo(")", ""));
         return padre;
     }
@@ -6100,12 +6146,13 @@ class Toupper {
         }
     }
     recorrer() {
-        let padre = new Nodo_1.Nodo("Tolower", "");
-        padre.AddHijo(new Nodo_1.Nodo("Tolower", ""));
-        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        let padre = new Nodo_1.Nodo("toUppercase", "");
         let hijo = new Nodo_1.Nodo("exp", "");
         hijo.AddHijo(this.expresion.recorrer());
         padre.AddHijo(hijo);
+        padre.AddHijo(new Nodo_1.Nodo(".", ""));
+        padre.AddHijo(new Nodo_1.Nodo("toUppercase", ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
         padre.AddHijo(new Nodo_1.Nodo(")", ""));
         return padre;
     }
@@ -6124,6 +6171,9 @@ class PopArreglo {
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador, ts) {
         let simbolo = ts.getSimbolo(this.id);
         if (simbolo.simbolo === 1 || simbolo.simbolo === 4) {
@@ -6135,9 +6185,6 @@ class PopArreglo {
             controlador.errores.push(error);
             controlador.append(`ERROR: Semántico, La expresión no es de tipo iterable, no se puede realizar la función pop. En la linea ${this.linea} y columna ${this.columna}`);
         }
-    }
-    traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
     }
     getTipo(controlador, ts) {
         let simAux = ts.getSimbolo(this.id);
@@ -6447,6 +6494,7 @@ exports.Tipo = Tipo;
 const  TablaSimbolos  = require("../../src/build/Interprete/TablaSimbolos/TablaSimbolos");
 const  gramatica  = require("../../src/build/Interprete/Gramatica/gramatica");
 const  Controlador  = require("../../src/build/Interprete/Controlador");
+
 // elements and global variables
 
 const tabs = document.getElementById('tabs');
@@ -6455,7 +6503,10 @@ const openInput = document.getElementById('open');
 const addButton = document.getElementById('new');
 const tabsContainer = document.getElementById('tab-container');
 const parseButton = document.getElementById('parseButton');
+const generateAst = document.getElementById('generateAst');
 const terminal = document.getElementById('terminal');
+const terminalast = document.getElementById('terminalast');
+const Simbolstable = document.getElementById('Simbolstable');
 
 var counter = 1;
 var currentEditor = 'editor';
@@ -6467,7 +6518,14 @@ var editorList = [];
 // events
 parseButton.addEventListener("click", () =>{
     parseInput();
+    
 } );
+
+generateAst.addEventListener("click", () =>{
+    generarAst();
+} );
+
+
 document.addEventListener('DOMContentLoaded', () => {
     let editor = document.getElementById('editor');
 
@@ -6621,13 +6679,31 @@ function readSingleFile(e) {
 const parseInput = () => {
     console.log('parsing...');
     let editorValue = currentEditor.getValue();
-        const ast = gramatica.parse(editorValue);
-        const controlador = new Controlador.Controlador();
-        const ts_global = new TablaSimbolos.TablaSimbolos(null);
-        ast.ejecutar(controlador,ts_global);
+    const ast = gramatica.parse(editorValue);
+    const controlador = new Controlador.Controlador();
+    const ts_global = new TablaSimbolos.TablaSimbolos(null);
+    ast.ejecutar(controlador,ts_global);
+    let ts_html = controlador.graficar_ts(controlador, ts_global, "1");
+    for (let tablitas of controlador.tablas) {
+        ts_html += controlador.graficar_ts(controlador, tablitas, "2");
+    }
+    console.log(controlador.errores);
+    document.getElementById("Simbolstable").innerHTML= ts_html // this is for show simbols table 
 
     terminal.value = controlador.consola;
 }
+
+
+const generarAst = () => {
+    console.log('Generando AST');
+    let editorValue = currentEditor.getValue();
+    const ast = gramatica.parse(editorValue);
+    const nodo_ast = ast.recorrer();
+    const grafo = nodo_ast.GraficarSintactico();
+    terminalast.value = grafo;
+    console.log(grafo);
+}
+
 
 },{"../../src/build/Interprete/Controlador":5,"../../src/build/Interprete/Gramatica/gramatica":15,"../../src/build/Interprete/TablaSimbolos/TablaSimbolos":52}],55:[function(require,module,exports){
 

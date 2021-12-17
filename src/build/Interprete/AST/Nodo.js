@@ -31,7 +31,7 @@ class Nodo {
      * @returns retorna la cadena total de la grafica
      */
     GraficarSintactico() {
-        let grafica = `digraph {\n\n${this.GraficarNodos(this, "0")}\n\n}`;
+        let grafica = `digraph {\n${this.GraficarNodos(this, "0")}\n}`;
         return grafica;
     }
     /**

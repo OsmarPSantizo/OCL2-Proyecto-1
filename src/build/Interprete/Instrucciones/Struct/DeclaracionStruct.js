@@ -14,6 +14,9 @@ class DeclaracionStruct {
         this.linea = linea;
         this.columna = columna;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
     ejecutar(controlador, ts) {
         // Verificando si el struct base es el mismo al struct a declarar
         if (this.structId !== this.structInstanceId) {
@@ -71,9 +74,6 @@ class DeclaracionStruct {
         let tipo = new Tipo_1.Tipo(`STRUCT`);
         let nuevoSimbolo = new Simbolo_1.Simbolo(1, tipo, this.newVariable, newVariableValues);
         ts.agregar(this.newVariable, nuevoSimbolo);
-    }
-    traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
     }
     recorrer() {
         throw new Error("Method not implemented.");

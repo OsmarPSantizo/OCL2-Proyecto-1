@@ -37,7 +37,7 @@ class Typeof {
         return this.get_string_tipo(tipo_enum);
     }
     recorrer() {
-        let padre = new Nodo_1.Nodo("Typeof", "");
+        let padre = new Nodo_1.Nodo("typeof", "");
         padre.AddHijo(new Nodo_1.Nodo("typeof", ""));
         padre.AddHijo(new Nodo_1.Nodo("(", ""));
         let hijo = new Nodo_1.Nodo("exp", "");

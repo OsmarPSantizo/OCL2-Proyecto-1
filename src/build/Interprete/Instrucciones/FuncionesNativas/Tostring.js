@@ -35,8 +35,8 @@ class Tostring {
         }
     }
     recorrer() {
-        let padre = new Nodo_1.Nodo("Tostring", "");
-        padre.AddHijo(new Nodo_1.Nodo("toString", ""));
+        let padre = new Nodo_1.Nodo("String", "");
+        padre.AddHijo(new Nodo_1.Nodo("String", ""));
         padre.AddHijo(new Nodo_1.Nodo("(", ""));
         let hijo = new Nodo_1.Nodo("exp", "");
         hijo.AddHijo(this.expresion.recorrer());

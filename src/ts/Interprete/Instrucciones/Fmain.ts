@@ -20,9 +20,10 @@ export class Fmain extends Simbolo implements Instruccion{
         this.linea = linea;
         this.columna = columna;
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos) {
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
         throw new Error("Method not implemented.");
     }
+    
 
 
 
@@ -50,7 +51,18 @@ export class Fmain extends Simbolo implements Instruccion{
         return null
     }
     recorrer(): Nodo {
-        return new Nodo("MAIN","");
+
+        let padre = new Nodo("Main","");
+        padre.AddHijo(new Nodo("{",""));
+
+        let hijo_instrucciones = new Nodo("Instrucciones","");
+        for (let inst of this.lista_instrucciones){
+            hijo_instrucciones.AddHijo(inst.recorrer());
+        }
+        padre.AddHijo(hijo_instrucciones);
+        padre.AddHijo(new Nodo("}",""));
+
+        return padre;
     }
     
 }

@@ -25,9 +25,10 @@ export class DeclaracionVectores implements Instruccion{
         this.linea = linea;
         this.columna = columna;
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos) {
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
         throw new Error("Method not implemented.");
     }
+ 
 
 
 

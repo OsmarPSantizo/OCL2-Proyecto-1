@@ -1,4 +1,5 @@
 import { Ast } from "./Interprete/AST/Ast";
+import { Nodo } from "./Interprete/AST/Nodo";
 import { Controlador } from "./Interprete/Controlador";
 import { TablaSimbolos } from "./Interprete/TablaSimbolos/TablaSimbolos";
 
@@ -43,3 +44,4 @@ ejecutarCodigo(`
 
 
 `);
+

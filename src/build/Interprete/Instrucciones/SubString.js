@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SubString = void 0;
 const Errores_1 = require("../AST/Errores");
+const Nodo_1 = require("../AST/Nodo");
 const Tipo_1 = require("../TablaSimbolos/Tipo");
 class SubString {
     constructor(expresion, inicio, final, linea, columna) {
@@ -38,7 +39,18 @@ class SubString {
         }
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("tipo.Parse", "");
+        padre.AddHijo(this.expresion.recorrer());
+        padre.AddHijo(new Nodo_1.Nodo(".", ""));
+        padre.AddHijo(new Nodo_1.Nodo("substring", ""));
+        let hijo = new Nodo_1.Nodo("substring", "");
+        hijo.AddHijo(new Nodo_1.Nodo("(", ""));
+        hijo.AddHijo(this.inicio.recorrer());
+        hijo.AddHijo(this.final.recorrer());
+        hijo.AddHijo(new Nodo_1.Nodo(")", ""));
+        padre.AddHijo(hijo);
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
+        return padre;
     }
 }
 exports.SubString = SubString;

@@ -52,6 +52,19 @@ export class SubString implements Expresion{
         }
     }
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("tipo.Parse",""); 
+        padre.AddHijo(this.expresion.recorrer()); 
+        padre.AddHijo(new Nodo(".",""));
+        padre.AddHijo(new Nodo("substring",""));
+
+        let hijo = new Nodo("substring","");
+        hijo.AddHijo(new Nodo("(","")); 
+        hijo.AddHijo(this.inicio.recorrer()); 
+        hijo.AddHijo(this.final.recorrer()); 
+        hijo.AddHijo(new Nodo(")","")); 
+
+        padre.AddHijo(hijo);
+        padre.AddHijo(new Nodo(")","")); 
+        return padre;
     }
 }

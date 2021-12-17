@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LenghtC = void 0;
 const Errores_1 = require("../AST/Errores");
+const Nodo_1 = require("../AST/Nodo");
 const Tipo_1 = require("../TablaSimbolos/Tipo");
 class LenghtC {
     constructor(id, linea, columna) {
@@ -26,7 +27,13 @@ class LenghtC {
         }
     }
     recorrer() {
-        return;
+        let padre = new Nodo_1.Nodo("length", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.id, ""));
+        padre.AddHijo(new Nodo_1.Nodo(".", ""));
+        padre.AddHijo(new Nodo_1.Nodo("length", ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
+        return padre;
     }
 }
 exports.LenghtC = LenghtC;

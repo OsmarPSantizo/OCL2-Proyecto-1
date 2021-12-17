@@ -22,9 +22,13 @@ export class Llamada implements Instruccion , Expresion{
         this.columna = columna;
         this.linea = linea;
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos) {
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
         throw new Error("Method not implemented.");
     }
+   
+
+
+    
     getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {
         let simbolo_funcion = ts.getSimbolo(this.identificador) as Funcion;
         return simbolo_funcion.tipo.n_tipo;

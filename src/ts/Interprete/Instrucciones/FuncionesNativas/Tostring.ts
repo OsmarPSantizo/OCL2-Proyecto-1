@@ -49,8 +49,8 @@ export class Tostring implements Expresion{
 
     }
     recorrer(): Nodo{
-        let padre = new Nodo("Tostring",""); 
-        padre.AddHijo(new Nodo("toString","")); 
+        let padre = new Nodo("String",""); 
+        padre.AddHijo(new Nodo("String","")); 
         padre.AddHijo(new Nodo("(",""));
 
         let hijo = new Nodo("exp","");

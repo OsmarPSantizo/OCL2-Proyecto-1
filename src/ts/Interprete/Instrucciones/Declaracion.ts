@@ -18,7 +18,6 @@ export  class Declaracion implements Instruccion{
     public type : Tipo;
     public lista_ids : Array<string>;
     public expresion : Expresion;
-
     public linea : number;
     public columna : number;
 
@@ -30,9 +29,7 @@ export  class Declaracion implements Instruccion{
         this.columna = columna;
         
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos) {
-        throw new Error("Method not implemented.");
-    }
+   
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos){
         for(let id of this.lista_ids){
@@ -142,7 +139,10 @@ export  class Declaracion implements Instruccion{
         return padre
     }
 
-
+ traducir(controlador: Controlador, ts: TablaSimbolos): String {
+        throw new Error("Method not implemented.");
+    }
+  
 
 
 
