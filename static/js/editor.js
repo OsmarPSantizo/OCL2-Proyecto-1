@@ -131,6 +131,8 @@ const createEditor = ( editor ) => {
         animal animal1 = animal("Bobby", 5);
         animal1.nombre = "Angel";
         println(animal1.nombre);
+        println(var.toUppercase());
+        println(var.toLowercase());
     }
     `);
 }
@@ -200,17 +202,25 @@ const parseInput = () => {
     }
     console.log(controlador.errores);
     document.getElementById("Simbolstable").innerHTML= ts_html // this is for show simbols table
-    let reporteGramaticalTexto = '';
-    ast.reporteGramatical.reverse().forEach( produccion => {
-        reporteGramaticalTexto += produccion + '\n';
+    let reporteGramaticalProduccionTexto = '';
+    let reporteGramaticalTDSTexto = '';
+
+    ast.reporteGramaticalProducciones.reverse().forEach( produccion => {
+        reporteGramaticalProduccionTexto += produccion + '\n';
     });
-    console.log('REPORTE GRAMATICAL:', reporteGramaticalTexto);
-    let newLink = generarReporteGramatical(reporteGramaticalTexto);
-    linkReporteGramatical.setAttribute('href', newLink);
+
+    ast.reporteGramaticalTDS.reverse().forEach( regla => {
+        reporteGramaticalTDSTexto += regla + '\n';
+    });
+
+    console.log('TDS:', reporteGramaticalTDSTexto);
+
+    // let newLink = generarReporteGramatical(reporteGramaticalProduccionTexto);
+    // linkReporteGramatical.setAttribute('href', newLink);
     terminal.value = controlador.consola;
 }
 
-var textFile = null
+// var textFile = null
 
 const generarReporteGramatical = (text) => {
 
@@ -221,7 +231,6 @@ const generarReporteGramatical = (text) => {
     }
 
     textFile = window.URL.createObjectURL(data);
-    console.log('textFile', textFile);
 
     return textFile;
 }
