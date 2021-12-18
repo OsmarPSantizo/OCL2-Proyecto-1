@@ -17,6 +17,7 @@ const generateAst = document.getElementById('generateAst');
 const terminal = document.getElementById('terminal');
 const terminalast = document.getElementById('terminalast');
 const Simbolstable = document.getElementById('Simbolstable');
+const linkReporteGramatical = document.getElementById('rg');
 
 var counter = 1;
 var currentEditor = 'editor';
@@ -130,8 +131,6 @@ const createEditor = ( editor ) => {
         animal animal1 = animal("Bobby", 5);
         animal1.nombre = "Angel";
         println(animal1.nombre);
-        println(var.toUppercase());
-        println(var.toLowercase());
     }
     `);
 }
@@ -206,7 +205,8 @@ const parseInput = () => {
         reporteGramaticalTexto += produccion + '\n';
     });
     console.log('REPORTE GRAMATICAL:', reporteGramaticalTexto);
-    generarReporteGramatical(reporteGramaticalTexto);
+    let newLink = generarReporteGramatical(reporteGramaticalTexto);
+    linkReporteGramatical.setAttribute('href', newLink);
     terminal.value = controlador.consola;
 }
 

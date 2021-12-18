@@ -33,6 +33,10 @@ ul button {
     margin: 0 1rem;
 }
 
+#rg {
+    margin-left: 1rem;
+}
+
 a.logo:link {
     text-decoration: none;
     color: #ffffff;
