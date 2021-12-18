@@ -28,7 +28,7 @@ var editorList = [];
 // events
 parseButton.addEventListener("click", () =>{
     parseInput();
-    
+
 } );
 
 generateAst.addEventListener("click", () =>{
@@ -119,6 +119,9 @@ const createEditor = ( editor ) => {
     currentEditor = newEditor;
 
     currentEditor.setValue(`void main(){
+
+        String var = "HooOooOolaA";
+
         struct animal {
             String nombre;
             int edad;
@@ -127,6 +130,8 @@ const createEditor = ( editor ) => {
         animal animal1 = animal("Bobby", 5);
         animal1.nombre = "Angel";
         println(animal1.nombre);
+        println(var.toUppercase());
+        println(var.toLowercase());
     }
     `);
 }
@@ -175,8 +180,6 @@ function readSingleFile(e) {
 
     reader.onload = function(e) {
         var contents = e.target.result;
-
-        console.log('contents:', contents);
         createTab(true, contents);
 
     };
@@ -187,7 +190,6 @@ function readSingleFile(e) {
 
 
 const parseInput = () => {
-    console.log('parsing...');
     let editorValue = currentEditor.getValue();
     const ast = gramatica.parse(editorValue);
     const controlador = new Controlador.Controlador();
@@ -198,9 +200,30 @@ const parseInput = () => {
         ts_html += controlador.graficar_ts(controlador, tablitas, "2");
     }
     console.log(controlador.errores);
-    document.getElementById("Simbolstable").innerHTML= ts_html // this is for show simbols table 
-
+    document.getElementById("Simbolstable").innerHTML= ts_html // this is for show simbols table
+    let reporteGramaticalTexto = '';
+    ast.reporteGramatical.reverse().forEach( produccion => {
+        reporteGramaticalTexto += produccion + '\n';
+    });
+    console.log('REPORTE GRAMATICAL:', reporteGramaticalTexto);
+    generarReporteGramatical(reporteGramaticalTexto);
     terminal.value = controlador.consola;
+}
+
+var textFile = null
+
+const generarReporteGramatical = (text) => {
+
+    var data = new Blob([text], {type: 'text/plain'});
+
+    if (textFile !== null) {
+        window.URL.revokeObjectURL(textFile);
+    }
+
+    textFile = window.URL.createObjectURL(data);
+    console.log('textFile', textFile);
+
+    return textFile;
 }
 
 
@@ -213,4 +236,3 @@ const generarAst = () => {
     terminalast.value = grafo;
     console.log(grafo);
 }
-

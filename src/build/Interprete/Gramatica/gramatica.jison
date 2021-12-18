@@ -213,6 +213,9 @@ caracter      (\' ({escape2}|{aceptacion2})\')
         const {Funcion} = require('../Instrucciones/Funcion');
         const {Llamada} = require('../Instrucciones/Llamada');
         const {Fmain} = require('../Instrucciones/Fmain');
+
+        var reporteGramatical = [];
+
 %}
 
 /* PRECEDENCIA */
@@ -234,35 +237,35 @@ caracter      (\' ({escape2}|{aceptacion2})\')
 
 %% /* Gramática del lenguaje */
 
-inicio : instrucciones EOF {$$ = new Ast($1); return $$};
+inicio : instrucciones EOF {$$ = new Ast($1); reporteGramatical.push('<inicio> := <instrucciones> EOF'); $$.reporteGramatical = reporteGramatical; return $$;};
 
-instrucciones : instrucciones instruccion   {$$ = $1; $$.push($2);}
-            | instruccion                   {$$ = new Array(); $$.push($1);}
+instrucciones : instrucciones instruccion   {$$ = $1; $$.push($2); reporteGramatical.push('<instrucciones> := <instrucciones> <instruccion>');}
+            | instruccion                   {$$ = new Array(); $$.push($1); reporteGramatical.push('<instrucciones> := <instruccion>');}
             ;
 
-instruccion : declaracion { $$ = $1; }
-            | impresion   { $$ = $1; }
-            | struct      { $$ = $1; }
-            | asignacion  { $$ = $1; }
-            | decl_vectores  { $$ = $1; }
-            | decl_struct  { $$ = $1; }
-            | push_vector    { $$ = $1; }
-            | pop_vector    { $$ = $1; }
-            | sent_if     { $$ = $1; }
-            | sent_while  { $$ = $1; }
-            | BREAK PYC   { $$ = new Break(); }
-            | CONTINUE PYC { $$ = new Continue(); }
-            | RETURN PYC   { $$ = new Retorno(null); }
-            | RETURN e PYC { $$ = new Retorno($2); }
-            | sent_switch { $$ = $1; }
-            | sent_for    { $$ = $1; }
-            | sent_do_while PYC {$$ = $1; }
-            | ID DECRE PYC   { $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column); }
-            | ID INCRE PYC   { $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column); }
-            | modi_vector    { $$ = $1; }
-            | modi_struct    { $$ = $1; }
-            | funciones      { $$ = $1; }
-            | llamada PYC    { $$ = $1; }
+instruccion : declaracion { $$ = $1; reporteGramatical.push('<instruccion> := <declaracion>');}
+            | impresion   { $$ = $1; reporteGramatical.push('<instruccion> := <impresion>');}
+            | struct      { $$ = $1; reporteGramatical.push('<instruccion> := <struct>');}
+            | asignacion  { $$ = $1; reporteGramatical.push('<instruccion> := <asignacion>');}
+            | decl_vectores  { $$ = $1; reporteGramatical.push('<instruccion> := <decl_vectores>');}
+            | decl_struct  { $$ = $1; reporteGramatical.push('<instruccion> := <decl_struct>');}
+            | push_vector    { $$ = $1; reporteGramatical.push('<instruccion> := <push_vector>');}
+            | pop_vector    { $$ = $1; reporteGramatical.push('<instruccion> := <pop_vector>');}
+            | sent_if     { $$ = $1; reporteGramatical.push('<instruccion> := <sent_if>');}
+            | sent_while  { $$ = $1; reporteGramatical.push('<instruccion> := <sent_while>');}
+            | BREAK PYC   { $$ = new Break(); reporteGramatical.push('<instruccion> := BREAK PYC');}
+            | CONTINUE PYC { $$ = new Continue(); reporteGramatical.push('<instruccion> := CONTINUE PYC');}
+            | RETURN PYC   { $$ = new Retorno(null); reporteGramatical.push('<instruccion> := RETURN PYC');}
+            | RETURN e PYC { $$ = new Retorno($2); reporteGramatical.push('<instruccion> := RETURN <e> PYC');}
+            | sent_switch { $$ = $1; reporteGramatical.push('<instruccion> := <sent_switch>');}
+            | sent_for    { $$ = $1; reporteGramatical.push('<instruccion> := <sent_for>');}
+            | sent_do_while PYC {$$ = $1; reporteGramatical.push('<instruccion> := <sent_do_while> PYC');}
+            | ID DECRE PYC   { reporteGramatical.push('<instruccion> := ID DECRE PYC'); $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column); }
+            | ID INCRE PYC   { reporteGramatical.push('<instruccion> := ID INCRE PYC'); $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column); }
+            | modi_vector    { $$ = $1; reporteGramatical.push('<instruccion> := <modi_vector>');}
+            | modi_struct    { $$ = $1; reporteGramatical.push('<instruccion> := <modi_struct>');}
+            | funciones      { $$ = $1; reporteGramatical.push('<instruccion> := <funciones>');}
+            | llamada PYC    { $$ = $1; reporteGramatical.push('<instruccion> := <llamada> PYC');}
             | error {console.log("Error Sintactico "  + yytext
                            + " linea: " + this._$.first_line
                            +" columna: "+ this._$.first_column);
@@ -273,15 +276,15 @@ instruccion : declaracion { $$ = $1; }
 
             ;
 
-declaracion : tipo lista_ids IGUAL e PYC    {$$ = new Declaracion($1,$2,$4,@1.first_line,@1.last_column); }
-            | tipo lista_ids PYC            {$$ = new Declaracion($1,$2,null,@1.first_line,@1.last_column);}
+declaracion : tipo lista_ids IGUAL e PYC    { reporteGramatical.push('<declaracion> := <tipo> <lsita_ids> IGUAL <e> PYC'); $$ = new Declaracion($1,$2,$4,@1.first_line,@1.last_column); }
+            | tipo lista_ids PYC            { reporteGramatical.push('<declaracion> := <tipo> <lsita_ids> PYC'); $$ = new Declaracion($1,$2,null,@1.first_line,@1.last_column);}
             ;
 
-tipo : DOUBLE       {$$ = new Tipo("DOBLE");}
-     | INT          {$$ = new Tipo("ENTERO");}
-     | STRINGT       {$$ = new Tipo("CADENA");}
-     | CHAR         {$$ = new Tipo("CARACTER");}
-     | BOOLEAN      {$$ = new Tipo("BOOLEAN");}
+tipo : DOUBLE       {reporteGramatical.push('<tipo> := DOUBLE'); $$ = new Tipo("DOBLE");}
+     | INT          {reporteGramatical.push('<tipo> := INT'); $$ = new Tipo("ENTERO");}
+     | STRINGT      {reporteGramatical.push('<tipo> := STRINGT'); $$ = new Tipo("CADENA");}
+     | CHAR         {reporteGramatical.push('<tipo> := CHAR'); $$ = new Tipo("CARACTER");}
+     | BOOLEAN      {reporteGramatical.push('<tipo> := BOOLEAN'); $$ = new Tipo("BOOLEAN");}
      ;
 
 
@@ -291,42 +294,42 @@ tipo : DOUBLE       {$$ = new Tipo("DOBLE");}
 // Vectores
 
 decl_vectores:
-              tipo CORA CORC lista_ids IGUAL CORA lista_valores CORC PYC     {$$ = new DeclaracionVectores($1,$4,$7,@1.first_line,@1.last_column);}
+              tipo CORA CORC lista_ids IGUAL CORA lista_valores CORC PYC     {reporteGramatical.push('<decl_valores> := <tipo> CORA CROC <lsita_ids> IGUAL CORA <lista_valores> CORC PYC'); $$ = new DeclaracionVectores($1,$4,$7,@1.first_line,@1.last_column);}
              | tipo CORA CORC lista_ids IGUAL e PYC
              ;
 
-lista_valores: lista_valores COMA e        {$$ = $1; $$.push($3);}
-             | e                           {$$ = new Array(); $$.push($1);}
+lista_valores: lista_valores COMA e        {$$ = $1; $$.push($3); reporteGramatical.push('<lista_valores> := <lista_valores> COMA <e>');}
+             | e                           {$$ = new Array(); $$.push($1); reporteGramatical.push('<lista_valores> := <e>');}
              ;
 
 
-modi_vector: ID CORA e CORC IGUAL e PYC { $$ = new AccesoVector( $1, $3, $6, true ,@1.first_line,@1.last_column ); }
+modi_vector: ID CORA e CORC IGUAL e PYC { reporteGramatical.push('<modi_vector> := ID CORA <e> CORC IGUAL <e> PYC'); $$ = new AccesoVector( $1, $3, $6, true ,@1.first_line,@1.last_column ); }
            ;
 
 push_vector:
-         ID PNT PUSH PARA e PARC PYC {$$ = new PushArreglo($1, $5, @1.first_line,@1.last_column);}
+         ID PNT PUSH PARA e PARC PYC { reporteGramatical.push('<push_vector> := ID PNT PUSH PARA <e> PARC'); $$ = new PushArreglo($1, $5, @1.first_line,@1.last_column);}
 ;
 
 pop_vector:
-         ID PNT POP PARA PARC PYC {$$ = new PopArreglo($1, @1.first_line,@1.last_column);}
+         ID PNT POP PARA PARC PYC { reporteGramatical.push('<pop_vector> := ID PNT PUSH PARA PARC PYC'); $$ = new PopArreglo($1, @1.first_line,@1.last_column);}
 ;
 
 // Struct
 
 struct:
-        STRUCTC ID LLAVA lista_atributos LLAVC { $$ = new DefinicionStruct($2, $4, @1.first_line, @1.last_column) }
+        STRUCTC ID LLAVA lista_atributos LLAVC { reporteGramatical.push('<struct> := STRUCTC ID LLAVA <lista_atributos> LLAVC'); $$ = new DefinicionStruct($2, $4, @1.first_line, @1.last_column) }
 ;
 
 decl_struct:
-        ID  ID IGUAL ID PARA lista_valores PARC PYC { $$ = new DeclaracionStruct( $1, $2, $4, $6, @1.first_line, @1.last_column );  }
+        ID  ID IGUAL ID PARA lista_valores PARC PYC { reporteGramatical.push('<decl_struct> := ID ID IGUAL ID PARA <lista_valores> PARC LLAVC'); $$ = new DeclaracionStruct( $1, $2, $4, $6, @1.first_line, @1.last_column );  }
 ;
 
-lista_atributos : lista_atributos tipo ID PYC {$$ = $1; $$.push(new Simbolo(7, $2, $3, null));}
-                | tipo ID PYC             {$$ = new Array(); $$.push(new Simbolo(7, $1, $2, null));}
+lista_atributos : lista_atributos tipo ID PYC { reporteGramatical.push('<lista_atributos> := <lista_atributos> <tipo> ID PYC'); $$ = $1; $$.push(new Simbolo(7, $2, $3, null));}
+                | tipo ID PYC             { reporteGramatical.push('<lista_atributos> := <tipo> ID PYC'); $$ = new Array(); $$.push(new Simbolo(7, $1, $2, null));}
 ;
 
 modi_struct:
-        ID PNT ID IGUAL e PYC { $$ = new ModificarStruct($1, $3, $5, @1.first_line, @1.last_column ); }
+        ID PNT ID IGUAL e PYC { reporteGramatical.push('<modi_struct> := ID PNT ID IGUAL <e> PYC'); $$ = new ModificarStruct($1, $3, $5, @1.first_line, @1.last_column ); }
 ;
 // acceso_struct:
 //         ID PNT ID PYC { $$ = new AccesoStruct( $1, $2, @1.first_line, @1.last_column ) }
@@ -335,149 +338,146 @@ modi_struct:
 
 // Lista de IDs
 
-lista_ids : lista_ids COMA ID           {$$ = $1; $$.push($3);}
-          | ID                          {$$ = new Array(); $$.push($1);}
+lista_ids : lista_ids COMA ID           { reporteGramatical.push('<lista_ids> := <lista_ids> COMA ID'); $$ = $1; $$.push($3);}
+          | ID                          { reporteGramatical.push('<lista_ids> := ID'); $$ = new Array(); $$.push($1);}
           ;
 
 /// Impresión
-impresion : PRINTLN PARA e PARC PYC  {$$ = new Println($3,@1.first_line,@1.last_column);}
-          | PRINT PARA e PARC PYC {$$ = new Print($3,@1.first_line,@1.last_column);}
+impresion : PRINTLN PARA e PARC PYC  { reporteGramatical.push('<impresion> := PRINTLN PARA <e> PARC PYC'); $$ = new Println($3,@1.first_line,@1.last_column);}
+          | PRINT PARA e PARC PYC { reporteGramatical.push('<impresion> := PRINT PARA <e> PARC PYC'); $$ = new Print($3,@1.first_line,@1.last_column);}
           ;
 
 
 /// Asignacion
-asignacion : ID IGUAL e PYC {$$ = new Asignacion($1,$3,@1.first_line,@1.last_column);}
+asignacion : ID IGUAL e PYC { reporteGramatical.push('<asignacion> := ID IGUAL <e> PYC'); $$ = new Asignacion($1,$3,@1.first_line,@1.last_column);}
             ;
 
 
 /// Sentencias de control
 //IF
-sent_if : IF PARA e PARC LLAVA instrucciones LLAVC  {$$ = new Ifs($3,$6,[],@1.first_line,@1.last_column);}
-        | IF PARA e PARC LLAVA instrucciones LLAVC ELSE LLAVA instrucciones LLAVC {$$ = new Ifs($3,$6,$10,@1.first_line,@1.last_column);}
-        | IF PARA e PARC LLAVA instrucciones LLAVC ELSE sent_if {$$ = new Ifs($3,$6,[$9],@1.first_line,@1.last_column);}
+sent_if : IF PARA e PARC LLAVA instrucciones LLAVC  { reporteGramatical.push('<asignacion> := IF PARA <e> PARC LLAVA <instrucciones> LLAVC'); $$ = new Ifs($3,$6,[],@1.first_line,@1.last_column);}
+        | IF PARA e PARC LLAVA instrucciones LLAVC ELSE LLAVA instrucciones LLAVC { reporteGramatical.push('<asignacion> := IF PARA <e> PARC LLAVA <instrucciones> LLAVC ELSE llava <INSTRUCCIONES> LLAVC'); $$ = new Ifs($3,$6,$10,@1.first_line,@1.last_column);}
+        | IF PARA e PARC LLAVA instrucciones LLAVC ELSE sent_if { reporteGramatical.push('<asignacion> := IF PARA <e> PARC LLAVA <instrucciones> LLAVC ELSE <sent_if>'); $$ = new Ifs($3,$6,[$9],@1.first_line,@1.last_column);}
         ;
 
 
 
 //switch
-sent_switch : SWITCH PARA e PARC LLAVA list_case LLAVC         {$$ = new Switch($3,$6,null,@1.first_line,@1.last_column);}
-            | SWITCH PARA e PARC LLAVA list_case default LLAVC {$$ = new Switch($3,$6,$7,@1.first_line,@1.last_column);}
-            | SWITCH PARA e PARC LLAVA default LLAVC           {$$ = new Switch($3,[],$6,@1.first_line,@1.last_column);}
+sent_switch : SWITCH PARA e PARC LLAVA list_case LLAVC         {reporteGramatical.push('<sent_switch> := SWITCH PARA <e> PARC LLAVA <list_case> LLAVC');  $$ = new Switch($3,$6,null,@1.first_line,@1.last_column);}
+            | SWITCH PARA e PARC LLAVA list_case default LLAVC {reporteGramatical.push('<sent_switch> := SWITCH PARA <e> PARC LLAVA <list_case> <default> LLAVC');  $$ = new Switch($3,$6,$7,@1.first_line,@1.last_column);}
+            | SWITCH PARA e PARC LLAVA default LLAVC           {reporteGramatical.push('<sent_switch> := SWITCH PARA <e> PARC LLAVA <default> LLAVC');  $$ = new Switch($3,[],$6,@1.first_line,@1.last_column);}
             ;
 
-list_case : list_case caso   {$$ = $1; $$.push($2);}
-          | caso             {$$ = new Array(); $$.push($1);}
+list_case : list_case caso   {$$ = $1; $$.push($2); reporteGramatical.push('<list_case> := <list_case> <caso>'); }
+          | caso             {$$ = new Array(); $$.push($1); reporteGramatical.push('<list_case> := <caso>'); }
           ;
 
-caso : CASE e DOSPUNTOS instrucciones     {$$ = new Caso($2,$4,@1.first_line,@1.last_column);}
+caso : CASE e DOSPUNTOS instrucciones     {$$ = new Caso($2,$4,@1.first_line,@1.last_column); reporteGramatical.push('<caso> := CASE <e> DOSPUNTOS <instrucciones>'); }
      ;
 
 
 /// Sentencias cíclicas
 // While
-sent_while : WHILE PARA e PARC LLAVA instrucciones LLAVC {$$ = new While($3,$6,@1.first_line,@1.last_column);}
+sent_while : WHILE PARA e PARC LLAVA instrucciones LLAVC {$$ = new While($3,$6,@1.first_line,@1.last_column); reporteGramatical.push('<sent_while> := WHILE PARA <e> PARC LLAVA <instrucciones> LLAVC'); }
             ;
 // for
-sent_for: FOR PARA dec_asignacion_for PYC e PYC actualizacion_for PARC LLAVA instrucciones LLAVC {$$ = new For($3,$5,$7,$10,@1.first_line,@1.last_column);}
+sent_for: FOR PARA dec_asignacion_for PYC e PYC actualizacion_for PARC LLAVA instrucciones LLAVC {$$ = new For($3,$5,$7,$10,@1.first_line,@1.last_column); reporteGramatical.push('<sent_for> := FOR PARA <dec_asignacion_for> PYC <e> PYC <actualizacion_for> PARC LLAVA <instrucciones> LLAVC'); }
         ;
 
-dec_asignacion_for : tipo ID IGUAL e {$$ = new Declaracion($1,$2,$4,@1.first_line,@1.last_column);}
-                   | ID IGUAL e      {$$ = new Asignacion($1,$3,@1.first_line,@1.last_column);}
+dec_asignacion_for : tipo ID IGUAL e { reporteGramatical.push('<dec_asignacion_for> := <tipo> ID IGUAL <e>'); $$ = new Declaracion($1,$2,$4,@1.first_line,@1.last_column);}
+                   | ID IGUAL e      { reporteGramatical.push('<dec_asignacion_for> := ID IGUAL <e>'); $$ = new Asignacion($1,$3,@1.first_line,@1.last_column);}
                    ;
 
 default : DEFAULT DOSPUNTOS instrucciones {$$ = new Caso(null,$3,@1.first_line,@1.last_column);}
         ;
 
 
-actualizacion_for : ID DECRE    {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
-                  | ID INCRE    {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
-                  | ID IGUAL e  {$$ = new Asignacion($1, $3,@1.first_line, @1.last_column);}
+actualizacion_for : ID DECRE    { reporteGramatical.push('<actualizacon_for> := ID DECRE'); $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
+                  | ID INCRE    { reporteGramatical.push('<actualizacon_for> := ID INCRE'); $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
+                  | ID IGUAL e  { reporteGramatical.push('<actualizacon_for> := ID IGUAL <e>'); $$ = new Asignacion($1, $3,@1.first_line, @1.last_column);}
                   ;
 // Do-While
 
-sent_do_while : DO LLAVA instrucciones LLAVC WHILE PARA e PARC {$$ = new DoWhile($7,$3,@1.first_line,@1.last_column);}
+sent_do_while : DO LLAVA instrucciones LLAVC WHILE PARA e PARC { reporteGramatical.push('<sent_do_while> := DO LLAVA <instrucciones> LLAVC WHILE PARA <e> PARC'); $$ = new DoWhile($7,$3,@1.first_line,@1.last_column);}
               ;
 
 
 
 /// Metodos y funciones
 
-funciones : tipo ID PARA lista_parametros PARC LLAVA instrucciones LLAVC  {$$ = new Funcion(2, $1, $2, $4, false, $7, @1.first_line, @1.last_column);}
-          | tipo ID PARA PARC LLAVA instrucciones LLAVC                   {$$ = new Funcion(2, $1, $2, [], false, $6, @1.first_line, @1.last_column);}
-          | VOID ID PARA lista_parametros PARC LLAVA instrucciones LLAVC  {$$ = new Funcion(3, $1, $2, $4, true, $7, @1.first_line, @1.last_column);}
-          | VOID ID PARA PARC LLAVA instrucciones LLAVC                   {$$ = new Funcion(3, $1, $2, [], true, $6, @1.first_line, @1.last_column); }
-          | VOID MAIN PARA PARC LLAVA instrucciones LLAVC                 {$$ = new Fmain(3, $1, $2, [], true, $6, @1.first_line, @1.last_column); }
+funciones : tipo ID PARA lista_parametros PARC LLAVA instrucciones LLAVC  { reporteGramatical.push('<funciones> := <tipo> ID PARA <lista_parametros> PARC LLAVA <instrucciones> LLAVC '); $$ = new Funcion(2, $1, $2, $4, false, $7, @1.first_line, @1.last_column);}
+          | tipo ID PARA PARC LLAVA instrucciones LLAVC                   { reporteGramatical.push('<funciones> := <tipo> ID PARA PARC LLAVA <instrucciones> LLAVC '); $$ = new Funcion(2, $1, $2, [], false, $6, @1.first_line, @1.last_column);}
+          | VOID ID PARA lista_parametros PARC LLAVA instrucciones LLAVC  { reporteGramatical.push('<funciones> := VOID ID PARA <lista_parametros> PARC LLAVA <instrucciones> LLAVC'); $$ = new Funcion(3, $1, $2, $4, true, $7, @1.first_line, @1.last_column);}
+          | VOID ID PARA PARC LLAVA instrucciones LLAVC                   { reporteGramatical.push('<funciones> :=  VOID ID PARA PARC LLAVA <instrucciones> LLAVC '); $$ = new Funcion(3, $1, $2, [], true, $6, @1.first_line, @1.last_column); }
+          | VOID MAIN PARA PARC LLAVA instrucciones LLAVC                 { reporteGramatical.push('<funciones> :=  VOID MAIN PARA PARC LLAVA <instrucciones> LLAVC '); $$ = new Fmain(3, $1, $2, [], true, $6, @1.first_line, @1.last_column); }
           ;
 
-lista_parametros : lista_parametros COMA tipo ID  {$$ = $1; $$.push(new Simbolo(6, $3, $4, null));}
-                 | tipo ID                        {$$ = new Array(); $$.push(new Simbolo(6, $1, $2, null));}
+lista_parametros : lista_parametros COMA tipo ID  { reporteGramatical.push('<lista_parametros> := <lista_parametros> COMA <tipo> ID'); $$ = $1; $$.push(new Simbolo(6, $3, $4, null));}
+                 | tipo ID                        { reporteGramatical.push('<lista_parametros> := <tipo> ID'); $$ = new Array(); $$.push(new Simbolo(6, $1, $2, null));}
                  ;
 
 /// Llamadas
 
-llamada : ID PARA lista_valores PARC       {$$ = new Llamada($1,$3,@1.first_line, @1.last_column);}
-        | ID PARA PARC                     {$$ = new Llamada($1,[],@1.first_line, @1.last_column);}
+llamada : ID PARA lista_valores PARC       { reporteGramatical.push('<llamada> := ID PARA <lista_valores> PARC'); $$ = new Llamada($1,$3,@1.first_line, @1.last_column);}
+        | ID PARA PARC                     { reporteGramatical.push('<llamada> := ID PARA PARC'); $$ = new Llamada($1,[],@1.first_line, @1.last_column);}
         ;
 
 
 
 e
-    : e MAS e                   {$$ = new Aritmetica($1, '+', $3, @1.first_line,@1.last_column, false);}
-    | e MENOS e                 {$$ = new Aritmetica($1, '-', $3, @1.first_line,@1.last_column, false);}
-    | e MULTI e                 {$$ = new Aritmetica($1, '*', $3, @1.first_line,@1.last_column, false);}
-    | e DIV e                   {$$ = new Aritmetica($1, '/', $3, @1.first_line,@1.last_column, false);}
-    | e POT e                   {$$ = new Aritmetica($1, '^', $3, @1.first_line,@1.last_column, false);}
-    | POT PARA e COMA e PARC    {$$ = new Aritmetica($3, '^', $5, @1.first_line,@1.last_column, false);}
-    | SQRT PARA e PARC          {$$ = new Aritmetica($3, 'sqrt', $3, @1.first_line,@1.last_column, false);}
-    | SIN PARA e PARC           {$$ = new Aritmetica($3, 'sin', $3, @1.first_line,@1.last_column, false);}
-    | COS PARA e PARC           {$$ = new Aritmetica($3, 'cos', $3, @1.first_line,@1.last_column, false);}
-    | TAN PARA e PARC           {$$ = new Aritmetica($3, 'tan', $3, @1.first_line,@1.last_column, false);}
-    | e MOD e                   {$$ = new Aritmetica($1, '%', $3, @1.first_line,@1.last_column, false);}
-    | e MAYORIGUAL e            {$$ = new Relacional($1, '>=', $3, @1.first_line,@1.last_column, false);}
-    | e MAYORQUE e              {$$ = new Relacional($1, '>', $3, @1.first_line,@1.last_column, false);}
-    | e MENORIGUAL e            {$$ = new Relacional($1, '<=', $3, @1.first_line,@1.last_column, false);}
-    | e MENORQUE e              {$$ = new Relacional($1, '<', $3, @1.first_line,@1.last_column, false);}
-    | e IGUALIGUAL e            {$$ = new Relacional($1, '==', $3, @1.first_line,@1.last_column, false);}
-    | e DIFERENTE e             {$$ = new Relacional($1, '!=', $3, @1.first_line,@1.last_column, false);}
-    | e AND e                   {$$ = new Logicas($1,'&&', $3, @1.first_line,@1.last_column, false);}
-    | e ANDD e                  {$$ = new Aritmetica($1,'+', $3, @1.first_line,@1.last_column, false);}
-    | e OR e                    {$$ = new Logicas($1,'||', $3, @1.first_line,@1.last_column, false);}
-    | NOT e                     {$$ = new Logicas($2,'!', null, @1.first_line,@1.last_column, true);}
-    | MENOS e %prec UMINUS      {$$ = new Aritmetica($2, 'UNARIO', null, @1.first_line,@1.last_column, true);}
-    | PARA e PARC               {$$ = $2;}
-    | DECIMAL                   {$$ = new Primitivo(Number($1),'DOBLE',@1.first_line,@1.last_column);}
-    | ENTERO                    {$$ = new Primitivo(Number($1),'ENTERO',@1.first_line,@1.last_column);}
-    | ID PNT ID                 { $$ = new AccesoStruct($1, $3, @1.first_line, @1.last_column); }
-    | ID                        {$$ = new Identificador($1,@1.first_line,@1.last_column);}
-    | CADENA                    {$1 = $1.slice(1,$1.length-1);$$ = new Primitivo($1,'CADENA',@1.first_line,@1.last_column);}
-    | NULLL                     {$$ = new Primitivo(null,'NULL',@1.first_line,@1.last_column);}
-    | CARACTER                  {$1 = $1.slice(1,$1.length-1);$$ = new Primitivo($1,'CARACTER',@1.first_line,@1.last_column);}
-    | TRUE                      {$$ = new Primitivo(true,'BOOLEAN',@1.first_line,@1.last_column);}
-    | FALSE                     {$$ = new Primitivo(false,'BOOLEAN',@1.first_line,@1.last_column);}
-    | e INTERROGACION e DOSPUNTOS e {$$ = new Ternario($1,$3,$5,@1.first_line,@1.last_column);}
-    | ID PNT CARALENGHT PARA PARC {$$ = new LenghtC($1, @1.first_line,@1.last_column);}
-    | ID PNT POP PARA PARC {$$ = new PopArreglo($1, @1.first_line,@1.last_column);}
-    | ID INCRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
-    | ID DECRE                  {$$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
-    | PARA tipo PARC e          {$$ = new Casteos($2,$4, @1.first_line,@1.last_column);}
-
-
-    | ID CORA e DOSPUNTOS e CORC { $$ = new SliceVector( $1, $3, $5, @1.first_line,@1.last_column ); }
-    | ID CORA e CORC  { $$ = new AccesoVector($1, $3, $3, false ,@1.first_line,@1.last_column); }
-
+    : e MAS e                   {reporteGramatical.push('<e> := <e> MAS <e>');  $$ = new Aritmetica($1, '+', $3, @1.first_line,@1.last_column, false);}
+    | e MENOS e                 {reporteGramatical.push('<e> := <e> MENOS <e>');  $$ = new Aritmetica($1, '-', $3, @1.first_line,@1.last_column, false);}
+    | e MULTI e                 {reporteGramatical.push('<e> := <e> MULTI <e>');  $$ = new Aritmetica($1, '*', $3, @1.first_line,@1.last_column, false);}
+    | e DIV e                   {reporteGramatical.push('<e> := <e> DIV <e>');  $$ = new Aritmetica($1, '/', $3, @1.first_line,@1.last_column, false);}
+    | e POT e                   {reporteGramatical.push('<e> := <e> POT <e>');  $$ = new Aritmetica($1, '^', $3, @1.first_line,@1.last_column, false);}
+    | POT PARA e COMA e PARC    {reporteGramatical.push('<e> :=  e <e>');  $$ = new Aritmetica($3, '^', $5, @1.first_line,@1.last_column, false);}
+    | SQRT PARA e PARC          {reporteGramatical.push('<e> := SQRT PARA <e> PARC');  $$ = new Aritmetica($3, 'sqrt', $3, @1.first_line,@1.last_column, false);}
+    | SIN PARA e PARC           {reporteGramatical.push('<e> := SIN PARA <e> PARC');  $$ = new Aritmetica($3, 'sin', $3, @1.first_line,@1.last_column, false);}
+    | COS PARA e PARC           {reporteGramatical.push('<e> := COS PARA <e> PARC');  $$ = new Aritmetica($3, 'cos', $3, @1.first_line,@1.last_column, false);}
+    | TAN PARA e PARC           {reporteGramatical.push('<e> := TAN PARA <e> PARC');  $$ = new Aritmetica($3, 'tan', $3, @1.first_line,@1.last_column, false);}
+    | e MOD e                   {reporteGramatical.push('<e> := <e> MOD <e>');  $$ = new Aritmetica($1, '%', $3, @1.first_line,@1.last_column, false);}
+    | e MAYORIGUAL e            {reporteGramatical.push('<e> := <e> MAYORIGUAL <e>');  $$ = new Relacional($1, '>=', $3, @1.first_line,@1.last_column, false);}
+    | e MAYORQUE e              {reporteGramatical.push('<e> := <e> MAYORQUE <e>');  $$ = new Relacional($1, '>', $3, @1.first_line,@1.last_column, false);}
+    | e MENORIGUAL e            {reporteGramatical.push('<e> := <e> MENORIGUAL <e>');  $$ = new Relacional($1, '<=', $3, @1.first_line,@1.last_column, false);}
+    | e MENORQUE e              {reporteGramatical.push('<e> := <e> MENORQUE <e>');  $$ = new Relacional($1, '<', $3, @1.first_line,@1.last_column, false);}
+    | e IGUALIGUAL e            {reporteGramatical.push('<e> := <e> IGUALIGUAL <e>');  $$ = new Relacional($1, '==', $3, @1.first_line,@1.last_column, false);}
+    | e DIFERENTE e             {reporteGramatical.push('<e> := <e> DIFERENTE <e>');  $$ = new Relacional($1, '!=', $3, @1.first_line,@1.last_column, false);}
+    | e AND e                   {reporteGramatical.push('<e> := <e> AND <e>');  $$ = new Logicas($1,'&&', $3, @1.first_line,@1.last_column, false);}
+    | e ANDD e                  {reporteGramatical.push('<e> := <e> ANDD <e>');  $$ = new Aritmetica($1,'+', $3, @1.first_line,@1.last_column, false);}
+    | e OR e                    {reporteGramatical.push('<e> := <e> OR <e>');  $$ = new Logicas($1,'||', $3, @1.first_line,@1.last_column, false);}
+    | NOT e                     {reporteGramatical.push('<e> := NOT <e>');  $$ = new Logicas($2,'!', null, @1.first_line,@1.last_column, true);}
+    | MENOS e %prec UMINUS      {reporteGramatical.push('<e> := MENOS <e> %prec UMINUS');  $$ = new Aritmetica($2, 'UNARIO', null, @1.first_line,@1.last_column, true);}
+    | PARA e PARC               {reporteGramatical.push('<e> := PARA e PARC');  $$ = $2;}
+    | DECIMAL                   { reporteGramatical.push('<e> := DECIMAL'); $$ = new Primitivo(Number($1),'DOBLE',@1.first_line,@1.last_column);}
+    | ENTERO                    { reporteGramatical.push('<e> := ENTERO'); $$ = new Primitivo(Number($1),'ENTERO',@1.first_line,@1.last_column);}
+    | ID PNT ID                 { reporteGramatical.push('<e> := ID PNT ID ');  $$ = new AccesoStruct($1, $3, @1.first_line, @1.last_column); }
+    | ID                        { reporteGramatical.push('<e> := ID'); $$ = new Identificador($1,@1.first_line,@1.last_column);}
+    | CADENA                    { reporteGramatical.push('<e> := CADENA'); $1 = $1.slice(1,$1.length-1);$$ = new Primitivo($1,'CADENA',@1.first_line,@1.last_column);}
+    | NULLL                     { reporteGramatical.push('<e> := NULLL'); $$ = new Primitivo(null,'NULL',@1.first_line,@1.last_column);}
+    | CARACTER                  { reporteGramatical.push('<e> := CARACTER'); $1 = $1.slice(1,$1.length-1);$$ = new Primitivo($1,'CARACTER',@1.first_line,@1.last_column);}
+    | TRUE                      { reporteGramatical.push('<e> := TRUE'); $$ = new Primitivo(true,'BOOLEAN',@1.first_line,@1.last_column);}
+    | FALSE                     { reporteGramatical.push('<e> := FALSE'); $$ = new Primitivo(false,'BOOLEAN',@1.first_line,@1.last_column);}
+    | e INTERROGACION e DOSPUNTOS e { reporteGramatical.push('<e> := <e> INTERROGACION <e> DOSPUNTOS <e>'); $$ = new Ternario($1,$3,$5,@1.first_line,@1.last_column);}
+    | ID PNT CARALENGHT PARA PARC   { reporteGramatical.push('<e> := ID PNT CARALENGHT PARA PARC'); $$ = new LenghtC($1, @1.first_line,@1.last_column);}
+    | ID PNT POP PARA PARC { reporteGramatical.push('<e> := ID PNT POP PARA PARC'); $$ = new PopArreglo($1, @1.first_line,@1.last_column);}
+    | ID INCRE                  { reporteGramatical.push('<e> := ID INCRE'); $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
+    | ID DECRE                  { reporteGramatical.push('<e> := ID DECRE'); $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
+    | PARA tipo PARC e          { reporteGramatical.push('<e> := PARA <tipo> PARC <e>'); $$ = new Casteos($2,$4, @1.first_line,@1.last_column);}
+    | ID CORA e DOSPUNTOS e CORC { reporteGramatical.push('<e> := ID CORA <e> DOSPUNTOS <e> CORC'); $$ = new SliceVector( $1, $3, $5, @1.first_line,@1.last_column ); }
+    | ID CORA e CORC  { reporteGramatical.push('<e> := ID CORA <e> CORC'); $$ = new AccesoVector($1, $3, $3, false ,@1.first_line,@1.last_column); }
+    | e PNT TOUPPER PARA PARC { reporteGramatical.push('<e> := <e> PNT TOUPPER PARA PARC'); $$ = new Toupper($1,@1.first_line,@1.last_column);}
+    | e PNT TOLOWER PARA PARC { reporteGramatical.push('<e> := <e> PNT TOLOWER PARA PARC'); $$ = new Tolower($1,@1.first_line,@1.last_column);}
+    | e PNT SUBSTR PARA e COMA e PARC   { reporteGramatical.push('<e> := <e> PNT SUBSTR PARA <e> COMA <e> PARC'); $$ = new  SubString($1,$5,$7,@1.first_line,@1.last_column);}
+    | e PNT CARAOFPOS PARA e PARC   { reporteGramatical.push('<e> := <e> PNT CARAOFPOS PARA <e> COMA <e> PARC'); $$ = new  CharOfPosition($1,$5,@1.first_line,@1.last_column);}
     | GETVALUE PARA e COMA e PARC // Para obtener valor de la lista
     | llamada
-    | e PNT TOUPPER PARA PARC {$$ = new Toupper($1,@1.first_line,@1.last_column);}
-    | e PNT TOLOWER PARA PARC {$$ = new Tolower($1,@1.first_line,@1.last_column);}
-    | e PNT SUBSTR PARA e COMA e PARC   {$$ = new  SubString($1,$5,$7,@1.first_line,@1.last_column);}
-    | e PNT CARAOFPOS PARA e PARC   {$$ = new  CharOfPosition($1,$5,@1.first_line,@1.last_column);}
-    | TOINT PARA e PARC     {$$ = new ToInt($3,@1.first_line,@1.last_column);}
-    | TODOUBLE PARA e PARC     {$$ = new ToDouble($3,@1.first_line,@1.last_column);}
-    | ROUND PARA e PARC     {$$ = new Round($3,@1.first_line,@1.last_column);}
-    | TYPEOF PARA e PARC     {$$ = new Typeof($3,@1.first_line,@1.last_column);}
-    | STRING PARA e PARC     {$$ = new Tostring($3,@1.first_line,@1.last_column);}
-    | BOOLEAN PNT PARSE PARA e PARC  {$$ = new TipoParse($5,"booleano",@1.first_line,@1.last_column);}
-    | INT PNT PARSE PARA e PARC  {$$ = new TipoParse($5,"int",@1.first_line,@1.last_column);}
-    | DOUBLE PNT PARSE PARA e PARC  {$$ = new TipoParse($5,"doble",@1.first_line,@1.last_column);}
+    | TOINT PARA e PARC     { reporteGramatical.push('<e> := TOINT PARA <e> PARC'); $$ = new ToInt($3,@1.first_line,@1.last_column);}
+    | TODOUBLE PARA e PARC     {  reporteGramatical.push('<e> := TODOUBLE PARA <e> PARC'); $$ = new ToDouble($3,@1.first_line,@1.last_column);}
+    | ROUND PARA e PARC     { reporteGramatical.push('<e> := ROUND PARA <e> PARC'); $$ = new Round($3,@1.first_line,@1.last_column);}
+    | TYPEOF PARA e PARC     { reporteGramatical.push('<e> := TYPEOF PARA <e> PARC'); $$ = new Typeof($3,@1.first_line,@1.last_column);}
+    | STRING PARA e PARC     { reporteGramatical.push('<e> := STRING PARA <e> PARC'); $$ = new Tostring($3,@1.first_line,@1.last_column);}
+    | BOOLEAN PNT PARSE PARA e PARC  { reporteGramatical.push('<e> := BOOLEAN PNT PARSE PARA <e> PARC'); $$ = new TipoParse($5,"booleano",@1.first_line,@1.last_column);}
+    | INT PNT PARSE PARA e PARC  { reporteGramatical.push('<e> := INT PNT PARSE PARA <e> PARC'); $$ = new TipoParse($5,"int",@1.first_line,@1.last_column);}
+    | DOUBLE PNT PARSE PARA e PARC  { reporteGramatical.push('<e> := DOUBLE PNT PARSE PARA <e> PARC'); $$ = new TipoParse($5,"doble",@1.first_line,@1.last_column);}
 
     ;

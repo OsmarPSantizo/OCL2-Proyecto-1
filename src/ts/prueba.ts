@@ -28,20 +28,21 @@ const ejecutarCodigo = (entrada:string) =>{
 
 ejecutarCodigo(`
 
-    void main(){
+void main(){
 
-        struct animal {
-            String nombre;
-            int edad;
-            boolean mod;
-        }
+    String var = "HooOooOolaA";
 
-        animal animal1 = animal("Bobby", 5, true);
-
-        println(animal1.afsdfds);
-
+    struct animal {
+        String nombre;
+        int edad;
     }
+
+    animal animal1 = animal("Bobby", 5);
+    animal1.nombre = "Angel";
+    println(animal1.nombre);
+    println(var.toUppercase());
+    println(var.toLowercase());
+}
 
 
 `);
-
