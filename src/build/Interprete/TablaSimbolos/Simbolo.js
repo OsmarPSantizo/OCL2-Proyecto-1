@@ -11,20 +11,28 @@ class Simbolo {
      * @param valor          Valor de la variable
      * @param lista_params   Lista de simbolos de tipo parametro (Función o método)
      * @param metodo         Booleano que indica si es metodo (true) o función (false)
+     * @param posicion       Aquí vamos
      */
-    constructor(simbolo, tipo, identificador, valor, lista_params, metodo) {
+    constructor(simbolo, tipo, identificador, valor, posicion, lista_params, metodo) {
         this.simbolo = simbolo;
         this.tipo = tipo;
         this.identificador = identificador;
         this.valor = valor;
         this.lista_params = lista_params;
         this.metodo = metodo;
+        this.posicion = posicion;
     }
     setValor(valor) {
         this.valor = valor;
     }
     getValor() {
         return this.valor;
+    }
+    getPosicion() {
+        return this.posicion;
+    }
+    getVariable() {
+        return this.identificador;
     }
 }
 exports.Simbolo = Simbolo;

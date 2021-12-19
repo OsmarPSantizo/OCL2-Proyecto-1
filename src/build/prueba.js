@@ -15,23 +15,22 @@ const ejecutarCodigo = (entrada) => {
     console.log(ts_html);
     console.log(controlador.consola);
 };
-ejecutarCodigo(`
+// ejecutarCodigo(`
+//     void main(){
+//         println(3+1);
+//     }
+// `);
+const Generar3D = (entrada) => {
+    const ast = gramatica.parse(entrada);
+    const ts_global = new TablaSimbolos_1.TablaSimbolos(null);
+    const controlador = new Controlador_1.Controlador();
+    console.log(ast.traducir(controlador, ts_global));
+};
+Generar3D(`
 
-void main(){
-
-    String var = "HooOooOolaA";
-
-    struct animal {
-        String nombre;
-        int edad;
+    void main(){
+         println(3);
     }
-
-    animal animal1 = animal("Bobby", 5);
-    animal1.nombre = "Angel";
-    println(animal1.nombre);
-    println(var.toUppercase());
-    println(var.toLowercase());
-}
 
 
 `);

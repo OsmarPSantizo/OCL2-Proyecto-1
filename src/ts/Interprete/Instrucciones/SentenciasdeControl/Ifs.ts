@@ -25,10 +25,7 @@ export class Ifs implements Instruccion{
         this.columna = columna;
         this.linea = linea;
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        throw new Error("Method not implemented.");
-    }
-  
+    
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos){
         
@@ -136,4 +133,30 @@ export class Ifs implements Instruccion{
         return padre;
     }
 
+
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
+        let c3d = '';
+        let condicion = this.condicion.traducir(controlador,ts);
+        c3d += condicion;
+
+        let temp = ts.getTemporalActual();
+        let etiquetaV = ts.getEtiqueta();
+        let etiquetaF = ts.getEtiqueta();
+        c3d += `if(${temp} ==1) goto ${etiquetaV}; \n`
+        ts.QuitarTemporal(temp);
+        for (let inst of this.lista_instrucciones_elses){
+            c3d += inst.traducir(controlador,ts);
+        }
+        c3d += `goto ${etiquetaF};\n`
+        c3d += `${etiquetaV}:\n`
+
+        for (let inst of this.lista_instrucciones_ifs){
+            c3d += inst.traducir(controlador,ts);
+        }
+
+        c3d += `${etiquetaF}:\n`;
+
+        return c3d;
+    }
+  
 }

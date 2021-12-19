@@ -94,7 +94,7 @@ class Llamada {
                 // ahora validamos si el valor del parametro de la llamada es igual al valor del parametro de la función
                 if (aux_tipo == aux_tipo_exp) {
                     // si son del mismo tipo se guarda cada parametro con su valor en su tabla de simbolos
-                    let simbolo = new Simbolo_1.Simbolo(aux.simbolo, aux.tipo, aux_id, aux_valor_exp);
+                    let simbolo = new Simbolo_1.Simbolo(aux.simbolo, aux.tipo, aux_id, aux_valor_exp, 0);
                     ts_local.agregar(aux_id, simbolo);
                 }
             }

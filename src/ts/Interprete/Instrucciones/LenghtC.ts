@@ -20,7 +20,7 @@ export class LenghtC implements Expresion{
     }
 
     getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {
-        return tipo.CADENA;
+        return tipo.ENTERO;
     }
 
     getValor(controlador: Controlador, ts: TablaSimbolos) {
@@ -50,6 +50,10 @@ export class LenghtC implements Expresion{
         padre.AddHijo(new Nodo("(","")); 
         padre.AddHijo(new Nodo(")","")); 
         return padre;
+    }
+
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
+        throw new Error("Method not implemented.");
     }
 
 }

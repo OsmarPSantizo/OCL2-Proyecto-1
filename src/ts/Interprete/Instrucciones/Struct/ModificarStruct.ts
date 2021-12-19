@@ -24,9 +24,7 @@ export class ModificarStruct implements Instruccion {
         this.linea = linea;
         this.columna = columna;
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        throw new Error("Method not implemented.");
-    }
+    
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
         let atributos = this.getAtributosStruct( ts );
@@ -79,6 +77,10 @@ export class ModificarStruct implements Instruccion {
 
 
     recorrer(): Nodo {
+        throw new Error("Method not implemented.");
+    }
+
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
         throw new Error("Method not implemented.");
     }
 

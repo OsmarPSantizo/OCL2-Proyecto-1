@@ -10,6 +10,7 @@ class DeclaracionVectores {
         this.listaExpresiones = listaExpresiones;
         this.linea = linea;
         this.columna = columna;
+        this.posicion = 0;
     }
     traducir(controlador, ts) {
         throw new Error("Method not implemented.");
@@ -35,7 +36,7 @@ class DeclaracionVectores {
                     controlador.errores.push(error);
                     controlador.append(`ERROR: Semántico, La variable ${id}  posee un tipo diferente al de la declaracion del vector. En la linea ${this.linea} y columna ${this.columna}`);
                 }
-                let nuevo_simbolo = new Simbolo_1.Simbolo(4, this.type, id, valores);
+                let nuevo_simbolo = new Simbolo_1.Simbolo(4, this.type, id, valores, this.posicion);
                 ts.agregar(id, nuevo_simbolo);
             }
         }

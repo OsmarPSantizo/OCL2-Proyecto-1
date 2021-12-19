@@ -97,5 +97,8 @@ class Casteos {
         padre.AddHijo(hijo);
         return padre;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
 }
 exports.Casteos = Casteos;

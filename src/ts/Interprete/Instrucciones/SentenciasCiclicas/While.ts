@@ -22,9 +22,6 @@ export class While implements Instruccion{
         this.columna = columna;
 
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        throw new Error("Method not implemented.");
-    }
     
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos){
@@ -80,6 +77,34 @@ export class While implements Instruccion{
         padre.AddHijo(hijo_instrucciones);
         padre.AddHijo(new Nodo("}",""));
         return padre;
+    }
+
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
+        let c3d = '';
+        let etiqueta = ts.getTemporalActual();
+        let condicion = this.condicion.traducir(controlador,ts);
+
+        c3d += `${etiqueta}:\n`;
+        c3d += condicion;
+
+        let temp = ts.getTemporalActual();
+
+        let etiqueta1 = ts.getEtiqueta();
+        let etiqueta2 = ts.getEtiqueta();
+
+        c3d += `if(${temp} = 1) goto ${etiqueta1}:\n`
+        c3d += `goto ${etiqueta2}:\n`
+        ts.QuitarTemporal(temp);
+        c3d += `${etiqueta1}:`
+        for(let instrucciones of this.lista_instrucciones){
+            c3d += instrucciones.traducir(controlador,ts);
+        }
+        c3d += `goto ${etiqueta}:\n`
+        c3d += `${etiqueta2}:\n`
+
+        return c3d
+
+        
     }
 
 }

@@ -1194,4 +1194,36 @@ export class Aritmetica extends Operacion implements Expresion{
         return padre;
     }
 
+    traducir(controlador: Controlador, ts: TablaSimbolos):String{
+        let c3d = ''
+        if(this.exp1 === undefined){
+            c3d += this.exp2.traducir(controlador,ts);
+            const tempIzq = ts.getTemporalActual();
+            const temporal = ts.getTemporal();
+
+            c3d+= `${temporal} = -1 * ${tempIzq}\n`
+            ts.QuitarTemporal(tempIzq);
+            ts.AgregarTemporal(temporal);
+            return c3d;
+
+        }else{
+            c3d += this.exp1.traducir(controlador,ts);
+
+            const tempIzq = ts.getTemporalActual();
+
+            c3d += this.exp2.traducir(controlador,ts);
+
+            const tempDer = ts.getTemporalActual();
+
+            const temporal = ts.getTemporal();
+
+            c3d += `${temporal} = ${tempIzq} ${this.signo_operador} ${tempDer};\n`;
+            ts.QuitarTemporal(tempIzq);
+            ts.QuitarTemporal(tempDer);
+            ts.AgregarTemporal(temporal);
+            return c3d;
+        }
+        
+    }
+
 }

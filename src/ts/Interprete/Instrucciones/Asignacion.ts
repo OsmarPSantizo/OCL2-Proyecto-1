@@ -21,9 +21,7 @@ export  class Asignacion implements Instruccion{
         this.linea = linea;
         this.columna = columna;
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        throw new Error("Method not implemented.");
-    }
+    
    
     ejecutar(controlador : Controlador, ts: TablaSimbolos){
         //hay que revisar si existe en la tabla de símbolos
@@ -81,5 +79,26 @@ export  class Asignacion implements Instruccion{
         padre.AddHijo(this.valor.recorrer());
 
         return padre
+    }
+
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
+        let c3d = '';
+        let variable = ts.getSimbolo(this.identificador);
+        let valor3d = this.valor.traducir(controlador,ts);
+        c3d += '/*------ASIGNACION------*/\n'
+        c3d += valor3d;
+
+        if(!ts.ambito){
+            c3d += `heap[${variable.posicion}] = ${ts.getTemporalActual()};\n`
+        }else{
+            let temp = ts.getTemporalActual();
+            let temp2 = ts.getTemporal();
+            c3d += `${temp2}=p;\n`;
+            c3d += `${temp2} = ${temp2} + ${variable.posicion};\n`;
+            c3d += `stack${temp2} = ${temp};\n`;
+
+        }
+        ts.QuitarTemporal(ts.getTemporalActual());
+        return c3d;
     }
 }

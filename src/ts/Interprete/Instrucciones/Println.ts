@@ -17,9 +17,7 @@ export class Println implements Instruccion{
         this.linea = linea;
         this.columna = columna;
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        throw new Error("Method not implemented.");
-    }
+    
   
 
     ejecutar(controlador: Controlador,ts : TablaSimbolos){
@@ -43,6 +41,99 @@ export class Println implements Instruccion{
         padre.AddHijo(hijo);
         padre.AddHijo(new Nodo(")","")); // Println --> Println->( exp -> primitivo -> "hola mundo")
         return padre;
+    }
+
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
+        let estructura = 'heap';
+
+        let codigo = '';
+        //let condicion = this.expresion.traducir(controlador,ts);
+        //codigo += condicion;
+        console.log(this.expresion.getTipo(controlador,ts))
+        
+        let temp = ts.getTemporalActual();
+
+        if(this.expresion.getTipo(controlador,ts) == tipo.ENTERO || this.expresion.getTipo(controlador,ts) == tipo.BOOLEAN){
+            codigo += `printf(\"%f\\n\", ${temp});\n`
+            ts.QuitarTemporal(temp);
+        }
+        // else if(this.expresion.getTipo(controlador,ts) == tipo.DOBLE){
+        //     codigo += `printf(\"%f\\n\", ${temp});\n`
+        //     ts.QuitarTemporal(temp);
+        // }
+        else if(this.expresion.getTipo(controlador,ts) == 4 ){
+            let c3d = ``;
+            const temporal = ts.getTemporal();
+            let temp4 = ts.getTemporal();
+            let temp5 = ts.getTemporal();
+
+           
+            let x = 0;
+            c3d += `${temporal} = h;\n`
+            while(x < this.expresion.getValor(controlador,ts).length){
+           
+                c3d += `heap[(int)h] = ${this.expresion.getValor(controlador,ts).charCodeAt(x)};\n`
+                c3d += `h = h+1;\n`
+                x = x+1;
+            }
+            c3d += `heap[(int)h] =-1;\n`;
+            c3d += `h = h+1;\n`
+            c3d += `${temp4} = p+0;\n`
+            c3d += `${temp4} = ${temp4}+1;\n`
+            c3d += `stack[(int)${temp4}] =  ${temporal};\n`
+            c3d += `p = p+0;\n`
+            c3d += `printString();\n`
+            c3d += `${temp5} = stack[(int)p];\n`
+            c3d += `p = p-0;\n`
+            c3d += `printf("%c", (char)10);\n`
+            codigo += c3d;
+
+        }
+        else{
+            let temp1 = ts.getTemporal();
+            let temp2 = ts.getTemporal();
+            let temp3 = ts.getTemporal();
+            let label = ts.getEtiqueta();
+            let label2 = ts.getEtiqueta();
+
+            codigo += `${temp1} = ${estructura}[${temp}]\n`
+            ts.AgregarTemporal(temp1);
+            ts.QuitarTemporal(temp);
+
+            codigo += `${temp2} = ${temp} +1\n`
+            ts.AgregarTemporal(temp2);
+            ts.QuitarTemporal(temp1);
+
+            codigo += `${temp3}=0\n`
+            ts.AgregarTemporal(temp3);
+
+            codigo += `${label2}:\n`
+            codigo += `if(${temp3} >= ${temp1})goto ${label}\n`
+            ts.QuitarTemporal(temp3);
+            ts.QuitarTemporal(temp1);
+            
+            let temp4 = ts.getTemporal();
+            codigo += `${temp4} = ${estructura}[${temp2}\n]`
+            ts.AgregarTemporal(temp4);
+            ts.QuitarTemporal(temp3);
+
+            codigo += `printf(\"%f\",${temp4};)\n`
+            ts.QuitarTemporal(temp4);
+
+            codigo+= `${temp2}= ${temp2} + 1\n`
+            ts.AgregarTemporal(temp2);
+
+            codigo += `${temp3}= ${temp3} + 1\n`
+            ts.AgregarTemporal(temp3);
+
+            codigo += `${temp4} = ${temp4} + 1\n`
+            ts.AgregarTemporal(temp4);
+
+            codigo += `goto ${label2}\n`
+            codigo += `${label}:\n`
+
+        }
+        return codigo;
     }
 
 }

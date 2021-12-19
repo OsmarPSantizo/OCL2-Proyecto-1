@@ -17,6 +17,7 @@ export class DeclaracionVectores implements Instruccion{
 
     public linea: number;
     public columna: number;
+    public posicion:number;
 
     constructor (type: Tipo, listaIds:Array<string>, listaExpresiones: Array<Expresion>, linea:number, columna:number){
         this.type = type;
@@ -24,6 +25,7 @@ export class DeclaracionVectores implements Instruccion{
         this.listaExpresiones = listaExpresiones;
         this.linea = linea;
         this.columna = columna;
+        this.posicion = 0;
     }
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
         throw new Error("Method not implemented.");
@@ -63,7 +65,7 @@ export class DeclaracionVectores implements Instruccion{
 
                 }
 
-                let nuevo_simbolo = new Simbolo(4, this.type , id, valores);
+                let nuevo_simbolo = new Simbolo(4, this.type , id, valores,this.posicion);
 
                 ts.agregar(id, nuevo_simbolo);
             }

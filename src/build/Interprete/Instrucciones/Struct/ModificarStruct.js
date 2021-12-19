@@ -10,9 +10,6 @@ class ModificarStruct {
         this.linea = linea;
         this.columna = columna;
     }
-    traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
-    }
     ejecutar(controlador, ts) {
         let atributos = this.getAtributosStruct(ts);
         let nuevoValorTipo = this.nuevoValor.getTipo(controlador, ts);
@@ -49,6 +46,9 @@ class ModificarStruct {
         return struct.valor;
     }
     recorrer() {
+        throw new Error("Method not implemented.");
+    }
+    traducir(controlador, ts) {
         throw new Error("Method not implemented.");
     }
 }

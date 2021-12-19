@@ -109,5 +109,8 @@ class Controlador {
             return "---";
         }
     }
+    getPosicion(sim) {
+        return sim.posicion;
+    }
 }
 exports.Controlador = Controlador;

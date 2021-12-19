@@ -27,9 +27,7 @@ export class AccesoVector implements Expresion, Instruccion{
         this.modificar = modificar;
 
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        throw new Error("Method not implemented.");
-    }
+    
     
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
@@ -108,6 +106,10 @@ export class AccesoVector implements Expresion, Instruccion{
     }
 
     recorrer(): Nodo {
+        throw new Error("Method not implemented.");
+    }
+
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
         throw new Error("Method not implemented.");
     }
 

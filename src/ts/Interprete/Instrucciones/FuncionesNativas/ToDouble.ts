@@ -56,5 +56,9 @@ export class ToDouble implements Expresion{
         padre.AddHijo(new Nodo(")","")); 
         return padre;
     }
+
+    traducir(controlador: Controlador, ts: TablaSimbolos) :String {
+        throw new Error("Method not implemented.");
+    }
     
 }

@@ -44,5 +44,8 @@ class ToInt {
         padre.AddHijo(new Nodo_1.Nodo(")", ""));
         return padre;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
 }
 exports.ToInt = ToInt;

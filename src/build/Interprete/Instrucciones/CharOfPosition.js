@@ -37,5 +37,8 @@ class CharOfPosition {
     recorrer() {
         throw new Error("Method not implemented.");
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
 }
 exports.CharOfPosition = CharOfPosition;

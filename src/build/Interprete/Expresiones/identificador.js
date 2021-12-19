@@ -38,5 +38,20 @@ class Identificador {
         padre.AddHijo(new Nodo_1.Nodo(this.identificador, ""));
         return padre;
     }
+    traducir(controlador, ts) {
+        let c3d = '';
+        let variable = ts.getSimbolo(this.identificador);
+        if (!ts.ambito) {
+            c3d += `${ts.getTemporal()} = stack[${variable.getPosicion()}];\n`;
+        }
+        else {
+            let temp = ts.getTemporal();
+            c3d += `${temp} = P;\n`;
+            c3d += `${temp} = ${temp} + ${variable.posicion};\n`;
+            c3d += `${ts.getTemporal()} = stack[${temp}];\n`;
+        }
+        ts.AgregarTemporal(ts.getTemporalActual());
+        return c3d;
+    }
 }
 exports.Identificador = Identificador;

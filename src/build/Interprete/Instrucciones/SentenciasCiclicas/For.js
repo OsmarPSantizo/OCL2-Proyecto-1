@@ -16,9 +16,6 @@ class For {
         this.linea = linea;
         this.columna = columna;
     }
-    traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
-    }
     ejecutar(controlador, ts) {
         let ts_local = new TablaSimbolos_1.TablaSimbolos(ts);
         if (controlador.tablas.some(x => x === ts_local)) {
@@ -65,6 +62,9 @@ class For {
         }
         padre.AddHijo(hijo_instrucciones);
         return padre;
+    }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
     }
 }
 exports.For = For;
