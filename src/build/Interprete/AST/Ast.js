@@ -11,7 +11,39 @@ class Ast {
         this.lista_instrucciones = lista_instrucciones;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        ts.sizeActual.push(0);
+        for (let instruccion of this.lista_instrucciones) {
+            if (instruccion instanceof Funcion_1.Funcion) {
+                ts.setStack(0);
+                let funcion = instruccion;
+                funcion.agregarFuncionTS(ts);
+            }
+        }
+        let cantidadGlobales = 0;
+        for (let instruccion of this.lista_instrucciones) {
+            if (instruccion instanceof Declaracion_1.Declaracion) {
+                instruccion.traducir(controlador, ts);
+                instruccion.posicion = ts.getHeap();
+                cantidadGlobales++;
+            }
+        }
+        let c3d = `#include <stdio.h> //Importar para el uso de Printf 
+float heap[16384]; //Estructura para heap 
+float stack[16394]; //Estructura para stack 
+float p; //Puntero P 
+float h; //Puntero H 
+`;
+        for (let i = 0; i < cantidadGlobales; i++) {
+            c3d += `heap[${i}] = 0\n`;
+            c3d += `h = h + 1 \n`;
+        }
+        for (let instruccion of this.lista_instrucciones) {
+            if (instruccion instanceof Fmain_1.Fmain) {
+                c3d += instruccion.traducir(controlador, ts);
+            }
+            ;
+        }
+        return c3d;
     }
     ejecutar(controlador, ts) {
         let bandera_start = false;

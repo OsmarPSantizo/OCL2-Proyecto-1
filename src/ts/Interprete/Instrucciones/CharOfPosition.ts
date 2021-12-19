@@ -51,4 +51,8 @@ export class CharOfPosition implements Expresion{
         throw new Error("Method not implemented.");
     }
 
+    traducir(controlador: Controlador, ts: TablaSimbolos) :String {
+        throw new Error("Method not implemented.");
+    }
+
 }

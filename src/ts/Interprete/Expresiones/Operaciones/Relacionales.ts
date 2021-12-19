@@ -814,4 +814,32 @@ export  class Relacional extends Operacion implements Expresion{
             padre.AddHijo(this.exp2.recorrer());
         return padre;
     }
+
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
+        let c3d = ''
+
+        c3d += this.exp1.traducir(controlador,ts);
+        const tempIzq = ts.getTemporalActual();
+
+        c3d += this.exp2.traducir(controlador,ts);
+        const tempDer = ts.getTemporalActual();
+
+        const etiquetaV = ts.getEtiqueta();
+        const etiquetaF = ts.getEtiqueta();
+
+        const temp = ts.getTemporal();
+
+        c3d += `if(${tempIzq} ${this.signo_operador} ${tempDer}) goto ${etiquetaV};\n`
+        c3d += `${temp} = 0;\n`
+        c3d += `goto ${etiquetaF};\n`
+        c3d += `${etiquetaV}: \n`
+        c3d += `${temp} = 1;\n`
+        c3d += `${etiquetaF}:\n`
+
+        ts.AgregarTemporal(temp);
+        ts.QuitarTemporal(tempIzq);
+        ts.QuitarTemporal(tempDer);
+        
+        return c3d
+    }
 }

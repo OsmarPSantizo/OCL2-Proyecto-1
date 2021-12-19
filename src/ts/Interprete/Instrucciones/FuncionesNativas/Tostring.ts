@@ -61,4 +61,8 @@ export class Tostring implements Expresion{
         return padre;
     }
 
+    traducir(controlador: Controlador, ts: TablaSimbolos) :String {
+        throw new Error("Method not implemented.");
+    }
+
 }

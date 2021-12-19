@@ -14,9 +14,6 @@ class While {
         this.linea = linea;
         this.columna = columna;
     }
-    traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
-    }
     ejecutar(controlador, ts) {
         let temp = controlador.sent_ciclica;
         controlador.sent_ciclica = true;
@@ -63,6 +60,26 @@ class While {
         padre.AddHijo(hijo_instrucciones);
         padre.AddHijo(new Nodo_1.Nodo("}", ""));
         return padre;
+    }
+    traducir(controlador, ts) {
+        let c3d = '';
+        let etiqueta = ts.getTemporalActual();
+        let condicion = this.condicion.traducir(controlador, ts);
+        c3d += `${etiqueta}:\n`;
+        c3d += condicion;
+        let temp = ts.getTemporalActual();
+        let etiqueta1 = ts.getEtiqueta();
+        let etiqueta2 = ts.getEtiqueta();
+        c3d += `if(${temp} = 1) goto ${etiqueta1}:\n`;
+        c3d += `goto ${etiqueta2}:\n`;
+        ts.QuitarTemporal(temp);
+        c3d += `${etiqueta1}:`;
+        for (let instrucciones of this.lista_instrucciones) {
+            c3d += instrucciones.traducir(controlador, ts);
+        }
+        c3d += `goto ${etiqueta}:\n`;
+        c3d += `${etiqueta2}:\n`;
+        return c3d;
     }
 }
 exports.While = While;

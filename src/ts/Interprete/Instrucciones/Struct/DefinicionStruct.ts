@@ -15,17 +15,18 @@ export class DefinicionStruct implements Instruccion{
     public listaAtributos:Array<Simbolo>;
     public linea: number;
     public columna: number;
+    public posicion :number;
+
 
     constructor (nombreStruct: string, listaAtributos: Array<Simbolo>, linea: number, columna: number){
         this.nombreStruct = nombreStruct;
         this.listaAtributos = listaAtributos;
         this.linea = linea;
         this.columna = columna;
+        this.posicion = 0
 
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        throw new Error("Method not implemented.");
-    }
+    
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
 
@@ -38,7 +39,7 @@ export class DefinicionStruct implements Instruccion{
         }
 
         let tipo = new Tipo('STRUCT ' + this.nombreStruct );
-        let nuevoSimbolo = new Simbolo(5, tipo, this.nombreStruct, this.listaAtributos);
+        let nuevoSimbolo = new Simbolo(5, tipo, this.nombreStruct, this.listaAtributos,this.posicion);
         ts.agregar(this.nombreStruct, nuevoSimbolo);
     }
 
@@ -49,8 +50,9 @@ export class DefinicionStruct implements Instruccion{
     }
 
 
-
-
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
+        throw new Error("Method not implemented.");
+    }
 
 
 }

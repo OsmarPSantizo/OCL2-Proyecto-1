@@ -24,5 +24,12 @@ class Primitivo {
         padre.AddHijo(new Nodo_1.Nodo(this.valor_primitivo.toString(), ""));
         return padre;
     }
+    traducir(controlador, ts) {
+        let c3d = ``;
+        const temporal = ts.getTemporal();
+        c3d += `${temporal} = ${this.valor_primitivo};\n`;
+        ts.AgregarTemporal(ts.getTemporalActual());
+        return c3d;
+    }
 }
 exports.Primitivo = Primitivo;

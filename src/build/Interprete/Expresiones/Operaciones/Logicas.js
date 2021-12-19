@@ -130,5 +130,8 @@ class Logicas extends Operacion_1.Operacion {
         }
         return padre;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
 }
 exports.Logicas = Logicas;

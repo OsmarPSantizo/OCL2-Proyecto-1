@@ -24,4 +24,7 @@ export interface Expresion{
      * @function recorrer crea y recorre el subarbol de la expresión.
      */
     recorrer() : Nodo;
+
+    
+    traducir(controlador: Controlador, ts: TablaSimbolos):String;
 }

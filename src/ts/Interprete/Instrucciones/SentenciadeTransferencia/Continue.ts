@@ -8,9 +8,7 @@ export  class Continue implements Instruccion{
     constructor(){
 
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        throw new Error("Method not implemented.");
-    }
+    
     
 
 
@@ -20,6 +18,10 @@ export  class Continue implements Instruccion{
 
     recorrer(): Nodo{
         return new Nodo("Continue","");
+    }
+
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
+        throw new Error("Method not implemented.");
     }
 
 

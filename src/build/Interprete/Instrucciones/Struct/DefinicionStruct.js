@@ -10,9 +10,7 @@ class DefinicionStruct {
         this.listaAtributos = listaAtributos;
         this.linea = linea;
         this.columna = columna;
-    }
-    traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        this.posicion = 0;
     }
     ejecutar(controlador, ts) {
         if (ts.existeEnActual(this.nombreStruct)) {
@@ -22,10 +20,13 @@ class DefinicionStruct {
             return;
         }
         let tipo = new Tipo_1.Tipo('STRUCT ' + this.nombreStruct);
-        let nuevoSimbolo = new Simbolo_1.Simbolo(5, tipo, this.nombreStruct, this.listaAtributos);
+        let nuevoSimbolo = new Simbolo_1.Simbolo(5, tipo, this.nombreStruct, this.listaAtributos, this.posicion);
         ts.agregar(this.nombreStruct, nuevoSimbolo);
     }
     recorrer() {
+        throw new Error("Method not implemented.");
+    }
+    traducir(controlador, ts) {
         throw new Error("Method not implemented.");
     }
 }

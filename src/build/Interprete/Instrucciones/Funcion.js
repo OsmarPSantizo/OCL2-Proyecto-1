@@ -7,7 +7,7 @@ const TablaSimbolos_1 = require("../TablaSimbolos/TablaSimbolos");
 class Funcion extends Simbolo_1.Simbolo {
     // con el booleano vamos a saber si es un métdodo true o false
     constructor(simbolo, tipo, identificador, lista_params, metodo, lista_instrucciones, linea, columna) {
-        super(simbolo, tipo, identificador, null, lista_params, metodo);
+        super(simbolo, tipo, identificador, null, 0, lista_params, metodo);
         this.lista_instrucciones = lista_instrucciones;
         this.linea = linea;
         this.columna = columna;

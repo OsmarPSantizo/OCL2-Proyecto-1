@@ -34,4 +34,15 @@ export class Primitivo implements Expresion{
         return padre
     }
 
+    traducir(controlador: Controlador, ts: TablaSimbolos) :String {
+        let c3d =``;
+
+        
+        const temporal = ts.getTemporal();
+         c3d += `${temporal} = ${this.valor_primitivo};\n`
+        
+        ts.AgregarTemporal(ts.getTemporalActual());
+        return c3d;
+    }
+
 }

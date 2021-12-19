@@ -6,9 +6,6 @@ class Retorno {
     constructor(valor_retorno) {
         this.valor_retorno = valor_retorno;
     }
-    traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
-    }
     ejecutar(controlador, ts) {
         // Primero vemos si el valor no sea nulo
         if (this.valor_retorno != null) {
@@ -20,6 +17,9 @@ class Retorno {
     }
     recorrer() {
         return new Nodo_1.Nodo("Return", "");
+    }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
     }
 }
 exports.Retorno = Retorno;

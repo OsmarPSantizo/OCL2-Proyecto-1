@@ -42,5 +42,8 @@ class Ternario {
         padre.AddHijo(this.falso.recorrer());
         return padre;
     }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
+    }
 }
 exports.Ternario = Ternario;

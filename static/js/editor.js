@@ -18,6 +18,8 @@ const terminal = document.getElementById('terminal');
 const terminalast = document.getElementById('terminalast');
 const Simbolstable = document.getElementById('Simbolstable');
 const linkReporteGramatical = document.getElementById('rg');
+const translateCode = document.getElementById('translateCode');
+const terminal3d = document.getElementById('terminal3d');
 
 var counter = 1;
 var currentEditor = 'editor';
@@ -36,6 +38,10 @@ generateAst.addEventListener("click", () =>{
     generarAst();
 } );
 
+translateCode.addEventListener("click", () =>{
+    translateCodee();
+
+} );
 
 document.addEventListener('DOMContentLoaded', () => {
     let editor = document.getElementById('editor');
@@ -253,4 +259,13 @@ const generarAst = () => {
     const grafo = nodo_ast.GraficarSintactico();
     terminalast.value = grafo;
     console.log(grafo);
+}
+
+
+const translateCodee = ()=>{
+    let editorValue = currentEditor.getValue();
+    const ast = gramatica.parse(editorValue);
+    const ts_global = new TablaSimbolos.TablaSimbolos(null);
+    const controlador = new Controlador.Controlador();
+    terminal3d.value= ast.traducir(controlador, ts_global)
 }

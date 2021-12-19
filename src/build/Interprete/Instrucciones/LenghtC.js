@@ -11,7 +11,7 @@ class LenghtC {
         this.columna = columna;
     }
     getTipo(controlador, ts) {
-        return Tipo_1.tipo.CADENA;
+        return Tipo_1.tipo.ENTERO;
     }
     getValor(controlador, ts) {
         let simbolo = ts.getSimbolo(this.id);
@@ -34,6 +34,9 @@ class LenghtC {
         padre.AddHijo(new Nodo_1.Nodo("(", ""));
         padre.AddHijo(new Nodo_1.Nodo(")", ""));
         return padre;
+    }
+    traducir(controlador, ts) {
+        throw new Error("Method not implemented.");
     }
 }
 exports.LenghtC = LenghtC;

@@ -9,9 +9,6 @@ class PopArreglo {
         this.linea = linea;
         this.columna = columna;
     }
-    traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
-    }
     ejecutar(controlador, ts) {
         let simbolo = ts.getSimbolo(this.id);
         if (simbolo.simbolo === 1 || simbolo.simbolo === 4) {
@@ -64,6 +61,9 @@ class PopArreglo {
         }
     }
     recorrer() {
+        throw new Error("Method not implemented.");
+    }
+    traducir(controlador, ts) {
         throw new Error("Method not implemented.");
     }
 }

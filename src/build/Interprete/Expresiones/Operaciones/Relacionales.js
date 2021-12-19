@@ -869,5 +869,25 @@ class Relacional extends Operacion_1.Operacion {
         padre.AddHijo(this.exp2.recorrer());
         return padre;
     }
+    traducir(controlador, ts) {
+        let c3d = '';
+        c3d += this.exp1.traducir(controlador, ts);
+        const tempIzq = ts.getTemporalActual();
+        c3d += this.exp2.traducir(controlador, ts);
+        const tempDer = ts.getTemporalActual();
+        const etiquetaV = ts.getEtiqueta();
+        const etiquetaF = ts.getEtiqueta();
+        const temp = ts.getTemporal();
+        c3d += `if(${tempIzq} ${this.signo_operador} ${tempDer}) goto ${etiquetaV};\n`;
+        c3d += `${temp} = 0;\n`;
+        c3d += `goto ${etiquetaF};\n`;
+        c3d += `${etiquetaV}: \n`;
+        c3d += `${temp} = 1;\n`;
+        c3d += `${etiquetaF}:\n`;
+        ts.AgregarTemporal(temp);
+        ts.QuitarTemporal(tempIzq);
+        ts.QuitarTemporal(tempDer);
+        return c3d;
+    }
 }
 exports.Relacional = Relacional;

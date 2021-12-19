@@ -25,24 +25,31 @@ const ejecutarCodigo = (entrada:string) =>{
     console.log(ts_html);
     console.log(controlador.consola);
 }
+// ejecutarCodigo(`
 
-ejecutarCodigo(`
+//     void main(){
+//         println(3+1);
+//     }
 
-void main(){
 
-    String var = "HooOooOolaA";
 
-    struct animal {
-        String nombre;
-        int edad;
-    }
+// `);
 
-    animal animal1 = animal("Bobby", 5);
-    animal1.nombre = "Angel";
-    println(animal1.nombre);
-    println(var.toUppercase());
-    println(var.toLowercase());
+
+const Generar3D =(entrada:string)=>{
+    const ast : Ast = gramatica.parse(entrada);
+    const ts_global = new TablaSimbolos(null);
+    const controlador = new Controlador();
+    
+    console.log(ast.traducir(controlador,ts_global));
 }
+
+
+Generar3D(`
+
+    void main(){
+         println(3);
+    }
 
 
 `);

@@ -12,9 +12,7 @@ export class Retorno implements Instruccion{
     constructor(valor_retorno:Expresion){
         this.valor_retorno = valor_retorno;
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        throw new Error("Method not implemented.");
-    }
+    
     
 
     ejecutar(controlador:Controlador, ts:TablaSimbolos){
@@ -30,6 +28,10 @@ export class Retorno implements Instruccion{
 
     recorrer(): Nodo{
         return new Nodo("Return","");
+    }
+
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
+        throw new Error("Method not implemented.");
     }
 
 }

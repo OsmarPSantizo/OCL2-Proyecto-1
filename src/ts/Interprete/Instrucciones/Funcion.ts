@@ -16,7 +16,7 @@ export class Funcion extends Simbolo implements Instruccion{
     public columna : number;
 // con el booleano vamos a saber si es un métdodo true o false
     constructor(simbolo:number, tipo:Tipo, identificador:string, lista_params: Array<Simbolo>, metodo:boolean, lista_instrucciones: Array<Instruccion>,linea :number, columna:number){
-        super(simbolo,tipo,identificador,null,lista_params,metodo);
+        super(simbolo,tipo,identificador,null,0,lista_params,metodo);
         this.lista_instrucciones = lista_instrucciones;
         this.linea = linea;
         this.columna = columna;

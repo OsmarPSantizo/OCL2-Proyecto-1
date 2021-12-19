@@ -12,9 +12,6 @@ class AccesoVector {
         this.valor = valor;
         this.modificar = modificar;
     }
-    traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
-    }
     ejecutar(controlador, ts) {
         console.log('Modificando vector.');
         if (this.modificar) {
@@ -67,6 +64,9 @@ class AccesoVector {
         }
     }
     recorrer() {
+        throw new Error("Method not implemented.");
+    }
+    traducir(controlador, ts) {
         throw new Error("Method not implemented.");
     }
 }

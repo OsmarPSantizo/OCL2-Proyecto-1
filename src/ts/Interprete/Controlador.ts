@@ -140,4 +140,8 @@ export  class Controlador{
 
     }
 
+    getPosicion(sim:Simbolo){
+        return sim.posicion
+    }
+
 }

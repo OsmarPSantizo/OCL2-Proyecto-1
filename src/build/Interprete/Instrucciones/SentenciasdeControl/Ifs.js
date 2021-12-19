@@ -16,9 +16,6 @@ class Ifs {
         this.columna = columna;
         this.linea = linea;
     }
-    traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
-    }
     ejecutar(controlador, ts) {
         let ts_local = new TablaSimbolos_1.TablaSimbolos(ts); //Creamos una tabla de simbolos local que se ejecute solo dentro del if
         //PAra agregar las tablas locales
@@ -109,6 +106,26 @@ class Ifs {
         padre.AddHijo(hijo_instrucciones2);
         padre.AddHijo(new Nodo_1.Nodo("}", ""));
         return padre;
+    }
+    traducir(controlador, ts) {
+        let c3d = '';
+        let condicion = this.condicion.traducir(controlador, ts);
+        c3d += condicion;
+        let temp = ts.getTemporalActual();
+        let etiquetaV = ts.getEtiqueta();
+        let etiquetaF = ts.getEtiqueta();
+        c3d += `if(${temp} ==1) goto ${etiquetaV}; \n`;
+        ts.QuitarTemporal(temp);
+        for (let inst of this.lista_instrucciones_elses) {
+            c3d += inst.traducir(controlador, ts);
+        }
+        c3d += `goto ${etiquetaF};\n`;
+        c3d += `${etiquetaV}:\n`;
+        for (let inst of this.lista_instrucciones_ifs) {
+            c3d += inst.traducir(controlador, ts);
+        }
+        c3d += `${etiquetaF}:\n`;
+        return c3d;
     }
 }
 exports.Ifs = Ifs;

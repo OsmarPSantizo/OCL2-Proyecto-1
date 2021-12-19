@@ -72,4 +72,8 @@ export class SliceVector implements Expresion{
     recorrer(): Nodo {
         throw new Error("Method not implemented.");
     }
+
+    traducir(controlador: Controlador, ts: TablaSimbolos) :String {
+        throw new Error("Method not implemented.");
+    }
 }
