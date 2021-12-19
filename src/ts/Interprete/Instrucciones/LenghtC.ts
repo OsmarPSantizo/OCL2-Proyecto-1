@@ -20,7 +20,7 @@ export class LenghtC implements Expresion{
     }
 
     getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {
-        return tipo.CADENA;
+        return tipo.ENTERO;
     }
 
     getValor(controlador: Controlador, ts: TablaSimbolos) {
@@ -43,12 +43,12 @@ export class LenghtC implements Expresion{
 
     }
     recorrer(): Nodo {
-        let padre = new Nodo("length",""); 
-        padre.AddHijo(new Nodo(this.id,"")); 
+        let padre = new Nodo("length","");
+        padre.AddHijo(new Nodo(this.id,""));
         padre.AddHijo(new Nodo(".",""));
-        padre.AddHijo(new Nodo("length","")); 
-        padre.AddHijo(new Nodo("(","")); 
-        padre.AddHijo(new Nodo(")","")); 
+        padre.AddHijo(new Nodo("length",""));
+        padre.AddHijo(new Nodo("(",""));
+        padre.AddHijo(new Nodo(")",""));
         return padre;
     }
 

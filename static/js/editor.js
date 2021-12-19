@@ -192,6 +192,8 @@ function readSingleFile(e) {
 
 
 const parseInput = () => {
+    sessionStorage.removeItem('reporteGramaticalProducciones');
+    sessionStorage.removeItem('reporteGramaticalTDS');
     let editorValue = currentEditor.getValue();
     const ast = gramatica.parse(editorValue);
     const controlador = new Controlador.Controlador();

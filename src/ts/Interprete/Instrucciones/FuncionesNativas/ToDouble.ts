@@ -28,7 +28,7 @@ export class ToDouble implements Expresion{
         }
     }
     getValor(controlador: Controlador, ts: TablaSimbolos) {
-        let valor 
+        let valor
         let tipo_valor:tipo;
 
         tipo_valor = this.expresion.getTipo(controlador,ts);
@@ -45,16 +45,16 @@ export class ToDouble implements Expresion{
 
     }
     recorrer(): Nodo {
-        let padre = new Nodo("toDouble",""); 
-        padre.AddHijo(new Nodo("toDouble","")); 
+        let padre = new Nodo("toDouble","");
+        padre.AddHijo(new Nodo("toDouble",""));
         padre.AddHijo(new Nodo("(",""));
 
         let hijo = new Nodo("exp","");
-        hijo.AddHijo(this.expresion.recorrer()); 
+        hijo.AddHijo(this.expresion.recorrer());
 
         padre.AddHijo(hijo);
-        padre.AddHijo(new Nodo(")","")); 
+        padre.AddHijo(new Nodo(")",""));
         return padre;
     }
-    
+
 }
