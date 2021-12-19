@@ -138,12 +138,12 @@ const createEditor = ( editor ) => {
 }
 
 
-const openTab = (evt = event, editorName) => {
+function openTab (evt = event, editorName) {
 
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
+    tabcontent[i].style.display = "none";
     }
 
     tablinks = document.getElementsByClassName("tablinks");
@@ -167,7 +167,8 @@ const openTab = (evt = event, editorName) => {
     }
 
     console.log(currentEditor);
-  }
+    }
+
 
   // Read file
 
@@ -205,11 +206,17 @@ const parseInput = () => {
     let reporteGramaticalProduccionTexto = '';
     let reporteGramaticalTDSTexto = '';
 
-    ast.reporteGramaticalProducciones.reverse().forEach( produccion => {
+    let reporteGramaticalProducciones = ast.reporteGramaticalProducciones.reverse();
+    let reporteGramaticalTDS = ast.reporteGramaticalTDS.reverse();
+
+    sessionStorage.setItem('reporteGramaticalProducciones', JSON.stringify(reporteGramaticalProducciones));
+    sessionStorage.setItem('reporteGramaticalTDS', JSON.stringify(reporteGramaticalTDS));
+
+    reporteGramaticalProducciones.forEach( produccion => {
         reporteGramaticalProduccionTexto += produccion + '\n';
     });
 
-    ast.reporteGramaticalTDS.reverse().forEach( regla => {
+    reporteGramaticalTDS.reverse().forEach( regla => {
         reporteGramaticalTDSTexto += regla + '\n';
     });
 
