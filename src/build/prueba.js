@@ -28,9 +28,15 @@ const Generar3D = (entrada) => {
 };
 Generar3D(`
 
-    void main(){
-         println(3);
-    }
+void main(){
+
+    int i = 11;
+    int b = 11;
+    i++;
+    b++;
+    println(i);
+    
+ }
 
 
 `);

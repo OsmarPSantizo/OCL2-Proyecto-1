@@ -57,12 +57,9 @@ export class ToDouble implements Expresion{
         return padre;
     }
 
-<<<<<<< HEAD
-}
-=======
+
     traducir(controlador: Controlador, ts: TablaSimbolos) :String {
         throw new Error("Method not implemented.");
     }
     
 }
->>>>>>> b6266c72539562951b400d23c83c3aa92fe73c04

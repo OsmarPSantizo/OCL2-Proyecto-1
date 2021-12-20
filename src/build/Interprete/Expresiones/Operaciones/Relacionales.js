@@ -879,11 +879,7 @@ class Relacional extends Operacion_1.Operacion {
         const etiquetaF = ts.getEtiqueta();
         const temp = ts.getTemporal();
         c3d += `if(${tempIzq} ${this.signo_operador} ${tempDer}) goto ${etiquetaV};\n`;
-        c3d += `${temp} = 0;\n`;
         c3d += `goto ${etiquetaF};\n`;
-        c3d += `${etiquetaV}: \n`;
-        c3d += `${temp} = 1;\n`;
-        c3d += `${etiquetaF}:\n`;
         ts.AgregarTemporal(temp);
         ts.QuitarTemporal(tempIzq);
         ts.QuitarTemporal(tempDer);

@@ -11,7 +11,12 @@ class Ast {
         this.lista_instrucciones = lista_instrucciones;
     }
     traducir(controlador, ts) {
-        ts.sizeActual.push(0);
+        let c3d = `#include <stdio.h> //Importar para el uso de Printf 
+float heap[16384]; //Estructura para heap 
+float stack[16394]; //Estructura para stack 
+float p; //Puntero P 
+float h; //Puntero H 
+       `;
         for (let instruccion of this.lista_instrucciones) {
             if (instruccion instanceof Funcion_1.Funcion) {
                 ts.setStack(0);
@@ -22,21 +27,14 @@ class Ast {
         let cantidadGlobales = 0;
         for (let instruccion of this.lista_instrucciones) {
             if (instruccion instanceof Declaracion_1.Declaracion) {
-                instruccion.traducir(controlador, ts);
-                instruccion.posicion = ts.getHeap();
-                cantidadGlobales++;
+                c3d += instruccion.traducir(controlador, ts);
             }
         }
-        let c3d = `#include <stdio.h> //Importar para el uso de Printf 
-float heap[16384]; //Estructura para heap 
-float stack[16394]; //Estructura para stack 
-float p; //Puntero P 
-float h; //Puntero H 
-`;
         for (let i = 0; i < cantidadGlobales; i++) {
             c3d += `heap[${i}] = 0\n`;
             c3d += `h = h + 1 \n`;
         }
+        ts.ambito = false;
         for (let instruccion of this.lista_instrucciones) {
             if (instruccion instanceof Fmain_1.Fmain) {
                 c3d += instruccion.traducir(controlador, ts);

@@ -108,23 +108,22 @@ class Ifs {
         return padre;
     }
     traducir(controlador, ts) {
-        let c3d = '';
+        let c3d = '/*------IF------*/\n';
         let condicion = this.condicion.traducir(controlador, ts);
         c3d += condicion;
-        let temp = ts.getTemporalActual();
-        let etiquetaV = ts.getEtiqueta();
-        let etiquetaF = ts.getEtiqueta();
-        c3d += `if(${temp} ==1) goto ${etiquetaV}; \n`;
-        ts.QuitarTemporal(temp);
-        for (let inst of this.lista_instrucciones_elses) {
-            c3d += inst.traducir(controlador, ts);
-        }
-        c3d += `goto ${etiquetaF};\n`;
-        c3d += `${etiquetaV}:\n`;
+        let etiquetaV = ts.getEtiquetaActualint() - 1;
+        let etiquetaF = ts.getEtiquetaActual();
+        let etiquetaescape = ts.getEtiqueta();
+        c3d += `L${etiquetaV}:\n`;
         for (let inst of this.lista_instrucciones_ifs) {
             c3d += inst.traducir(controlador, ts);
         }
+        c3d += `goto ${etiquetaescape};\n`;
         c3d += `${etiquetaF}:\n`;
+        for (let inst of this.lista_instrucciones_elses) {
+            c3d += inst.traducir(controlador, ts);
+        }
+        c3d += `${etiquetaescape}:\n`;
         return c3d;
     }
 }

@@ -62,23 +62,22 @@ class While {
         return padre;
     }
     traducir(controlador, ts) {
-        let c3d = '';
-        let etiqueta = ts.getTemporalActual();
+        let c3d = '/*------WHILE------*/\n';
+        let etiqueta = ts.getEtiqueta();
         let condicion = this.condicion.traducir(controlador, ts);
         c3d += `${etiqueta}:\n`;
         c3d += condicion;
+        c3d += '/*------FINWHILE-----*/\n';
         let temp = ts.getTemporalActual();
         let etiqueta1 = ts.getEtiqueta();
         let etiqueta2 = ts.getEtiqueta();
-        c3d += `if(${temp} = 1) goto ${etiqueta1}:\n`;
-        c3d += `goto ${etiqueta2}:\n`;
-        ts.QuitarTemporal(temp);
-        c3d += `${etiqueta1}:`;
+        c3d += `${etiqueta1}:\n`;
         for (let instrucciones of this.lista_instrucciones) {
             c3d += instrucciones.traducir(controlador, ts);
         }
         c3d += `goto ${etiqueta}:\n`;
         c3d += `${etiqueta2}:\n`;
+        c3d += '/*------FINWHILdE-----*/\n';
         return c3d;
     }
 }

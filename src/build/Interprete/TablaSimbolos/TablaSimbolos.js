@@ -123,6 +123,9 @@ class TablaSimbolos {
     getEtiquetaActual() {
         return "L" + this.etiqueta;
     }
+    getEtiquetaActualint() {
+        return this.etiqueta;
+    }
     /**
      * @method AgregarTemporal Agrega temporal de la lista de temporales que no utilizamos
      * @param {String} temp Temporal que se almacenará en la lista de temporales
