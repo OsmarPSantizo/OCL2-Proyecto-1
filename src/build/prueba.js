@@ -15,22 +15,20 @@ const ejecutarCodigo = (entrada) => {
     console.log(ts_html);
     console.log(controlador.consola);
 };
-// ejecutarCodigo(`
-//     void main(){
-//         println(3+1);
-//     }
-// `);
+ejecutarCodigo(`
+
+    void main(){
+        int[] arr;
+        arr.push(2);
+        println(arr[0]);
+    }
+
+ `);
 const Generar3D = (entrada) => {
     const ast = gramatica.parse(entrada);
     const ts_global = new TablaSimbolos_1.TablaSimbolos(null);
     const controlador = new Controlador_1.Controlador();
     console.log(ast.traducir(controlador, ts_global));
 };
-Generar3D(`
-
-    void main(){
-         println(3);
-    }
-
-
-`);
+// Generar3D(`
+// `);

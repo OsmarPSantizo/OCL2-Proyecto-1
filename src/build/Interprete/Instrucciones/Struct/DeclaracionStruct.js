@@ -61,9 +61,9 @@ class DeclaracionStruct {
         let tipo = new Tipo_1.Tipo(`STRUCT ${this.structId} ${this.newVariable}`);
         let nuevoSimbolo = new Simbolo_1.Simbolo(1, tipo, this.newVariable, newVariableValues, 0);
         ts.agregar(this.newVariable, nuevoSimbolo);
-        console.log('NUEVA VARIABLE STRUCT:', nuevoSimbolo);
-        console.log('VALORES NUEVOS:', newVariableValues);
-        console.log('VALORES ORIGINALES:', storedStruct.valor);
+        // console.log('NUEVA VARIABLE STRUCT:', nuevoSimbolo);
+        // console.log('VALORES NUEVOS:', newVariableValues)
+        // console.log('VALORES ORIGINALES:', storedStruct.valor);
     }
     recorrer() {
         throw new Error("Method not implemented.");

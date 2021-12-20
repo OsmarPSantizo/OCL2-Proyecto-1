@@ -25,31 +25,29 @@ const ejecutarCodigo = (entrada:string) =>{
     console.log(ts_html);
     console.log(controlador.consola);
 }
-// ejecutarCodigo(`
+ ejecutarCodigo(`
 
-//     void main(){
-//         println(3+1);
-//     }
+    void main(){
+        int[] arr;
+        arr.push(2);
+        println(arr[0]);
+    }
 
-
-
-// `);
+ `);
 
 
 const Generar3D =(entrada:string)=>{
     const ast : Ast = gramatica.parse(entrada);
     const ts_global = new TablaSimbolos(null);
     const controlador = new Controlador();
-    
+
     console.log(ast.traducir(controlador,ts_global));
 }
 
 
-Generar3D(`
-
-    void main(){
-         println(3);
-    }
+// Generar3D(`
 
 
-`);
+
+
+// `);

@@ -49,7 +49,7 @@ class PushArreglo {
     //     }
     // }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        return 'push';
     }
     recorrer() {
         throw new Error("Method not implemented.");

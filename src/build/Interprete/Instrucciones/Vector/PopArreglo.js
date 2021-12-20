@@ -64,7 +64,7 @@ class PopArreglo {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        return 'pop';
     }
 }
 exports.PopArreglo = PopArreglo;
