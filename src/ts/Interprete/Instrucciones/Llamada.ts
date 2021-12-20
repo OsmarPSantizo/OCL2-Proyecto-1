@@ -25,10 +25,10 @@ export class Llamada implements Instruccion , Expresion{
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
         throw new Error("Method not implemented.");
     }
-   
 
 
-    
+
+
     getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {
         let simbolo_funcion = ts.getSimbolo(this.identificador) as Funcion;
         return simbolo_funcion.tipo.n_tipo;
@@ -40,12 +40,12 @@ export class Llamada implements Instruccion , Expresion{
             let ts_local = new TablaSimbolos(ts);
             // obtiene el simbolo del método
             let simbolo_funcion = ts.getSimbolo(this.identificador) as Funcion;
-           
+
 
 
             // verificamos is los parametros están correctos
             if(this.validar_param(this.parametros,simbolo_funcion.lista_params!, controlador,ts,ts_local)){
-                
+
                 let retorno = simbolo_funcion.ejecutar(controlador,ts_local);
 
                 if(retorno != null){
@@ -61,7 +61,7 @@ export class Llamada implements Instruccion , Expresion{
             controlador.append(`ERROR: Semántico, El método no ha sido creado. En la linea ${this.linea} y columna ${this.columna}`);
             return null;
         }
-        
+
     }
 
 
@@ -71,13 +71,13 @@ export class Llamada implements Instruccion , Expresion{
             //creamos una tabla de simbolos local
             let ts_local = new TablaSimbolos(ts);
             if(controlador.tablas.some(x=> ts_local === ts_local)){
-                
-    
+
+
             }else{
                 controlador.tablas.push(ts_local)
-                
+
             }
-            
+
             // obtiene el simbolo del método
             let simbolo_funcion = ts.getSimbolo(this.identificador) as Funcion;
 
@@ -88,7 +88,7 @@ export class Llamada implements Instruccion , Expresion{
                 if(retorno != null){
                     return retorno
                 }
-            
+
             }
 
 
@@ -98,13 +98,15 @@ export class Llamada implements Instruccion , Expresion{
             controlador.append(`ERROR: Semántico, El método no ha sido creado. En la linea ${this.linea} y columna ${this.columna}`);
             return null;
         }
-        // Se debe crear 
+        // Se debe crear
         //
 
     }
 
     validar_param(parametros_llamada : Array<Expresion>, parametros_funcion : Array<Simbolo>, controlador : Controlador, ts : TablaSimbolos, ts_local: TablaSimbolos){
-        //Primero vemos si la cantidad de parametros en la llamada es igual a los que mandamos a llamar 
+        //Primero vemos si la cantidad de parametros en la llamada es igual a los que mandamos a llamar
+        console.log('Length pll:', parametros_llamada.length );
+        console.log('Length f:', parametros_funcion.length );
         if(parametros_llamada.length == parametros_funcion.length){
             //****Parametros desde la funcion/metododo*****/
             let aux : Simbolo; // -> parametro
@@ -118,7 +120,7 @@ export class Llamada implements Instruccion , Expresion{
 
             //Primero hay que ver si los dos parametros el ingresado y el requerido sean del mismo tipo
             for(let i = 0; i<parametros_llamada.length; i++){
-                
+
                 // -> guardamos la información del parámetro de la función
                 aux = parametros_funcion[i] as Simbolo;
                 aux_id = aux.identificador;
@@ -134,7 +136,7 @@ export class Llamada implements Instruccion , Expresion{
                     // si son del mismo tipo se guarda cada parametro con su valor en su tabla de simbolos
                     let simbolo = new Simbolo(aux.simbolo, aux.tipo, aux_id,aux_valor_exp,0);
                     ts_local.agregar(aux_id, simbolo);
-                    
+
                 }
             }
             return true;
@@ -148,10 +150,10 @@ export class Llamada implements Instruccion , Expresion{
     }
 
     recorrer(): Nodo{
-        let padre = new Nodo("Llamada",""); 
+        let padre = new Nodo("Llamada","");
         padre.AddHijo(new Nodo(this.identificador,""));
         padre.AddHijo(new Nodo("(",""));
-        
+
         if(this.parametros == undefined){
 
         }else{
@@ -161,9 +163,9 @@ export class Llamada implements Instruccion , Expresion{
             }
             padre.AddHijo(hijo_parametros);
         }
-        
+
         padre.AddHijo(new Nodo(")",""));
-        
+
        return padre;
     }
 

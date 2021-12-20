@@ -57,4 +57,3 @@ export class LenghtC implements Expresion{
     }
 
 }
-

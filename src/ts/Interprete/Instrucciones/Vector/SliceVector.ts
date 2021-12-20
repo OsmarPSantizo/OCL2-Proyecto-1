@@ -74,6 +74,6 @@ export class SliceVector implements Expresion{
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos) :String {
-        throw new Error("Method not implemented.");
+        return 'slice';
     }
 }

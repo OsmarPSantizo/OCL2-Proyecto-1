@@ -305,6 +305,8 @@ tipo : DOUBLE       {reporteGramaticalTDS.push('tipo.val := DOUBLE'); reporteGra
 
 decl_vectores:
               tipo CORA CORC lista_ids IGUAL CORA lista_valores CORC PYC     {reporteGramaticalTDS.push('decl_valores.val := tipo.val CORA CROC lista_ids.val IGUAL CORA lista_valores.val CORC PYC'); reporteGramaticalProducciones.push('<decl_valores> -> <tipo> CORA CROC <lista_ids> IGUAL CORA <lista_valores> CORC PYC'); $$ = new DeclaracionVectores($1,$4,$7,@1.first_line,@1.last_column);}
+        |     tipo CORA CORC lista_ids IGUAL CORA CORC PYC     {reporteGramaticalTDS.push('decl_valores.val := tipo.val CORA CROC lista_ids.val IGUAL CORA CORC PYC'); reporteGramaticalProducciones.push('<decl_valores> -> <tipo> CORA CROC <lista_ids> IGUAL CORA CORC PYC'); $$ = new DeclaracionVectores($1,$4,[],@1.first_line,@1.last_column);}
+        |     tipo CORA CORC lista_ids PYC     {reporteGramaticalTDS.push('decl_valores.val := tipo.val CORA CROC lista_ids.val PYC'); reporteGramaticalProducciones.push('<decl_valores> -> <tipo> CORA CROC <lista_ids> PYC'); $$ = new DeclaracionVectores($1,$4,[],@1.first_line,@1.last_column);}
              //| tipo CORA CORC lista_ids IGUAL e PYC
              ;
 
@@ -417,6 +419,8 @@ funciones : tipo ID PARA lista_parametros PARC LLAVA instrucciones LLAVC  { repo
           ;
 
 lista_parametros : lista_parametros COMA tipo ID  { reporteGramaticalTDS.push('lista_parametros.val := lista_parametros.val COMA tipo.val ID'); reporteGramaticalProducciones.push('<lista_parametros> -> <lista_parametros> COMA <tipo> ID'); $$ = $1; $$.push(new Simbolo(6, $3, $4, null));}
+                 //| lista_parametros COMA tipo CORA CORC ID                        { reporteGramaticalTDS.push('lista_parametros.val := tipo.val CORA CORC ID'); reporteGramaticalProducciones.push('<lista_parametros> -> <tipo> CORA CORC ID'); $$ = new Array(); $$.push(new Simbolo(4, $3, $6, null));}
+                 //| tipo CORA CORC ID                        { reporteGramaticalTDS.push('lista_parametros.val := tipo.val CORA CORC ID'); reporteGramaticalProducciones.push('<lista_parametros> -> <tipo> CORA CORC ID'); $$ = new Array(); $$.push(new Simbolo(4, $1, $4, null));}
                  | tipo ID                        { reporteGramaticalTDS.push('lista_parametros.val := tipo.val ID'); reporteGramaticalProducciones.push('<lista_parametros> -> <tipo> ID'); $$ = new Array(); $$.push(new Simbolo(6, $1, $2, null));}
                  ;
 
@@ -449,10 +453,11 @@ e
     | e DIFERENTE e             {reporteGramaticalTDS.push('e.val := e.val DIFERENTE e.val'); reporteGramaticalProducciones.push('<e> -> <e> DIFERENTE <e>');  $$ = new Relacional($1, '!=', $3, @1.first_line,@1.last_column, false);}
     | e AND e                   {reporteGramaticalTDS.push('e.val := e.val AND e.val'); reporteGramaticalProducciones.push('<e> -> <e> AND <e>');  $$ = new Logicas($1,'&&', $3, @1.first_line,@1.last_column, false);}
     | e ANDD e                  {reporteGramaticalTDS.push('e.val := e.val ANDD e.val'); reporteGramaticalProducciones.push('<e> -> <e> ANDD <e>');  $$ = new Aritmetica($1,'+', $3, @1.first_line,@1.last_column, false);}
+    //| e COMA e                  {reporteGramaticalTDS.push('e.val := e.val COMA e.val'); reporteGramaticalProducciones.push('<e> -> <e> COMA <e>');  $$ = new Aritmetica($1,'+', $3, @1.first_line,@1.last_column, false, true);}
     | e OR e                    {reporteGramaticalTDS.push('e.val := e.val OR e.val'); reporteGramaticalProducciones.push('<e> -> <e> OR <e>');  $$ = new Logicas($1,'||', $3, @1.first_line,@1.last_column, false);}
     | e INTERROGACION e DOSPUNTOS e { reporteGramaticalTDS.push('e.val := e.val INTERROGACION e.val DOSPUNTOS e.val'); reporteGramaticalProducciones.push('<e> -> <e> INTERROGACION <e> DOSPUNTOS <e>'); $$ = new Ternario($1,$3,$5,@1.first_line,@1.last_column);}
     | e PNT CARAOFPOS PARA e PARC   { reporteGramaticalTDS.push('e.val := e.val PNT CARAOFPOS PARA e.val COMA e.val PARC'); reporteGramaticalProducciones.push('<e> -> <e> PNT CARAOFPOS PARA <e> COMA <e> PARC'); $$ = new  CharOfPosition($1,$5,@1.first_line,@1.last_column);}
-    | ID PNT ID                 { reporteGramaticalTDS.push('e.val := ID PNT ID'); reporteGramaticalProducciones.push('<e> -> ID PNT ID ');  $$ = new AccesoStruct($1, $3, @1.first_line, @1.last_column); }
+    //| ID PNT ID                 { reporteGramaticalTDS.push('e.val := ID PNT ID'); reporteGramaticalProducciones.push('<e> -> ID PNT ID ');  $$ = new AccesoStruct($1, $3, @1.first_line, @1.last_column); }
     | ID PNT CARALENGHT PARA PARC   { reporteGramaticalTDS.push('e.val := ID PNT CARALENGHT PARA PARC'); reporteGramaticalProducciones.push('<e> -> ID PNT CARALENGHT PARA PARC'); $$ = new LenghtC($1, @1.first_line,@1.last_column);}
     | ID PNT POP PARA PARC { reporteGramaticalTDS.push('e.val := ID PNT POP PARA PARC'); reporteGramaticalProducciones.push('<e> -> ID PNT POP PARA PARC'); $$ = new PopArreglo($1, @1.first_line,@1.last_column);}
     | POT PARA e COMA e PARC    { reporteGramaticalTDS.push('e.val :=  e.val e.val'); reporteGramaticalProducciones.push('<e> ->  e <e>');  $$ = new Aritmetica($3, '^', $5, @1.first_line,@1.last_column, false);}

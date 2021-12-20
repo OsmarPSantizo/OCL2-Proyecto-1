@@ -4,9 +4,6 @@ import { Controlador } from "../../Controlador";
 import { Expresion } from "../../Interfaces/Expresion";
 import { Instruccion } from "../../Interfaces/Instruccion";
 import { TablaSimbolos } from "../../TablaSimbolos/TablaSimbolos";
-import { tipo } from "../../TablaSimbolos/Tipo";
-
-
 
 export class PushArreglo implements Instruccion{
 
@@ -38,6 +35,7 @@ export class PushArreglo implements Instruccion{
             controlador.append(`ERROR: Semántico, La expresión no es de tipo cadena. En la linea ${this.linea} y columna ${this.columna}`);
 
         }
+
     }
 
 
@@ -83,7 +81,7 @@ export class PushArreglo implements Instruccion{
 
     // }
     traducir(controlador: Controlador, ts:TablaSimbolos): any {
-        throw new Error("Method not implemented.");
+        return 'push';
     }
     recorrer(): Nodo {
         throw new Error("Method not implemented.");

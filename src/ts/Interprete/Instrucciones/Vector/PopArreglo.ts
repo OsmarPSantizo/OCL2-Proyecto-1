@@ -19,7 +19,7 @@ export class PopArreglo implements Expresion, Instruccion{
         this.linea = linea;
         this.columna = columna;
     }
-    
+
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
 
@@ -38,7 +38,7 @@ export class PopArreglo implements Expresion, Instruccion{
 
         }
     }
-    
+
 
 
     getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {
@@ -100,7 +100,7 @@ export class PopArreglo implements Expresion, Instruccion{
 
 
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        throw new Error("Method not implemented.");
+        return 'pop'
     }
 
 }

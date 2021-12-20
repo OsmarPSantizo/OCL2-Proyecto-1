@@ -9,12 +9,13 @@ class Aritmetica extends Operacion_1.Operacion {
     /**
      *
      */
-    constructor(exp1, signo_operador, exp2, linea, columna, expU) {
+    constructor(exp1, signo_operador, exp2, linea, columna, expU, union) {
         super(exp1, signo_operador, exp2, linea, columna, expU);
+        this.union = union;
     }
     // 1 + 1
     // -1
-    // e + e 
+    // e + e
     getTipo(controlador, ts) {
         let tipo_exp1;
         let tipo_exp2;
@@ -341,6 +342,9 @@ class Aritmetica extends Operacion_1.Operacion {
                             controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
                             break;
                         }
+                        if (this.union) {
+                            return valor_exp1 + ' ' + valor_exp2;
+                        }
                         return valor_exp1 + valor_exp2; // 1+2.5 = 3.5
                     }
                     else if (tipo_exp2 == Tipo_1.tipo.DOBLE) {
@@ -349,6 +353,9 @@ class Aritmetica extends Operacion_1.Operacion {
                             controlador.errores.push(error);
                             controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
                             break;
+                        }
+                        if (this.union) {
+                            return valor_exp1 + ' ' + valor_exp2;
                         }
                         return valor_exp1 + valor_exp2;
                     }
@@ -367,6 +374,9 @@ class Aritmetica extends Operacion_1.Operacion {
                         }
                         //1 + 'A' == 1 + 65 = 66
                         let num_ascci = valor_exp2.charCodeAt(0);
+                        if (this.union) {
+                            return valor_exp1 + ' ' + num_ascci;
+                        }
                         return valor_exp1 + num_ascci;
                     }
                     else if (tipo_exp2 == Tipo_1.tipo.CADENA) {
@@ -375,6 +385,9 @@ class Aritmetica extends Operacion_1.Operacion {
                             controlador.errores.push(error);
                             controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
                             break;
+                        }
+                        if (this.union) {
+                            return valor_exp1 + ' ' + valor_exp2;
                         }
                         return valor_exp1 + valor_exp2;
                     }
@@ -393,6 +406,9 @@ class Aritmetica extends Operacion_1.Operacion {
                             controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
                             break;
                         }
+                        if (this.union) {
+                            return valor_exp1 + ' ' + valor_exp2;
+                        }
                         return valor_exp1 + valor_exp2; // 1+2.5 = 3.5
                     }
                     else if (tipo_exp2 == Tipo_1.tipo.DOBLE) {
@@ -401,6 +417,9 @@ class Aritmetica extends Operacion_1.Operacion {
                             controlador.errores.push(error);
                             controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
                             break;
+                        }
+                        if (this.union) {
+                            return valor_exp1 + ' ' + valor_exp2;
                         }
                         return valor_exp1 + valor_exp2; // 1.1+2.5 = 3.6
                     }
@@ -419,6 +438,9 @@ class Aritmetica extends Operacion_1.Operacion {
                         }
                         //1.5 + 'A' == 1.5 + 65 = 66.5
                         let num_ascci = valor_exp2.charCodeAt(0);
+                        if (this.union) {
+                            return valor_exp1 + ' ' + num_ascci;
+                        }
                         return valor_exp1 + num_ascci;
                     }
                     else if (tipo_exp2 == Tipo_1.tipo.CADENA) {
@@ -427,6 +449,9 @@ class Aritmetica extends Operacion_1.Operacion {
                             controlador.errores.push(error);
                             controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
                             break;
+                        }
+                        if (this.union) {
+                            return valor_exp1 + ' ' + valor_exp2;
                         }
                         return valor_exp1 + valor_exp2;
                     }
@@ -472,6 +497,9 @@ class Aritmetica extends Operacion_1.Operacion {
                             controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
                             break;
                         }
+                        if (this.union) {
+                            return valor_exp1 + ' ' + valor_exp2;
+                        }
                         return valor_exp1 + valor_exp2; // true + hola = "truehola"
                     }
                     else {
@@ -490,6 +518,9 @@ class Aritmetica extends Operacion_1.Operacion {
                             controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
                             break;
                         }
+                        if (this.union) {
+                            return valor_exp1 + ' ' + num_ascci;
+                        }
                         return num_ascci + valor_exp2;
                     }
                     else if (tipo_exp2 == Tipo_1.tipo.DOBLE) {
@@ -498,6 +529,9 @@ class Aritmetica extends Operacion_1.Operacion {
                             controlador.errores.push(error);
                             controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
                             break;
+                        }
+                        if (this.union) {
+                            return num_ascci + ' ' + valor_exp2;
                         }
                         return num_ascci + valor_exp2;
                     }
@@ -508,6 +542,9 @@ class Aritmetica extends Operacion_1.Operacion {
                             controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
                             break;
                         }
+                        if (this.union) {
+                            return valor_exp1 + ' ' + valor_exp2;
+                        }
                         return valor_exp1 + valor_exp2; // 'A' + 'A' = AA
                     }
                     else if (tipo_exp2 == Tipo_1.tipo.CADENA) {
@@ -516,6 +553,9 @@ class Aritmetica extends Operacion_1.Operacion {
                             controlador.errores.push(error);
                             controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
                             break;
+                        }
+                        if (this.union) {
+                            return valor_exp1 + ' ' + valor_exp2;
                         }
                         return valor_exp1 + valor_exp2; // 'A' + hola = "Ahola"
                     }
@@ -539,6 +579,9 @@ class Aritmetica extends Operacion_1.Operacion {
                             controlador.errores.push(error);
                             controlador.append(`ERROR: Semántico, No se pueden hacer sumas con null . En la linea ${this.linea} y columna ${this.columna}`);
                             break;
+                        }
+                        if (this.union) {
+                            return valor_exp1 + ' ' + valor_exp2;
                         }
                         return valor_exp1 + valor_exp2;
                     }
@@ -716,7 +759,7 @@ class Aritmetica extends Operacion_1.Operacion {
                     }
                 }
                 break;
-            //MULTI                
+            //MULTI
             case Operacion_1.Operador.MULTIPLICACION:
                 if (tipo_exp1 == Tipo_1.tipo.ENTERO) {
                     if (tipo_exp2 == Tipo_1.tipo.ENTERO) {

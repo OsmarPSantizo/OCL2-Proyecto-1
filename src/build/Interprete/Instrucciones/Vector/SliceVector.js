@@ -46,7 +46,7 @@ class SliceVector {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        return 'slice';
     }
 }
 exports.SliceVector = SliceVector;

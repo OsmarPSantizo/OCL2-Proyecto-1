@@ -32,7 +32,7 @@ class AccesoVector {
     getTipo(controlador, ts) {
         let valorIndice = this.indice.getValor(controlador, ts);
         let valoresVector = this.getValoresVector(ts);
-        if (valorIndice < 0 || valorIndice >= valoresVector.length) {
+        if (valorIndice < 0 || valorIndice >= valoresVector.length || !valoresVector) {
             // Indice es mayor o menor al tamaño del arreglo
             let error = new Errores_1.Errores("Semántico", `Indice fuera de rango en el vector ${this.id}.`, this.linea, this.columna);
             controlador.errores.push(error);
@@ -67,7 +67,7 @@ class AccesoVector {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        return 'acceso_vector';
     }
 }
 exports.AccesoVector = AccesoVector;

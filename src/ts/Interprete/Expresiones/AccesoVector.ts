@@ -27,8 +27,8 @@ export class AccesoVector implements Expresion, Instruccion{
         this.modificar = modificar;
 
     }
-    
-    
+
+
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
         console.log('Modificando vector.');
@@ -59,7 +59,7 @@ export class AccesoVector implements Expresion, Instruccion{
         let valorIndice = this.indice.getValor(controlador,ts);
         let valoresVector = this.getValoresVector( ts );
 
-        if( valorIndice < 0 || valorIndice >= valoresVector.length) {
+        if( valorIndice < 0 || valorIndice >= valoresVector.length || !valoresVector ) {
             // Indice es mayor o menor al tamaño del arreglo
             let error = new Errores("Semántico", `Indice fuera de rango en el vector ${this.id}.`, this.linea, this.columna);
             controlador.errores.push(error);
@@ -110,7 +110,7 @@ export class AccesoVector implements Expresion, Instruccion{
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        throw new Error("Method not implemented.");
+        return 'acceso_vector';
     }
 
 }

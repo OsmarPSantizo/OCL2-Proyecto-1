@@ -28,7 +28,7 @@ export class DeclaracionStruct implements Instruccion {
         this.linea = linea;
         this.columna = columna;
     }
-    
+
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
 
@@ -88,9 +88,9 @@ export class DeclaracionStruct implements Instruccion {
         let nuevoSimbolo = new Simbolo(1, tipo, this.newVariable, newVariableValues,0);
         ts.agregar(this.newVariable, nuevoSimbolo);
 
-        console.log('NUEVA VARIABLE STRUCT:', nuevoSimbolo);
-        console.log('VALORES NUEVOS:', newVariableValues)
-        console.log('VALORES ORIGINALES:', storedStruct.valor);
+        // console.log('NUEVA VARIABLE STRUCT:', nuevoSimbolo);
+        // console.log('VALORES NUEVOS:', newVariableValues)
+        // console.log('VALORES ORIGINALES:', storedStruct.valor);
 
     }
 

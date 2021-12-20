@@ -19,7 +19,7 @@ export class DeclaracionVectores implements Instruccion{
     public columna: number;
     public posicion:number;
 
-    constructor (type: Tipo, listaIds:Array<string>, listaExpresiones: Array<Expresion>, linea:number, columna:number){
+    constructor (type: Tipo, listaIds:Array<string>, listaExpresiones: Array<Expresion> = [], linea:number, columna:number){
         this.type = type;
         this.listaIds = listaIds;
         this.listaExpresiones = listaExpresiones;
@@ -27,12 +27,6 @@ export class DeclaracionVectores implements Instruccion{
         this.columna = columna;
         this.posicion = 0;
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        throw new Error("Method not implemented.");
-    }
- 
-
-
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
 
@@ -48,27 +42,35 @@ export class DeclaracionVectores implements Instruccion{
 
             let valores = [];
 
-            for(let exp of this.listaExpresiones){ //{1,2,3}
+            if(this.listaExpresiones.length > 0) {
 
-                let valor = exp.getValor(controlador,ts);
-                let tipoValor = exp.getTipo(controlador,ts);
+                for(let exp of this.listaExpresiones){ //{1,2,3}
 
-                if(this.type.n_tipo == tipoValor){
+                    let valor = exp.getValor(controlador,ts);
+                    let tipoValor = exp.getTipo(controlador,ts);
 
-                    valores.push(valor);
+                    if(this.type.n_tipo == tipoValor){
 
-                }else{
+                        valores.push(valor);
 
-                    let error = new Errores("Semantico",`La variable ${id} posee un tipo diferente al de la declaracion del vector.`,this.linea,this.columna);
-                    controlador.errores.push(error);
-                    controlador.append(`ERROR: Semántico, La variable ${id}  posee un tipo diferente al de la declaracion del vector. En la linea ${this.linea} y columna ${this.columna}`);
+                    }else{
+
+                        let error = new Errores("Semantico",`La variable ${id} posee un tipo diferente al de la declaracion del vector.`,this.linea,this.columna);
+                        controlador.errores.push(error);
+                        controlador.append(`ERROR: Semántico, La variable ${id}  posee un tipo diferente al de la declaracion del vector. En la linea ${this.linea} y columna ${this.columna}`);
+
+                    }
 
                 }
 
-                let nuevo_simbolo = new Simbolo(4, this.type , id, valores,this.posicion);
-
-                ts.agregar(id, nuevo_simbolo);
+            } else {
+                valores = [];
             }
+
+            let nuevo_simbolo = new Simbolo(4, this.type , id, valores,this.posicion);
+            console.log('NUEVO SIMBOLO:', nuevo_simbolo);
+            ts.agregar(id, nuevo_simbolo);
+
         }
     }
 
@@ -78,9 +80,8 @@ export class DeclaracionVectores implements Instruccion{
         throw new Error("Method not implemented.");
     }
 
-
-
-
-
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
+        return 'hola';
+    }
 
 }
