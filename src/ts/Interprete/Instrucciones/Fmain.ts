@@ -40,7 +40,8 @@ export class Fmain extends Simbolo implements Instruccion{
         
 
         let conttemp = 0;
-        c3d += `double `
+        console.log(ts.tempStorage);
+        c3d += "double "
         while(conttemp < (ts_local.getNumeroTemporales()+ts.getNumeroTemporales() -3)){
             c3d += `t${conttemp}, `
             conttemp = conttemp +1;

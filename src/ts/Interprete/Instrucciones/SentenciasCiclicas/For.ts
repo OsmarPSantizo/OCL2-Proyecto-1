@@ -65,9 +65,6 @@ export class For implements Instruccion {
             controlador.append(`ERROR: Semántico, La condicion no es booleana. En la linea ${this.linea} y columna ${this.columna}`);
             return null;
         }
-
-
-
         
         
     }

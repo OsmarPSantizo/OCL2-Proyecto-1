@@ -25,6 +25,7 @@ class Toupper {
         tipo_valor = this.expresion.getTipo(controlador, ts);
         valor = this.expresion.getValor(controlador, ts);
         if (tipo_valor == Tipo_1.tipo.CADENA) {
+            console.log(valor + " Aqui estamos viendo el toupper");
             return valor.toUpperCase();
         }
         else {

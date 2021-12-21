@@ -86,22 +86,19 @@ export class While implements Instruccion{
 
         c3d += `${etiqueta}:\n`;
         c3d += condicion;
-        
-
-         c3d += '/*------FINWHILE-----*/\n';
+    
 
         let temp = ts.getTemporalActual();
 
-        let etiqueta1 = ts.getEtiqueta();
-        let etiqueta2 = ts.getEtiqueta();
+        let etiqueta1 = ts.getEtiquetaActualint()-1;
+        let etiqueta2 = ts.getEtiquetaActual();
         
-        c3d += `${etiqueta1}:\n`
+        c3d += `L${etiqueta1}:\n`
         for(let instrucciones of this.lista_instrucciones){
             c3d += instrucciones.traducir(controlador,ts);
         }
-        c3d += `goto ${etiqueta}:\n`
+        c3d += `goto ${etiqueta};\n`
         c3d += `${etiqueta2}:\n`
-        c3d += '/*------FINWHILdE-----*/\n';
 
         return c3d
 

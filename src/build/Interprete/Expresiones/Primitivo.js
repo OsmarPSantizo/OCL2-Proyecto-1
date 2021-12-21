@@ -26,8 +26,19 @@ class Primitivo {
     }
     traducir(controlador, ts) {
         let c3d = ``;
+        let x = 0;
         const temporal = ts.getTemporal();
-        c3d += `${temporal} = ${this.valor_primitivo};\n`;
+        if (this.getTipo(controlador, ts) == Tipo_1.tipo.ENTERO || this.getTipo(controlador, ts) == Tipo_1.tipo.DOBLE) {
+            c3d += `${temporal} = ${this.valor_primitivo};\n`;
+        }
+        else if (this.getTipo(controlador, ts) == Tipo_1.tipo.CADENA) {
+            c3d += `${temporal} = h;\n`;
+            while (x < this.getValor(controlador, ts).length) {
+                c3d += `heap[(int)h] = ${this.getValor(controlador, ts).charCodeAt(x)};\n`;
+                c3d += `h = h+1;\n`;
+                x = x + 1;
+            }
+        }
         ts.AgregarTemporal(ts.getTemporalActual());
         return c3d;
     }

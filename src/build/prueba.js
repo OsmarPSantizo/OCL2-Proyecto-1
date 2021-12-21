@@ -15,15 +15,13 @@ const ejecutarCodigo = (entrada) => {
     console.log(ts_html);
     console.log(controlador.consola);
 };
-ejecutarCodigo(`
-
-    void main(){
-        int[] arr;
-        arr.push(2);
-        println(arr[0]);
-    }
-
- `);
+//  ejecutarCodigo(`
+//     void main(){
+//         int[] arr;
+//         arr.push(2);
+//         println(arr[0]);
+//     }
+//  `);
 const Generar3D = (entrada) => {
     const ast = gramatica.parse(entrada);
     const ts_global = new TablaSimbolos_1.TablaSimbolos(null);
@@ -33,14 +31,12 @@ const Generar3D = (entrada) => {
 Generar3D(`
 
 void main(){
+    int i = 0;
+    while (i <5){
 
-    int i = 11;
-    int b = 11;
-    i++;
-    b++;
-    println(i);
-    
- }
+        println(i);
+    }
+}
 
 
 `);

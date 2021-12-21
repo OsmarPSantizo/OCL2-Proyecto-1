@@ -26,6 +26,7 @@ class Declaracion {
             if (this.expresion != null) {
                 let tipo_valor = this.expresion.getTipo(controlador, ts);
                 let valor = this.expresion.getValor(controlador, ts);
+                console.log("veamooos " + tipo_valor + "  " + this.type.n_tipo);
                 if (tipo_valor == this.type.n_tipo) { // n tipo sirve para obtener el tipo que declaramos con enum                    
                     let nuevo_simbolo = new Simbolo_1.Simbolo(1, this.type, id, valor, this.posicion);
                     ts.agregar(id, nuevo_simbolo);
@@ -130,7 +131,15 @@ class Declaracion {
             if (this.expresion != null) {
                 let tipo_valor = this.expresion.getTipo(controlador, ts);
                 let valor = this.expresion.getValor(controlador, ts);
-                if (tipo_valor == this.type.n_tipo) {
+                if (this.type.n_tipo == Tipo_1.tipo.ENTERO) {
+                    let nuevo_simbolo = new Simbolo_1.Simbolo(1, this.type, id, valor, ts.getStack());
+                    ts.agregar(id, nuevo_simbolo);
+                }
+                else if (this.type.n_tipo == Tipo_1.tipo.DOBLE) {
+                    let nuevo_simbolo = new Simbolo_1.Simbolo(1, this.type, id, valor, ts.getStack());
+                    ts.agregar(id, nuevo_simbolo);
+                }
+                else if (this.type.n_tipo == Tipo_1.tipo.CADENA) {
                     let nuevo_simbolo = new Simbolo_1.Simbolo(1, this.type, id, valor, ts.getStack());
                     ts.agregar(id, nuevo_simbolo);
                 }
@@ -154,6 +163,7 @@ class Declaracion {
                     nuevo_simbolo.setValor('0');
                 }
             }
+            console.log(ts.getSimbolo(id));
             let variable = ts.getSimbolo(id);
             if (variable != null) {
                 let valor3d = this.expresion.traducir(controlador, ts);
@@ -180,8 +190,8 @@ class Declaracion {
                     c3d += `${temp} = -1;\n`;
                 }
             }
-            return c3d;
         }
+        return c3d;
     }
 }
 exports.Declaracion = Declaracion;

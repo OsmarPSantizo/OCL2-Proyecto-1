@@ -24,7 +24,8 @@ class Fmain extends Simbolo_1.Simbolo {
             c3d2 += inst.traducir(controlador, ts_local);
         }
         let conttemp = 0;
-        c3d += `double `;
+        console.log(ts.tempStorage);
+        c3d += "double ";
         while (conttemp < (ts_local.getNumeroTemporales() + ts.getNumeroTemporales() - 3)) {
             c3d += `t${conttemp}, `;
             conttemp = conttemp + 1;

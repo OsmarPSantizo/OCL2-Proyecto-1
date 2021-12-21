@@ -99,6 +99,9 @@ class TablaSimbolos {
     getStack() {
         return this.stack++;
     }
+    getStackActual() {
+        return this.stack;
+    }
     sumarStack() {
         this.stack = this.stack + 1;
     }

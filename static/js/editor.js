@@ -21,6 +21,7 @@ const linkReporteGramatical = document.getElementById('rg');
 const translateCode = document.getElementById('translateCode');
 const terminal3d = document.getElementById('terminal3d');
 
+
 var counter = 1;
 var currentEditor = 'editor';
 var editorList = [];
@@ -42,6 +43,7 @@ translateCode.addEventListener("click", () =>{
     translateCodee();
 
 } );
+
 
 document.addEventListener('DOMContentLoaded', () => {
     let editor = document.getElementById('editor');
@@ -311,7 +313,8 @@ const generarAst = () => {
     const nodo_ast = ast.recorrer();
     const grafo = nodo_ast.GraficarSintactico();
     terminalast.value = grafo;
-    console.log(grafo);
+    terminalast.select();
+    document.execCommand("copy");
 }
 
 
@@ -321,4 +324,10 @@ const translateCodee = ()=>{
     const ts_global = new TablaSimbolos.TablaSimbolos(null);
     const controlador = new Controlador.Controlador();
     terminal3d.value= ast.traducir(controlador, ts_global)
+
+    terminal3d.select();
+    document.execCommand("copy");
+
 }
+
+

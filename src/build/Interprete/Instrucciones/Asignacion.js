@@ -74,7 +74,7 @@ class Asignacion {
         c3d += '/*------ASIGNACION------*/\n';
         c3d += valor3d;
         if (!ts.ambito) {
-            c3d += `heap[${variable.posicion}] = ${ts.getTemporalActual()};\n`;
+            c3d += `stack[${variable.posicion}] = ${ts.getTemporalActual()};\n`;
         }
         else {
             let temp = ts.getTemporalActual();

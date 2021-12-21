@@ -137,6 +137,10 @@ export class TablaSimbolos{
     getStack():number{
         return this.stack++;
     }
+
+    getStackActual():number{
+        return this.stack;
+    }
     sumarStack():void{
         this.stack = this.stack+1
     }
@@ -193,6 +197,8 @@ export class TablaSimbolos{
             this.tempStorage.splice(index,1);
         }
     }
+
+    
 
 
 

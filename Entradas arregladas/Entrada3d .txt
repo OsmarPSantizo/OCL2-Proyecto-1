@@ -1,0 +1,16 @@
+void main(){
+
+    int i = 11; 
+    if(i > 10){
+        println("si");
+        if(i == 0 ){
+            println("sisi");
+        }else{
+            println("nono");
+        }
+    }else if(i == 0){
+        println("no x3");
+    }else{
+        println("nada de nada");
+    }
+ }

@@ -1356,8 +1356,6 @@ class Aritmetica extends Operacion_1.Operacion {
             const tempDer = ts.getTemporalActual();
             const temporal = ts.getTemporal();
             c3d += `${temporal} = ${tempIzq} ${this.signo_operador} ${tempDer};\n`;
-            ts.QuitarTemporal(tempIzq);
-            ts.QuitarTemporal(tempDer);
             ts.AgregarTemporal(temporal);
             return c3d;
         }

@@ -457,9 +457,9 @@ e
     | e OR e                    {reporteGramaticalTDS.push('e.val := e.val OR e.val'); reporteGramaticalProducciones.push('<e> -> <e> OR <e>');  $$ = new Logicas($1,'||', $3, @1.first_line,@1.last_column, false);}
     | e INTERROGACION e DOSPUNTOS e { reporteGramaticalTDS.push('e.val := e.val INTERROGACION e.val DOSPUNTOS e.val'); reporteGramaticalProducciones.push('<e> -> <e> INTERROGACION <e> DOSPUNTOS <e>'); $$ = new Ternario($1,$3,$5,@1.first_line,@1.last_column);}
     | e PNT CARAOFPOS PARA e PARC   { reporteGramaticalTDS.push('e.val := e.val PNT CARAOFPOS PARA e.val COMA e.val PARC'); reporteGramaticalProducciones.push('<e> -> <e> PNT CARAOFPOS PARA <e> COMA <e> PARC'); $$ = new  CharOfPosition($1,$5,@1.first_line,@1.last_column);}
-    //| ID PNT ID                 { reporteGramaticalTDS.push('e.val := ID PNT ID'); reporteGramaticalProducciones.push('<e> -> ID PNT ID ');  $$ = new AccesoStruct($1, $3, @1.first_line, @1.last_column); }
-    | ID PNT CARALENGHT PARA PARC   { reporteGramaticalTDS.push('e.val := ID PNT CARALENGHT PARA PARC'); reporteGramaticalProducciones.push('<e> -> ID PNT CARALENGHT PARA PARC'); $$ = new LenghtC($1, @1.first_line,@1.last_column);}
-    | ID PNT POP PARA PARC { reporteGramaticalTDS.push('e.val := ID PNT POP PARA PARC'); reporteGramaticalProducciones.push('<e> -> ID PNT POP PARA PARC'); $$ = new PopArreglo($1, @1.first_line,@1.last_column);}
+    | e PNT e                 { reporteGramaticalTDS.push('e.val := ID PNT ID'); reporteGramaticalProducciones.push('<e> -> ID PNT ID ');  $$ = new AccesoStruct($1, $3, @1.first_line, @1.last_column); }
+    | e PNT CARALENGHT PARA PARC   { reporteGramaticalTDS.push('e.val := ID PNT CARALENGHT PARA PARC'); reporteGramaticalProducciones.push('<e> -> ID PNT CARALENGHT PARA PARC'); $$ = new LenghtC($1, @1.first_line,@1.last_column);}
+    | e PNT POP PARA PARC { reporteGramaticalTDS.push('e.val := ID PNT POP PARA PARC'); reporteGramaticalProducciones.push('<e> -> ID PNT POP PARA PARC'); $$ = new PopArreglo($1, @1.first_line,@1.last_column);}
     | POT PARA e COMA e PARC    { reporteGramaticalTDS.push('e.val :=  e.val e.val'); reporteGramaticalProducciones.push('<e> ->  e <e>');  $$ = new Aritmetica($3, '^', $5, @1.first_line,@1.last_column, false);}
     | SQRT PARA e PARC          {reporteGramaticalTDS.push('e.val := SQRT PARA e.val PARC'); reporteGramaticalProducciones.push('<e> -> SQRT PARA <e> PARC');  $$ = new Aritmetica($3, 'sqrt', $3, @1.first_line,@1.last_column, false);}
     | SIN PARA e PARC           {reporteGramaticalTDS.push('e.val := SIN PARA e.val PARC'); reporteGramaticalProducciones.push('<e> -> SIN PARA <e> PARC');  $$ = new Aritmetica($3, 'sin', $3, @1.first_line,@1.last_column, false);}
@@ -475,7 +475,6 @@ e
     | CARACTER                  { reporteGramaticalTDS.push('e.val := CARACTER'); reporteGramaticalProducciones.push('<e> -> CARACTER'); $1 = $1.slice(1,$1.length-1);$$ = new Primitivo($1,'CARACTER',@1.first_line,@1.last_column);}
     | TRUE                      { reporteGramaticalTDS.push('e.val := TRUE'); reporteGramaticalProducciones.push('<e> -> TRUE'); $$ = new Primitivo(true,'BOOLEAN',@1.first_line,@1.last_column);}
     | FALSE                     { reporteGramaticalTDS.push('e.val := FALSE'); reporteGramaticalProducciones.push('<e> -> FALSE'); $$ = new Primitivo(false,'BOOLEAN',@1.first_line,@1.last_column);}
-    | GETVALUE PARA e COMA e PARC // Para obtener valor de la lista
     | llamada
     | TOINT PARA e PARC     {  reporteGramaticalTDS.push('e.val := TOINT PARA e.val PARC'); reporteGramaticalProducciones.push('<e> -> TOINT PARA <e> PARC'); $$ = new ToInt($3,@1.first_line,@1.last_column);}
     | TODOUBLE PARA e PARC     {   reporteGramaticalTDS.push('e.val := TODOUBLE PARA e.val PARC'); reporteGramaticalProducciones.push('<e> -> TODOUBLE PARA <e> PARC'); $$ = new ToDouble($3,@1.first_line,@1.last_column);}
@@ -485,8 +484,13 @@ e
     | BOOLEAN PNT PARSE PARA e PARC  { reporteGramaticalTDS.push('e.val := BOOLEAN PNT PARSE PARA e.val PARC'); reporteGramaticalProducciones.push('<e> -> BOOLEAN PNT PARSE PARA <e> PARC'); $$ = new TipoParse($5,"booleano",@1.first_line,@1.last_column);}
     | INT PNT PARSE PARA e PARC  { reporteGramaticalTDS.push('e.val := INT PNT PARSE PARA e.val PARC'); reporteGramaticalProducciones.push('<e> -> INT PNT PARSE PARA <e> PARC'); $$ = new TipoParse($5,"int",@1.first_line,@1.last_column);}
     | DOUBLE PNT PARSE PARA e PARC  { reporteGramaticalTDS.push('e.val := DOUBLE PNT PARSE PARA e.val PARC'); reporteGramaticalProducciones.push('<e> -> DOUBLE PNT PARSE PARA <e> PARC'); $$ = new TipoParse($5,"doble",@1.first_line,@1.last_column);}
-
     | e PNT TOUPPER PARA PARC { reporteGramaticalTDS.push('e.val := e.val PNT TOUPPER PARA PARC'); reporteGramaticalProducciones.push('<e> -> <e> PNT TOUPPER PARA PARC'); $$ = new Toupper($1,@1.first_line,@1.last_column);}
     | e PNT TOLOWER PARA PARC { reporteGramaticalTDS.push('e.val := e.val PNT TOLOWER PARA PARC'); reporteGramaticalProducciones.push('<e> -> <e> PNT TOLOWER PARA PARC'); $$ = new Tolower($1,@1.first_line,@1.last_column);}
     | e PNT SUBSTR PARA e COMA e PARC   { reporteGramaticalTDS.push('e.val := e.val PNT SUBSTR PARA e.val COMA e.val PARC'); reporteGramaticalProducciones.push('<e> -> <e> PNT SUBSTR PARA <e> COMA <e> PARC'); $$ = new  SubString($1,$5,$7,@1.first_line,@1.last_column);}
     ;
+
+
+
+e2:
+
+;

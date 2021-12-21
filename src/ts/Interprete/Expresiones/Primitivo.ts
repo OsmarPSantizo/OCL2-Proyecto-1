@@ -37,9 +37,20 @@ export class Primitivo implements Expresion{
     traducir(controlador: Controlador, ts: TablaSimbolos) :String {
         let c3d =``;
 
-        
+        let x = 0;
         const temporal = ts.getTemporal();
-         c3d += `${temporal} = ${this.valor_primitivo};\n`
+
+        if(this.getTipo(controlador,ts) == tipo.ENTERO || this.getTipo(controlador,ts) == tipo.DOBLE){
+            c3d += `${temporal} = ${this.valor_primitivo};\n`
+        }else if(this.getTipo(controlador,ts) == tipo.CADENA){
+            c3d += `${temporal} = h;\n`
+            while(x < this.getValor(controlador,ts).length){
+                c3d += `heap[(int)h] = ${this.getValor(controlador,ts).charCodeAt(x)};\n`
+                c3d += `h = h+1;\n`
+                x = x+1;
+            }
+        }
+
         
         ts.AgregarTemporal(ts.getTemporalActual());
         return c3d;

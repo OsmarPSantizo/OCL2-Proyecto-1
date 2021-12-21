@@ -30,11 +30,16 @@ class Println {
         let estructura = 'heap';
         let codigo = '';
         //let condicion = this.expresion.traducir(controlador,ts);
-        //codigo += condicion;
-        console.log(this.expresion.getTipo(controlador, ts));
+        //codigo += condicion;        
         let temp = ts.getTemporalActual();
         if (this.expresion.getTipo(controlador, ts) == Tipo_1.tipo.ENTERO || this.expresion.getTipo(controlador, ts) == Tipo_1.tipo.BOOLEAN) {
-            codigo += `printf(\"%f\\n\", ${temp});\n`;
+            codigo += this.expresion.traducir(controlador, ts);
+            codigo += `printf(\"%d\\n\", (int)${temp});\n`;
+            ts.QuitarTemporal(temp);
+        }
+        else if (this.expresion.getTipo(controlador, ts) == Tipo_1.tipo.DOBLE) {
+            codigo += this.expresion.traducir(controlador, ts);
+            codigo += `printf(\"%f\\n\", (double)${temp});\n`;
             ts.QuitarTemporal(temp);
         }
         // else if(this.expresion.getTipo(controlador,ts) == tipo.DOBLE){
@@ -55,13 +60,13 @@ class Println {
             }
             c3d += `heap[(int)h] =-1;\n`;
             c3d += `h = h+1;\n`;
-            c3d += `${temp4} = p+0;\n`;
+            c3d += `${temp4} = p+ ${ts.getStackActual()};\n`;
             c3d += `${temp4} = ${temp4}+1;\n`;
             c3d += `stack[(int)${temp4}] =  ${temporal};\n`;
-            c3d += `p = p+0;\n`;
+            c3d += `p = p+${ts.getStackActual()};\n`;
             c3d += `printString();\n`;
             c3d += `${temp5} = stack[(int)p];\n`;
-            c3d += `p = p-0;\n`;
+            c3d += `p = p-${ts.getStackActual()};\n`;
             c3d += `printf("%c", (char)10);\n`;
             codigo += c3d;
         }

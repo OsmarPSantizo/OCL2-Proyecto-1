@@ -25,15 +25,15 @@ const ejecutarCodigo = (entrada:string) =>{
     console.log(ts_html);
     console.log(controlador.consola);
 }
- ejecutarCodigo(`
+//  ejecutarCodigo(`
 
-    void main(){
-        int[] arr;
-        arr.push(2);
-        println(arr[0]);
-    }
+//     void main(){
+//         int[] arr;
+//         arr.push(2);
+//         println(arr[0]);
+//     }
 
- `);
+//  `);
 
 
 const Generar3D =(entrada:string)=>{
@@ -45,9 +45,15 @@ const Generar3D =(entrada:string)=>{
 }
 
 
-// Generar3D(`
+Generar3D(`
+
+void main(){
+    int i = 0;
+    while (i <5){
+
+        println(i);
+    }
+}
 
 
-
-
-// `);
+`);

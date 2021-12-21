@@ -1241,6 +1241,8 @@ export class Aritmetica extends Operacion implements Expresion{
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos):String{
+        
+
         let c3d = ''
         if(this.exp1 === undefined){
             c3d += this.exp2.traducir(controlador,ts);
@@ -1264,8 +1266,7 @@ export class Aritmetica extends Operacion implements Expresion{
             const temporal = ts.getTemporal();
 
             c3d += `${temporal} = ${tempIzq} ${this.signo_operador} ${tempDer};\n`;
-            ts.QuitarTemporal(tempIzq);
-            ts.QuitarTemporal(tempDer);
+            
             ts.AgregarTemporal(temporal);
             return c3d;
         }
