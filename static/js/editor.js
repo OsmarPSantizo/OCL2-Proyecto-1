@@ -127,25 +127,14 @@ const createEditor = ( editor ) => {
     editorList.push(newEditor);
     currentEditor = newEditor;
 
-    currentEditor.setValue(`
-
-    void main(){
-
-        String persona = "Carlos Ng";
-
-        Struct animal {
-            int edad;
-            String nombre;
-        }
-
-        println(persona.toUppercase());
-
-        animal animal1 = animal(10, "Pedro");
-        println(animal1.nombre);
-
-
-    }
-
+    currentEditor.setValue(`void main(){
+        String[] personas = ["Carlos", "Osmar". "Pablo", "Juan"];
+        println(personas.length());
+        println(personas.pop());
+		String poppedValue = personas.pop();
+        println(poppedValue);
+        println(personas.length());
+}
     `);
     // currentEditor.setValue(`
     // int getPivot(double value) {
@@ -329,5 +318,3 @@ const translateCodee = ()=>{
     document.execCommand("copy");
 
 }
-
-

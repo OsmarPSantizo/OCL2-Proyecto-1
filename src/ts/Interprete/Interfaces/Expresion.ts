@@ -25,6 +25,6 @@ export interface Expresion{
      */
     recorrer() : Nodo;
 
-    
+
     traducir(controlador: Controlador, ts: TablaSimbolos):String;
 }

@@ -18,6 +18,7 @@ export class LenghtC implements Expresion{
         this.linea = linea;
         this.columna = columna;
     }
+    identificador: any;
 
     getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {
         return tipo.ENTERO;
@@ -25,45 +26,42 @@ export class LenghtC implements Expresion{
     }
 
     getValor(controlador: Controlador, ts: TablaSimbolos) {
-        let valor;
-        let tipo_valor:tipo;
+
+        let id = this.expresion['identificador'];
+        let simboloAuxiliar = ts.getSimbolo( id );
+        console.log('Simbolo Auxiliar', simboloAuxiliar);
+
+        if( simboloAuxiliar.simbolo === 1 || simboloAuxiliar.simbolo === 4) {
+
+            return simboloAuxiliar.valor.length;
+
+        } else {
+
+            let error = new Errores("Semantico",`La expresión no es de tipo cadena, solo se puede usar Lenght con cadenas`,this.linea,this.columna);
+            controlador.errores.push(error);
+            controlador.append(`ERROR: Semántico, La expresión no es de tipo cadena. En la linea ${this.linea} y columna ${this.columna}`);
+            return tipo.ERROR;
+
+        }
 
 
-
-        tipo_valor = this.expresion.getTipo(controlador,ts);
-        valor = this.expresion.getValor(controlador,ts);
-        if(tipo_valor == tipo.CADENA){
-            
-            return valor.length;
-        }else {
-
-                let error = new Errores("Semantico",`La expresión no es de tipo cadena, solo se puede usar Lenght con cadenas`,this.linea,this.columna);
-                controlador.errores.push(error);
-                controlador.append(`ERROR: Semántico, La expresión no es de tipo cadena. En la linea ${this.linea} y columna ${this.columna}`);
-                return tipo.ERROR;
-    
-            }
+        // tipo_valor = this.expresion.getTipo(controlador,ts);
+        // valor = this.expresion.getValor(controlador,ts);
 
 
+        // if(tipo_valor == tipo.CADENA){
 
+        //     return valor.length;
 
+        // }else {
 
+        //         let error = new Errores("Semantico",`La expresión no es de tipo cadena, solo se puede usar Lenght con cadenas`,this.linea,this.columna);
+        //         controlador.errores.push(error);
+        //         controlador.append(`ERROR: Semántico, La expresión no es de tipo cadena. En la linea ${this.linea} y columna ${this.columna}`);
+        //         return tipo.ERROR;
 
+        //     }
 
-
-
-        // if( simbolo.simbolo === 1 || simbolo.simbolo === 4) {
-
-        //     return valorSimbolo.length;
-
-        // } else {
-
-        //     let error = new Errores("Semantico",`La expresión no es de tipo cadena, solo se puede usar Lenght con cadenas`,this.linea,this.columna);
-        //     controlador.errores.push(error);
-        //     controlador.append(`ERROR: Semántico, La expresión no es de tipo cadena. En la linea ${this.linea} y columna ${this.columna}`);
-        //     return tipo.ERROR;
-
-        // }
 
     }
     recorrer(): Nodo {

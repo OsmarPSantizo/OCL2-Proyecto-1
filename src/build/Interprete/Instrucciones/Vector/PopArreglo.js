@@ -4,13 +4,14 @@ exports.PopArreglo = void 0;
 const Errores_1 = require("../../AST/Errores");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
 class PopArreglo {
-    constructor(id, linea, columna) {
-        this.id = id;
+    constructor(expresion, linea, columna) {
+        this.expresion = expresion;
         this.linea = linea;
         this.columna = columna;
     }
     ejecutar(controlador, ts) {
-        let simbolo = ts.getSimbolo(this.id);
+        let id = this.expresion['identificador'];
+        let simbolo = ts.getSimbolo(id);
         if (simbolo.simbolo === 1 || simbolo.simbolo === 4) {
             let poppedValue = this.getPoppedValue(ts);
             console.log('poppedValue', poppedValue);
@@ -22,7 +23,8 @@ class PopArreglo {
         }
     }
     getTipo(controlador, ts) {
-        let simAux = ts.getSimbolo(this.id);
+        let id = this.expresion['identificador'];
+        let simAux = ts.getSimbolo(id);
         let nombreTipo = simAux.tipo.nombre_tipo;
         switch (nombreTipo) {
             case 'ENTERO':
@@ -40,7 +42,8 @@ class PopArreglo {
         }
     }
     getPoppedValue(ts) {
-        let simAux = ts.getSimbolo(this.id);
+        let id = this.expresion['identificador'];
+        let simAux = ts.getSimbolo(id);
         if ((simAux === null || simAux === void 0 ? void 0 : simAux.simbolo) === 4) {
             let valoresVector = simAux.valor;
             let poppedValue = valoresVector.pop();
@@ -49,7 +52,8 @@ class PopArreglo {
         return null;
     }
     getValor(controlador, ts) {
-        let simbolo = ts.getSimbolo(this.id);
+        let id = this.expresion['identificador'];
+        let simbolo = ts.getSimbolo(id);
         if (simbolo.simbolo === 1 || simbolo.simbolo === 4) {
             return this.getPoppedValue(ts);
         }

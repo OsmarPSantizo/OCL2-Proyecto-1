@@ -323,7 +323,7 @@ push_vector:
 ;
 
 pop_vector:
-         ID PNT POP PARA PARC PYC { reporteGramaticalTDS.push('pop_vector.val := ID PNT PUSH PARA PARC PYC'); reporteGramaticalProducciones.push('<pop_vector> -> ID PNT PUSH PARA PARC PYC'); $$ = new PopArreglo($1, @1.first_line,@1.last_column);}
+         e PNT POP PARA PARC PYC { reporteGramaticalTDS.push('pop_vector.val := e.val PNT PUSH PARA PARC PYC'); reporteGramaticalProducciones.push('<pop_vector> -> <e> PNT PUSH PARA PARC PYC'); $$ = new PopArreglo($1, @1.first_line,@1.last_column);}
 ;
 
 // Struct

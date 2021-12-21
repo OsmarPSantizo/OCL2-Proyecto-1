@@ -10,12 +10,12 @@ import { tipo } from "../../TablaSimbolos/Tipo";
 
 export class PopArreglo implements Expresion, Instruccion{
 
-    public id : string;
+    public expresion : Expresion;
     public linea: number;
     public columna: number;
 
-    constructor (id: string, linea:number, columna:number){
-        this.id = id;
+    constructor (expresion: Expresion, linea:number, columna:number){
+        this.expresion = expresion;
         this.linea = linea;
         this.columna = columna;
     }
@@ -23,9 +23,12 @@ export class PopArreglo implements Expresion, Instruccion{
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
 
-        let simbolo = ts.getSimbolo( this.id );
 
-        if( simbolo.simbolo === 1 || simbolo.simbolo === 4) {
+
+        let id = this.expresion['identificador'];
+        let simbolo = ts.getSimbolo( id );
+
+        if( simbolo.simbolo === 1 || simbolo.simbolo === 4 ) {
 
             let poppedValue = this.getPoppedValue( ts );
             console.log('poppedValue', poppedValue);
@@ -42,8 +45,8 @@ export class PopArreglo implements Expresion, Instruccion{
 
 
     getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {
-
-        let simAux = ts.getSimbolo(this.id);
+        let id = this.expresion['identificador'];
+        let simAux = ts.getSimbolo(id);
         let nombreTipo: string = simAux.tipo.nombre_tipo;
         switch (nombreTipo) {
             case 'ENTERO':
@@ -64,7 +67,8 @@ export class PopArreglo implements Expresion, Instruccion{
 
     getPoppedValue(ts: TablaSimbolos) {
 
-        let simAux = ts.getSimbolo(this.id);
+        let id = this.expresion['identificador'];
+        let simAux = ts.getSimbolo(id);
 
         if(simAux?.simbolo === 4){
             let valoresVector = simAux.valor;
@@ -77,7 +81,8 @@ export class PopArreglo implements Expresion, Instruccion{
 
     getValor(controlador: Controlador, ts: TablaSimbolos) {
 
-        let simbolo = ts.getSimbolo( this.id );
+        let id = this.expresion['identificador'];
+        let simbolo = ts.getSimbolo( id );
 
         if( simbolo.simbolo === 1 || simbolo.simbolo === 4) {
 
