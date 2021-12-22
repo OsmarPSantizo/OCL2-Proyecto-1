@@ -14,6 +14,7 @@ void apilar(int num) {
 
 void desapilar(){
     if(stack.length() == MINZIE){
+        // Corregido: Imprimía "Pila llena"
         print("Pila vacia");
         return;
     }
@@ -51,6 +52,8 @@ void main(){
     println(stack);
     String temp = "";
 
+
+    // Corregido: No manejamos for of... Unicamente el for normal.
     for(int i = 0; i < 50; i++) {
         temp = temp & "|" & i & "|" & stack[i] & "|\n";
     }

@@ -162,6 +162,7 @@ class Declaracion {
                     nuevo_simbolo.setValor('0');
                 }
             }
+            console.log(ts.getSimbolo(id));
             let variable = ts.getSimbolo(id);
             if (variable != null) {
                 let valor3d = this.expresion.traducir(controlador, ts);
