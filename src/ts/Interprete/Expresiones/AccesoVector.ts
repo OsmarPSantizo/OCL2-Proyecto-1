@@ -26,6 +26,8 @@ export class AccesoVector implements Expresion, Instruccion{
         this.valor = valor;
         this.modificar = modificar;
 
+        console.log('ID AV:', this.id);
+
     }
 
 
@@ -56,8 +58,14 @@ export class AccesoVector implements Expresion, Instruccion{
     }
 
     getTipo(controlador: Controlador, ts: TablaSimbolos): tipo {
+
+
+
         let valorIndice = this.indice.getValor(controlador,ts);
         let valoresVector = this.getValoresVector( ts );
+
+        console.log('VALOR AV:', valorIndice);
+        console.log('VALORES AV:', valoresVector);
 
         if( valorIndice < 0 || valorIndice >= valoresVector.length || !valoresVector ) {
             // Indice es mayor o menor al tamaño del arreglo
@@ -68,9 +76,25 @@ export class AccesoVector implements Expresion, Instruccion{
         }
 
         // Válida si el index es un entero.
-        if(this.indice.getTipo(controlador,ts)== tipo.ENTERO){
+        if(this.indice.getTipo(controlador,ts) == tipo.ENTERO){
 
             return tipo.ENTERO
+
+        }else if(this.indice.getTipo(controlador,ts) == tipo.BOOLEAN){
+
+            return tipo.BOOLEAN
+        }else if(this.indice.getTipo(controlador,ts) == tipo.CADENA){
+
+            return tipo.CADENA
+        }else if(this.indice.getTipo(controlador,ts) == tipo.CARACTER){
+
+            return tipo.CARACTER
+        }else if(this.indice.getTipo(controlador,ts) == tipo.DOBLE){
+
+            return tipo.DOBLE
+        }else if(this.indice.getTipo(controlador,ts) == tipo.STRUCT){
+
+            return tipo.STRUCT
 
         }else{
 

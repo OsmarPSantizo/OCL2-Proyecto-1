@@ -11,6 +11,7 @@ class AccesoVector {
         this.columna = columna;
         this.valor = valor;
         this.modificar = modificar;
+        console.log('ID AV:', this.id);
     }
     ejecutar(controlador, ts) {
         console.log('Modificando vector.');
@@ -32,6 +33,8 @@ class AccesoVector {
     getTipo(controlador, ts) {
         let valorIndice = this.indice.getValor(controlador, ts);
         let valoresVector = this.getValoresVector(ts);
+        console.log('VALOR AV:', valorIndice);
+        console.log('VALORES AV:', valoresVector);
         if (valorIndice < 0 || valorIndice >= valoresVector.length || !valoresVector) {
             // Indice es mayor o menor al tamaño del arreglo
             let error = new Errores_1.Errores("Semántico", `Indice fuera de rango en el vector ${this.id}.`, this.linea, this.columna);
@@ -42,6 +45,21 @@ class AccesoVector {
         // Válida si el index es un entero.
         if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.ENTERO) {
             return Tipo_1.tipo.ENTERO;
+        }
+        else if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.BOOLEAN) {
+            return Tipo_1.tipo.BOOLEAN;
+        }
+        else if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.CADENA) {
+            return Tipo_1.tipo.CADENA;
+        }
+        else if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.CARACTER) {
+            return Tipo_1.tipo.CARACTER;
+        }
+        else if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.DOBLE) {
+            return Tipo_1.tipo.DOBLE;
+        }
+        else if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.STRUCT) {
+            return Tipo_1.tipo.STRUCT;
         }
         else {
             return Tipo_1.tipo.ERROR;
