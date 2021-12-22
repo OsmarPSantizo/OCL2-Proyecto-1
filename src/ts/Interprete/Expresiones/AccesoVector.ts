@@ -64,7 +64,14 @@ export class AccesoVector implements Expresion, Instruccion{
         let valorIndice = this.indice.getValor(controlador,ts);
         let valoresVector = this.getValoresVector( ts );
 
+<<<<<<< HEAD
         if( valorIndice < 0 || valorIndice >= valoresVector.length || !valoresVector ) {
+=======
+        console.log('VALOR AV:', valorIndice);
+        console.log('VALORES AV:', valoresVector);
+
+        if( valorIndice < 0 || valorIndice >= valoresVector.length || !valoresVector ) {
+>>>>>>> ff8cdc8d2099c87602c2384feb486a3aa6901ab8
             // Indice es mayor o menor al tamaño del arreglo
             let error = new Errores("Semántico", `Indice fuera de rango en el vector ${this.id}.`, this.linea, this.columna);
             controlador.errores.push(error);

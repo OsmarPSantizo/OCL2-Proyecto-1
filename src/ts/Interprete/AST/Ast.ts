@@ -20,16 +20,18 @@ export class Ast implements Instruccion{
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
-
-       let c3d = `#include <stdio.h> //Importar para el uso de Printf
-float heap[16384]; //Estructura para heap
-float stack[16394]; //Estructura para stack
-float p; //Puntero P
+       
+       let c3d = `#include <stdio.h> //Importar para el uso de Printf 
+#include <math.h> //Importar para el uso de libreria matematicas
+float heap[16384]; //Estructura para heap 
+float stack[16394]; //Estructura para stack 
+float p; //Puntero P 
 float h; //Puntero H
-       `
+`
 
         for(let instruccion of this.lista_instrucciones){
             if(instruccion instanceof Funcion){
+                c3d +=  '/*------FUNCIONES------*/\n';
                 ts.setStack(0);
                 let funcion = instruccion as Funcion;
                 funcion.agregarFuncionTS(ts);

@@ -112,6 +112,9 @@ export class TablaSimbolos{
     getTemporalActual():String{
         return "t" + this.temporal;
     }
+    getTemporalActualint():number{
+        return  this.temporal;
+    }
 
     getNumeroTemporales():number{
         return this.numerotemp;

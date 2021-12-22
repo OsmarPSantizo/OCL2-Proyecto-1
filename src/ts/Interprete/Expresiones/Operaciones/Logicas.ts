@@ -136,7 +136,25 @@ export class Logicas extends Operacion implements Expresion{
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos):String{
-        throw new Error("Method not implemented.");
+        let c3d = ''
+       
+
+        switch(this.operador){
+
+
+            case Operador.AND:
+                return c3d;
+                
+            case Operador.OR:
+                c3d += 'A mamon'
+                c3d += this.exp1.traducir(controlador,ts)
+                c3d += this.exp2.traducir(controlador,ts)
+                return c3d;
+            case Operador.NOT:
+                return c3d;
+        }
+        
+        
     }
 
 

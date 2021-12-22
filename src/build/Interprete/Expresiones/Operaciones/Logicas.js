@@ -131,7 +131,18 @@ class Logicas extends Operacion_1.Operacion {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '';
+        switch (this.operador) {
+            case Operacion_1.Operador.AND:
+                return c3d;
+            case Operacion_1.Operador.OR:
+                c3d += 'A mamon';
+                c3d += this.exp1.traducir(controlador, ts);
+                c3d += this.exp2.traducir(controlador, ts);
+                return c3d;
+            case Operacion_1.Operador.NOT:
+                return c3d;
+        }
     }
 }
 exports.Logicas = Logicas;

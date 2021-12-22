@@ -1349,6 +1349,31 @@ class Aritmetica extends Operacion_1.Operacion {
             ts.AgregarTemporal(temporal);
             return c3d;
         }
+        else if (this.operador == Operacion_1.Operador.SIN) {
+            const temporal = ts.getTemporal();
+            c3d += `${temporal} = sin\(${this.exp1.getValor(controlador, ts)}\);\n`;
+            return c3d;
+        }
+        else if (this.operador == Operacion_1.Operador.COS) {
+            const temporal = ts.getTemporal();
+            c3d += `${temporal} = cos\(${this.exp1.getValor(controlador, ts)}\);\n`;
+            return c3d;
+        }
+        else if (this.operador == Operacion_1.Operador.TAN) {
+            const temporal = ts.getTemporal();
+            c3d += `${temporal} = tan\(${this.exp1.getValor(controlador, ts)}\);\n`;
+            return c3d;
+        }
+        else if (this.operador == Operacion_1.Operador.SQRT) {
+            const temporal = ts.getTemporal();
+            c3d += `${temporal} = sqrt\(${this.exp1.getValor(controlador, ts)}\);\n`;
+            return c3d;
+        }
+        else if (this.operador == Operacion_1.Operador.POT) {
+            const temporal = ts.getTemporal();
+            c3d += `${temporal} = pow\(${this.exp1.getValor(controlador, ts)},${this.exp2.getValor(controlador, ts)}\);\n`;
+            return c3d;
+        }
         else {
             c3d += this.exp1.traducir(controlador, ts);
             const tempIzq = ts.getTemporalActual();
