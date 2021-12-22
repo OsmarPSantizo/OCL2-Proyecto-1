@@ -734,7 +734,6 @@ class Ast {
         this.lista_instrucciones = lista_instrucciones;
     }
     traducir(controlador, ts) {
-<<<<<<< HEAD
         let c3d = `#include <stdio.h> //Importar para el uso de Printf 
 #include <math.h> //Importar para el uso de libreria matematicas
 float heap[16384]; //Estructura para heap 
@@ -742,14 +741,6 @@ float stack[16394]; //Estructura para stack
 float p; //Puntero P 
 float h; //Puntero H
 `;
-=======
-        let c3d = `#include <stdio.h> //Importar para el uso de Printf
-float heap[16384]; //Estructura para heap
-float stack[16394]; //Estructura para stack
-float p; //Puntero P
-float h; //Puntero H
-       `;
->>>>>>> b8fc6c06b04e24a97ab99b5c3234cc90efbf4a91
         for (let instruccion of this.lista_instrucciones) {
             if (instruccion instanceof Funcion_1.Funcion) {
                 c3d += '/*------FUNCIONES------*/\n';
@@ -825,11 +816,7 @@ float h; //Puntero H
 }
 exports.Ast = Ast;
 
-<<<<<<< HEAD
-},{"../Instrucciones/Declaracion":21,"../Instrucciones/Fmain":23,"../Instrucciones/Funcion":24,"./Errores":5,"./Nodo":7}],5:[function(require,module,exports){
-=======
-},{"../Instrucciones/Declaracion":18,"../Instrucciones/DeclaracionVectores":19,"../Instrucciones/Fmain":20,"../Instrucciones/Funcion":21,"./Errores":2,"./Nodo":4}],2:[function(require,module,exports){
->>>>>>> b8fc6c06b04e24a97ab99b5c3234cc90efbf4a91
+},{"../Instrucciones/Declaracion":21,"../Instrucciones/DeclaracionVectores":22,"../Instrucciones/Fmain":23,"../Instrucciones/Funcion":24,"./Errores":5,"./Nodo":7}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Errores = void 0;
@@ -1132,31 +1119,6 @@ class AccesoVector {
             controlador.append(`ERROR: Semántico, índice fuera de rango en el vector ${this.id}. En la linea ${this.linea} y columna ${this.columna}.`);
             return Tipo_1.tipo.ERROR;
         }
-<<<<<<< HEAD
-        // Válida si el index es un entero.
-        if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.ENTERO) {
-            if (this.valor.getTipo(controlador, ts) == Tipo_1.tipo.BOOLEAN) {
-                return Tipo_1.tipo.BOOLEAN;
-            }
-        }
-        else if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.BOOLEAN) {
-            return Tipo_1.tipo.BOOLEAN;
-        }
-        else if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.CADENA) {
-            return Tipo_1.tipo.CADENA;
-        }
-        else if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.CARACTER) {
-            return Tipo_1.tipo.CARACTER;
-        }
-        else if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.DOBLE) {
-            return Tipo_1.tipo.DOBLE;
-        }
-        else if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.STRUCT) {
-            return Tipo_1.tipo.STRUCT;
-        }
-        else {
-            return Tipo_1.tipo.ERROR;
-=======
         let tipo_valor = this.indice.getTipo(controlador, ts);
         if (tipo_valor == Tipo_1.tipo.ENTERO) {
             if (ts.existe(this.id)) {
@@ -1185,7 +1147,6 @@ class AccesoVector {
                 controlador.errores.push(error);
                 controlador.append(`ERROR: Semántico, El vector ${this.id} no ha sido declarada, entonces no se puede asignar un valor. En la linea ${this.linea} y columna ${this.columna}.`);
             }
->>>>>>> b8fc6c06b04e24a97ab99b5c3234cc90efbf4a91
         }
     }
     getValor(controlador, ts) {

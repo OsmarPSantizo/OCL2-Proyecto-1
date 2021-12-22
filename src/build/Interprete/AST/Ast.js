@@ -12,7 +12,6 @@ class Ast {
         this.lista_instrucciones = lista_instrucciones;
     }
     traducir(controlador, ts) {
-<<<<<<< HEAD
         let c3d = `#include <stdio.h> //Importar para el uso de Printf 
 #include <math.h> //Importar para el uso de libreria matematicas
 float heap[16384]; //Estructura para heap 
@@ -20,14 +19,6 @@ float stack[16394]; //Estructura para stack
 float p; //Puntero P 
 float h; //Puntero H
 `;
-=======
-        let c3d = `#include <stdio.h> //Importar para el uso de Printf
-float heap[16384]; //Estructura para heap
-float stack[16394]; //Estructura para stack
-float p; //Puntero P
-float h; //Puntero H
-       `;
->>>>>>> b8fc6c06b04e24a97ab99b5c3234cc90efbf4a91
         for (let instruccion of this.lista_instrucciones) {
             if (instruccion instanceof Funcion_1.Funcion) {
                 c3d += '/*------FUNCIONES------*/\n';
