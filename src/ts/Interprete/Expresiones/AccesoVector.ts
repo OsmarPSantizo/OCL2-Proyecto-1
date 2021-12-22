@@ -67,7 +67,7 @@ export class AccesoVector implements Expresion, Instruccion{
         console.log('VALOR AV:', valorIndice);
         console.log('VALORES AV:', valoresVector);
 
-        if( valorIndice < 0 || valorIndice >= valoresVector.length || !valoresVector ) {
+        if( valorIndice < 0 || valorIndice >= valoresVector.length || !valoresVector ) {
             // Indice es mayor o menor al tamaño del arreglo
             let error = new Errores("Semántico", `Indice fuera de rango en el vector ${this.id}.`, this.linea, this.columna);
             controlador.errores.push(error);
@@ -75,32 +75,49 @@ export class AccesoVector implements Expresion, Instruccion{
             return tipo.ERROR;
         }
 
-        // Válida si el index es un entero.
-        if(this.indice.getTipo(controlador,ts) == tipo.ENTERO){
 
-            return tipo.ENTERO
+        let tipo_valor = this.indice.getTipo(controlador,ts);
 
-        }else if(this.indice.getTipo(controlador,ts) == tipo.BOOLEAN){
+        if(tipo_valor == tipo.ENTERO){
 
-            return tipo.BOOLEAN
-        }else if(this.indice.getTipo(controlador,ts) == tipo.CADENA){
+            if(ts.existe(this.id)){
 
-            return tipo.CADENA
-        }else if(this.indice.getTipo(controlador,ts) == tipo.CARACTER){
+                let valoresVector = this.getValoresVector(ts);
+                let valorAcceso = valoresVector[valorIndice];
+                console.log(typeof(valorAcceso));
 
-            return tipo.CARACTER
-        }else if(this.indice.getTipo(controlador,ts) == tipo.DOBLE){
+                 // Válida si el index es un entero.
+                if(typeof(valorAcceso) == 'number'){
 
-            return tipo.DOBLE
-        }else if(this.indice.getTipo(controlador,ts) == tipo.STRUCT){
+                    return tipo.ENTERO
 
-            return tipo.STRUCT
+                }else if(typeof(valorAcceso) == 'boolean'){
 
-        }else{
+                    return tipo.BOOLEAN
+                }else if(typeof(valorAcceso) == 'string'){
 
-            return tipo.ERROR
+                    return tipo.CADENA
+                }else if(typeof(valorAcceso) == 'string'){
+
+                    return tipo.CARACTER;
+
+                }else{
+
+                    return tipo.ERROR
+
+                }
+
+            }else{
+
+                let error = new Errores("Semantico",`El vector ${this.id} no ha sido declarada, entonces no se puede asignar un valor`,this.linea,this.columna);
+                controlador.errores.push(error);
+                controlador.append(`ERROR: Semántico, El vector ${this.id} no ha sido declarada, entonces no se puede asignar un valor. En la linea ${this.linea} y columna ${this.columna}.`);
+
+            }
 
         }
+
+
 
     }
 
@@ -116,6 +133,7 @@ export class AccesoVector implements Expresion, Instruccion{
 
                 let valoresVector = this.getValoresVector(ts);
                 let valorAcceso = valoresVector[valorIndice];
+                console.log(typeof(valorAcceso));
                 return valorAcceso;
 
             }else{
