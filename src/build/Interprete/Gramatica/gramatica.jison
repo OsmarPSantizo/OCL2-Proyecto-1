@@ -186,6 +186,7 @@ caracter      (\' ({escape2}|{aceptacion2})\')
         const {SliceVector} = require('../Instrucciones/Vector/SliceVector');
         const {PushArreglo} = require('../Instrucciones/Vector/PushArreglo');
         const {PopArreglo} = require('../Instrucciones/Vector/PopArreglo');
+        const {AsignacionArreglo} = require('../Instrucciones/Vector/AsignacionArreglo');
         const {AccesoVector} = require('../Expresiones/AccesoVector');
 
         // Structs
@@ -248,6 +249,7 @@ instrucciones : instrucciones instruccion   {$$ = $1; $$.push($2); reporteGramat
 instruccion : declaracion { $$ = $1; reporteGramaticalTDS.push('instruccion.val := declaracion.val'); reporteGramaticalProducciones.push('<instruccion> -> <declaracion>');}
             | impresion   { $$ = $1; reporteGramaticalTDS.push('instruccion.val := impresion.val'); reporteGramaticalProducciones.push('<instruccion> -> <impresion>');}
             | struct      { $$ = $1; reporteGramaticalTDS.push('instruccion.val := struct.val'); reporteGramaticalProducciones.push('<instruccion> -> <struct>');}
+            | asignacion_vector  { $$ = $1; reporteGramaticalTDS.push('instruccion.val := asignacion_vector.val'); reporteGramaticalProducciones.push('<instruccion> -> <asignacion_vector>');}
             | asignacion  { $$ = $1; reporteGramaticalTDS.push('instruccion.val := asignacion.val'); reporteGramaticalProducciones.push('<instruccion> -> <asignacion>');}
             | decl_vectores  { $$ = $1; reporteGramaticalTDS.push('instruccion.val := decl_vectores.val'); reporteGramaticalProducciones.push('<instruccion> -> <decl_vectores>');}
             | decl_struct  { $$ = $1; reporteGramaticalTDS.push('instruccion.val := decl_struct.val'); reporteGramaticalProducciones.push('<instruccion> -> <decl_struct>');}
@@ -323,7 +325,14 @@ push_vector:
 ;
 
 pop_vector:
-         e PNT POP PARA PARC PYC { reporteGramaticalTDS.push('pop_vector.val := e.val PNT PUSH PARA PARC PYC'); reporteGramaticalProducciones.push('<pop_vector> -> <e> PNT PUSH PARA PARC PYC'); $$ = new PopArreglo($1, @1.first_line,@1.last_column);}
+         ID PNT POP PARA PARC PYC { reporteGramaticalTDS.push('pop_vector.val := e.val PNT PUSH PARA PARC PYC'); reporteGramaticalProducciones.push('<pop_vector> -> <e> PNT PUSH PARA PARC PYC'); $$ = new PopArreglo($1, @1.first_line,@1.last_column);}
+;
+
+asignacion_vector:
+                  ID IGUAL CORA lista_valores CORC PYC     {reporteGramaticalTDS.push('asignacion_vector.val := tipo.val CORA CROC lista_ids.val IGUAL CORA lista_valores.val CORC PYC'); reporteGramaticalProducciones.push('<asignacion_vector> -> <tipo> CORA CROC <lista_ids> IGUAL CORA <lista_valores> CORC PYC'); $$ = new AsignacionArreglo($1,$4,@1.first_line,@1.last_column);}
+           |      ID IGUAL CORA CORC PYC     {reporteGramaticalTDS.push('asignacion_vector.val := tipo.val CORA CROC lista_ids.val IGUAL CORA CORC PYC'); reporteGramaticalProducciones.push('<asignacion_vector> -> <tipo> CORA CROC <lista_ids> IGUAL CORA CORC PYC'); $$ = new AsignacionArreglo($1,[],@1.first_line,@1.last_column);}
+
+
 ;
 
 // Struct
@@ -398,9 +407,9 @@ default : DEFAULT DOSPUNTOS instrucciones {$$ = new Caso(null,$3,@1.first_line,@
         ;
 
 
-actualizacion_for : ID DECRE    { reporteGramaticalTDS.push('actualizacon_for.val := ID DECRE'); reporteGramaticalProducciones.push('<actualizacon_for> -> ID DECRE'); $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
-                  | ID INCRE    { reporteGramaticalTDS.push('actualizacon_for.val := ID INCRE'); reporteGramaticalProducciones.push('<actualizacon_for> -> ID INCRE'); $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
-                  | ID IGUAL e  { reporteGramaticalTDS.push('actualizacon_for.val := ID IGUAL e.val'); reporteGramaticalProducciones.push('<actualizacon_for> -> ID IGUAL <e>'); $$ = new Asignacion($1, $3,@1.first_line, @1.last_column);}
+actualizacion_for : ID DECRE    { reporteGramaticalTDS.push('actualizacon_for.val := ID DECRE'); reporteGramaticalProducciones.push('<actualizacon_for> -> ID DECRE'); $$ = new Asignacion($1,new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column );}
+                  | ID INCRE    { reporteGramaticalTDS.push('actualizacon_for.val := ID INCRE'); reporteGramaticalProducciones.push('<actualizacon_for> -> ID INCRE'); $$ = new Asignacion($1,new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column );}
+                  | ID IGUAL e  { reporteGramaticalTDS.push('actualizacon_for.val := ID IGUAL e.val'); reporteGramaticalProducciones.push('<actualizacon_for> -> ID IGUAL <e>'); $$ = new Asignacion($1,$3,@1.first_line, @1.last_column);}
                   ;
 // Do-While
 
@@ -435,8 +444,8 @@ llamada : ID PARA lista_valores PARC       { reporteGramaticalTDS.push('llamada.
 e
     : e MAS e                   { reporteGramaticalTDS.push('e.val := <e> MAS <e>');  reporteGramaticalProducciones.push('<e> -> <e> MAS <e>');  $$ = new Aritmetica($1, '+', $3, @1.first_line,@1.last_column, false);}
     | ID                        { reporteGramaticalTDS.push('e.val := ID'); reporteGramaticalProducciones.push('<e> -> ID'); $$ = new Identificador($1,@1.first_line,@1.last_column);}
-    | ID DECRE                  { reporteGramaticalTDS.push('e.val := ID DECRE'); reporteGramaticalProducciones.push('<e> -> ID DECRE'); $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
-    | ID INCRE                  { reporteGramaticalTDS.push('e.val := ID INCRE'); reporteGramaticalProducciones.push('<e> -> ID INCRE'); $$ = new Asignacion($1, new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column);}
+    | ID DECRE                  { reporteGramaticalTDS.push('e.val := ID DECRE'); reporteGramaticalProducciones.push('<e> -> ID DECRE'); $$ = new Asignacion($1,new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'-',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column );}
+    | ID INCRE                  { reporteGramaticalTDS.push('e.val := ID INCRE'); reporteGramaticalProducciones.push('<e> -> ID INCRE'); $$ = new Asignacion($1,new Aritmetica(new Identificador($1,@1.first_line,@1.last_column),'+',new Primitivo(1,'ENTERO',@1.first_line,@1.last_column),@1.first_line,@1.last_column,false),@1.first_line,@1.last_column );}
     | PARA tipo PARC e          { reporteGramaticalTDS.push('e.val := PARA tipo.val PARC e.val'); reporteGramaticalProducciones.push('<e> -> PARA <tipo> PARC <e>'); $$ = new Casteos($2,$4, @1.first_line,@1.last_column);}
     | ID CORA e DOSPUNTOS e CORC { reporteGramaticalTDS.push('e.val := ID CORA e.val DOSPUNTOS e.val CORC'); reporteGramaticalProducciones.push('<e> -> ID CORA <e> DOSPUNTOS <e> CORC'); $$ = new SliceVector( $1, $3, $5, @1.first_line,@1.last_column ); }
     | ID CORA e CORC            {reporteGramaticalTDS.push('e.val := ID CORA e.val CORC'); reporteGramaticalProducciones.push('<e> -> ID CORA <e> CORC'); $$ = new AccesoVector($1, $3, $3, false ,@1.first_line,@1.last_column); }

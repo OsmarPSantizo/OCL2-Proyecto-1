@@ -105,8 +105,6 @@ export class Llamada implements Instruccion , Expresion{
 
     validar_param(parametros_llamada : Array<Expresion>, parametros_funcion : Array<Simbolo>, controlador : Controlador, ts : TablaSimbolos, ts_local: TablaSimbolos){
         //Primero vemos si la cantidad de parametros en la llamada es igual a los que mandamos a llamar
-        console.log('Length pll:', parametros_llamada.length );
-        console.log('Length f:', parametros_funcion.length );
         if(parametros_llamada.length == parametros_funcion.length){
             //****Parametros desde la funcion/metododo*****/
             let aux : Simbolo; // -> parametro

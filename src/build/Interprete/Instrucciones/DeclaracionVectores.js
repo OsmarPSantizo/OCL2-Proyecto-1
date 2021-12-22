@@ -40,7 +40,6 @@ class DeclaracionVectores {
                 valores = [];
             }
             let nuevo_simbolo = new Simbolo_1.Simbolo(4, this.type, id, valores, this.posicion);
-            console.log('NUEVO SIMBOLO:', nuevo_simbolo);
             ts.agregar(id, nuevo_simbolo);
         }
     }

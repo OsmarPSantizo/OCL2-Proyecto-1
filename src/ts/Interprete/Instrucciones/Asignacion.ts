@@ -15,17 +15,17 @@ export  class Asignacion implements Instruccion{
 
 
 
-    constructor(indentificador: string, valor : Expresion, linea : number,columna:number){
+    constructor(indentificador: string,valor : Expresion, linea : number,columna:number){
         this.identificador = indentificador;
         this.valor = valor;
         this.linea = linea;
         this.columna = columna;
     }
-    
-   
+
+
     ejecutar(controlador : Controlador, ts: TablaSimbolos){
         //hay que revisar si existe en la tabla de símbolos
-        
+
         if(ts.existe(this.identificador)){
              // si lo encontramos verificamos que el valor a asignar sea del mismo tipo de la variable
              let valor = this.valor.getValor(controlador,ts);
@@ -58,7 +58,7 @@ export  class Asignacion implements Instruccion{
                     return null;
                 }
 
-                
+
              }
 
         }else{
@@ -67,13 +67,13 @@ export  class Asignacion implements Instruccion{
             controlador.append(`ERROR: Semántico, La variable ${this.identificador} no ha sido declarada, entonces no se puede asignar un valor. En la linea ${this.linea} y columna ${this.columna}`);
             return null;
         }
-       
-        
+
+
 
     }
     recorrer(): Nodo{
         let padre = new Nodo("ASIGNACION","");
-        
+
         padre.AddHijo(new Nodo(this.identificador,""))
         padre.AddHijo(new Nodo("=",""))
         padre.AddHijo(this.valor.recorrer());

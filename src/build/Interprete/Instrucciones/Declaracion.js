@@ -26,8 +26,7 @@ class Declaracion {
             if (this.expresion != null) {
                 let tipo_valor = this.expresion.getTipo(controlador, ts);
                 let valor = this.expresion.getValor(controlador, ts);
-                console.log("veamooos " + tipo_valor + "  " + this.type.n_tipo);
-                if (tipo_valor == this.type.n_tipo) { // n tipo sirve para obtener el tipo que declaramos con enum                    
+                if (tipo_valor == this.type.n_tipo) { // n tipo sirve para obtener el tipo que declaramos con enum
                     let nuevo_simbolo = new Simbolo_1.Simbolo(1, this.type, id, valor, this.posicion);
                     ts.agregar(id, nuevo_simbolo);
                 }
@@ -163,7 +162,6 @@ class Declaracion {
                     nuevo_simbolo.setValor('0');
                 }
             }
-            console.log(ts.getSimbolo(id));
             let variable = ts.getSimbolo(id);
             if (variable != null) {
                 let valor3d = this.expresion.traducir(controlador, ts);

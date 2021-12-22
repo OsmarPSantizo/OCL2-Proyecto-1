@@ -26,14 +26,14 @@ export class AccesoVector implements Expresion, Instruccion{
         this.valor = valor;
         this.modificar = modificar;
 
-        console.log('ID AV:', this.id);
+
 
     }
 
 
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
-        console.log('Modificando vector.');
+
         if(this.modificar) {
             let valorIndice = this.indice.getValor( controlador, ts );
             let valoresVector = this.getValoresVector( ts );
@@ -63,9 +63,6 @@ export class AccesoVector implements Expresion, Instruccion{
 
         let valorIndice = this.indice.getValor(controlador,ts);
         let valoresVector = this.getValoresVector( ts );
-
-        console.log('VALOR AV:', valorIndice);
-        console.log('VALORES AV:', valoresVector);
 
         if( valorIndice < 0 || valorIndice >= valoresVector.length || !valoresVector ) {
             // Indice es mayor o menor al tamaño del arreglo

@@ -8,18 +8,31 @@ class PopArreglo {
         this.expresion = expresion;
         this.linea = linea;
         this.columna = columna;
+        console.log('EXPRESION', typeof (this.expresion));
+    }
+    isString(x) {
+        return typeof x === "string";
     }
     ejecutar(controlador, ts) {
-        let id = this.expresion['identificador'];
-        let simbolo = ts.getSimbolo(id);
-        if (simbolo.simbolo === 1 || simbolo.simbolo === 4) {
-            let poppedValue = this.getPoppedValue(ts);
-            console.log('poppedValue', poppedValue);
+        if (!this.isString(this.expresion)) {
+            let id = this.expresion['identificador'];
+            let simbolo = ts.getSimbolo(id);
+            if (simbolo.simbolo === 1 || simbolo.simbolo === 4) {
+                let poppedValue = this.getPoppedValue(ts);
+                console.log('poppedValue', poppedValue);
+            }
+            else {
+                let error = new Errores_1.Errores("Semantico", `La expresión no es de tipo iterable, no se puede realizar la función pop.`, this.linea, this.columna);
+                controlador.errores.push(error);
+                controlador.append(`ERROR: Semántico, La expresión no es de tipo iterable, no se puede realizar la función pop. En la linea ${this.linea} y columna ${this.columna}`);
+            }
         }
         else {
-            let error = new Errores_1.Errores("Semantico", `La expresión no es de tipo iterable, no se puede realizar la función pop.`, this.linea, this.columna);
-            controlador.errores.push(error);
-            controlador.append(`ERROR: Semántico, La expresión no es de tipo iterable, no se puede realizar la función pop. En la linea ${this.linea} y columna ${this.columna}`);
+            let simbolo = ts.getSimbolo(this.expresion);
+            if ((simbolo === null || simbolo === void 0 ? void 0 : simbolo.simbolo) === 4) {
+                let valoresVector = simbolo.valor;
+                let poppedValue = valoresVector.pop();
+            }
         }
     }
     getTipo(controlador, ts) {

@@ -11,10 +11,8 @@ class AccesoVector {
         this.columna = columna;
         this.valor = valor;
         this.modificar = modificar;
-        console.log('ID AV:', this.id);
     }
     ejecutar(controlador, ts) {
-        console.log('Modificando vector.');
         if (this.modificar) {
             let valorIndice = this.indice.getValor(controlador, ts);
             let valoresVector = this.getValoresVector(ts);
@@ -33,8 +31,6 @@ class AccesoVector {
     getTipo(controlador, ts) {
         let valorIndice = this.indice.getValor(controlador, ts);
         let valoresVector = this.getValoresVector(ts);
-        console.log('VALOR AV:', valorIndice);
-        console.log('VALORES AV:', valoresVector);
         if (valorIndice < 0 || valorIndice >= valoresVector.length || !valoresVector) {
             // Indice es mayor o menor al tamaño del arreglo
             let error = new Errores_1.Errores("Semántico", `Indice fuera de rango en el vector ${this.id}.`, this.linea, this.columna);

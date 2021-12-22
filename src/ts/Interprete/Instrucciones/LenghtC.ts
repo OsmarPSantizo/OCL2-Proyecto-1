@@ -29,7 +29,6 @@ export class LenghtC implements Expresion{
 
         let id = this.expresion['identificador'];
         let simboloAuxiliar = ts.getSimbolo( id );
-        console.log('Simbolo Auxiliar', simboloAuxiliar);
 
         if( simboloAuxiliar.simbolo === 1 || simboloAuxiliar.simbolo === 4) {
 

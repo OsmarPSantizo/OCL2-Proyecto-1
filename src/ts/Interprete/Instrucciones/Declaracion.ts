@@ -29,9 +29,9 @@ export  class Declaracion implements Instruccion{
         this.linea = linea;
         this.columna = columna;
         this.posicion = 0;
-        
+
     }
-   
+
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos){
         for(let id of this.lista_ids){
@@ -46,8 +46,8 @@ export  class Declaracion implements Instruccion{
                 let tipo_valor = this.expresion.getTipo(controlador,ts);
                 let valor = this.expresion.getValor(controlador,ts);
 
-                console.log("veamooos " + tipo_valor + "  " +this.type.n_tipo)   
-                if(tipo_valor == this.type.n_tipo){ // n tipo sirve para obtener el tipo que declaramos con enum                    
+
+                if(tipo_valor == this.type.n_tipo){ // n tipo sirve para obtener el tipo que declaramos con enum
                     let nuevo_simbolo = new  Simbolo(1,this.type,id,valor,this.posicion);
                     ts.agregar(id, nuevo_simbolo);
 
@@ -100,7 +100,7 @@ export  class Declaracion implements Instruccion{
 
 
 
-                    
+
                 }
 
             }else{
@@ -138,20 +138,20 @@ export  class Declaracion implements Instruccion{
             padre.AddHijo(this.expresion.recorrer())
         }
 
-        
+
         return padre
     }
 
  traducir(controlador: Controlador, ts: TablaSimbolos): String {
     let c3d = ''
     c3d += '/*------DECLARACION------*/\n'
-    
+
     for(let id of this.lista_ids){
 
         if(this.expresion != null){
             let tipo_valor = this.expresion.getTipo(controlador,ts);
             let valor = this.expresion.getValor(controlador,ts);
-            
+
             if( this.type.n_tipo == tipo.ENTERO){
                 let nuevo_simbolo = new Simbolo(1,this.type,id,valor,ts.getStack())
                 ts.agregar(id,nuevo_simbolo)
@@ -179,7 +179,7 @@ export  class Declaracion implements Instruccion{
 
         }
 
-        console.log(ts.getSimbolo(id))
+
         let variable = ts.getSimbolo(id);
         if (variable != null){
             let valor3d = this.expresion.traducir(controlador,ts);
@@ -190,14 +190,14 @@ export  class Declaracion implements Instruccion{
             }else{
                 let temp = ts.getTemporalActual();
                 let temp2 = ts.getTemporal();
-                
+
                 c3d += `${temp2}=p;\n`;
                 c3d += `${temp2} = ${temp2} + ${variable.posicion};\n`
                 c3d += `stack[${temp2}] = ${temp};\n`
             }
             ts.QuitarTemporal(ts.getTemporalActual());
 
-               
+
         }else{
             let temp = ts.getTemporal();
             if(this.expresion.getTipo(controlador,ts) == tipo.BOOLEAN || this.expresion.getTipo(controlador,ts) == tipo.ENTERO ){
@@ -206,12 +206,12 @@ export  class Declaracion implements Instruccion{
                 c3d += `${temp} = -1;\n`
             }
         }
-        
-    
+
+
     }
     return c3d;
     }
-  
+
 
 
 

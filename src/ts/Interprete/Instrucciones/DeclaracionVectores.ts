@@ -68,7 +68,6 @@ export class DeclaracionVectores implements Instruccion{
             }
 
             let nuevo_simbolo = new Simbolo(4, this.type , id, valores,this.posicion);
-            console.log('NUEVO SIMBOLO:', nuevo_simbolo);
             ts.agregar(id, nuevo_simbolo);
 
         }

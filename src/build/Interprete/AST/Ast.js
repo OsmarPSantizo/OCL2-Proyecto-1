@@ -46,6 +46,7 @@ float h; //Puntero H
     }
     ejecutar(controlador, ts) {
         let bandera_start = false;
+        //Vamos a recorrer las instrucciones que vienen desde la gramática
         //1era pasada vamos a guardar las funciones y métodos del programa
         for (let instruccion of this.lista_instrucciones) {
             if (instruccion instanceof Funcion_1.Funcion) {
@@ -53,7 +54,6 @@ float h; //Puntero H
                 funcion.agregarFuncionTS(ts);
             }
         }
-        //Vamos a recorrer las instrucciones que vienen desde la gramática
         //2da pasada. Se ejecuta las declaraciones de variables
         for (let instruccion of this.lista_instrucciones) {
             if (instruccion instanceof Declaracion_1.Declaracion || instruccion instanceof DeclaracionVectores_1.DeclaracionVectores) {

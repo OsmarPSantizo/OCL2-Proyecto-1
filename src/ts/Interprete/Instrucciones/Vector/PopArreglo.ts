@@ -10,36 +10,54 @@ import { tipo } from "../../TablaSimbolos/Tipo";
 
 export class PopArreglo implements Expresion, Instruccion{
 
-    public expresion : Expresion;
+    public expresion : string | Expresion;
     public linea: number;
     public columna: number;
 
-    constructor (expresion: Expresion, linea:number, columna:number){
+    constructor (expresion: string | Expresion, linea:number, columna:number){
         this.expresion = expresion;
         this.linea = linea;
         this.columna = columna;
+        console.log('EXPRESION', typeof(this.expresion));
     }
+
+    isString(x: any): x is string {
+        return typeof x === "string";
+      }
 
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
 
+        if( !this.isString(this.expresion)) {
 
+            let id = this.expresion['identificador'];
+            let simbolo = ts.getSimbolo( id );
 
-        let id = this.expresion['identificador'];
-        let simbolo = ts.getSimbolo( id );
+            if( simbolo.simbolo === 1 || simbolo.simbolo === 4 ) {
 
-        if( simbolo.simbolo === 1 || simbolo.simbolo === 4 ) {
+                let poppedValue = this.getPoppedValue( ts );
+                console.log('poppedValue', poppedValue);
 
-            let poppedValue = this.getPoppedValue( ts );
-            console.log('poppedValue', poppedValue);
+            } else {
 
+                let error = new Errores("Semantico",`La expresión no es de tipo iterable, no se puede realizar la función pop.`,this.linea,this.columna);
+                controlador.errores.push(error);
+                controlador.append(`ERROR: Semántico, La expresión no es de tipo iterable, no se puede realizar la función pop. En la linea ${this.linea} y columna ${this.columna}`);
+
+            }
         } else {
 
-            let error = new Errores("Semantico",`La expresión no es de tipo iterable, no se puede realizar la función pop.`,this.linea,this.columna);
-            controlador.errores.push(error);
-            controlador.append(`ERROR: Semántico, La expresión no es de tipo iterable, no se puede realizar la función pop. En la linea ${this.linea} y columna ${this.columna}`);
+            let simbolo = ts.getSimbolo( this.expresion as string);
+            if(simbolo?.simbolo === 4){
+                let valoresVector = simbolo.valor;
+                let poppedValue = valoresVector.pop();
+
+            }
+
+
 
         }
+
     }
 
 

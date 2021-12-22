@@ -1,5 +1,5 @@
 int ackerman(int m, int n)
-{    
+{
     if (m == 0){
         return n + 1;
     }else if (m > 0 && n == 0){
@@ -41,5 +41,5 @@ void main()
     println("===============ACKERMAN==============================");
     println(ackerman(3, 4));
     println("===============HANOI=================================");
-    hanoi(3, 1, 2, 3);
+    hanoi(4, 1, 2, 3);
 }

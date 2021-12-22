@@ -72,8 +72,6 @@ class Llamada {
     }
     validar_param(parametros_llamada, parametros_funcion, controlador, ts, ts_local) {
         //Primero vemos si la cantidad de parametros en la llamada es igual a los que mandamos a llamar
-        console.log('Length pll:', parametros_llamada.length);
-        console.log('Length f:', parametros_funcion.length);
         if (parametros_llamada.length == parametros_funcion.length) {
             //****Parametros desde la funcion/metododo*****/
             let aux; // -> parametro

@@ -16,7 +16,6 @@ class LenghtC {
     getValor(controlador, ts) {
         let id = this.expresion['identificador'];
         let simboloAuxiliar = ts.getSimbolo(id);
-        console.log('Simbolo Auxiliar', simboloAuxiliar);
         if (simboloAuxiliar.simbolo === 1 || simboloAuxiliar.simbolo === 4) {
             return simboloAuxiliar.valor.length;
         }
