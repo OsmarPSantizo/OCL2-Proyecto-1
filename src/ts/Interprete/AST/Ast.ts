@@ -1,5 +1,6 @@
 import {Controlador} from "../Controlador";
 import {Declaracion} from "../Instrucciones/Declaracion";
+import { DeclaracionVectores } from "../Instrucciones/DeclaracionVectores";
 import { Fmain } from "../Instrucciones/Fmain";
 import {Funcion }from "../Instrucciones/Funcion";
 import { Instruccion } from "../Interfaces/Instruccion";
@@ -17,8 +18,9 @@ export class Ast implements Instruccion{
     constructor(lista_instrucciones : Array<Instruccion>){
         this.lista_instrucciones = lista_instrucciones;
     }
-    
+
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
+<<<<<<< HEAD
        
        let c3d = `#include <stdio.h> //Importar para el uso de Printf 
 #include <math.h> //Importar para el uso de libreria matematicas
@@ -27,6 +29,15 @@ float stack[16394]; //Estructura para stack
 float p; //Puntero P 
 float h; //Puntero H
 `
+=======
+
+       let c3d = `#include <stdio.h> //Importar para el uso de Printf
+float heap[16384]; //Estructura para heap
+float stack[16394]; //Estructura para stack
+float p; //Puntero P
+float h; //Puntero H
+       `
+>>>>>>> b8fc6c06b04e24a97ab99b5c3234cc90efbf4a91
 
         for(let instruccion of this.lista_instrucciones){
             if(instruccion instanceof Funcion){
@@ -41,11 +52,11 @@ float h; //Puntero H
         for(let instruccion of this.lista_instrucciones){
             if(instruccion instanceof Declaracion){
                 c3d += instruccion.traducir(controlador,ts);
-                
+
             }
         }
 
-        
+
         for (let i =0; i< cantidadGlobales; i++){
             c3d += `heap[${i}] = 0\n`;
             c3d += `h = h + 1 \n`;
@@ -55,11 +66,11 @@ float h; //Puntero H
         for(let instruccion of this.lista_instrucciones){
             if(instruccion instanceof Fmain ){
                 c3d += instruccion.traducir(controlador,ts)
-            }; 
+            };
         }
-        return c3d 
+        return c3d
     }
-    
+
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos){
         let bandera_start = false;
@@ -71,13 +82,13 @@ float h; //Puntero H
                 funcion.agregarFuncionTS(ts);
             }
         }
-        
-        
+
+
         //Vamos a recorrer las instrucciones que vienen desde la gramática
 
         //2da pasada. Se ejecuta las declaraciones de variables
         for(let instruccion of this.lista_instrucciones){
-            if(instruccion instanceof Declaracion){
+            if(instruccion instanceof Declaracion || instruccion instanceof DeclaracionVectores){
                 instruccion.ejecutar(controlador,ts);
             }
         }
@@ -86,23 +97,23 @@ float h; //Puntero H
             if(instruccion instanceof Fmain && !bandera_start){
                 instruccion.ejecutar(controlador,ts);
                 bandera_start = true;
-            
+
             } else if(!(instruccion instanceof Declaracion) && !(instruccion instanceof Funcion) && bandera_start){
                 instruccion.ejecutar(controlador,ts);
             }else if(bandera_start){
-                let error = new Errores("Semantico",`Solo se puede colocar un main.`,0,0);
-                controlador.errores.push(error);
-                controlador.append(`ERROR: Semántico, Solo se puede colocar un main.`);
-                console.log("no se puede");
+                // let error = new Errores("Semantico",`Solo se puede colocar un main.`,0,0);
+                // controlador.errores.push(error);
+                // controlador.append(`ERROR: Semántico, Solo se puede colocar un main.`);
+                // console.log("no se puede");
             }
-            
-                     
+
+
         }
         if(bandera_start == false){
             let error = new Errores("Semantico",`Se debe colocar un void main() para correr el programa.`,0,0);
                 controlador.errores.push(error);
                 controlador.append(`ERROR: Semántico, Se debe colocar un void main() para correr el programa.`);
-               
+
         }
     }
     recorrer():Nodo{
@@ -114,5 +125,5 @@ float h; //Puntero H
         return raiz;
     }
 
-    
+
 }

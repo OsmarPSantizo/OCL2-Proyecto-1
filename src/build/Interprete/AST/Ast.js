@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Ast = void 0;
 const Declaracion_1 = require("../Instrucciones/Declaracion");
+const DeclaracionVectores_1 = require("../Instrucciones/DeclaracionVectores");
 const Fmain_1 = require("../Instrucciones/Fmain");
 const Funcion_1 = require("../Instrucciones/Funcion");
 const Errores_1 = require("./Errores");
@@ -11,6 +12,7 @@ class Ast {
         this.lista_instrucciones = lista_instrucciones;
     }
     traducir(controlador, ts) {
+<<<<<<< HEAD
         let c3d = `#include <stdio.h> //Importar para el uso de Printf 
 #include <math.h> //Importar para el uso de libreria matematicas
 float heap[16384]; //Estructura para heap 
@@ -18,6 +20,14 @@ float stack[16394]; //Estructura para stack
 float p; //Puntero P 
 float h; //Puntero H
 `;
+=======
+        let c3d = `#include <stdio.h> //Importar para el uso de Printf
+float heap[16384]; //Estructura para heap
+float stack[16394]; //Estructura para stack
+float p; //Puntero P
+float h; //Puntero H
+       `;
+>>>>>>> b8fc6c06b04e24a97ab99b5c3234cc90efbf4a91
         for (let instruccion of this.lista_instrucciones) {
             if (instruccion instanceof Funcion_1.Funcion) {
                 c3d += '/*------FUNCIONES------*/\n';
@@ -57,7 +67,7 @@ float h; //Puntero H
         //Vamos a recorrer las instrucciones que vienen desde la gramática
         //2da pasada. Se ejecuta las declaraciones de variables
         for (let instruccion of this.lista_instrucciones) {
-            if (instruccion instanceof Declaracion_1.Declaracion) {
+            if (instruccion instanceof Declaracion_1.Declaracion || instruccion instanceof DeclaracionVectores_1.DeclaracionVectores) {
                 instruccion.ejecutar(controlador, ts);
             }
         }
@@ -71,10 +81,10 @@ float h; //Puntero H
                 instruccion.ejecutar(controlador, ts);
             }
             else if (bandera_start) {
-                let error = new Errores_1.Errores("Semantico", `Solo se puede colocar un main.`, 0, 0);
-                controlador.errores.push(error);
-                controlador.append(`ERROR: Semántico, Solo se puede colocar un main.`);
-                console.log("no se puede");
+                // let error = new Errores("Semantico",`Solo se puede colocar un main.`,0,0);
+                // controlador.errores.push(error);
+                // controlador.append(`ERROR: Semántico, Solo se puede colocar un main.`);
+                // console.log("no se puede");
             }
         }
         if (bandera_start == false) {
