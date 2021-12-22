@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Ast = void 0;
 const Declaracion_1 = require("../Instrucciones/Declaracion");
+const DeclaracionVectores_1 = require("../Instrucciones/DeclaracionVectores");
 const Fmain_1 = require("../Instrucciones/Fmain");
 const Funcion_1 = require("../Instrucciones/Funcion");
 const Errores_1 = require("./Errores");
@@ -12,11 +13,11 @@ class Ast {
         this.lista_instrucciones = lista_instrucciones;
     }
     traducir(controlador, ts) {
-        let c3d = `#include <stdio.h> //Importar para el uso de Printf 
-float heap[16384]; //Estructura para heap 
-float stack[16394]; //Estructura para stack 
-float p; //Puntero P 
-float h; //Puntero H 
+        let c3d = `#include <stdio.h> //Importar para el uso de Printf
+float heap[16384]; //Estructura para heap
+float stack[16394]; //Estructura para stack
+float p; //Puntero P
+float h; //Puntero H
        `;
         for (let instruccion of this.lista_instrucciones) {
             if (instruccion instanceof Funcion_1.Funcion) {
@@ -56,7 +57,7 @@ float h; //Puntero H
         //Vamos a recorrer las instrucciones que vienen desde la gramática
         //2da pasada. Se ejecuta las declaraciones de variables
         for (let instruccion of this.lista_instrucciones) {
-            if (instruccion instanceof Declaracion_1.Declaracion) {
+            if (instruccion instanceof Declaracion_1.Declaracion || instruccion instanceof DeclaracionVectores_1.DeclaracionVectores) {
                 instruccion.ejecutar(controlador, ts);
             }
         }
@@ -70,10 +71,10 @@ float h; //Puntero H
                 instruccion.ejecutar(controlador, ts);
             }
             else if (bandera_start) {
-                let error = new Errores_1.Errores("Semantico", `Solo se puede colocar un main.`, 0, 0);
-                controlador.errores.push(error);
-                controlador.append(`ERROR: Semántico, Solo se puede colocar un main.`);
-                console.log("no se puede");
+                // let error = new Errores("Semantico",`Solo se puede colocar un main.`,0,0);
+                // controlador.errores.push(error);
+                // controlador.append(`ERROR: Semántico, Solo se puede colocar un main.`);
+                // console.log("no se puede");
             }
         }
         if (bandera_start == false) {
@@ -92,7 +93,7 @@ float h; //Puntero H
 }
 exports.Ast = Ast;
 
-},{"../Instrucciones/Declaracion":18,"../Instrucciones/Fmain":20,"../Instrucciones/Funcion":21,"./Errores":2,"./Nodo":4}],2:[function(require,module,exports){
+},{"../Instrucciones/Declaracion":18,"../Instrucciones/DeclaracionVectores":19,"../Instrucciones/Fmain":20,"../Instrucciones/Funcion":21,"./Errores":2,"./Nodo":4}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Errores = void 0;
@@ -395,27 +396,34 @@ class AccesoVector {
             controlador.append(`ERROR: Semántico, índice fuera de rango en el vector ${this.id}. En la linea ${this.linea} y columna ${this.columna}.`);
             return Tipo_1.tipo.ERROR;
         }
-        // Válida si el index es un entero.
-        if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.ENTERO) {
-            return Tipo_1.tipo.ENTERO;
-        }
-        else if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.BOOLEAN) {
-            return Tipo_1.tipo.BOOLEAN;
-        }
-        else if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.CADENA) {
-            return Tipo_1.tipo.CADENA;
-        }
-        else if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.CARACTER) {
-            return Tipo_1.tipo.CARACTER;
-        }
-        else if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.DOBLE) {
-            return Tipo_1.tipo.DOBLE;
-        }
-        else if (this.indice.getTipo(controlador, ts) == Tipo_1.tipo.STRUCT) {
-            return Tipo_1.tipo.STRUCT;
-        }
-        else {
-            return Tipo_1.tipo.ERROR;
+        let tipo_valor = this.indice.getTipo(controlador, ts);
+        if (tipo_valor == Tipo_1.tipo.ENTERO) {
+            if (ts.existe(this.id)) {
+                let valoresVector = this.getValoresVector(ts);
+                let valorAcceso = valoresVector[valorIndice];
+                console.log(typeof (valorAcceso));
+                // Válida si el index es un entero.
+                if (typeof (valorAcceso) == 'number') {
+                    return Tipo_1.tipo.ENTERO;
+                }
+                else if (typeof (valorAcceso) == 'boolean') {
+                    return Tipo_1.tipo.BOOLEAN;
+                }
+                else if (typeof (valorAcceso) == 'string') {
+                    return Tipo_1.tipo.CADENA;
+                }
+                else if (typeof (valorAcceso) == 'string') {
+                    return Tipo_1.tipo.CARACTER;
+                }
+                else {
+                    return Tipo_1.tipo.ERROR;
+                }
+            }
+            else {
+                let error = new Errores_1.Errores("Semantico", `El vector ${this.id} no ha sido declarada, entonces no se puede asignar un valor`, this.linea, this.columna);
+                controlador.errores.push(error);
+                controlador.append(`ERROR: Semántico, El vector ${this.id} no ha sido declarada, entonces no se puede asignar un valor. En la linea ${this.linea} y columna ${this.columna}.`);
+            }
         }
     }
     getValor(controlador, ts) {
@@ -425,6 +433,7 @@ class AccesoVector {
             if (ts.existe(this.id)) {
                 let valoresVector = this.getValoresVector(ts);
                 let valorAcceso = valoresVector[valorIndice];
+                console.log(typeof (valorAcceso));
                 return valorAcceso;
             }
             else {
