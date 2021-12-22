@@ -52,7 +52,7 @@ export  class Identificador implements Expresion{
         let c3d = '';
         let variable = ts.getSimbolo(this.identificador);
         if(!ts.ambito){
-            c3d += `${ts.getTemporalActual()} = stack[${variable.getPosicion()}];\n`;
+            c3d += `${ts.getTemporal()} = stack[${variable.getPosicion()}];\n`;
 
         }else{
             let temp = ts.getTemporal();

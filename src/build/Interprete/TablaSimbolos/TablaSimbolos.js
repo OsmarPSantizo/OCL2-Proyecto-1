@@ -80,6 +80,9 @@ class TablaSimbolos {
     getTemporalActual() {
         return "t" + this.temporal;
     }
+    getTemporalActualint() {
+        return this.temporal;
+    }
     getNumeroTemporales() {
         return this.numerotemp;
     }

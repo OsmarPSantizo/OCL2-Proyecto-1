@@ -122,6 +122,8 @@ export  class Declaracion implements Instruccion{
         }
         return null;
 
+
+        
     }
     recorrer(): Nodo{
         let padre = new Nodo("DECLARACION","");
@@ -135,6 +137,7 @@ export  class Declaracion implements Instruccion{
         padre.AddHijo(hijos_id);
         padre.AddHijo(new Nodo("=",""))
         if(this.expresion != null){
+            
             padre.AddHijo(this.expresion.recorrer())
         }
 
@@ -142,75 +145,75 @@ export  class Declaracion implements Instruccion{
         return padre
     }
 
- traducir(controlador: Controlador, ts: TablaSimbolos): String {
-    let c3d = ''
-    c3d += '/*------DECLARACION------*/\n'
-    
-    for(let id of this.lista_ids){
-
-        if(this.expresion != null){
-            let tipo_valor = this.expresion.getTipo(controlador,ts);
-            let valor = this.expresion.getValor(controlador,ts);
-            
-            if( this.type.n_tipo == tipo.ENTERO){
-                let nuevo_simbolo = new Simbolo(1,this.type,id,valor,ts.getStack())
-                ts.agregar(id,nuevo_simbolo)
-            }else if(this.type.n_tipo == tipo.DOBLE){
-                let nuevo_simbolo = new Simbolo(1,this.type,id,valor,ts.getStack())
-                ts.agregar(id,nuevo_simbolo)
-            }else if(this.type.n_tipo == tipo.CADENA){
-                let nuevo_simbolo = new Simbolo(1,this.type,id,valor,ts.getStack())
-                ts.agregar(id,nuevo_simbolo)
-            }
-        }else{
-            let nuevo_simbolo = new  Simbolo(1,this.type,id,null, ts.getStack());
-            ts.agregar(id, nuevo_simbolo);
-            if(this.type.n_tipo == tipo.ENTERO){
-                nuevo_simbolo.setValor(0);
-            }else if(this.type.n_tipo == tipo.DOBLE){
-                nuevo_simbolo.setValor(0.0);
-            }else if(this.type.n_tipo == tipo.BOOLEAN){
-                nuevo_simbolo.setValor(true);
-            }else if(this.type.n_tipo == tipo.CADENA){
-                nuevo_simbolo.setValor("");
-            }else if(this.type.n_tipo == tipo.CARACTER){
-                nuevo_simbolo.setValor('0');
-            }
-
-        }
-
-        console.log(ts.getSimbolo(id))
-        let variable = ts.getSimbolo(id);
-        if (variable != null){
-            let valor3d = this.expresion.traducir(controlador,ts);
-            //Concatenamos el codigo que se genero del valor
-            c3d += valor3d;
-            if(!ts.ambito){
-                c3d += `stack[${variable.posicion}] = ${ts.getTemporalActual()};\n`
-            }else{
-                let temp = ts.getTemporalActual();
-                let temp2 = ts.getTemporal();
-                
-                c3d += `${temp2}=p;\n`;
-                c3d += `${temp2} = ${temp2} + ${variable.posicion};\n`
-                c3d += `stack[${temp2}] = ${temp};\n`
-            }
-            ts.QuitarTemporal(ts.getTemporalActual());
-
-               
-        }else{
-            let temp = ts.getTemporal();
-            if(this.expresion.getTipo(controlador,ts) == tipo.BOOLEAN || this.expresion.getTipo(controlador,ts) == tipo.ENTERO ){
-                c3d += `${temp} = 0;\n`
-            }else{
-                c3d += `${temp} = -1;\n`
-            }
-        }
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
+        let c3d = ''
+        c3d += '/*------DECLARACION------*/\n'
         
+        for(let id of this.lista_ids){
     
-    }
-    return c3d;
-    }
+            if(this.expresion != null){
+                let tipo_valor = this.expresion.getTipo(controlador,ts);
+                let valor = this.expresion.getValor(controlador,ts);
+                
+                if( this.type.n_tipo == tipo.ENTERO){
+                    let nuevo_simbolo = new Simbolo(1,this.type,id,valor,ts.getStack())
+                    ts.agregar(id,nuevo_simbolo)
+                }else if(this.type.n_tipo == tipo.DOBLE){
+                    let nuevo_simbolo = new Simbolo(1,this.type,id,valor,ts.getStack())
+                    ts.agregar(id,nuevo_simbolo)
+                }else if(this.type.n_tipo == tipo.CADENA){
+                    let nuevo_simbolo = new Simbolo(1,this.type,id,valor,ts.getStack())
+                    ts.agregar(id,nuevo_simbolo)
+                }
+            }else{
+                let nuevo_simbolo = new  Simbolo(1,this.type,id,null, ts.getStack());
+                ts.agregar(id, nuevo_simbolo);
+                if(this.type.n_tipo == tipo.ENTERO){
+                    nuevo_simbolo.setValor(0);
+                }else if(this.type.n_tipo == tipo.DOBLE){
+                    nuevo_simbolo.setValor(0.0);
+                }else if(this.type.n_tipo == tipo.BOOLEAN){
+                    nuevo_simbolo.setValor(true);
+                }else if(this.type.n_tipo == tipo.CADENA){
+                    nuevo_simbolo.setValor("");
+                }else if(this.type.n_tipo == tipo.CARACTER){
+                    nuevo_simbolo.setValor('0');
+                }
+    
+            }
+    
+            console.log(ts.getSimbolo(id))
+            let variable = ts.getSimbolo(id);
+            if (variable != null){
+                let valor3d = this.expresion.traducir(controlador,ts);
+                //Concatenamos el codigo que se genero del valor
+                c3d += valor3d;
+                if(!ts.ambito){
+                    c3d += `stack[${variable.posicion}] = ${ts.getTemporalActual()};\n`
+                }else{
+                    let temp = ts.getTemporalActual();
+                    let temp2 = ts.getTemporal();
+                    
+                    c3d += `${temp2}=p;\n`;
+                    c3d += `${temp2} = ${temp2} + ${variable.posicion};\n`
+                    c3d += `stack[${temp2}] = ${temp};\n`
+                }
+                ts.QuitarTemporal(ts.getTemporalActual());
+    
+                   
+            }else{
+                let temp = ts.getTemporal();
+                if(this.expresion.getTipo(controlador,ts) == tipo.BOOLEAN || this.expresion.getTipo(controlador,ts) == tipo.ENTERO ){
+                    c3d += `${temp} = 0;\n`
+                }else{
+                    c3d += `${temp} = -1;\n`
+                }
+            }
+            
+        
+        }
+        return c3d;
+        }
   
 
 

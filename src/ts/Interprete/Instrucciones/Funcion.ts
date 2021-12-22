@@ -22,7 +22,11 @@ export class Funcion extends Simbolo implements Instruccion{
         this.columna = columna;
     }
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        throw new Error("Method not implemented.");
+        let c3d = ``;
+
+        c3d+= `si aqui va `
+
+        return c3d;
     }
    
         //Se crea un método para agregar el símbolo de la función a la tabla de símbolos

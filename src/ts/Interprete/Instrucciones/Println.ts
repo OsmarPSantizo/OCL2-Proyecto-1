@@ -51,15 +51,16 @@ export class Println implements Instruccion{
         //let condicion = this.expresion.traducir(controlador,ts);
         //codigo += condicion;        
         let temp = ts.getTemporalActual();
+        let temp2 = ts.getTemporalActualint()
         
 
         if(this.expresion.getTipo(controlador,ts) == tipo.ENTERO || this.expresion.getTipo(controlador,ts) == tipo.BOOLEAN){
             codigo +=  this.expresion.traducir(controlador,ts)
-            codigo += `printf(\"%d\\n\", (int)${temp});\n`
+            codigo += `printf(\"%d\\n\", (int)t${temp2+1});\n`
             ts.QuitarTemporal(temp);
         }else if(this.expresion.getTipo(controlador,ts) == tipo.DOBLE ){
             codigo +=  this.expresion.traducir(controlador,ts)
-            codigo += `printf(\"%f\\n\", (double)${temp});\n`
+            codigo += `printf(\"%f\\n\", (double)t${temp2+1});\n`
             ts.QuitarTemporal(temp);
         }
         // else if(this.expresion.getTipo(controlador,ts) == tipo.DOBLE){
