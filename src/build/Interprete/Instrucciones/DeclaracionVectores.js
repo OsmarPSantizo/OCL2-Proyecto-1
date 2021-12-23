@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeclaracionVectores = void 0;
 const Errores_1 = require("../AST/Errores");
+const Nodo_1 = require("../AST/Nodo");
 const Simbolo_1 = require("../TablaSimbolos/Simbolo");
 class DeclaracionVectores {
     constructor(type, listaIds, listaExpresiones = [], linea, columna) {
@@ -44,7 +45,21 @@ class DeclaracionVectores {
         }
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("DECLARACION VECTORES", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.type.nombre_tipo, ""));
+        let hijos_id = new Nodo_1.Nodo("Ids", "");
+        for (let id of this.listaIds) {
+            hijos_id.AddHijo(new Nodo_1.Nodo(id, ""));
+        }
+        padre.AddHijo(hijos_id);
+        padre.AddHijo(new Nodo_1.Nodo("=", ""));
+        padre.AddHijo(new Nodo_1.Nodo("[", ""));
+        let hijos_id2 = new Nodo_1.Nodo("EXPRESIONES", "");
+        for (let id of this.listaExpresiones) {
+            hijos_id2.AddHijo(id.recorrer());
+        }
+        padre.AddHijo(new Nodo_1.Nodo("]", ""));
+        return padre;
     }
     traducir(controlador, ts) {
         let c3d = '/*------Declaracion de vectores------*/\n';

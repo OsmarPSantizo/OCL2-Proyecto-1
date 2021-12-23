@@ -1117,6 +1117,7 @@ exports.AccesoStruct = AccesoStruct;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccesoVector = void 0;
 const Errores_1 = require("../AST/Errores");
+const Nodo_1 = require("../AST/Nodo");
 const Tipo_1 = require("../TablaSimbolos/Tipo");
 class AccesoVector {
     constructor(id, indice, valor, modificar, linea, columna) {
@@ -1201,7 +1202,12 @@ class AccesoVector {
         }
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("ACCESO VECTOR", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.id, ""));
+        padre.AddHijo(new Nodo_1.Nodo("[", ""));
+        padre.AddHijo(this.indice.recorrer());
+        padre.AddHijo(new Nodo_1.Nodo("]", ""));
+        return padre;
     }
     traducir(controlador, ts) {
         let c3d = '/*------Acceso a vectores-----*/\n';
@@ -1210,7 +1216,7 @@ class AccesoVector {
 }
 exports.AccesoVector = AccesoVector;
 
-},{"../AST/Errores":5,"../TablaSimbolos/Tipo":57}],11:[function(require,module,exports){
+},{"../AST/Errores":5,"../AST/Nodo":7,"../TablaSimbolos/Tipo":57}],11:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Aritmetica = void 0;
@@ -5371,6 +5377,7 @@ exports.Asignacion = Asignacion;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CharOfPosition = void 0;
 const Errores_1 = require("../AST/Errores");
+const Nodo_1 = require("../AST/Nodo");
 const Tipo_1 = require("../TablaSimbolos/Tipo");
 class CharOfPosition {
     constructor(expresion, posicion, linea, columna) {
@@ -5404,7 +5411,14 @@ class CharOfPosition {
         }
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("Char of position", "");
+        padre.AddHijo(this.expresion.recorrer());
+        padre.AddHijo(new Nodo_1.Nodo(".", ""));
+        padre.AddHijo(new Nodo_1.Nodo("caracterOfPosition", ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        padre.AddHijo(this.posicion.recorrer());
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
+        return padre;
     }
     traducir(controlador, ts) {
         let c3d = '/*------Posicion de caracter------*/\n';
@@ -5413,7 +5427,7 @@ class CharOfPosition {
 }
 exports.CharOfPosition = CharOfPosition;
 
-},{"../AST/Errores":5,"../TablaSimbolos/Tipo":57}],21:[function(require,module,exports){
+},{"../AST/Errores":5,"../AST/Nodo":7,"../TablaSimbolos/Tipo":57}],21:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Declaracion = void 0;
@@ -5616,6 +5630,7 @@ exports.Declaracion = Declaracion;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeclaracionVectores = void 0;
 const Errores_1 = require("../AST/Errores");
+const Nodo_1 = require("../AST/Nodo");
 const Simbolo_1 = require("../TablaSimbolos/Simbolo");
 class DeclaracionVectores {
     constructor(type, listaIds, listaExpresiones = [], linea, columna) {
@@ -5658,7 +5673,21 @@ class DeclaracionVectores {
         }
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("DECLARACION VECTORES", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.type.nombre_tipo, ""));
+        let hijos_id = new Nodo_1.Nodo("Ids", "");
+        for (let id of this.listaIds) {
+            hijos_id.AddHijo(new Nodo_1.Nodo(id, ""));
+        }
+        padre.AddHijo(hijos_id);
+        padre.AddHijo(new Nodo_1.Nodo("=", ""));
+        padre.AddHijo(new Nodo_1.Nodo("[", ""));
+        let hijos_id2 = new Nodo_1.Nodo("EXPRESIONES", "");
+        for (let id of this.listaExpresiones) {
+            hijos_id2.AddHijo(id.recorrer());
+        }
+        padre.AddHijo(new Nodo_1.Nodo("]", ""));
+        return padre;
     }
     traducir(controlador, ts) {
         let c3d = '/*------Declaracion de vectores------*/\n';
@@ -5667,7 +5696,7 @@ class DeclaracionVectores {
 }
 exports.DeclaracionVectores = DeclaracionVectores;
 
-},{"../AST/Errores":5,"../TablaSimbolos/Simbolo":55}],23:[function(require,module,exports){
+},{"../AST/Errores":5,"../AST/Nodo":7,"../TablaSimbolos/Simbolo":55}],23:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Fmain = void 0;
@@ -6350,7 +6379,7 @@ class LenghtC {
     }
     recorrer() {
         let padre = new Nodo_1.Nodo("length", "");
-        padre.AddHijo(new Nodo_1.Nodo("probalndo", ""));
+        padre.AddHijo(this.expresion.recorrer());
         padre.AddHijo(new Nodo_1.Nodo(".", ""));
         padre.AddHijo(new Nodo_1.Nodo("length", ""));
         padre.AddHijo(new Nodo_1.Nodo("(", ""));
@@ -7423,6 +7452,7 @@ exports.DefinicionStruct = DefinicionStruct;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModificarStruct = void 0;
 const Errores_1 = require("../../AST/Errores");
+const Nodo_1 = require("../../AST/Nodo");
 class ModificarStruct {
     constructor(id, atributo, nuevoValor, linea, columna) {
         this.id = id;
@@ -7467,7 +7497,13 @@ class ModificarStruct {
         return struct.valor;
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("MODIFICAR STRUCT", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.id, ""));
+        padre.AddHijo(new Nodo_1.Nodo(".", ""));
+        padre.AddHijo(new Nodo_1.Nodo(this.atributo, ""));
+        padre.AddHijo(new Nodo_1.Nodo("=", ""));
+        padre.AddHijo(this.nuevoValor.recorrer());
+        return padre;
     }
     traducir(controlador, ts) {
         let c3d = '/*------Modificar structs------*/\n';
@@ -7476,7 +7512,7 @@ class ModificarStruct {
 }
 exports.ModificarStruct = ModificarStruct;
 
-},{"../../AST/Errores":5}],48:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../AST/Nodo":7}],48:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SubString = void 0;
@@ -7653,6 +7689,7 @@ exports.Toupper = Toupper;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AsignacionArreglo = void 0;
 const Errores_1 = require("../../AST/Errores");
+const Nodo_1 = require("../../AST/Nodo");
 class AsignacionArreglo {
     constructor(id = '', listaExpresiones, linea, columna) {
         this.id = id;
@@ -7697,7 +7734,17 @@ class AsignacionArreglo {
         simbolo.valor = valores;
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("ASIGNACION ARREGLO", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.id, ""));
+        padre.AddHijo(new Nodo_1.Nodo("=", ""));
+        padre.AddHijo(new Nodo_1.Nodo("[", ""));
+        let hijo_instrucciones = new Nodo_1.Nodo("Lista expresiones", "");
+        for (let inst of this.listaExpresiones) {
+            hijo_instrucciones.AddHijo(inst.recorrer());
+        }
+        padre.AddHijo(hijo_instrucciones);
+        padre.AddHijo(new Nodo_1.Nodo("]", ""));
+        return padre;
     }
     traducir(controlador, ts) {
         let c3d = '/*------AsignacionArreglos------*/\n';
@@ -7706,11 +7753,12 @@ class AsignacionArreglo {
 }
 exports.AsignacionArreglo = AsignacionArreglo;
 
-},{"../../AST/Errores":5}],52:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../AST/Nodo":7}],52:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PopArreglo = void 0;
 const Errores_1 = require("../../AST/Errores");
+const Nodo_1 = require("../../AST/Nodo");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
 class PopArreglo {
     constructor(expresion, linea, columna) {
@@ -7787,7 +7835,13 @@ class PopArreglo {
         }
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("POP", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.expresion['identificador'], ""));
+        padre.AddHijo(new Nodo_1.Nodo(".", ""));
+        padre.AddHijo(new Nodo_1.Nodo("pop", ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
+        return padre;
     }
     traducir(controlador, ts) {
         let c3d = '/*------Pop arreglos------*/\n';
@@ -7796,11 +7850,12 @@ class PopArreglo {
 }
 exports.PopArreglo = PopArreglo;
 
-},{"../../AST/Errores":5,"../../TablaSimbolos/Tipo":57}],53:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../AST/Nodo":7,"../../TablaSimbolos/Tipo":57}],53:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PushArreglo = void 0;
 const Errores_1 = require("../../AST/Errores");
+const Nodo_1 = require("../../AST/Nodo");
 class PushArreglo {
     constructor(id, valor, linea, columna) {
         this.id = id;
@@ -7852,15 +7907,23 @@ class PushArreglo {
         return c3d;
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("PUSH", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.id, ""));
+        padre.AddHijo(new Nodo_1.Nodo(".", ""));
+        padre.AddHijo(new Nodo_1.Nodo("push", ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        padre.AddHijo(this.valor.recorrer());
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
+        return padre;
     }
 }
 exports.PushArreglo = PushArreglo;
 
-},{"../../AST/Errores":5}],54:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../AST/Nodo":7}],54:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SliceVector = void 0;
+const Nodo_1 = require("../../AST/Nodo");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
 class SliceVector {
     constructor(id, inicio, final, linea, columna) {
@@ -7903,7 +7966,14 @@ class SliceVector {
         return null;
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("Slice", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.id, ""));
+        padre.AddHijo(new Nodo_1.Nodo("[", ""));
+        padre.AddHijo(this.inicio.recorrer());
+        padre.AddHijo(new Nodo_1.Nodo(":", ""));
+        padre.AddHijo(this.final.recorrer());
+        padre.AddHijo(new Nodo_1.Nodo("]", ""));
+        return padre;
     }
     traducir(controlador, ts) {
         let c3d = '/*------Slice vector------*/\n';
@@ -7912,7 +7982,7 @@ class SliceVector {
 }
 exports.SliceVector = SliceVector;
 
-},{"../../TablaSimbolos/Tipo":57}],55:[function(require,module,exports){
+},{"../../AST/Nodo":7,"../../TablaSimbolos/Tipo":57}],55:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Simbolo = void 0;
@@ -8188,6 +8258,7 @@ const Simbolstable = document.getElementById('Simbolstable');
 const linkReporteGramatical = document.getElementById('rg');
 const translateCode = document.getElementById('translateCode');
 const terminal3d = document.getElementById('terminal3d');
+const graficoast = document.getElementById('graph');
 
 
 var counter = 1;
@@ -8430,6 +8501,8 @@ const generarAst = () => {
     terminalast.value = grafo;
     terminalast.select();
     document.execCommand("copy");
+    d3.select("#graph").graphviz()
+    .renderDot(grafo)
 }
 
 

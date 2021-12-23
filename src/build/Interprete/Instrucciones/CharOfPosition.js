@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CharOfPosition = void 0;
 const Errores_1 = require("../AST/Errores");
+const Nodo_1 = require("../AST/Nodo");
 const Tipo_1 = require("../TablaSimbolos/Tipo");
 class CharOfPosition {
     constructor(expresion, posicion, linea, columna) {
@@ -35,7 +36,14 @@ class CharOfPosition {
         }
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("Char of position", "");
+        padre.AddHijo(this.expresion.recorrer());
+        padre.AddHijo(new Nodo_1.Nodo(".", ""));
+        padre.AddHijo(new Nodo_1.Nodo("caracterOfPosition", ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        padre.AddHijo(this.posicion.recorrer());
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
+        return padre;
     }
     traducir(controlador, ts) {
         let c3d = '/*------Posicion de caracter------*/\n';

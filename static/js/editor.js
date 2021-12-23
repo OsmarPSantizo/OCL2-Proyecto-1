@@ -20,6 +20,7 @@ const Simbolstable = document.getElementById('Simbolstable');
 const linkReporteGramatical = document.getElementById('rg');
 const translateCode = document.getElementById('translateCode');
 const terminal3d = document.getElementById('terminal3d');
+const graficoast = document.getElementById('graph');
 
 
 var counter = 1;
@@ -262,6 +263,8 @@ const generarAst = () => {
     terminalast.value = grafo;
     terminalast.select();
     document.execCommand("copy");
+    d3.select("#graph").graphviz()
+    .renderDot(grafo)
 }
 
 

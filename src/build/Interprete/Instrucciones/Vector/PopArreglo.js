@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PopArreglo = void 0;
 const Errores_1 = require("../../AST/Errores");
+const Nodo_1 = require("../../AST/Nodo");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
 class PopArreglo {
     constructor(expresion, linea, columna) {
@@ -78,7 +79,13 @@ class PopArreglo {
         }
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("POP", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.expresion['identificador'], ""));
+        padre.AddHijo(new Nodo_1.Nodo(".", ""));
+        padre.AddHijo(new Nodo_1.Nodo("pop", ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
+        return padre;
     }
     traducir(controlador, ts) {
         let c3d = '/*------Pop arreglos------*/\n';
