@@ -1,4 +1,4 @@
-  int var1 = 10;
+int var1 = 10;
 int var2 = 20;
 double punteoBasicas = 0.0;
 double declaracion, asignacion, aritmeticas, relacionales, logicas;
@@ -85,7 +85,7 @@ void main(){
     println("Lógica 2" & " = " & String_4); //true,false
     println("Cadena 5" & " = " & String_5); //Calificacion Calificacion Calificacion
 
-    println(pruebasNativas.subString(0,12).toUppercase()&" "&pruebasNativas.caracterOfPosition(12)& " "& pruebasNativas.subString(14,pruebasNativas.length()).toLowercase());  // COMPILADORES 2 test
+    println(pruebasNativas.toUppercase()&" "&pruebasNativas.caracterOfPosition(12)& " "& pruebasNativas.subString(14,pruebasNativas.length()).toLowercase());  // COMPILADORES 2 test
 
 
     boolean relacionaes = (a == 0) != (44.3 < 44.4) == (pow(2,5) == 31 + 2 % 1);
@@ -101,19 +101,19 @@ void main(){
 
 
     //Notas estudiante 1
-    agregar(0,0, 90);
-    agregar(0,1, 95);
-    agregar(0,2, 92);
+    print(agregar(0,0, 90));
+    print(agregar(0,1, 95));
+    print(agregar(0,2, 92));
 
     //Notas estudiante 2
-    agregar(1,0, 85);
-    agregar(1,1, 90);
-    agregar(1,2, 100);
+    print(agregar(1,0, 85));
+    print(agregar(1,1, 90));
+    print(agregar(1,2, 100));
 
     //Notas estudiante 3
-    agregar(2,0, 20);
-    agregar(2,1, 100);
-    agregar(2,2, 100);
+    print(agregar(2,0, 20));
+    print(agregar(2,1, 100));
+    print(agregar(2,2, 100));
 
     //Imprimir Promedios
     imprimirPromedio(0);
@@ -168,3 +168,6 @@ Promedio Estudiante  Estudiante2  =  91.0
 Promedio Estudiante  Estudiante3  =  73.0
 Posicion ocupada
 */
+
+
+

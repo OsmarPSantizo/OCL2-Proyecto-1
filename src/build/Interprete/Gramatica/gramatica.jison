@@ -280,7 +280,6 @@ instruccion : declaracion { $$ = $1; reporteGramaticalTDS.push('instruccion.val 
 
             ;
 
-
 // Lista de IDs
 
 lista_ids : lista_ids COMA ID           { reporteGramaticalTDS.push('lista_ids.val := lista_ids.val COMA ID'); reporteGramaticalProducciones.push('<lista_ids> -> <lista_ids> COMA ID'); $$ = $1; $$.push($3);}
@@ -426,6 +425,7 @@ funciones : tipo ID PARA lista_parametros PARC LLAVA instrucciones LLAVC  { repo
           | VOID ID PARA PARC LLAVA instrucciones LLAVC                   { reporteGramaticalTDS.push('funciones.val :=  VOID ID PARA PARC LLAVA instrucciones.val LLAVC '); reporteGramaticalProducciones.push('<funciones> ->  VOID ID PARA PARC LLAVA <instrucciones> LLAVC '); $$ = new Funcion(3, $1, $2, [], true, $6, @1.first_line, @1.last_column); }
           | VOID MAIN PARA PARC LLAVA instrucciones LLAVC                 { reporteGramaticalTDS.push('funciones.val :=  VOID MAIN PARA PARC LLAVA instrucciones.val LLAVC '); reporteGramaticalProducciones.push('<funciones> ->  VOID MAIN PARA PARC LLAVA <instrucciones> LLAVC '); $$ = new Fmain(3, $1, $2, [], true, $6, @1.first_line, @1.last_column); }
           ;
+
 
 lista_parametros : lista_parametros COMA tipo ID  { reporteGramaticalTDS.push('lista_parametros.val := lista_parametros.val COMA tipo.val ID'); reporteGramaticalProducciones.push('<lista_parametros> -> <lista_parametros> COMA <tipo> ID'); $$ = $1; $$.push(new Simbolo(6, $3, $4, null));}
                  //| lista_parametros COMA tipo CORA CORC ID                        { reporteGramaticalTDS.push('lista_parametros.val := tipo.val CORA CORC ID'); reporteGramaticalProducciones.push('<lista_parametros> -> <tipo> CORA CORC ID'); $$ = new Array(); $$.push(new Simbolo(4, $3, $6, null));}
