@@ -3,6 +3,7 @@ import {Declaracion} from "../Instrucciones/Declaracion";
 import { DeclaracionVectores } from "../Instrucciones/DeclaracionVectores";
 import { Fmain } from "../Instrucciones/Fmain";
 import {Funcion }from "../Instrucciones/Funcion";
+import { DeclaracionStruct } from "../Instrucciones/Struct/DeclaracionStruct";
 import { Instruccion } from "../Interfaces/Instruccion";
 import {TablaSimbolos} from "../TablaSimbolos/TablaSimbolos";
 import {Errores} from "./Errores";
@@ -24,11 +25,11 @@ export class Ast implements Instruccion{
         let funciones = `/*------FUNCIONES------*/\n`
         let temporales =`double `
         let cuerpo =``
-        let encabezado = `#include <stdio.h> //Importar para el uso de Printf 
+        let encabezado = `#include <stdio.h> //Importar para el uso de Printf
 #include <math.h> //Importar para el uso de libreria matematicas
-float heap[16384]; //Estructura para heap 
-float stack[16394]; //Estructura para stack 
-float p; //Puntero P 
+float heap[16384]; //Estructura para heap
+float stack[16394]; //Estructura para stack
+float p; //Puntero P
 float h; //Puntero H
 `
 
@@ -44,7 +45,7 @@ let impresion = `void printString() {
     L0:
     return;
 }\n\n`
- 
+
         for(let instruccion of this.lista_instrucciones){
             if(instruccion instanceof Funcion){
                 let funcion = instruccion as Funcion;
@@ -108,7 +109,7 @@ let impresion = `void printString() {
 
         //2da pasada. Se ejecuta las declaraciones de variables
         for(let instruccion of this.lista_instrucciones){
-            if(instruccion instanceof Declaracion || instruccion instanceof DeclaracionVectores ){
+            if(instruccion instanceof Declaracion || instruccion instanceof DeclaracionVectores || instruccion instanceof DeclaracionStruct ){
                 instruccion.ejecutar(controlador,ts);
             }
         }

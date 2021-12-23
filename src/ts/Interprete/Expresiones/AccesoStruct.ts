@@ -9,14 +9,14 @@ import { tipo } from "../TablaSimbolos/Tipo";
 
 export class AccesoStruct implements Expresion {
 
-    public id:string;
-    public valor: string;
+    public id:Expresion;
+    public valor: Expresion;
     public linea: number;
     public columna : number;
 
     public tipo: tipo;
 
-    constructor(id:string, valor: string, linea:number, columna:number){
+    constructor(id:Expresion, valor: Expresion, linea:number, columna:number){
         this.id =  id
         this.valor = valor;
         this.linea = linea;
@@ -29,8 +29,11 @@ export class AccesoStruct implements Expresion {
     }
 
     getValor(controlador: Controlador, ts: TablaSimbolos) {
+        this.id = this.id['identificador'];
+        this.valor = this.valor['identificador'];
 
         let atributos = this.getAtributosStruct( controlador, ts );
+        console.log('Atributos AS:', atributos);
 
         if( !atributos ) {
             let error = new Errores("Semantico",`${this.id} no está definido.`,this.linea,this.columna);
@@ -39,7 +42,12 @@ export class AccesoStruct implements Expresion {
             return;
         }
 
-        let valorAtributo = `${this.id}_${this.valor}`
+        let structPadre = atributos[0]['identificador'];
+        structPadre = structPadre.split("_")[0];
+        console.log('STRUCT PADRE', structPadre);
+
+        let valorAtributo = `${structPadre}_${this.valor}`
+        console.log('Valor atributo:', valorAtributo);
 
         for (let atributo of atributos) {
             if( valorAtributo === atributo.identificador ) {

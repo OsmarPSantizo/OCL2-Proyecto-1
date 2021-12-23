@@ -26,7 +26,7 @@ export class DefinicionStruct implements Instruccion{
         this.posicion = 0
 
     }
-    
+
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
 
@@ -38,12 +38,20 @@ export class DefinicionStruct implements Instruccion{
             return
         }
 
+        //console.log('LISTA TRIBUTOS DEFINICION:', this.listaAtributos);
+
+        this.listaAtributos.forEach( atributo => {
+            atributo['identificador'] = `${this.nombreStruct}_${atributo['identificador']}`
+        });
+
+
         let tipo = new Tipo('STRUCT ' + this.nombreStruct );
         let nuevoSimbolo = new Simbolo(5, tipo, this.nombreStruct, this.listaAtributos,this.posicion);
         ts.agregar(this.nombreStruct, nuevoSimbolo);
+
     }
 
-    
+
 
     recorrer(): Nodo {
         throw new Error("Method not implemented.");

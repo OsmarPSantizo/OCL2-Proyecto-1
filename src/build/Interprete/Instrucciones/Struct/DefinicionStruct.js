@@ -19,6 +19,10 @@ class DefinicionStruct {
             controlador.append(`ERROR: Semántico, el Struct ${this.nombreStruct} ya existe en el entorno actual, no se puede definir otra vez. En la linea ${this.linea} y columna ${this.columna}`);
             return;
         }
+        //console.log('LISTA TRIBUTOS DEFINICION:', this.listaAtributos);
+        this.listaAtributos.forEach(atributo => {
+            atributo['identificador'] = `${this.nombreStruct}_${atributo['identificador']}`;
+        });
         let tipo = new Tipo_1.Tipo('STRUCT ' + this.nombreStruct);
         let nuevoSimbolo = new Simbolo_1.Simbolo(5, tipo, this.nombreStruct, this.listaAtributos, this.posicion);
         ts.agregar(this.nombreStruct, nuevoSimbolo);
