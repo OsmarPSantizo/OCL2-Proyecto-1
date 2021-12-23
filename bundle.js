@@ -7645,22 +7645,7 @@ const createEditor = ( editor ) => {
     editorList.push(newEditor);
     currentEditor = newEditor;
 
-    currentEditor.setValue(`
-
-        void main() {
-            struct animal {
-                int edad;
-                String name;
-                boolean mamifero;
-            }
-
-            animal perro = animal(4, "Roberto", true);
-
-            println(perro.edad);
-
-        }
-
-    `);
+    currentEditor.setValue(`void main() {}`);
 }
 
 
