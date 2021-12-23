@@ -231,7 +231,7 @@ const parseInput = () => {
         reporteGramaticalTDSTexto += regla + '\n';
     });
 
-    console.log('TDS:', reporteGramaticalTDSTexto);
+
 
     // let newLink = generarReporteGramatical(reporteGramaticalProduccionTexto);
     // linkReporteGramatical.setAttribute('href', newLink);

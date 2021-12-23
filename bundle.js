@@ -348,7 +348,6 @@ class AccesoStruct {
         this.id = this.id['identificador'];
         this.valor = this.valor['identificador'];
         let atributos = this.getAtributosStruct(controlador, ts);
-        console.log('Atributos AS:', atributos);
         if (!atributos) {
             let error = new Errores_1.Errores("Semantico", `${this.id} no está definido.`, this.linea, this.columna);
             controlador.errores.push(error);
@@ -357,9 +356,7 @@ class AccesoStruct {
         }
         let structPadre = atributos[0]['identificador'];
         structPadre = structPadre.split("_")[0];
-        console.log('STRUCT PADRE', structPadre);
         let valorAtributo = `${structPadre}_${this.valor}`;
-        console.log('Valor atributo:', valorAtributo);
         for (let atributo of atributos) {
             if (valorAtributo === atributo.identificador) {
                 return atributo.valor;
@@ -6751,7 +6748,10 @@ class ModificarStruct {
             controlador.append(`ERROR: Semántico, ${this.id} no está definido. En la linea ${this.linea} y columna ${this.columna}`);
             return;
         }
-        let valorAtributo = `${this.id}_${this.atributo}`;
+        let structPadre = atributos[0]['identificador'];
+        structPadre = structPadre.split("_")[0];
+        console.log('STRUCT PADRE', structPadre);
+        let valorAtributo = `${structPadre}_${this.atributo}`;
         for (let atributo of atributos) {
             if ((valorAtributo === atributo.identificador)) {
                 if (!(nuevoValorTipo === atributo.tipo.n_tipo)) {
@@ -7748,7 +7748,7 @@ const parseInput = () => {
         reporteGramaticalTDSTexto += regla + '\n';
     });
 
-    console.log('TDS:', reporteGramaticalTDSTexto);
+
 
     // let newLink = generarReporteGramatical(reporteGramaticalProduccionTexto);
     // linkReporteGramatical.setAttribute('href', newLink);

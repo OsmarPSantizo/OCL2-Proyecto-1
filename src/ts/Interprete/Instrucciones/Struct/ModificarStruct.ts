@@ -24,7 +24,7 @@ export class ModificarStruct implements Instruccion {
         this.linea = linea;
         this.columna = columna;
     }
-    
+
 
     ejecutar(controlador: Controlador, ts: TablaSimbolos) {
         let atributos = this.getAtributosStruct( ts );
@@ -40,7 +40,11 @@ export class ModificarStruct implements Instruccion {
             return;
         }
 
-        let valorAtributo = `${this.id}_${this.atributo}`
+        let structPadre = atributos[0]['identificador'];
+        structPadre = structPadre.split("_")[0];
+        console.log('STRUCT PADRE', structPadre);
+
+        let valorAtributo = `${structPadre}_${this.atributo}`
 
         for (let atributo of atributos) {
 

@@ -33,7 +33,7 @@ export class AccesoStruct implements Expresion {
         this.valor = this.valor['identificador'];
 
         let atributos = this.getAtributosStruct( controlador, ts );
-        console.log('Atributos AS:', atributos);
+
 
         if( !atributos ) {
             let error = new Errores("Semantico",`${this.id} no está definido.`,this.linea,this.columna);
@@ -44,10 +44,10 @@ export class AccesoStruct implements Expresion {
 
         let structPadre = atributos[0]['identificador'];
         structPadre = structPadre.split("_")[0];
-        console.log('STRUCT PADRE', structPadre);
+
 
         let valorAtributo = `${structPadre}_${this.valor}`
-        console.log('Valor atributo:', valorAtributo);
+
 
         for (let atributo of atributos) {
             if( valorAtributo === atributo.identificador ) {

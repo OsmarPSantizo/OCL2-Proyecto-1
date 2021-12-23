@@ -22,7 +22,10 @@ class ModificarStruct {
             controlador.append(`ERROR: Semántico, ${this.id} no está definido. En la linea ${this.linea} y columna ${this.columna}`);
             return;
         }
-        let valorAtributo = `${this.id}_${this.atributo}`;
+        let structPadre = atributos[0]['identificador'];
+        structPadre = structPadre.split("_")[0];
+        console.log('STRUCT PADRE', structPadre);
+        let valorAtributo = `${structPadre}_${this.atributo}`;
         for (let atributo of atributos) {
             if ((valorAtributo === atributo.identificador)) {
                 if (!(nuevoValorTipo === atributo.tipo.n_tipo)) {
