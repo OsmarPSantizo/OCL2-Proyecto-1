@@ -18,12 +18,12 @@ class DoWhile {
         let etiqueta = ts.getEtiquetaActualint() + 1;
         let condicion = this.condicion.traducir(controlador, ts);
         let etiqueta2 = ts.getEtiquetaActual();
-        c3d += `L${etiqueta}:\n`;
+        c3d += `  L${etiqueta}:\n`;
         for (let instrucciones of this.lista_instrucciones) {
             c3d += instrucciones.traducir(controlador, ts);
         }
         c3d += condicion;
-        c3d += `${etiqueta2}:\n`;
+        c3d += `    ${etiqueta2}:\n`;
         return c3d;
     }
     ejecutar(controlador, ts) {

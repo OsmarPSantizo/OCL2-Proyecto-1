@@ -58,7 +58,8 @@ export class ToDouble implements Expresion{
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos) :String {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Todoble------*/\n';
+        return c3d
     }
 
 }

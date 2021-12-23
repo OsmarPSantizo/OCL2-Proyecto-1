@@ -80,7 +80,8 @@ export class DeclaracionVectores implements Instruccion{
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        return 'hola';
+        let c3d = '/*------Declaracion de vectores------*/\n';
+        return c3d
     }
 
 }

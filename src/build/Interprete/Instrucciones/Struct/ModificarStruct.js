@@ -49,7 +49,8 @@ class ModificarStruct {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Modificar structs------*/\n';
+        return c3d;
     }
 }
 exports.ModificarStruct = ModificarStruct;

@@ -21,7 +21,8 @@ export  class Continue implements Instruccion{
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Continue------*/\n';
+        return c3d
     }
 
 

@@ -53,7 +53,8 @@ class SubString {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Substring------*/\n';
+        return c3d;
     }
 }
 exports.SubString = SubString;

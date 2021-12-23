@@ -38,7 +38,8 @@ class CharOfPosition {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Posicion de caracter------*/\n';
+        return c3d;
     }
 }
 exports.CharOfPosition = CharOfPosition;

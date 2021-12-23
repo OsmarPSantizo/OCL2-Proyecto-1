@@ -1344,34 +1344,34 @@ class Aritmetica extends Operacion_1.Operacion {
             c3d += this.exp2.traducir(controlador, ts);
             const tempIzq = ts.getTemporalActual();
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = -1 * ${tempIzq}\n`;
+            c3d += ` ${temporal} = -1 * ${tempIzq}\n`;
             ts.QuitarTemporal(tempIzq);
             ts.AgregarTemporal(temporal);
             return c3d;
         }
         else if (this.operador == Operacion_1.Operador.SIN) {
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = sin\(${this.exp1.getValor(controlador, ts)}\);\n`;
+            c3d += `    ${temporal} = sin\(${this.exp1.getValor(controlador, ts)}\);\n`;
             return c3d;
         }
         else if (this.operador == Operacion_1.Operador.COS) {
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = cos\(${this.exp1.getValor(controlador, ts)}\);\n`;
+            c3d += `    ${temporal} = cos\(${this.exp1.getValor(controlador, ts)}\);\n`;
             return c3d;
         }
         else if (this.operador == Operacion_1.Operador.TAN) {
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = tan\(${this.exp1.getValor(controlador, ts)}\);\n`;
+            c3d += `    ${temporal} = tan\(${this.exp1.getValor(controlador, ts)}\);\n`;
             return c3d;
         }
         else if (this.operador == Operacion_1.Operador.SQRT) {
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = sqrt\(${this.exp1.getValor(controlador, ts)}\);\n`;
+            c3d += `    ${temporal} = sqrt\(${this.exp1.getValor(controlador, ts)}\);\n`;
             return c3d;
         }
         else if (this.operador == Operacion_1.Operador.POT) {
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = pow\(${this.exp1.getValor(controlador, ts)},${this.exp2.getValor(controlador, ts)}\);\n`;
+            c3d += `    ${temporal} = pow\(${this.exp1.getValor(controlador, ts)},${this.exp2.getValor(controlador, ts)}\);\n`;
             return c3d;
         }
         else {
@@ -1380,7 +1380,7 @@ class Aritmetica extends Operacion_1.Operacion {
             c3d += this.exp2.traducir(controlador, ts);
             const tempDer = ts.getTemporalActual();
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = ${tempIzq} ${this.signo_operador} ${tempDer};\n`;
+            c3d += `    ${temporal} = ${tempIzq} ${this.signo_operador} ${tempDer};\n`;
             ts.AgregarTemporal(temporal);
             return c3d;
         }

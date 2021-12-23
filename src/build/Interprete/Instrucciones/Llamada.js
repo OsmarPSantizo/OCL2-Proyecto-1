@@ -13,7 +13,8 @@ class Llamada {
         this.linea = linea;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Llamada------*/\n';
+        return c3d;
     }
     getTipo(controlador, ts) {
         let simbolo_funcion = ts.getSimbolo(this.identificador);

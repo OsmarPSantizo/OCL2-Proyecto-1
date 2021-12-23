@@ -29,13 +29,13 @@ class Primitivo {
         let x = 0;
         const temporal = ts.getTemporal();
         if (this.getTipo(controlador, ts) == Tipo_1.tipo.ENTERO || this.getTipo(controlador, ts) == Tipo_1.tipo.DOBLE) {
-            c3d += `${temporal} = ${this.valor_primitivo};\n`;
+            c3d += `    ${temporal} = ${this.valor_primitivo};\n`;
         }
         else if (this.getTipo(controlador, ts) == Tipo_1.tipo.CADENA) {
-            c3d += `${temporal} = h;\n`;
+            c3d += `    ${temporal} = h;\n`;
             while (x < this.getValor(controlador, ts).length) {
-                c3d += `heap[(int)h] = ${this.getValor(controlador, ts).charCodeAt(x)};\n`;
-                c3d += `h = h+1;\n`;
+                c3d += `    heap[(int)h] = ${this.getValor(controlador, ts).charCodeAt(x)};\n`;
+                c3d += `    h = h+1;\n`;
                 x = x + 1;
             }
         }

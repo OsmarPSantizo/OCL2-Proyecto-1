@@ -81,7 +81,8 @@ class PopArreglo {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        return 'pop';
+        let c3d = '/*------Pop arreglos------*/\n';
+        return c3d;
     }
 }
 exports.PopArreglo = PopArreglo;

@@ -12,7 +12,8 @@ class Caso {
         this.column = column;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*----- CAse------*/\n';
+        return c3d;
     }
     ejecutar(controlador, ts) {
         let ts_local = new TablaSimbolos_1.TablaSimbolos(ts);

@@ -69,7 +69,8 @@ class DeclaracionStruct {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Declaracion structs------*/\n';
+        return c3d;
     }
 }
 exports.DeclaracionStruct = DeclaracionStruct;

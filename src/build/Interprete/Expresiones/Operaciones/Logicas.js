@@ -136,7 +136,6 @@ class Logicas extends Operacion_1.Operacion {
             case Operacion_1.Operador.AND:
                 return c3d;
             case Operacion_1.Operador.OR:
-                c3d += 'A mamon';
                 c3d += this.exp1.traducir(controlador, ts);
                 c3d += this.exp2.traducir(controlador, ts);
                 return c3d;

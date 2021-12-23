@@ -23,7 +23,8 @@ export class Caso implements Instruccion{
 
     }
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        throw new Error("Method not implemented.");
+        let c3d = '/*----- CAse------*/\n';
+        return c3d
     }
    
 

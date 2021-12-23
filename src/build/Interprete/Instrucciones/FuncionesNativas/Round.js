@@ -45,7 +45,8 @@ class Round {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Round------*/\n';
+        return c3d;
     }
 }
 exports.Round = Round;

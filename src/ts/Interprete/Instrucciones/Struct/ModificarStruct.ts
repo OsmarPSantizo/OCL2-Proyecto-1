@@ -81,7 +81,8 @@ export class ModificarStruct implements Instruccion {
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Modificar structs------*/\n';
+        return c3d
     }
 
 }

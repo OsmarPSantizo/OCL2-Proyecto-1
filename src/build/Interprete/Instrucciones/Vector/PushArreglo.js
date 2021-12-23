@@ -49,7 +49,8 @@ class PushArreglo {
     //     }
     // }
     traducir(controlador, ts) {
-        return 'push';
+        let c3d = '/*------push arreglos------*/\n';
+        return c3d;
     }
     recorrer() {
         throw new Error("Method not implemented.");

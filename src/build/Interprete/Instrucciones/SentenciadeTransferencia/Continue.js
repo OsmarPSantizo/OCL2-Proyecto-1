@@ -12,7 +12,8 @@ class Continue {
         return new Nodo_1.Nodo("Continue", "");
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Continue------*/\n';
+        return c3d;
     }
 }
 exports.Continue = Continue;

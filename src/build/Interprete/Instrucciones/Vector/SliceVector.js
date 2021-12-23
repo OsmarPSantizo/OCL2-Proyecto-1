@@ -46,7 +46,8 @@ class SliceVector {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        return 'slice';
+        let c3d = '/*------Slice vector------*/\n';
+        return c3d;
     }
 }
 exports.SliceVector = SliceVector;

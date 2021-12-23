@@ -21,13 +21,7 @@ export class Funcion extends Simbolo implements Instruccion{
         this.linea = linea;
         this.columna = columna;
     }
-    traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        let c3d = ``;
-
-        c3d+= `si aqui va `
-
-        return c3d;
-    }
+    
    
         //Se crea un método para agregar el símbolo de la función a la tabla de símbolos
     agregarFuncionTS( ts:TablaSimbolos){
@@ -93,6 +87,33 @@ export class Funcion extends Simbolo implements Instruccion{
         return padre
     }
 
+
+
+    traducir(controlador: Controlador, ts: TablaSimbolos): String {
+        let c3d = ``;
+
+        c3d+= `void ${this.identificador}(){\n`
+        let ts_local = new TablaSimbolos(ts);
+        if(controlador.tablas.some(x=> ts_local === ts_local)){
+
+        }else{
+            controlador.tablas.push(ts_local)
+            
+        }
+        for(let inst of this.lista_instrucciones){
+            let retorno = inst.traducir(controlador, ts_local);
+            c3d+= retorno
+            // if(retorno != null){
+            //     return retorno;
+            // }
+        }
+
+        c3d+= ` return;
+}\n`
+        ts.temporal = ts.temporal + ts_local.temporal
+        ts.etiqueta = ts.etiqueta + ts_local.etiqueta
+        return c3d;
+    }
 }
 
 

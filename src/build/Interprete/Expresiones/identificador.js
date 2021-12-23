@@ -42,13 +42,13 @@ class Identificador {
         let c3d = '';
         let variable = ts.getSimbolo(this.identificador);
         if (!ts.ambito) {
-            c3d += `${ts.getTemporal()} = stack[${variable.getPosicion()}];\n`;
+            c3d += `    ${ts.getTemporal()} = stack[${variable.getPosicion()}];\n`;
         }
         else {
             let temp = ts.getTemporal();
-            c3d += `${temp} = P;\n`;
-            c3d += `${temp} = ${temp} + ${variable.posicion};\n`;
-            c3d += `${ts.getTemporal()} = stack[${temp}];\n`;
+            c3d += `    ${temp} = P;\n`;
+            c3d += `    ${temp} = ${temp} + ${variable.posicion};\n`;
+            c3d += `    ${ts.getTemporal()} = stack[${temp}];\n`;
         }
         ts.AgregarTemporal(ts.getTemporalActual());
         return c3d;

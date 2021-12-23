@@ -12,11 +12,6 @@ class Funcion extends Simbolo_1.Simbolo {
         this.linea = linea;
         this.columna = columna;
     }
-    traducir(controlador, ts) {
-        let c3d = ``;
-        c3d += `si aqui va `;
-        return c3d;
-    }
     //Se crea un método para agregar el símbolo de la función a la tabla de símbolos
     agregarFuncionTS(ts) {
         if (!(ts.existe(this.identificador))) {
@@ -70,6 +65,28 @@ class Funcion extends Simbolo_1.Simbolo {
         padre.AddHijo(hijo_instrucciones);
         padre.AddHijo(new Nodo_1.Nodo("}", ""));
         return padre;
+    }
+    traducir(controlador, ts) {
+        let c3d = ``;
+        c3d += `void ${this.identificador}(){\n`;
+        let ts_local = new TablaSimbolos_1.TablaSimbolos(ts);
+        if (controlador.tablas.some(x => ts_local === ts_local)) {
+        }
+        else {
+            controlador.tablas.push(ts_local);
+        }
+        for (let inst of this.lista_instrucciones) {
+            let retorno = inst.traducir(controlador, ts_local);
+            c3d += retorno;
+            // if(retorno != null){
+            //     return retorno;
+            // }
+        }
+        c3d += ` return;
+}\n`;
+        ts.temporal = ts.temporal + ts_local.temporal;
+        ts.etiqueta = ts.etiqueta + ts_local.etiqueta;
+        return c3d;
     }
 }
 exports.Funcion = Funcion;

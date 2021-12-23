@@ -1249,34 +1249,34 @@ export class Aritmetica extends Operacion implements Expresion{
             const tempIzq = ts.getTemporalActual();
             const temporal = ts.getTemporal();
 
-            c3d+= `${temporal} = -1 * ${tempIzq}\n`
+            c3d+= ` ${temporal} = -1 * ${tempIzq}\n`
             ts.QuitarTemporal(tempIzq);
             ts.AgregarTemporal(temporal);
             return c3d;
 
         }else if (this.operador == Operador.SIN){
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = sin\(${this.exp1.getValor(controlador,ts)}\);\n`
+            c3d += `    ${temporal} = sin\(${this.exp1.getValor(controlador,ts)}\);\n`
             return c3d;
 
         }else if (this.operador == Operador.COS){
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = cos\(${this.exp1.getValor(controlador,ts)}\);\n`
+            c3d += `    ${temporal} = cos\(${this.exp1.getValor(controlador,ts)}\);\n`
             return c3d;
 
         }else if (this.operador == Operador.TAN){
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = tan\(${this.exp1.getValor(controlador,ts)}\);\n`
+            c3d += `    ${temporal} = tan\(${this.exp1.getValor(controlador,ts)}\);\n`
             return c3d;
 
         }else if (this.operador == Operador.SQRT){
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = sqrt\(${this.exp1.getValor(controlador,ts)}\);\n`
+            c3d += `    ${temporal} = sqrt\(${this.exp1.getValor(controlador,ts)}\);\n`
             return c3d;
 
         }else if(this.operador == Operador.POT){
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = pow\(${this.exp1.getValor(controlador,ts)},${this.exp2.getValor(controlador,ts)}\);\n`
+            c3d += `    ${temporal} = pow\(${this.exp1.getValor(controlador,ts)},${this.exp2.getValor(controlador,ts)}\);\n`
             return c3d;
         }
         
@@ -1294,7 +1294,7 @@ export class Aritmetica extends Operacion implements Expresion{
 
             const temporal = ts.getTemporal();
 
-            c3d += `${temporal} = ${tempIzq} ${this.signo_operador} ${tempDer};\n`;
+            c3d += `    ${temporal} = ${tempIzq} ${this.signo_operador} ${tempDer};\n`;
             
             ts.AgregarTemporal(temporal);
             return c3d;

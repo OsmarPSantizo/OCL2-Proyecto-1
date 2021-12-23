@@ -64,7 +64,8 @@ class Switch {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Switch------*/\n';
+        return c3d;
     }
 }
 exports.Switch = Switch;

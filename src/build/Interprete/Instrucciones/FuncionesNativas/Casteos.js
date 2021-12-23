@@ -98,7 +98,8 @@ class Casteos {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Casteos------*/\n';
+        return c3d;
     }
 }
 exports.Casteos = Casteos;

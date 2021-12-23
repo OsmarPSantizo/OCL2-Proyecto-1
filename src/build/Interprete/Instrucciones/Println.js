@@ -35,12 +35,12 @@ class Println {
         let temp2 = ts.getTemporalActualint();
         if (this.expresion.getTipo(controlador, ts) == Tipo_1.tipo.ENTERO || this.expresion.getTipo(controlador, ts) == Tipo_1.tipo.BOOLEAN) {
             codigo += this.expresion.traducir(controlador, ts);
-            codigo += `printf(\"%d\\n\", (int)t${temp2 + 1});\n`;
+            codigo += `    printf(\"%d\\n\", (int)t${temp2 + 1});\n`;
             ts.QuitarTemporal(temp);
         }
         else if (this.expresion.getTipo(controlador, ts) == Tipo_1.tipo.DOBLE) {
             codigo += this.expresion.traducir(controlador, ts);
-            codigo += `printf(\"%f\\n\", (double)t${temp2 + 1});\n`;
+            codigo += `    printf(\"%f\\n\", (double)t${temp2 + 1});\n`;
             ts.QuitarTemporal(temp);
         }
         // else if(this.expresion.getTipo(controlador,ts) == tipo.DOBLE){
@@ -53,22 +53,22 @@ class Println {
             let temp4 = ts.getTemporal();
             let temp5 = ts.getTemporal();
             let x = 0;
-            c3d += `${temporal} = h;\n`;
+            c3d += `    ${temporal} = h;\n`;
             while (x < this.expresion.getValor(controlador, ts).length) {
-                c3d += `heap[(int)h] = ${this.expresion.getValor(controlador, ts).charCodeAt(x)};\n`;
-                c3d += `h = h+1;\n`;
+                c3d += `    heap[(int)h] = ${this.expresion.getValor(controlador, ts).charCodeAt(x)};\n`;
+                c3d += `    h = h+1;\n`;
                 x = x + 1;
             }
-            c3d += `heap[(int)h] =-1;\n`;
-            c3d += `h = h+1;\n`;
-            c3d += `${temp4} = p+ ${ts.getStackActual()};\n`;
-            c3d += `${temp4} = ${temp4}+1;\n`;
-            c3d += `stack[(int)${temp4}] =  ${temporal};\n`;
-            c3d += `p = p+${ts.getStackActual()};\n`;
-            c3d += `printString();\n`;
-            c3d += `${temp5} = stack[(int)p];\n`;
-            c3d += `p = p-${ts.getStackActual()};\n`;
-            c3d += `printf("%c", (char)10);\n`;
+            c3d += `    heap[(int)h] =-1;\n`;
+            c3d += `    h = h+1;\n`;
+            c3d += `    ${temp4} = p+ ${ts.getStackActual()};\n`;
+            c3d += `    ${temp4} = ${temp4}+1;\n`;
+            c3d += `    stack[(int)${temp4}] =  ${temporal};\n`;
+            c3d += `    p = p+${ts.getStackActual()};\n`;
+            c3d += `    printString();\n`;
+            c3d += `    ${temp5} = stack[(int)p];\n`;
+            c3d += `    p = p-${ts.getStackActual()};\n`;
+            c3d += `    printf("%c", (char)10);\n`;
             codigo += c3d;
         }
         else {

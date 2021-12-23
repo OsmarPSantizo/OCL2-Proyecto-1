@@ -151,7 +151,8 @@ export class AccesoVector implements Expresion, Instruccion{
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        return 'acceso_vector';
+        let c3d = '/*------Acceso a vectores-----*/\n';
+        return c3d
     }
 
 }

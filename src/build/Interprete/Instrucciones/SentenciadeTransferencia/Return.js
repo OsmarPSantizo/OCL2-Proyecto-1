@@ -19,7 +19,8 @@ class Retorno {
         return new Nodo_1.Nodo("Return", "");
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Return------*/\n';
+        return c3d;
     }
 }
 exports.Retorno = Retorno;

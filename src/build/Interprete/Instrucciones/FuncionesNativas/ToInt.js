@@ -45,7 +45,8 @@ class ToInt {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Toint------*/\n';
+        return c3d;
     }
 }
 exports.ToInt = ToInt;

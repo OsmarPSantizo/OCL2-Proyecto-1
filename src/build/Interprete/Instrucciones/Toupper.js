@@ -46,7 +46,8 @@ class Toupper {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------ToUpper------*/\n';
+        return c3d;
     }
 }
 exports.Toupper = Toupper;

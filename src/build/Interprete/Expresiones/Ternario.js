@@ -43,7 +43,8 @@ class Ternario {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Ternarios------*/\n';
+        return c3d;
     }
 }
 exports.Ternario = Ternario;

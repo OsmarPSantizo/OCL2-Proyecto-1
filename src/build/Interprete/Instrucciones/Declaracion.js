@@ -169,24 +169,24 @@ class Declaracion {
                 //Concatenamos el codigo que se genero del valor
                 c3d += valor3d;
                 if (!ts.ambito) {
-                    c3d += `stack[${variable.posicion}] = ${ts.getTemporalActual()};\n`;
+                    c3d += `    stack[${variable.posicion}] = ${ts.getTemporalActual()};\n`;
                 }
                 else {
                     let temp = ts.getTemporalActual();
                     let temp2 = ts.getTemporal();
-                    c3d += `${temp2}=p;\n`;
-                    c3d += `${temp2} = ${temp2} + ${variable.posicion};\n`;
-                    c3d += `stack[${temp2}] = ${temp};\n`;
+                    c3d += `    ${temp2}=p;\n`;
+                    c3d += `    ${temp2} = ${temp2} + ${variable.posicion};\n`;
+                    c3d += `    stack[${temp2}] = ${temp};\n`;
                 }
                 ts.QuitarTemporal(ts.getTemporalActual());
             }
             else {
                 let temp = ts.getTemporal();
                 if (this.expresion.getTipo(controlador, ts) == Tipo_1.tipo.BOOLEAN || this.expresion.getTipo(controlador, ts) == Tipo_1.tipo.ENTERO) {
-                    c3d += `${temp} = 0;\n`;
+                    c3d += `    ${temp} = 0;\n`;
                 }
                 else {
-                    c3d += `${temp} = -1;\n`;
+                    c3d += `    ${temp} = -1;\n`;
                 }
             }
         }

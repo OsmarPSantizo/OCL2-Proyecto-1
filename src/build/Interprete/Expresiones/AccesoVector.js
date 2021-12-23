@@ -89,7 +89,8 @@ class AccesoVector {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        return 'acceso_vector';
+        let c3d = '/*------Acceso a vectores-----*/\n';
+        return c3d;
     }
 }
 exports.AccesoVector = AccesoVector;

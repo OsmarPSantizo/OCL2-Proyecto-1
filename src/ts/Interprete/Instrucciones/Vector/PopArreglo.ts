@@ -123,7 +123,8 @@ export class PopArreglo implements Expresion, Instruccion{
 
 
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        return 'pop'
+        let c3d = '/*------Pop arreglos------*/\n';
+        return c3d
     }
 
 }
