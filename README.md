@@ -28,3 +28,8 @@ O su forma abreviada,
 Los archivos .js que genera este comando se almacenarán en **src/build**.
 
 En la carpeta parser se estará llevando toda la codificación del interprete utilizando Jison.
+
+## Documentación de la aplicación
+
+* [Manual de usuario](https://github.com/carlosngv/OCL2-Proyecto-1/blob/main/Documentaci%C3%B3n/Manual_de_Usuario.pdf).
+* [Manual técnico](https://github.com/carlosngv/OCL2-Proyecto-1/blob/main/Documentaci%C3%B3n/Manual_de_Usuario.pdf).

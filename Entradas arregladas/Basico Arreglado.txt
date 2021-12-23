@@ -130,6 +130,7 @@ boolean agregar(int i, int j, int nota){
     println("Valor estado agregar: " + estado[i * dimension + j]);
     if(!estado[i * dimension + j]){
         tablero[i * dimension + j] = nota;
+        print("Tablero: " + tablero);
         estado[i*dimension + j] = true;
         return true;
     }
