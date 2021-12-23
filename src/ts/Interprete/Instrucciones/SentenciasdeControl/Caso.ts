@@ -23,11 +23,17 @@ export class Caso implements Instruccion{
 
     }
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        let c3d = '/*----- CAse------*/\n';
+        let c3d = '/*----- Case------*/\n';
+        
+        for (let inst of this.instrucciones){
+            c3d += inst.traducir(controlador,ts)
+        }
         return c3d
     }
    
+    
 
+    
     
     ejecutar(controlador : Controlador, ts:TablaSimbolos){
         let ts_local = new TablaSimbolos(ts);

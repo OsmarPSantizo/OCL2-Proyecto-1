@@ -12,7 +12,10 @@ class Caso {
         this.column = column;
     }
     traducir(controlador, ts) {
-        let c3d = '/*----- CAse------*/\n';
+        let c3d = '/*----- Case------*/\n';
+        for (let inst of this.instrucciones) {
+            c3d += inst.traducir(controlador, ts);
+        }
         return c3d;
     }
     ejecutar(controlador, ts) {

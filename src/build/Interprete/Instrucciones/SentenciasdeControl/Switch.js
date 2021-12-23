@@ -65,6 +65,13 @@ class Switch {
     }
     traducir(controlador, ts) {
         let c3d = '/*------Switch------*/\n';
+        c3d += this.condicion.traducir(controlador, ts);
+        let valor = `t${ts.getTemporalActualint()}\n;`;
+        for (let caso of this.lista_casos) {
+            c3d += caso.valor.traducir(controlador, ts);
+            c3d += `if(${valor}} == t${ts.getTemporalActualint()})`;
+            c3d += caso.traducir(controlador, ts);
+        }
         return c3d;
     }
 }
