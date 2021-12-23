@@ -32,6 +32,8 @@ export class Retorno implements Instruccion{
 
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
         let c3d = '/*------Return------*/\n';
+
+        c3d += `stack[(int)P${this.valor_retorno.recorrer()};\n`
         return c3d
     }
 

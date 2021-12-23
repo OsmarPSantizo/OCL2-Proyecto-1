@@ -26,11 +26,11 @@ export class Ast implements Instruccion{
         let temporales =`double `
         let cuerpo =``
         let encabezado = `#include <stdio.h> //Importar para el uso de Printf
-                        #include <math.h> //Importar para el uso de libreria matematicas
-                        float heap[16384]; //Estructura para heap
-                        float stack[16394]; //Estructura para stack
-                        float p; //Puntero P
-                        float h; //Puntero H
+#include <math.h> //Importar para el uso de libreria matematicas
+float heap[16384]; //Estructura para heap
+float stack[16394]; //Estructura para stack
+float p; //Puntero P
+float h; //Puntero H
 `
 
 let impresion = `void printString() {

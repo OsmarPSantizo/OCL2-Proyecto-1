@@ -92,6 +92,26 @@ export class For implements Instruccion {
 
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
         let c3d = '/*------FOR------*/\n';
+        
+        c3d += this.declarar_asignacion.traducir(controlador,ts);
+        let etiqueta = ts.getEtiqueta();
+        let condicion = this.condicion.traducir(controlador,ts);
+
+        c3d += `    ${etiqueta}:\n`;
+        c3d += condicion;
+
+        let etiqueta1 = ts.getEtiquetaActualint()-1;
+        let etiqueta2 = ts.getEtiquetaActual();
+
+        c3d += `    L${etiqueta1}:\n`
+        
+        for(let instrucciones of this.lista_instrucciones){
+            c3d += instrucciones.traducir(controlador,ts);
+        }
+        c3d += this.actualizacion.traducir(controlador,ts);
+        c3d += `    goto ${etiqueta};\n`
+        c3d += `    ${etiqueta2}:\n`
+    
         return c3d
     }
 
