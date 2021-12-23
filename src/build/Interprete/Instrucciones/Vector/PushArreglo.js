@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PushArreglo = void 0;
 const Errores_1 = require("../../AST/Errores");
+const Nodo_1 = require("../../AST/Nodo");
 class PushArreglo {
     constructor(id, valor, linea, columna) {
         this.id = id;
@@ -53,7 +54,14 @@ class PushArreglo {
         return c3d;
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("PUSH", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.id, ""));
+        padre.AddHijo(new Nodo_1.Nodo(".", ""));
+        padre.AddHijo(new Nodo_1.Nodo("push", ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        padre.AddHijo(this.valor.recorrer());
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
+        return padre;
     }
 }
 exports.PushArreglo = PushArreglo;

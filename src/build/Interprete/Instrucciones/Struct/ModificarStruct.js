@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModificarStruct = void 0;
 const Errores_1 = require("../../AST/Errores");
+const Nodo_1 = require("../../AST/Nodo");
 class ModificarStruct {
     constructor(id, atributo, nuevoValor, linea, columna) {
         this.id = id;
@@ -46,7 +47,13 @@ class ModificarStruct {
         return struct.valor;
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("MODIFICAR STRUCT", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.id, ""));
+        padre.AddHijo(new Nodo_1.Nodo(".", ""));
+        padre.AddHijo(new Nodo_1.Nodo(this.atributo, ""));
+        padre.AddHijo(new Nodo_1.Nodo("=", ""));
+        padre.AddHijo(this.nuevoValor.recorrer());
+        return padre;
     }
     traducir(controlador, ts) {
         let c3d = '/*------Modificar structs------*/\n';

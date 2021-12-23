@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AsignacionArreglo = void 0;
 const Errores_1 = require("../../AST/Errores");
+const Nodo_1 = require("../../AST/Nodo");
 class AsignacionArreglo {
     constructor(id = '', listaExpresiones, linea, columna) {
         this.id = id;
@@ -46,7 +47,17 @@ class AsignacionArreglo {
         simbolo.valor = valores;
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("ASIGNACION ARREGLO", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.id, ""));
+        padre.AddHijo(new Nodo_1.Nodo("=", ""));
+        padre.AddHijo(new Nodo_1.Nodo("[", ""));
+        let hijo_instrucciones = new Nodo_1.Nodo("Lista expresiones", "");
+        for (let inst of this.listaExpresiones) {
+            hijo_instrucciones.AddHijo(inst.recorrer());
+        }
+        padre.AddHijo(hijo_instrucciones);
+        padre.AddHijo(new Nodo_1.Nodo("]", ""));
+        return padre;
     }
     traducir(controlador, ts) {
         let c3d = '/*------AsignacionArreglos------*/\n';

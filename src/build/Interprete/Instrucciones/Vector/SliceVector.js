@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SliceVector = void 0;
+const Nodo_1 = require("../../AST/Nodo");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
 class SliceVector {
     constructor(id, inicio, final, linea, columna) {
@@ -43,7 +44,14 @@ class SliceVector {
         return null;
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("Slice", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.id, ""));
+        padre.AddHijo(new Nodo_1.Nodo("[", ""));
+        padre.AddHijo(this.inicio.recorrer());
+        padre.AddHijo(new Nodo_1.Nodo(":", ""));
+        padre.AddHijo(this.final.recorrer());
+        padre.AddHijo(new Nodo_1.Nodo("]", ""));
+        return padre;
     }
     traducir(controlador, ts) {
         let c3d = '/*------Slice vector------*/\n';

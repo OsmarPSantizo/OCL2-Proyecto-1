@@ -38,7 +38,7 @@ class LenghtC {
     }
     recorrer() {
         let padre = new Nodo_1.Nodo("length", "");
-        padre.AddHijo(new Nodo_1.Nodo("probalndo", ""));
+        padre.AddHijo(this.expresion.recorrer());
         padre.AddHijo(new Nodo_1.Nodo(".", ""));
         padre.AddHijo(new Nodo_1.Nodo("length", ""));
         padre.AddHijo(new Nodo_1.Nodo("(", ""));
