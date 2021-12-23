@@ -31,5 +31,5 @@ En la carpeta parser se estará llevando toda la codificación del interprete ut
 
 ## Documentación de la aplicación
 
-* [Manual de usuario](https://github.com/carlosngv/OCL2-Proyecto-1/blob/main/Documentaci%C3%B3n/Manual_de_Usuario.pdf).
-* [Manual técnico](https://github.com/carlosngv/OCL2-Proyecto-1/blob/main/Documentaci%C3%B3n/Manual_Tecnico.pdf).
+* [Manual de usuario](https://github.com/carlosngv/OCL2-Proyecto-1/blob/main/Documentaci%C3%B3n/ManualUsuario/Manual_de_Usuario.md).
+* [Manual técnico](https://github.com/carlosngv/OCL2-Proyecto-1/blob/main/Documentaci%C3%B3n/ManualTecnico/Manual_Tecnico.md).
