@@ -47,7 +47,8 @@ class Typeof {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Typeof------*/\n';
+        return c3d;
     }
 }
 exports.Typeof = Typeof;

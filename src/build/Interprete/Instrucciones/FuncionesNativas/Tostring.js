@@ -45,7 +45,8 @@ class Tostring {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Traducir------*/\n';
+        return c3d;
     }
 }
 exports.Tostring = Tostring;

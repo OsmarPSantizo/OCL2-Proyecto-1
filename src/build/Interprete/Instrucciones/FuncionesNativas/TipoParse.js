@@ -71,7 +71,8 @@ class TipoParse {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------TipoPArse-----*/\n';
+        return c3d;
     }
 }
 exports.TipoParse = TipoParse;

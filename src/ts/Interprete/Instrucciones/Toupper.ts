@@ -63,7 +63,8 @@ export class Toupper implements Expresion{
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------ToUpper------*/\n';
+        return c3d
     }
 
 }

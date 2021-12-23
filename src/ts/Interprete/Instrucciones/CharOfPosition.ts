@@ -52,7 +52,8 @@ export class CharOfPosition implements Expresion{
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos) :String {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Posicion de caracter------*/\n';
+        return c3d
     }
 
 }

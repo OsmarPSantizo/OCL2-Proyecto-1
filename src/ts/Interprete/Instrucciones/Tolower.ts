@@ -62,7 +62,8 @@ export class Tolower implements Expresion{
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Tolower------*/\n';
+        return c3d
     }
 
 }

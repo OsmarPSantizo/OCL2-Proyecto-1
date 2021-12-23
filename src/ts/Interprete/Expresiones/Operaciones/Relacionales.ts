@@ -829,8 +829,8 @@ export  class Relacional extends Operacion implements Expresion{
 
         const temp = ts.getTemporal();
 
-        c3d += `if(${tempIzq} ${this.signo_operador} ${tempDer}) goto ${etiquetaV};\n`
-        c3d += `goto ${etiquetaF};\n`
+        c3d += `    if(${tempIzq} ${this.signo_operador} ${tempDer}) goto ${etiquetaV};\n`
+        c3d += `    goto ${etiquetaF};\n`
         ts.AgregarTemporal(temp);
         ts.QuitarTemporal(tempIzq);
         ts.QuitarTemporal(tempDer);

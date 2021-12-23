@@ -47,7 +47,8 @@ class DeclaracionVectores {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        return 'hola';
+        let c3d = '/*------Declaracion de vectores------*/\n';
+        return c3d;
     }
 }
 exports.DeclaracionVectores = DeclaracionVectores;

@@ -74,6 +74,7 @@ export class SliceVector implements Expresion{
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos) :String {
-        return 'slice';
+        let c3d = '/*------Slice vector------*/\n';
+        return c3d
     }
 }

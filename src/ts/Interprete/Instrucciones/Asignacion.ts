@@ -89,13 +89,13 @@ export  class Asignacion implements Instruccion{
         c3d += valor3d;
 
         if(!ts.ambito){
-            c3d += `stack[${variable.posicion}] = ${ts.getTemporalActual()};\n`
+            c3d += `    stack[${variable.posicion}] = ${ts.getTemporalActual()};\n`
         }else{
             let temp = ts.getTemporalActual();
             let temp2 = ts.getTemporal();
-            c3d += `${temp2}=p;\n`;
-            c3d += `${temp2} = ${temp2} + ${variable.posicion};\n`;
-            c3d += `stack${temp2} = ${temp};\n`;
+            c3d += `    ${temp2}=p;\n`;
+            c3d += `    ${temp2} = ${temp2} + ${variable.posicion};\n`;
+            c3d += `    stack${temp2} = ${temp};\n`;
 
         }
         ts.QuitarTemporal(ts.getTemporalActual());

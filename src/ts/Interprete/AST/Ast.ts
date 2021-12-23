@@ -20,8 +20,11 @@ export class Ast implements Instruccion{
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
-       
-       let c3d = `#include <stdio.h> //Importar para el uso de Printf 
+        let c3d = ``;
+        let funciones = `/*------FUNCIONES------*/\n`
+        let temporales =`double `
+        let cuerpo =``
+        let encabezado = `#include <stdio.h> //Importar para el uso de Printf 
 #include <math.h> //Importar para el uso de libreria matematicas
 float heap[16384]; //Estructura para heap 
 float stack[16394]; //Estructura para stack 
@@ -29,12 +32,25 @@ float p; //Puntero P
 float h; //Puntero H
 `
 
+
+let impresion = `void printString() {
+    t0 = p+1;
+    t1 = stack[(int)t0];
+    L1:
+    t2 = heap[(int)t1];
+    if(t2 == -1) goto L0;
+    printf("%c", (char)t2);
+    t1 = t1+1;
+    goto L1;
+    L0:
+    return;
+}\n\n`
+ 
         for(let instruccion of this.lista_instrucciones){
             if(instruccion instanceof Funcion){
-                c3d +=  '/*------FUNCIONES------*/\n';
-                ts.setStack(0);
                 let funcion = instruccion as Funcion;
                 funcion.agregarFuncionTS(ts);
+                funciones += instruccion.traducir(controlador,ts);
             }
         }
         let cantidadGlobales = 0;
@@ -51,13 +67,32 @@ float h; //Puntero H
             c3d += `heap[${i}] = 0\n`;
             c3d += `h = h + 1 \n`;
         }
-
         ts.ambito = false;
         for(let instruccion of this.lista_instrucciones){
             if(instruccion instanceof Fmain ){
-                c3d += instruccion.traducir(controlador,ts)
+                cuerpo += instruccion.traducir(controlador,ts)
             };
         }
+
+
+        let conttemp = 0;
+        while(conttemp < (ts.temporal)){
+            temporales += `t${conttemp}, `
+            conttemp = conttemp +1;
+
+            if (conttemp == (ts.temporal)){
+                temporales += `t${conttemp};\n\n`
+            }
+        }
+
+        c3d += encabezado
+        c3d += temporales
+        c3d += impresion
+        c3d += funciones
+        c3d += cuerpo
+
+
+
         return c3d
     }
 

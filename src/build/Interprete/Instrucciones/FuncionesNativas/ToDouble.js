@@ -42,7 +42,8 @@ class ToDouble {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Todoble------*/\n';
+        return c3d;
     }
 }
 exports.ToDouble = ToDouble;

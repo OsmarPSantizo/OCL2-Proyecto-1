@@ -12,7 +12,8 @@ class Break {
         return new Nodo_1.Nodo("Break", "");
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Break------*/\n';
+        return c3d;
     }
 }
 exports.Break = Break;

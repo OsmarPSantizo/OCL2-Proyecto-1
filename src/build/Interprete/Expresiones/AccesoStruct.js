@@ -40,7 +40,8 @@ class AccesoStruct {
         return struct.valor;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Acceso a structrs------*/\n';
+        return c3d;
     }
     recorrer() {
         throw new Error("Method not implemented.");

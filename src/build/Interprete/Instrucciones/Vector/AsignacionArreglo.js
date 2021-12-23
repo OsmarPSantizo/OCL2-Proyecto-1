@@ -49,7 +49,8 @@ class AsignacionArreglo {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        return 'hola';
+        let c3d = '/*------AsignacionArreglos------*/\n';
+        return c3d;
     }
 }
 exports.AsignacionArreglo = AsignacionArreglo;

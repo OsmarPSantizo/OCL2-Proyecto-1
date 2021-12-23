@@ -21,7 +21,10 @@ export class Fmain extends Simbolo implements Instruccion{
         this.columna = columna;
     }
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
+        
         let ts_local = new TablaSimbolos(ts);
+        ts_local.temporal = ts.temporal
+        ts_local.etiqueta = ts.etiqueta
         let c3d=''
         if(controlador.tablas.some(x=> ts_local === ts_local)){
             
@@ -31,6 +34,7 @@ export class Fmain extends Simbolo implements Instruccion{
         
 
 
+     
 
         let c3d2 = `void main(){\n`
         for(let inst of this.lista_instrucciones){
@@ -39,33 +43,37 @@ export class Fmain extends Simbolo implements Instruccion{
         }
         
 
-        let conttemp = 0;
-        console.log(ts.tempStorage);
-        c3d += "double "
-        while(conttemp < (ts_local.getNumeroTemporales()+ts.getNumeroTemporales() -3)){
-            c3d += `t${conttemp}, `
-            conttemp = conttemp +1;
+        // let conttemp = 0;
+        // console.log(ts.tempStorage);
+        // c3d += "double "
+        // while(conttemp < (ts_local.getNumeroTemporales()+ts.getNumeroTemporales() -3)){
+        //     c3d += `t${conttemp}, `
+        //     conttemp = conttemp +1;
 
-            if (conttemp == (ts_local.getNumeroTemporales()+ts.getNumeroTemporales() -3)){
-                c3d += `t${conttemp};\n `
-            }
-        }
-        c3d+= `void printString() {
-t0 = p+1;
-t1 = stack[(int)t0];
-L1:
-t2 = heap[(int)t1];
-if(t2 == -1) goto L0;
-printf("%c", (char)t2);
-t1 = t1+1;
-goto L1;
-L0:
-return;
-        }\n\n`
-        c3d += c3d2;
-        c3d += `return;\n}\n`
+        //     if (conttemp == (ts_local.getNumeroTemporales()+ts.getNumeroTemporales() -3)){
+        //         c3d += `t${conttemp};\n `
+        //     }
+        // }
         
+//         c3d+= `void printString() {
+// t0 = p+1;
+// t1 = stack[(int)t0];
+// L1:
+// t2 = heap[(int)t1];
+// if(t2 == -1) goto L0;
+// printf("%c", (char)t2);
+// t1 = t1+1;
+// goto L1;
+// L0:
+// return;
+//         }\n\n`
+        c3d += c3d2;
+        c3d += `    return;\n}\n`
+        ts.temporal = ts_local.temporal
+        ts.etiqueta = ts_local.etiqueta
         return c3d
+
+        
     }
     
 

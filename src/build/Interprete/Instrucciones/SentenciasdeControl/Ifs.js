@@ -114,16 +114,16 @@ class Ifs {
         let etiquetaV = ts.getEtiquetaActualint() - 1;
         let etiquetaF = ts.getEtiquetaActual();
         let etiquetaescape = ts.getEtiqueta();
-        c3d += `L${etiquetaV}:\n`;
+        c3d += `    L${etiquetaV}:\n`;
         for (let inst of this.lista_instrucciones_ifs) {
             c3d += inst.traducir(controlador, ts);
         }
-        c3d += `goto ${etiquetaescape};\n`;
-        c3d += `${etiquetaF}:\n`;
+        c3d += `    goto ${etiquetaescape};\n`;
+        c3d += `    ${etiquetaF}:\n`;
         for (let inst of this.lista_instrucciones_elses) {
             c3d += inst.traducir(controlador, ts);
         }
-        c3d += `${etiquetaescape}:\n`;
+        c3d += `    ${etiquetaescape}:\n`;
         return c3d;
     }
 }

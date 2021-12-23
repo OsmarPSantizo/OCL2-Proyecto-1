@@ -86,7 +86,8 @@ export class AsignacionArreglo implements Instruccion{
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos): String {
-        return 'hola';
+        let c3d = '/*------AsignacionArreglos------*/\n';
+        return c3d
     }
 
 }

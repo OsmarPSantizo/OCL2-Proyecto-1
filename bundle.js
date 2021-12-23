@@ -1,4 +1,725 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+
+},{}],2:[function(require,module,exports){
+(function (process){(function (){
+// 'path' module extracted from Node.js v8.11.1 (only the posix part)
+// transplited with Babel
+
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+'use strict';
+
+function assertPath(path) {
+  if (typeof path !== 'string') {
+    throw new TypeError('Path must be a string. Received ' + JSON.stringify(path));
+  }
+}
+
+// Resolves . and .. elements in a path with directory names
+function normalizeStringPosix(path, allowAboveRoot) {
+  var res = '';
+  var lastSegmentLength = 0;
+  var lastSlash = -1;
+  var dots = 0;
+  var code;
+  for (var i = 0; i <= path.length; ++i) {
+    if (i < path.length)
+      code = path.charCodeAt(i);
+    else if (code === 47 /*/*/)
+      break;
+    else
+      code = 47 /*/*/;
+    if (code === 47 /*/*/) {
+      if (lastSlash === i - 1 || dots === 1) {
+        // NOOP
+      } else if (lastSlash !== i - 1 && dots === 2) {
+        if (res.length < 2 || lastSegmentLength !== 2 || res.charCodeAt(res.length - 1) !== 46 /*.*/ || res.charCodeAt(res.length - 2) !== 46 /*.*/) {
+          if (res.length > 2) {
+            var lastSlashIndex = res.lastIndexOf('/');
+            if (lastSlashIndex !== res.length - 1) {
+              if (lastSlashIndex === -1) {
+                res = '';
+                lastSegmentLength = 0;
+              } else {
+                res = res.slice(0, lastSlashIndex);
+                lastSegmentLength = res.length - 1 - res.lastIndexOf('/');
+              }
+              lastSlash = i;
+              dots = 0;
+              continue;
+            }
+          } else if (res.length === 2 || res.length === 1) {
+            res = '';
+            lastSegmentLength = 0;
+            lastSlash = i;
+            dots = 0;
+            continue;
+          }
+        }
+        if (allowAboveRoot) {
+          if (res.length > 0)
+            res += '/..';
+          else
+            res = '..';
+          lastSegmentLength = 2;
+        }
+      } else {
+        if (res.length > 0)
+          res += '/' + path.slice(lastSlash + 1, i);
+        else
+          res = path.slice(lastSlash + 1, i);
+        lastSegmentLength = i - lastSlash - 1;
+      }
+      lastSlash = i;
+      dots = 0;
+    } else if (code === 46 /*.*/ && dots !== -1) {
+      ++dots;
+    } else {
+      dots = -1;
+    }
+  }
+  return res;
+}
+
+function _format(sep, pathObject) {
+  var dir = pathObject.dir || pathObject.root;
+  var base = pathObject.base || (pathObject.name || '') + (pathObject.ext || '');
+  if (!dir) {
+    return base;
+  }
+  if (dir === pathObject.root) {
+    return dir + base;
+  }
+  return dir + sep + base;
+}
+
+var posix = {
+  // path.resolve([from ...], to)
+  resolve: function resolve() {
+    var resolvedPath = '';
+    var resolvedAbsolute = false;
+    var cwd;
+
+    for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
+      var path;
+      if (i >= 0)
+        path = arguments[i];
+      else {
+        if (cwd === undefined)
+          cwd = process.cwd();
+        path = cwd;
+      }
+
+      assertPath(path);
+
+      // Skip empty entries
+      if (path.length === 0) {
+        continue;
+      }
+
+      resolvedPath = path + '/' + resolvedPath;
+      resolvedAbsolute = path.charCodeAt(0) === 47 /*/*/;
+    }
+
+    // At this point the path should be resolved to a full absolute path, but
+    // handle relative paths to be safe (might happen when process.cwd() fails)
+
+    // Normalize the path
+    resolvedPath = normalizeStringPosix(resolvedPath, !resolvedAbsolute);
+
+    if (resolvedAbsolute) {
+      if (resolvedPath.length > 0)
+        return '/' + resolvedPath;
+      else
+        return '/';
+    } else if (resolvedPath.length > 0) {
+      return resolvedPath;
+    } else {
+      return '.';
+    }
+  },
+
+  normalize: function normalize(path) {
+    assertPath(path);
+
+    if (path.length === 0) return '.';
+
+    var isAbsolute = path.charCodeAt(0) === 47 /*/*/;
+    var trailingSeparator = path.charCodeAt(path.length - 1) === 47 /*/*/;
+
+    // Normalize the path
+    path = normalizeStringPosix(path, !isAbsolute);
+
+    if (path.length === 0 && !isAbsolute) path = '.';
+    if (path.length > 0 && trailingSeparator) path += '/';
+
+    if (isAbsolute) return '/' + path;
+    return path;
+  },
+
+  isAbsolute: function isAbsolute(path) {
+    assertPath(path);
+    return path.length > 0 && path.charCodeAt(0) === 47 /*/*/;
+  },
+
+  join: function join() {
+    if (arguments.length === 0)
+      return '.';
+    var joined;
+    for (var i = 0; i < arguments.length; ++i) {
+      var arg = arguments[i];
+      assertPath(arg);
+      if (arg.length > 0) {
+        if (joined === undefined)
+          joined = arg;
+        else
+          joined += '/' + arg;
+      }
+    }
+    if (joined === undefined)
+      return '.';
+    return posix.normalize(joined);
+  },
+
+  relative: function relative(from, to) {
+    assertPath(from);
+    assertPath(to);
+
+    if (from === to) return '';
+
+    from = posix.resolve(from);
+    to = posix.resolve(to);
+
+    if (from === to) return '';
+
+    // Trim any leading backslashes
+    var fromStart = 1;
+    for (; fromStart < from.length; ++fromStart) {
+      if (from.charCodeAt(fromStart) !== 47 /*/*/)
+        break;
+    }
+    var fromEnd = from.length;
+    var fromLen = fromEnd - fromStart;
+
+    // Trim any leading backslashes
+    var toStart = 1;
+    for (; toStart < to.length; ++toStart) {
+      if (to.charCodeAt(toStart) !== 47 /*/*/)
+        break;
+    }
+    var toEnd = to.length;
+    var toLen = toEnd - toStart;
+
+    // Compare paths to find the longest common path from root
+    var length = fromLen < toLen ? fromLen : toLen;
+    var lastCommonSep = -1;
+    var i = 0;
+    for (; i <= length; ++i) {
+      if (i === length) {
+        if (toLen > length) {
+          if (to.charCodeAt(toStart + i) === 47 /*/*/) {
+            // We get here if `from` is the exact base path for `to`.
+            // For example: from='/foo/bar'; to='/foo/bar/baz'
+            return to.slice(toStart + i + 1);
+          } else if (i === 0) {
+            // We get here if `from` is the root
+            // For example: from='/'; to='/foo'
+            return to.slice(toStart + i);
+          }
+        } else if (fromLen > length) {
+          if (from.charCodeAt(fromStart + i) === 47 /*/*/) {
+            // We get here if `to` is the exact base path for `from`.
+            // For example: from='/foo/bar/baz'; to='/foo/bar'
+            lastCommonSep = i;
+          } else if (i === 0) {
+            // We get here if `to` is the root.
+            // For example: from='/foo'; to='/'
+            lastCommonSep = 0;
+          }
+        }
+        break;
+      }
+      var fromCode = from.charCodeAt(fromStart + i);
+      var toCode = to.charCodeAt(toStart + i);
+      if (fromCode !== toCode)
+        break;
+      else if (fromCode === 47 /*/*/)
+        lastCommonSep = i;
+    }
+
+    var out = '';
+    // Generate the relative path based on the path difference between `to`
+    // and `from`
+    for (i = fromStart + lastCommonSep + 1; i <= fromEnd; ++i) {
+      if (i === fromEnd || from.charCodeAt(i) === 47 /*/*/) {
+        if (out.length === 0)
+          out += '..';
+        else
+          out += '/..';
+      }
+    }
+
+    // Lastly, append the rest of the destination (`to`) path that comes after
+    // the common path parts
+    if (out.length > 0)
+      return out + to.slice(toStart + lastCommonSep);
+    else {
+      toStart += lastCommonSep;
+      if (to.charCodeAt(toStart) === 47 /*/*/)
+        ++toStart;
+      return to.slice(toStart);
+    }
+  },
+
+  _makeLong: function _makeLong(path) {
+    return path;
+  },
+
+  dirname: function dirname(path) {
+    assertPath(path);
+    if (path.length === 0) return '.';
+    var code = path.charCodeAt(0);
+    var hasRoot = code === 47 /*/*/;
+    var end = -1;
+    var matchedSlash = true;
+    for (var i = path.length - 1; i >= 1; --i) {
+      code = path.charCodeAt(i);
+      if (code === 47 /*/*/) {
+          if (!matchedSlash) {
+            end = i;
+            break;
+          }
+        } else {
+        // We saw the first non-path separator
+        matchedSlash = false;
+      }
+    }
+
+    if (end === -1) return hasRoot ? '/' : '.';
+    if (hasRoot && end === 1) return '//';
+    return path.slice(0, end);
+  },
+
+  basename: function basename(path, ext) {
+    if (ext !== undefined && typeof ext !== 'string') throw new TypeError('"ext" argument must be a string');
+    assertPath(path);
+
+    var start = 0;
+    var end = -1;
+    var matchedSlash = true;
+    var i;
+
+    if (ext !== undefined && ext.length > 0 && ext.length <= path.length) {
+      if (ext.length === path.length && ext === path) return '';
+      var extIdx = ext.length - 1;
+      var firstNonSlashEnd = -1;
+      for (i = path.length - 1; i >= 0; --i) {
+        var code = path.charCodeAt(i);
+        if (code === 47 /*/*/) {
+            // If we reached a path separator that was not part of a set of path
+            // separators at the end of the string, stop now
+            if (!matchedSlash) {
+              start = i + 1;
+              break;
+            }
+          } else {
+          if (firstNonSlashEnd === -1) {
+            // We saw the first non-path separator, remember this index in case
+            // we need it if the extension ends up not matching
+            matchedSlash = false;
+            firstNonSlashEnd = i + 1;
+          }
+          if (extIdx >= 0) {
+            // Try to match the explicit extension
+            if (code === ext.charCodeAt(extIdx)) {
+              if (--extIdx === -1) {
+                // We matched the extension, so mark this as the end of our path
+                // component
+                end = i;
+              }
+            } else {
+              // Extension does not match, so our result is the entire path
+              // component
+              extIdx = -1;
+              end = firstNonSlashEnd;
+            }
+          }
+        }
+      }
+
+      if (start === end) end = firstNonSlashEnd;else if (end === -1) end = path.length;
+      return path.slice(start, end);
+    } else {
+      for (i = path.length - 1; i >= 0; --i) {
+        if (path.charCodeAt(i) === 47 /*/*/) {
+            // If we reached a path separator that was not part of a set of path
+            // separators at the end of the string, stop now
+            if (!matchedSlash) {
+              start = i + 1;
+              break;
+            }
+          } else if (end === -1) {
+          // We saw the first non-path separator, mark this as the end of our
+          // path component
+          matchedSlash = false;
+          end = i + 1;
+        }
+      }
+
+      if (end === -1) return '';
+      return path.slice(start, end);
+    }
+  },
+
+  extname: function extname(path) {
+    assertPath(path);
+    var startDot = -1;
+    var startPart = 0;
+    var end = -1;
+    var matchedSlash = true;
+    // Track the state of characters (if any) we see before our first dot and
+    // after any path separator we find
+    var preDotState = 0;
+    for (var i = path.length - 1; i >= 0; --i) {
+      var code = path.charCodeAt(i);
+      if (code === 47 /*/*/) {
+          // If we reached a path separator that was not part of a set of path
+          // separators at the end of the string, stop now
+          if (!matchedSlash) {
+            startPart = i + 1;
+            break;
+          }
+          continue;
+        }
+      if (end === -1) {
+        // We saw the first non-path separator, mark this as the end of our
+        // extension
+        matchedSlash = false;
+        end = i + 1;
+      }
+      if (code === 46 /*.*/) {
+          // If this is our first dot, mark it as the start of our extension
+          if (startDot === -1)
+            startDot = i;
+          else if (preDotState !== 1)
+            preDotState = 1;
+      } else if (startDot !== -1) {
+        // We saw a non-dot and non-path separator before our dot, so we should
+        // have a good chance at having a non-empty extension
+        preDotState = -1;
+      }
+    }
+
+    if (startDot === -1 || end === -1 ||
+        // We saw a non-dot character immediately before the dot
+        preDotState === 0 ||
+        // The (right-most) trimmed path component is exactly '..'
+        preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
+      return '';
+    }
+    return path.slice(startDot, end);
+  },
+
+  format: function format(pathObject) {
+    if (pathObject === null || typeof pathObject !== 'object') {
+      throw new TypeError('The "pathObject" argument must be of type Object. Received type ' + typeof pathObject);
+    }
+    return _format('/', pathObject);
+  },
+
+  parse: function parse(path) {
+    assertPath(path);
+
+    var ret = { root: '', dir: '', base: '', ext: '', name: '' };
+    if (path.length === 0) return ret;
+    var code = path.charCodeAt(0);
+    var isAbsolute = code === 47 /*/*/;
+    var start;
+    if (isAbsolute) {
+      ret.root = '/';
+      start = 1;
+    } else {
+      start = 0;
+    }
+    var startDot = -1;
+    var startPart = 0;
+    var end = -1;
+    var matchedSlash = true;
+    var i = path.length - 1;
+
+    // Track the state of characters (if any) we see before our first dot and
+    // after any path separator we find
+    var preDotState = 0;
+
+    // Get non-dir info
+    for (; i >= start; --i) {
+      code = path.charCodeAt(i);
+      if (code === 47 /*/*/) {
+          // If we reached a path separator that was not part of a set of path
+          // separators at the end of the string, stop now
+          if (!matchedSlash) {
+            startPart = i + 1;
+            break;
+          }
+          continue;
+        }
+      if (end === -1) {
+        // We saw the first non-path separator, mark this as the end of our
+        // extension
+        matchedSlash = false;
+        end = i + 1;
+      }
+      if (code === 46 /*.*/) {
+          // If this is our first dot, mark it as the start of our extension
+          if (startDot === -1) startDot = i;else if (preDotState !== 1) preDotState = 1;
+        } else if (startDot !== -1) {
+        // We saw a non-dot and non-path separator before our dot, so we should
+        // have a good chance at having a non-empty extension
+        preDotState = -1;
+      }
+    }
+
+    if (startDot === -1 || end === -1 ||
+    // We saw a non-dot character immediately before the dot
+    preDotState === 0 ||
+    // The (right-most) trimmed path component is exactly '..'
+    preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
+      if (end !== -1) {
+        if (startPart === 0 && isAbsolute) ret.base = ret.name = path.slice(1, end);else ret.base = ret.name = path.slice(startPart, end);
+      }
+    } else {
+      if (startPart === 0 && isAbsolute) {
+        ret.name = path.slice(1, startDot);
+        ret.base = path.slice(1, end);
+      } else {
+        ret.name = path.slice(startPart, startDot);
+        ret.base = path.slice(startPart, end);
+      }
+      ret.ext = path.slice(startDot, end);
+    }
+
+    if (startPart > 0) ret.dir = path.slice(0, startPart - 1);else if (isAbsolute) ret.dir = '/';
+
+    return ret;
+  },
+
+  sep: '/',
+  delimiter: ':',
+  win32: null,
+  posix: null
+};
+
+posix.posix = posix;
+
+module.exports = posix;
+
+}).call(this)}).call(this,require('_process'))
+},{"_process":3}],3:[function(require,module,exports){
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+},{}],4:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Ast = void 0;
@@ -13,19 +734,34 @@ class Ast {
         this.lista_instrucciones = lista_instrucciones;
     }
     traducir(controlador, ts) {
-        let c3d = `#include <stdio.h> //Importar para el uso de Printf 
+        let c3d = ``;
+        let funciones = `/*------FUNCIONES------*/\n`;
+        let temporales = `double `;
+        let cuerpo = ``;
+        let encabezado = `#include <stdio.h> //Importar para el uso de Printf 
 #include <math.h> //Importar para el uso de libreria matematicas
 float heap[16384]; //Estructura para heap 
 float stack[16394]; //Estructura para stack 
 float p; //Puntero P 
 float h; //Puntero H
 `;
+        let impresion = `void printString() {
+    t0 = p+1;
+    t1 = stack[(int)t0];
+    L1:
+    t2 = heap[(int)t1];
+    if(t2 == -1) goto L0;
+    printf("%c", (char)t2);
+    t1 = t1+1;
+    goto L1;
+    L0:
+    return;
+}\n\n`;
         for (let instruccion of this.lista_instrucciones) {
             if (instruccion instanceof Funcion_1.Funcion) {
-                c3d += '/*------FUNCIONES------*/\n';
-                ts.setStack(0);
                 let funcion = instruccion;
                 funcion.agregarFuncionTS(ts);
+                funciones += instruccion.traducir(controlador, ts);
             }
         }
         let cantidadGlobales = 0;
@@ -41,10 +777,23 @@ float h; //Puntero H
         ts.ambito = false;
         for (let instruccion of this.lista_instrucciones) {
             if (instruccion instanceof Fmain_1.Fmain) {
-                c3d += instruccion.traducir(controlador, ts);
+                cuerpo += instruccion.traducir(controlador, ts);
             }
             ;
         }
+        let conttemp = 0;
+        while (conttemp < (ts.temporal)) {
+            temporales += `t${conttemp}, `;
+            conttemp = conttemp + 1;
+            if (conttemp == (ts.temporal)) {
+                temporales += `t${conttemp};\n\n`;
+            }
+        }
+        c3d += encabezado;
+        c3d += temporales;
+        c3d += impresion;
+        c3d += funciones;
+        c3d += cuerpo;
         return c3d;
     }
     ejecutar(controlador, ts) {
@@ -95,7 +844,7 @@ float h; //Puntero H
 }
 exports.Ast = Ast;
 
-},{"../Instrucciones/Declaracion":18,"../Instrucciones/DeclaracionVectores":19,"../Instrucciones/Fmain":20,"../Instrucciones/Funcion":21,"./Errores":2,"./Nodo":4}],2:[function(require,module,exports){
+},{"../Instrucciones/Declaracion":21,"../Instrucciones/DeclaracionVectores":22,"../Instrucciones/Fmain":23,"../Instrucciones/Funcion":24,"./Errores":5,"./Nodo":7}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Errores = void 0;
@@ -113,13 +862,13 @@ class Errores {
 }
 exports.Errores = Errores;
 
-},{"./Lista_Errores":3}],3:[function(require,module,exports){
+},{"./Lista_Errores":6}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.lista_errores = void 0;
 exports.lista_errores = { Errores: Array() };
 
-},{}],4:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Nodo = void 0;
@@ -184,7 +933,7 @@ class Nodo {
 }
 exports.Nodo = Nodo;
 
-},{}],5:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Controlador = void 0;
@@ -302,7 +1051,7 @@ class Controlador {
 }
 exports.Controlador = Controlador;
 
-},{}],6:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccesoStruct = void 0;
@@ -345,7 +1094,8 @@ class AccesoStruct {
         return struct.valor;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Acceso a structrs------*/\n';
+        return c3d;
     }
     recorrer() {
         throw new Error("Method not implemented.");
@@ -353,7 +1103,7 @@ class AccesoStruct {
 }
 exports.AccesoStruct = AccesoStruct;
 
-},{"../AST/Errores":2,"../TablaSimbolos/Tipo":54}],7:[function(require,module,exports){
+},{"../AST/Errores":5,"../TablaSimbolos/Tipo":57}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccesoVector = void 0;
@@ -445,12 +1195,13 @@ class AccesoVector {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        return 'acceso_vector';
+        let c3d = '/*------Acceso a vectores-----*/\n';
+        return c3d;
     }
 }
 exports.AccesoVector = AccesoVector;
 
-},{"../AST/Errores":2,"../TablaSimbolos/Tipo":54}],8:[function(require,module,exports){
+},{"../AST/Errores":5,"../TablaSimbolos/Tipo":57}],11:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Aritmetica = void 0;
@@ -1797,34 +2548,34 @@ class Aritmetica extends Operacion_1.Operacion {
             c3d += this.exp2.traducir(controlador, ts);
             const tempIzq = ts.getTemporalActual();
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = -1 * ${tempIzq}\n`;
+            c3d += ` ${temporal} = -1 * ${tempIzq}\n`;
             ts.QuitarTemporal(tempIzq);
             ts.AgregarTemporal(temporal);
             return c3d;
         }
         else if (this.operador == Operacion_1.Operador.SIN) {
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = sin\(${this.exp1.getValor(controlador, ts)}\);\n`;
+            c3d += `    ${temporal} = sin\(${this.exp1.getValor(controlador, ts)}\);\n`;
             return c3d;
         }
         else if (this.operador == Operacion_1.Operador.COS) {
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = cos\(${this.exp1.getValor(controlador, ts)}\);\n`;
+            c3d += `    ${temporal} = cos\(${this.exp1.getValor(controlador, ts)}\);\n`;
             return c3d;
         }
         else if (this.operador == Operacion_1.Operador.TAN) {
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = tan\(${this.exp1.getValor(controlador, ts)}\);\n`;
+            c3d += `    ${temporal} = tan\(${this.exp1.getValor(controlador, ts)}\);\n`;
             return c3d;
         }
         else if (this.operador == Operacion_1.Operador.SQRT) {
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = sqrt\(${this.exp1.getValor(controlador, ts)}\);\n`;
+            c3d += `    ${temporal} = sqrt\(${this.exp1.getValor(controlador, ts)}\);\n`;
             return c3d;
         }
         else if (this.operador == Operacion_1.Operador.POT) {
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = pow\(${this.exp1.getValor(controlador, ts)},${this.exp2.getValor(controlador, ts)}\);\n`;
+            c3d += `    ${temporal} = pow\(${this.exp1.getValor(controlador, ts)},${this.exp2.getValor(controlador, ts)}\);\n`;
             return c3d;
         }
         else {
@@ -1833,7 +2584,7 @@ class Aritmetica extends Operacion_1.Operacion {
             c3d += this.exp2.traducir(controlador, ts);
             const tempDer = ts.getTemporalActual();
             const temporal = ts.getTemporal();
-            c3d += `${temporal} = ${tempIzq} ${this.signo_operador} ${tempDer};\n`;
+            c3d += `    ${temporal} = ${tempIzq} ${this.signo_operador} ${tempDer};\n`;
             ts.AgregarTemporal(temporal);
             return c3d;
         }
@@ -1841,7 +2592,7 @@ class Aritmetica extends Operacion_1.Operacion {
 }
 exports.Aritmetica = Aritmetica;
 
-},{"../../AST/Errores":2,"../../AST/Nodo":4,"../../TablaSimbolos/Tipo":54,"./Operacion":10}],9:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../AST/Nodo":7,"../../TablaSimbolos/Tipo":57,"./Operacion":13}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Logicas = void 0;
@@ -1980,7 +2731,6 @@ class Logicas extends Operacion_1.Operacion {
             case Operacion_1.Operador.AND:
                 return c3d;
             case Operacion_1.Operador.OR:
-                c3d += 'A mamon';
                 c3d += this.exp1.traducir(controlador, ts);
                 c3d += this.exp2.traducir(controlador, ts);
                 return c3d;
@@ -1991,7 +2741,7 @@ class Logicas extends Operacion_1.Operacion {
 }
 exports.Logicas = Logicas;
 
-},{"../../AST/Errores":2,"../../AST/Nodo":4,"../../TablaSimbolos/Tipo":54,"./Operacion":10}],10:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../AST/Nodo":7,"../../TablaSimbolos/Tipo":57,"./Operacion":13}],13:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Operacion = exports.Operador = void 0;
@@ -2109,7 +2859,7 @@ class Operacion {
 }
 exports.Operacion = Operacion;
 
-},{}],11:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Relacional = void 0;
@@ -2990,8 +3740,8 @@ class Relacional extends Operacion_1.Operacion {
         const etiquetaV = ts.getEtiqueta();
         const etiquetaF = ts.getEtiqueta();
         const temp = ts.getTemporal();
-        c3d += `if(${tempIzq} ${this.signo_operador} ${tempDer}) goto ${etiquetaV};\n`;
-        c3d += `goto ${etiquetaF};\n`;
+        c3d += `    if(${tempIzq} ${this.signo_operador} ${tempDer}) goto ${etiquetaV};\n`;
+        c3d += `    goto ${etiquetaF};\n`;
         ts.AgregarTemporal(temp);
         ts.QuitarTemporal(tempIzq);
         ts.QuitarTemporal(tempDer);
@@ -3000,7 +3750,7 @@ class Relacional extends Operacion_1.Operacion {
 }
 exports.Relacional = Relacional;
 
-},{"../../AST/Errores":2,"../../AST/Nodo":4,"../../TablaSimbolos/Tipo":54,"./Operacion":10}],12:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../AST/Nodo":7,"../../TablaSimbolos/Tipo":57,"./Operacion":13}],15:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Primitivo = void 0;
@@ -3032,13 +3782,13 @@ class Primitivo {
         let x = 0;
         const temporal = ts.getTemporal();
         if (this.getTipo(controlador, ts) == Tipo_1.tipo.ENTERO || this.getTipo(controlador, ts) == Tipo_1.tipo.DOBLE) {
-            c3d += `${temporal} = ${this.valor_primitivo};\n`;
+            c3d += `    ${temporal} = ${this.valor_primitivo};\n`;
         }
         else if (this.getTipo(controlador, ts) == Tipo_1.tipo.CADENA) {
-            c3d += `${temporal} = h;\n`;
+            c3d += `    ${temporal} = h;\n`;
             while (x < this.getValor(controlador, ts).length) {
-                c3d += `heap[(int)h] = ${this.getValor(controlador, ts).charCodeAt(x)};\n`;
-                c3d += `h = h+1;\n`;
+                c3d += `    heap[(int)h] = ${this.getValor(controlador, ts).charCodeAt(x)};\n`;
+                c3d += `    h = h+1;\n`;
                 x = x + 1;
             }
         }
@@ -3048,7 +3798,7 @@ class Primitivo {
 }
 exports.Primitivo = Primitivo;
 
-},{"../AST/Nodo":4,"../TablaSimbolos/Tipo":54}],13:[function(require,module,exports){
+},{"../AST/Nodo":7,"../TablaSimbolos/Tipo":57}],16:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Ternario = void 0;
@@ -3094,12 +3844,13 @@ class Ternario {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Ternarios------*/\n';
+        return c3d;
     }
 }
 exports.Ternario = Ternario;
 
-},{"../AST/Errores":2,"../AST/Nodo":4,"../TablaSimbolos/Tipo":54}],14:[function(require,module,exports){
+},{"../AST/Errores":5,"../AST/Nodo":7,"../TablaSimbolos/Tipo":57}],17:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Identificador = void 0;
@@ -3144,13 +3895,13 @@ class Identificador {
         let c3d = '';
         let variable = ts.getSimbolo(this.identificador);
         if (!ts.ambito) {
-            c3d += `${ts.getTemporal()} = stack[${variable.getPosicion()}];\n`;
+            c3d += `    ${ts.getTemporal()} = stack[${variable.getPosicion()}];\n`;
         }
         else {
             let temp = ts.getTemporal();
-            c3d += `${temp} = P;\n`;
-            c3d += `${temp} = ${temp} + ${variable.posicion};\n`;
-            c3d += `${ts.getTemporal()} = stack[${temp}];\n`;
+            c3d += `    ${temp} = P;\n`;
+            c3d += `    ${temp} = ${temp} + ${variable.posicion};\n`;
+            c3d += `    ${ts.getTemporal()} = stack[${temp}];\n`;
         }
         ts.AgregarTemporal(ts.getTemporalActual());
         return c3d;
@@ -3158,7 +3909,7 @@ class Identificador {
 }
 exports.Identificador = Identificador;
 
-},{"../AST/Errores":2,"../AST/Nodo":4,"../TablaSimbolos/Tipo":54}],15:[function(require,module,exports){
+},{"../AST/Errores":5,"../AST/Nodo":7,"../TablaSimbolos/Tipo":57}],18:[function(require,module,exports){
 (function (process){(function (){
 /* parser generated by jison 0.4.18 */
 /*
@@ -4514,7 +5265,7 @@ if (typeof module !== 'undefined' && require.main === module) {
 }
 }
 }).call(this)}).call(this,require('_process'))
-},{"../AST/Ast":1,"../AST/Errores":2,"../Expresiones/AccesoStruct":6,"../Expresiones/AccesoVector":7,"../Expresiones/Operaciones/Aritmetica":8,"../Expresiones/Operaciones/Logicas":9,"../Expresiones/Operaciones/Relacionales":11,"../Expresiones/Primitivo":12,"../Expresiones/Ternario":13,"../Expresiones/identificador":14,"../Instrucciones/Asignacion":16,"../Instrucciones/CharOfPosition":17,"../Instrucciones/Declaracion":18,"../Instrucciones/DeclaracionVectores":19,"../Instrucciones/Fmain":20,"../Instrucciones/Funcion":21,"../Instrucciones/FuncionesNativas/Casteos":22,"../Instrucciones/FuncionesNativas/Round":23,"../Instrucciones/FuncionesNativas/TipoParse":24,"../Instrucciones/FuncionesNativas/ToDouble":25,"../Instrucciones/FuncionesNativas/ToInt":26,"../Instrucciones/FuncionesNativas/Tostring":27,"../Instrucciones/FuncionesNativas/Typeof":28,"../Instrucciones/LenghtC":29,"../Instrucciones/Llamada":30,"../Instrucciones/Print":31,"../Instrucciones/Println":32,"../Instrucciones/SentenciadeTransferencia/Break":33,"../Instrucciones/SentenciadeTransferencia/Continue":34,"../Instrucciones/SentenciadeTransferencia/Return":35,"../Instrucciones/SentenciasCiclicas/DoWhile":36,"../Instrucciones/SentenciasCiclicas/For":37,"../Instrucciones/SentenciasCiclicas/While":38,"../Instrucciones/SentenciasdeControl/Ifs":39,"../Instrucciones/SentenciasdeControl/Switch":40,"../Instrucciones/SentenciasdeControl/caso":41,"../Instrucciones/Struct/DeclaracionStruct":42,"../Instrucciones/Struct/DefinicionStruct":43,"../Instrucciones/Struct/ModificarStruct":44,"../Instrucciones/SubString":45,"../Instrucciones/Tolower":46,"../Instrucciones/Toupper":47,"../Instrucciones/Vector/AsignacionArreglo":48,"../Instrucciones/Vector/PopArreglo":49,"../Instrucciones/Vector/PushArreglo":50,"../Instrucciones/Vector/SliceVector":51,"../TablaSimbolos/Simbolo":52,"../TablaSimbolos/Tipo":54,"_process":58,"fs":56,"path":57}],16:[function(require,module,exports){
+},{"../AST/Ast":4,"../AST/Errores":5,"../Expresiones/AccesoStruct":9,"../Expresiones/AccesoVector":10,"../Expresiones/Operaciones/Aritmetica":11,"../Expresiones/Operaciones/Logicas":12,"../Expresiones/Operaciones/Relacionales":14,"../Expresiones/Primitivo":15,"../Expresiones/Ternario":16,"../Expresiones/identificador":17,"../Instrucciones/Asignacion":19,"../Instrucciones/CharOfPosition":20,"../Instrucciones/Declaracion":21,"../Instrucciones/DeclaracionVectores":22,"../Instrucciones/Fmain":23,"../Instrucciones/Funcion":24,"../Instrucciones/FuncionesNativas/Casteos":25,"../Instrucciones/FuncionesNativas/Round":26,"../Instrucciones/FuncionesNativas/TipoParse":27,"../Instrucciones/FuncionesNativas/ToDouble":28,"../Instrucciones/FuncionesNativas/ToInt":29,"../Instrucciones/FuncionesNativas/Tostring":30,"../Instrucciones/FuncionesNativas/Typeof":31,"../Instrucciones/LenghtC":32,"../Instrucciones/Llamada":33,"../Instrucciones/Print":34,"../Instrucciones/Println":35,"../Instrucciones/SentenciadeTransferencia/Break":36,"../Instrucciones/SentenciadeTransferencia/Continue":37,"../Instrucciones/SentenciadeTransferencia/Return":38,"../Instrucciones/SentenciasCiclicas/DoWhile":39,"../Instrucciones/SentenciasCiclicas/For":40,"../Instrucciones/SentenciasCiclicas/While":41,"../Instrucciones/SentenciasdeControl/Ifs":42,"../Instrucciones/SentenciasdeControl/Switch":43,"../Instrucciones/SentenciasdeControl/caso":44,"../Instrucciones/Struct/DeclaracionStruct":45,"../Instrucciones/Struct/DefinicionStruct":46,"../Instrucciones/Struct/ModificarStruct":47,"../Instrucciones/SubString":48,"../Instrucciones/Tolower":49,"../Instrucciones/Toupper":50,"../Instrucciones/Vector/AsignacionArreglo":51,"../Instrucciones/Vector/PopArreglo":52,"../Instrucciones/Vector/PushArreglo":53,"../Instrucciones/Vector/SliceVector":54,"../TablaSimbolos/Simbolo":55,"../TablaSimbolos/Tipo":57,"_process":3,"fs":1,"path":2}],19:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Asignacion = void 0;
@@ -4591,14 +5342,14 @@ class Asignacion {
         c3d += '/*------ASIGNACION------*/\n';
         c3d += valor3d;
         if (!ts.ambito) {
-            c3d += `stack[${variable.posicion}] = ${ts.getTemporalActual()};\n`;
+            c3d += `    stack[${variable.posicion}] = ${ts.getTemporalActual()};\n`;
         }
         else {
             let temp = ts.getTemporalActual();
             let temp2 = ts.getTemporal();
-            c3d += `${temp2}=p;\n`;
-            c3d += `${temp2} = ${temp2} + ${variable.posicion};\n`;
-            c3d += `stack${temp2} = ${temp};\n`;
+            c3d += `    ${temp2}=p;\n`;
+            c3d += `    ${temp2} = ${temp2} + ${variable.posicion};\n`;
+            c3d += `    stack${temp2} = ${temp};\n`;
         }
         ts.QuitarTemporal(ts.getTemporalActual());
         return c3d;
@@ -4606,7 +5357,7 @@ class Asignacion {
 }
 exports.Asignacion = Asignacion;
 
-},{"../AST/Errores":2,"../AST/Nodo":4,"../TablaSimbolos/Tipo":54}],17:[function(require,module,exports){
+},{"../AST/Errores":5,"../AST/Nodo":7,"../TablaSimbolos/Tipo":57}],20:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CharOfPosition = void 0;
@@ -4647,12 +5398,13 @@ class CharOfPosition {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Posicion de caracter------*/\n';
+        return c3d;
     }
 }
 exports.CharOfPosition = CharOfPosition;
 
-},{"../AST/Errores":2,"../TablaSimbolos/Tipo":54}],18:[function(require,module,exports){
+},{"../AST/Errores":5,"../TablaSimbolos/Tipo":57}],21:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Declaracion = void 0;
@@ -4824,24 +5576,24 @@ class Declaracion {
                 //Concatenamos el codigo que se genero del valor
                 c3d += valor3d;
                 if (!ts.ambito) {
-                    c3d += `stack[${variable.posicion}] = ${ts.getTemporalActual()};\n`;
+                    c3d += `    stack[${variable.posicion}] = ${ts.getTemporalActual()};\n`;
                 }
                 else {
                     let temp = ts.getTemporalActual();
                     let temp2 = ts.getTemporal();
-                    c3d += `${temp2}=p;\n`;
-                    c3d += `${temp2} = ${temp2} + ${variable.posicion};\n`;
-                    c3d += `stack[${temp2}] = ${temp};\n`;
+                    c3d += `    ${temp2}=p;\n`;
+                    c3d += `    ${temp2} = ${temp2} + ${variable.posicion};\n`;
+                    c3d += `    stack[${temp2}] = ${temp};\n`;
                 }
                 ts.QuitarTemporal(ts.getTemporalActual());
             }
             else {
                 let temp = ts.getTemporal();
                 if (this.expresion.getTipo(controlador, ts) == Tipo_1.tipo.BOOLEAN || this.expresion.getTipo(controlador, ts) == Tipo_1.tipo.ENTERO) {
-                    c3d += `${temp} = 0;\n`;
+                    c3d += `    ${temp} = 0;\n`;
                 }
                 else {
-                    c3d += `${temp} = -1;\n`;
+                    c3d += `    ${temp} = -1;\n`;
                 }
             }
         }
@@ -4850,7 +5602,7 @@ class Declaracion {
 }
 exports.Declaracion = Declaracion;
 
-},{"../AST/Errores":2,"../AST/Nodo":4,"../TablaSimbolos/Simbolo":52,"../TablaSimbolos/Tipo":54}],19:[function(require,module,exports){
+},{"../AST/Errores":5,"../AST/Nodo":7,"../TablaSimbolos/Simbolo":55,"../TablaSimbolos/Tipo":57}],22:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeclaracionVectores = void 0;
@@ -4900,12 +5652,13 @@ class DeclaracionVectores {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        return 'hola';
+        let c3d = '/*------Declaracion de vectores------*/\n';
+        return c3d;
     }
 }
 exports.DeclaracionVectores = DeclaracionVectores;
 
-},{"../AST/Errores":2,"../TablaSimbolos/Simbolo":52}],20:[function(require,module,exports){
+},{"../AST/Errores":5,"../TablaSimbolos/Simbolo":55}],23:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Fmain = void 0;
@@ -4921,6 +5674,8 @@ class Fmain extends Simbolo_1.Simbolo {
     }
     traducir(controlador, ts) {
         let ts_local = new TablaSimbolos_1.TablaSimbolos(ts);
+        ts_local.temporal = ts.temporal;
+        ts_local.etiqueta = ts.etiqueta;
         let c3d = '';
         if (controlador.tablas.some(x => ts_local === ts_local)) {
         }
@@ -4931,30 +5686,32 @@ class Fmain extends Simbolo_1.Simbolo {
         for (let inst of this.lista_instrucciones) {
             c3d2 += inst.traducir(controlador, ts_local);
         }
-        let conttemp = 0;
-        console.log(ts.tempStorage);
-        c3d += "double ";
-        while (conttemp < (ts_local.getNumeroTemporales() + ts.getNumeroTemporales() - 3)) {
-            c3d += `t${conttemp}, `;
-            conttemp = conttemp + 1;
-            if (conttemp == (ts_local.getNumeroTemporales() + ts.getNumeroTemporales() - 3)) {
-                c3d += `t${conttemp};\n `;
-            }
-        }
-        c3d += `void printString() {
-t0 = p+1;
-t1 = stack[(int)t0];
-L1:
-t2 = heap[(int)t1];
-if(t2 == -1) goto L0;
-printf("%c", (char)t2);
-t1 = t1+1;
-goto L1;
-L0:
-return;
-        }\n\n`;
+        // let conttemp = 0;
+        // console.log(ts.tempStorage);
+        // c3d += "double "
+        // while(conttemp < (ts_local.getNumeroTemporales()+ts.getNumeroTemporales() -3)){
+        //     c3d += `t${conttemp}, `
+        //     conttemp = conttemp +1;
+        //     if (conttemp == (ts_local.getNumeroTemporales()+ts.getNumeroTemporales() -3)){
+        //         c3d += `t${conttemp};\n `
+        //     }
+        // }
+        //         c3d+= `void printString() {
+        // t0 = p+1;
+        // t1 = stack[(int)t0];
+        // L1:
+        // t2 = heap[(int)t1];
+        // if(t2 == -1) goto L0;
+        // printf("%c", (char)t2);
+        // t1 = t1+1;
+        // goto L1;
+        // L0:
+        // return;
+        //         }\n\n`
         c3d += c3d2;
-        c3d += `return;\n}\n`;
+        c3d += `    return;\n}\n`;
+        ts.temporal = ts_local.temporal;
+        ts.etiqueta = ts_local.etiqueta;
         return c3d;
     }
     agregarFuncionTS(ts) {
@@ -4993,7 +5750,7 @@ return;
 }
 exports.Fmain = Fmain;
 
-},{"../AST/Nodo":4,"../TablaSimbolos/Simbolo":52,"../TablaSimbolos/TablaSimbolos":53}],21:[function(require,module,exports){
+},{"../AST/Nodo":7,"../TablaSimbolos/Simbolo":55,"../TablaSimbolos/TablaSimbolos":56}],24:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Funcion = void 0;
@@ -5007,11 +5764,6 @@ class Funcion extends Simbolo_1.Simbolo {
         this.lista_instrucciones = lista_instrucciones;
         this.linea = linea;
         this.columna = columna;
-    }
-    traducir(controlador, ts) {
-        let c3d = ``;
-        c3d += `si aqui va `;
-        return c3d;
     }
     //Se crea un método para agregar el símbolo de la función a la tabla de símbolos
     agregarFuncionTS(ts) {
@@ -5067,10 +5819,32 @@ class Funcion extends Simbolo_1.Simbolo {
         padre.AddHijo(new Nodo_1.Nodo("}", ""));
         return padre;
     }
+    traducir(controlador, ts) {
+        let c3d = ``;
+        c3d += `void ${this.identificador}(){\n`;
+        let ts_local = new TablaSimbolos_1.TablaSimbolos(ts);
+        if (controlador.tablas.some(x => ts_local === ts_local)) {
+        }
+        else {
+            controlador.tablas.push(ts_local);
+        }
+        for (let inst of this.lista_instrucciones) {
+            let retorno = inst.traducir(controlador, ts_local);
+            c3d += retorno;
+            // if(retorno != null){
+            //     return retorno;
+            // }
+        }
+        c3d += ` return;
+}\n`;
+        ts.temporal = ts.temporal + ts_local.temporal;
+        ts.etiqueta = ts.etiqueta + ts_local.etiqueta;
+        return c3d;
+    }
 }
 exports.Funcion = Funcion;
 
-},{"../AST/Nodo":4,"../TablaSimbolos/Simbolo":52,"../TablaSimbolos/TablaSimbolos":53}],22:[function(require,module,exports){
+},{"../AST/Nodo":7,"../TablaSimbolos/Simbolo":55,"../TablaSimbolos/TablaSimbolos":56}],25:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Casteos = void 0;
@@ -5171,12 +5945,13 @@ class Casteos {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Casteos------*/\n';
+        return c3d;
     }
 }
 exports.Casteos = Casteos;
 
-},{"../../AST/Nodo":4,"../../TablaSimbolos/Tipo":54}],23:[function(require,module,exports){
+},{"../../AST/Nodo":7,"../../TablaSimbolos/Tipo":57}],26:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Round = void 0;
@@ -5224,12 +5999,13 @@ class Round {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Round------*/\n';
+        return c3d;
     }
 }
 exports.Round = Round;
 
-},{"../../AST/Errores":2,"../../AST/Nodo":4,"../../TablaSimbolos/Tipo":54}],24:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../AST/Nodo":7,"../../TablaSimbolos/Tipo":57}],27:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TipoParse = void 0;
@@ -5303,12 +6079,13 @@ class TipoParse {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------TipoPArse-----*/\n';
+        return c3d;
     }
 }
 exports.TipoParse = TipoParse;
 
-},{"../../AST/Errores":2,"../../AST/Nodo":4,"../../TablaSimbolos/Tipo":54}],25:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../AST/Nodo":7,"../../TablaSimbolos/Tipo":57}],28:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToDouble = void 0;
@@ -5353,12 +6130,13 @@ class ToDouble {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Todoble------*/\n';
+        return c3d;
     }
 }
 exports.ToDouble = ToDouble;
 
-},{"../../AST/Errores":2,"../../AST/Nodo":4,"../../TablaSimbolos/Tipo":54}],26:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../AST/Nodo":7,"../../TablaSimbolos/Tipo":57}],29:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToInt = void 0;
@@ -5406,12 +6184,13 @@ class ToInt {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Toint------*/\n';
+        return c3d;
     }
 }
 exports.ToInt = ToInt;
 
-},{"../../AST/Errores":2,"../../AST/Nodo":4,"../../TablaSimbolos/Tipo":54}],27:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../AST/Nodo":7,"../../TablaSimbolos/Tipo":57}],30:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Tostring = void 0;
@@ -5459,12 +6238,13 @@ class Tostring {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Traducir------*/\n';
+        return c3d;
     }
 }
 exports.Tostring = Tostring;
 
-},{"../../AST/Errores":2,"../../AST/Nodo":4,"../../TablaSimbolos/Tipo":54}],28:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../AST/Nodo":7,"../../TablaSimbolos/Tipo":57}],31:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Typeof = void 0;
@@ -5514,12 +6294,13 @@ class Typeof {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Typeof------*/\n';
+        return c3d;
     }
 }
 exports.Typeof = Typeof;
 
-},{"../../AST/Nodo":4,"../../TablaSimbolos/Tipo":54}],29:[function(require,module,exports){
+},{"../../AST/Nodo":7,"../../TablaSimbolos/Tipo":57}],32:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LenghtC = void 0;
@@ -5568,12 +6349,13 @@ class LenghtC {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Lenght------*/\n';
+        return c3d;
     }
 }
 exports.LenghtC = LenghtC;
 
-},{"../AST/Errores":2,"../AST/Nodo":4,"../TablaSimbolos/Tipo":54}],30:[function(require,module,exports){
+},{"../AST/Errores":5,"../AST/Nodo":7,"../TablaSimbolos/Tipo":57}],33:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Llamada = void 0;
@@ -5589,7 +6371,8 @@ class Llamada {
         this.linea = linea;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Llamada------*/\n';
+        return c3d;
     }
     getTipo(controlador, ts) {
         let simbolo_funcion = ts.getSimbolo(this.identificador);
@@ -5703,7 +6486,7 @@ class Llamada {
 }
 exports.Llamada = Llamada;
 
-},{"../AST/Errores":2,"../AST/Nodo":4,"../TablaSimbolos/Simbolo":52,"../TablaSimbolos/TablaSimbolos":53}],31:[function(require,module,exports){
+},{"../AST/Errores":5,"../AST/Nodo":7,"../TablaSimbolos/Simbolo":55,"../TablaSimbolos/TablaSimbolos":56}],34:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Print = void 0;
@@ -5741,12 +6524,12 @@ class Print {
         let temp2 = ts.getTemporalActualint();
         if (this.expresion.getTipo(controlador, ts) == Tipo_1.tipo.ENTERO || this.expresion.getTipo(controlador, ts) == Tipo_1.tipo.BOOLEAN) {
             codigo += this.expresion.traducir(controlador, ts);
-            codigo += `printf(\"%d\", (int)t${temp2 + 1});\n`;
+            codigo += `    printf(\"%d\", (int)t${temp2 + 1});\n`;
             ts.QuitarTemporal(temp);
         }
         else if (this.expresion.getTipo(controlador, ts) == Tipo_1.tipo.DOBLE) {
             codigo += this.expresion.traducir(controlador, ts);
-            codigo += `printf(\"%f\", (double)t${temp2 + 1});\n`;
+            codigo += `    printf(\"%f\", (double)t${temp2 + 1});\n`;
             ts.QuitarTemporal(temp);
         }
         // else if(this.expresion.getTipo(controlador,ts) == tipo.DOBLE){
@@ -5759,21 +6542,21 @@ class Print {
             let temp4 = ts.getTemporal();
             let temp5 = ts.getTemporal();
             let x = 0;
-            c3d += `${temporal} = h;\n`;
+            c3d += `    ${temporal} = h;\n`;
             while (x < this.expresion.getValor(controlador, ts).length) {
-                c3d += `heap[(int)h] = ${this.expresion.getValor(controlador, ts).charCodeAt(x)};\n`;
-                c3d += `h = h+1;\n`;
+                c3d += `    heap[(int)h] = ${this.expresion.getValor(controlador, ts).charCodeAt(x)};\n`;
+                c3d += `    h = h+1;\n`;
                 x = x + 1;
             }
-            c3d += `heap[(int)h] =-1;\n`;
-            c3d += `h = h+1;\n`;
-            c3d += `${temp4} = p+ ${ts.getStackActual()};\n`;
-            c3d += `${temp4} = ${temp4}+1;\n`;
-            c3d += `stack[(int)${temp4}] =  ${temporal};\n`;
-            c3d += `p = p+${ts.getStackActual()};\n`;
-            c3d += `printString();\n`;
-            c3d += `${temp5} = stack[(int)p];\n`;
-            c3d += `p = p-${ts.getStackActual()};\n`;
+            c3d += `    heap[(int)h] =-1;\n`;
+            c3d += `    h = h+1;\n`;
+            c3d += `    ${temp4} = p+ ${ts.getStackActual()};\n`;
+            c3d += `    ${temp4} = ${temp4}+1;\n`;
+            c3d += `    stack[(int)${temp4}] =  ${temporal};\n`;
+            c3d += `    p = p+${ts.getStackActual()};\n`;
+            c3d += `    printString();\n`;
+            c3d += `    ${temp5} = stack[(int)p];\n`;
+            c3d += `    p = p-${ts.getStackActual()};\n`;
             codigo += c3d;
         }
         else {
@@ -5814,7 +6597,7 @@ class Print {
 }
 exports.Print = Print;
 
-},{"../AST/Nodo":4,"../TablaSimbolos/Tipo":54}],32:[function(require,module,exports){
+},{"../AST/Nodo":7,"../TablaSimbolos/Tipo":57}],35:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Println = void 0;
@@ -5852,12 +6635,12 @@ class Println {
         let temp2 = ts.getTemporalActualint();
         if (this.expresion.getTipo(controlador, ts) == Tipo_1.tipo.ENTERO || this.expresion.getTipo(controlador, ts) == Tipo_1.tipo.BOOLEAN) {
             codigo += this.expresion.traducir(controlador, ts);
-            codigo += `printf(\"%d\\n\", (int)t${temp2 + 1});\n`;
+            codigo += `    printf(\"%d\\n\", (int)t${temp2 + 1});\n`;
             ts.QuitarTemporal(temp);
         }
         else if (this.expresion.getTipo(controlador, ts) == Tipo_1.tipo.DOBLE) {
             codigo += this.expresion.traducir(controlador, ts);
-            codigo += `printf(\"%f\\n\", (double)t${temp2 + 1});\n`;
+            codigo += `    printf(\"%f\\n\", (double)t${temp2 + 1});\n`;
             ts.QuitarTemporal(temp);
         }
         // else if(this.expresion.getTipo(controlador,ts) == tipo.DOBLE){
@@ -5870,22 +6653,22 @@ class Println {
             let temp4 = ts.getTemporal();
             let temp5 = ts.getTemporal();
             let x = 0;
-            c3d += `${temporal} = h;\n`;
+            c3d += `    ${temporal} = h;\n`;
             while (x < this.expresion.getValor(controlador, ts).length) {
-                c3d += `heap[(int)h] = ${this.expresion.getValor(controlador, ts).charCodeAt(x)};\n`;
-                c3d += `h = h+1;\n`;
+                c3d += `    heap[(int)h] = ${this.expresion.getValor(controlador, ts).charCodeAt(x)};\n`;
+                c3d += `    h = h+1;\n`;
                 x = x + 1;
             }
-            c3d += `heap[(int)h] =-1;\n`;
-            c3d += `h = h+1;\n`;
-            c3d += `${temp4} = p+ ${ts.getStackActual()};\n`;
-            c3d += `${temp4} = ${temp4}+1;\n`;
-            c3d += `stack[(int)${temp4}] =  ${temporal};\n`;
-            c3d += `p = p+${ts.getStackActual()};\n`;
-            c3d += `printString();\n`;
-            c3d += `${temp5} = stack[(int)p];\n`;
-            c3d += `p = p-${ts.getStackActual()};\n`;
-            c3d += `printf("%c", (char)10);\n`;
+            c3d += `    heap[(int)h] =-1;\n`;
+            c3d += `    h = h+1;\n`;
+            c3d += `    ${temp4} = p+ ${ts.getStackActual()};\n`;
+            c3d += `    ${temp4} = ${temp4}+1;\n`;
+            c3d += `    stack[(int)${temp4}] =  ${temporal};\n`;
+            c3d += `    p = p+${ts.getStackActual()};\n`;
+            c3d += `    printString();\n`;
+            c3d += `    ${temp5} = stack[(int)p];\n`;
+            c3d += `    p = p-${ts.getStackActual()};\n`;
+            c3d += `    printf("%c", (char)10);\n`;
             codigo += c3d;
         }
         else {
@@ -5926,7 +6709,7 @@ class Println {
 }
 exports.Println = Println;
 
-},{"../AST/Nodo":4,"../TablaSimbolos/Tipo":54}],33:[function(require,module,exports){
+},{"../AST/Nodo":7,"../TablaSimbolos/Tipo":57}],36:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Break = void 0;
@@ -5941,12 +6724,13 @@ class Break {
         return new Nodo_1.Nodo("Break", "");
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Break------*/\n';
+        return c3d;
     }
 }
 exports.Break = Break;
 
-},{"../../AST/Nodo":4}],34:[function(require,module,exports){
+},{"../../AST/Nodo":7}],37:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Continue = void 0;
@@ -5961,12 +6745,13 @@ class Continue {
         return new Nodo_1.Nodo("Continue", "");
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Continue------*/\n';
+        return c3d;
     }
 }
 exports.Continue = Continue;
 
-},{"../../AST/Nodo":4}],35:[function(require,module,exports){
+},{"../../AST/Nodo":7}],38:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Retorno = void 0;
@@ -5988,12 +6773,13 @@ class Retorno {
         return new Nodo_1.Nodo("Return", "");
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Return------*/\n';
+        return c3d;
     }
 }
 exports.Retorno = Retorno;
 
-},{"../../AST/Nodo":4}],36:[function(require,module,exports){
+},{"../../AST/Nodo":7}],39:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DoWhile = void 0;
@@ -6014,12 +6800,12 @@ class DoWhile {
         let etiqueta = ts.getEtiquetaActualint() + 1;
         let condicion = this.condicion.traducir(controlador, ts);
         let etiqueta2 = ts.getEtiquetaActual();
-        c3d += `L${etiqueta}:\n`;
+        c3d += `  L${etiqueta}:\n`;
         for (let instrucciones of this.lista_instrucciones) {
             c3d += instrucciones.traducir(controlador, ts);
         }
         c3d += condicion;
-        c3d += `${etiqueta2}:\n`;
+        c3d += `    ${etiqueta2}:\n`;
         return c3d;
     }
     ejecutar(controlador, ts) {
@@ -6073,7 +6859,7 @@ class DoWhile {
 }
 exports.DoWhile = DoWhile;
 
-},{"../../AST/Errores":2,"../../AST/Nodo":4,"../../TablaSimbolos/TablaSimbolos":53,"../SentenciadeTransferencia/Break":33,"../SentenciadeTransferencia/Continue":34}],37:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../AST/Nodo":7,"../../TablaSimbolos/TablaSimbolos":56,"../SentenciadeTransferencia/Break":36,"../SentenciadeTransferencia/Continue":37}],40:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.For = void 0;
@@ -6140,12 +6926,13 @@ class For {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------FOR------*/\n';
+        return c3d;
     }
 }
 exports.For = For;
 
-},{"../../AST/Errores":2,"../../AST/Nodo":4,"../../TablaSimbolos/TablaSimbolos":53,"../../TablaSimbolos/Tipo":54,"../SentenciadeTransferencia/Break":33,"../SentenciadeTransferencia/Continue":34}],38:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../AST/Nodo":7,"../../TablaSimbolos/TablaSimbolos":56,"../../TablaSimbolos/Tipo":57,"../SentenciadeTransferencia/Break":36,"../SentenciadeTransferencia/Continue":37}],41:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.While = void 0;
@@ -6213,23 +7000,23 @@ class While {
         let c3d = '/*------WHILE------*/\n';
         let etiqueta = ts.getEtiqueta();
         let condicion = this.condicion.traducir(controlador, ts);
-        c3d += `${etiqueta}:\n`;
+        c3d += `    ${etiqueta}:\n`;
         c3d += condicion;
         let temp = ts.getTemporalActual();
         let etiqueta1 = ts.getEtiquetaActualint() - 1;
         let etiqueta2 = ts.getEtiquetaActual();
-        c3d += `L${etiqueta1}:\n`;
+        c3d += `    L${etiqueta1}:\n`;
         for (let instrucciones of this.lista_instrucciones) {
             c3d += instrucciones.traducir(controlador, ts);
         }
-        c3d += `goto ${etiqueta};\n`;
-        c3d += `${etiqueta2}:\n`;
+        c3d += `    goto ${etiqueta};\n`;
+        c3d += `    ${etiqueta2}:\n`;
         return c3d;
     }
 }
 exports.While = While;
 
-},{"../../AST/Errores":2,"../../AST/Nodo":4,"../../TablaSimbolos/TablaSimbolos":53,"../../TablaSimbolos/Tipo":54,"../SentenciadeTransferencia/Break":33,"../SentenciadeTransferencia/Continue":34}],39:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../AST/Nodo":7,"../../TablaSimbolos/TablaSimbolos":56,"../../TablaSimbolos/Tipo":57,"../SentenciadeTransferencia/Break":36,"../SentenciadeTransferencia/Continue":37}],42:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Ifs = void 0;
@@ -6346,22 +7133,22 @@ class Ifs {
         let etiquetaV = ts.getEtiquetaActualint() - 1;
         let etiquetaF = ts.getEtiquetaActual();
         let etiquetaescape = ts.getEtiqueta();
-        c3d += `L${etiquetaV}:\n`;
+        c3d += `    L${etiquetaV}:\n`;
         for (let inst of this.lista_instrucciones_ifs) {
             c3d += inst.traducir(controlador, ts);
         }
-        c3d += `goto ${etiquetaescape};\n`;
-        c3d += `${etiquetaF}:\n`;
+        c3d += `    goto ${etiquetaescape};\n`;
+        c3d += `    ${etiquetaF}:\n`;
         for (let inst of this.lista_instrucciones_elses) {
             c3d += inst.traducir(controlador, ts);
         }
-        c3d += `${etiquetaescape}:\n`;
+        c3d += `    ${etiquetaescape}:\n`;
         return c3d;
     }
 }
 exports.Ifs = Ifs;
 
-},{"../../AST/Errores":2,"../../AST/Nodo":4,"../../TablaSimbolos/TablaSimbolos":53,"../../TablaSimbolos/Tipo":54,"../SentenciadeTransferencia/Break":33,"../SentenciadeTransferencia/Continue":34,"../SentenciadeTransferencia/Return":35}],40:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../AST/Nodo":7,"../../TablaSimbolos/TablaSimbolos":56,"../../TablaSimbolos/Tipo":57,"../SentenciadeTransferencia/Break":36,"../SentenciadeTransferencia/Continue":37,"../SentenciadeTransferencia/Return":38}],43:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Switch = void 0;
@@ -6428,12 +7215,13 @@ class Switch {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Switch------*/\n';
+        return c3d;
     }
 }
 exports.Switch = Switch;
 
-},{"../../AST/Errores":2,"../../AST/Nodo":4,"../../TablaSimbolos/TablaSimbolos":53,"../SentenciadeTransferencia/Break":33}],41:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../AST/Nodo":7,"../../TablaSimbolos/TablaSimbolos":56,"../SentenciadeTransferencia/Break":36}],44:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Caso = void 0;
@@ -6448,7 +7236,8 @@ class Caso {
         this.column = column;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*----- CAse------*/\n';
+        return c3d;
     }
     ejecutar(controlador, ts) {
         let ts_local = new TablaSimbolos_1.TablaSimbolos(ts);
@@ -6478,7 +7267,7 @@ class Caso {
 }
 exports.Caso = Caso;
 
-},{"../../AST/Nodo":4,"../../TablaSimbolos/TablaSimbolos":53,"../SentenciadeTransferencia/Break":33}],42:[function(require,module,exports){
+},{"../../AST/Nodo":7,"../../TablaSimbolos/TablaSimbolos":56,"../SentenciadeTransferencia/Break":36}],45:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeclaracionStruct = void 0;
@@ -6550,12 +7339,13 @@ class DeclaracionStruct {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Declaracion structs------*/\n';
+        return c3d;
     }
 }
 exports.DeclaracionStruct = DeclaracionStruct;
 
-},{"../../AST/Errores":2,"../../TablaSimbolos/Simbolo":52,"../../TablaSimbolos/Tipo":54}],43:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../TablaSimbolos/Simbolo":55,"../../TablaSimbolos/Tipo":57}],46:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DefinicionStruct = void 0;
@@ -6585,12 +7375,13 @@ class DefinicionStruct {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Definicion structs------*/\n';
+        return c3d;
     }
 }
 exports.DefinicionStruct = DefinicionStruct;
 
-},{"../../AST/Errores":2,"../../TablaSimbolos/Simbolo":52,"../../TablaSimbolos/Tipo":54}],44:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../TablaSimbolos/Simbolo":55,"../../TablaSimbolos/Tipo":57}],47:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModificarStruct = void 0;
@@ -6642,12 +7433,13 @@ class ModificarStruct {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Modificar structs------*/\n';
+        return c3d;
     }
 }
 exports.ModificarStruct = ModificarStruct;
 
-},{"../../AST/Errores":2}],45:[function(require,module,exports){
+},{"../../AST/Errores":5}],48:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SubString = void 0;
@@ -6703,12 +7495,13 @@ class SubString {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Substring------*/\n';
+        return c3d;
     }
 }
 exports.SubString = SubString;
 
-},{"../AST/Errores":2,"../AST/Nodo":4,"../TablaSimbolos/Tipo":54}],46:[function(require,module,exports){
+},{"../AST/Errores":5,"../AST/Nodo":7,"../TablaSimbolos/Tipo":57}],49:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Tolower = void 0;
@@ -6757,12 +7550,13 @@ class Tolower {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Tolower------*/\n';
+        return c3d;
     }
 }
 exports.Tolower = Tolower;
 
-},{"../AST/Errores":2,"../AST/Nodo":4,"../TablaSimbolos/Tipo":54}],47:[function(require,module,exports){
+},{"../AST/Errores":5,"../AST/Nodo":7,"../TablaSimbolos/Tipo":57}],50:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Toupper = void 0;
@@ -6811,12 +7605,13 @@ class Toupper {
         return padre;
     }
     traducir(controlador, ts) {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------ToUpper------*/\n';
+        return c3d;
     }
 }
 exports.Toupper = Toupper;
 
-},{"../AST/Errores":2,"../AST/Nodo":4,"../TablaSimbolos/Tipo":54}],48:[function(require,module,exports){
+},{"../AST/Errores":5,"../AST/Nodo":7,"../TablaSimbolos/Tipo":57}],51:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AsignacionArreglo = void 0;
@@ -6868,12 +7663,13 @@ class AsignacionArreglo {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        return 'hola';
+        let c3d = '/*------AsignacionArreglos------*/\n';
+        return c3d;
     }
 }
 exports.AsignacionArreglo = AsignacionArreglo;
 
-},{"../../AST/Errores":2}],49:[function(require,module,exports){
+},{"../../AST/Errores":5}],52:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PopArreglo = void 0;
@@ -6957,12 +7753,13 @@ class PopArreglo {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        return 'pop';
+        let c3d = '/*------Pop arreglos------*/\n';
+        return c3d;
     }
 }
 exports.PopArreglo = PopArreglo;
 
-},{"../../AST/Errores":2,"../../TablaSimbolos/Tipo":54}],50:[function(require,module,exports){
+},{"../../AST/Errores":5,"../../TablaSimbolos/Tipo":57}],53:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PushArreglo = void 0;
@@ -7014,7 +7811,8 @@ class PushArreglo {
     //     }
     // }
     traducir(controlador, ts) {
-        return 'push';
+        let c3d = '/*------push arreglos------*/\n';
+        return c3d;
     }
     recorrer() {
         throw new Error("Method not implemented.");
@@ -7022,7 +7820,7 @@ class PushArreglo {
 }
 exports.PushArreglo = PushArreglo;
 
-},{"../../AST/Errores":2}],51:[function(require,module,exports){
+},{"../../AST/Errores":5}],54:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SliceVector = void 0;
@@ -7071,12 +7869,13 @@ class SliceVector {
         throw new Error("Method not implemented.");
     }
     traducir(controlador, ts) {
-        return 'slice';
+        let c3d = '/*------Slice vector------*/\n';
+        return c3d;
     }
 }
 exports.SliceVector = SliceVector;
 
-},{"../../TablaSimbolos/Tipo":54}],52:[function(require,module,exports){
+},{"../../TablaSimbolos/Tipo":57}],55:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Simbolo = void 0;
@@ -7116,7 +7915,7 @@ class Simbolo {
 }
 exports.Simbolo = Simbolo;
 
-},{}],53:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 "use strict";
 /**
  * @class Esta clase va guardar la tabla de símbolos del programa, es decir, qeu guarda todas las variables, metodos y funciones
@@ -7273,7 +8072,7 @@ class TablaSimbolos {
 }
 exports.TablaSimbolos = TablaSimbolos;
 
-},{}],54:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Tipo = exports.tipo = void 0;
@@ -7329,7 +8128,7 @@ class Tipo {
 }
 exports.Tipo = Tipo;
 
-},{}],55:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 // Imports
 
 
@@ -7664,725 +8463,4 @@ const translateCodee = ()=>{
 
 }
 
-},{"../../src/build/Interprete/Controlador":5,"../../src/build/Interprete/Gramatica/gramatica":15,"../../src/build/Interprete/TablaSimbolos/TablaSimbolos":53}],56:[function(require,module,exports){
-
-},{}],57:[function(require,module,exports){
-(function (process){(function (){
-// 'path' module extracted from Node.js v8.11.1 (only the posix part)
-// transplited with Babel
-
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-'use strict';
-
-function assertPath(path) {
-  if (typeof path !== 'string') {
-    throw new TypeError('Path must be a string. Received ' + JSON.stringify(path));
-  }
-}
-
-// Resolves . and .. elements in a path with directory names
-function normalizeStringPosix(path, allowAboveRoot) {
-  var res = '';
-  var lastSegmentLength = 0;
-  var lastSlash = -1;
-  var dots = 0;
-  var code;
-  for (var i = 0; i <= path.length; ++i) {
-    if (i < path.length)
-      code = path.charCodeAt(i);
-    else if (code === 47 /*/*/)
-      break;
-    else
-      code = 47 /*/*/;
-    if (code === 47 /*/*/) {
-      if (lastSlash === i - 1 || dots === 1) {
-        // NOOP
-      } else if (lastSlash !== i - 1 && dots === 2) {
-        if (res.length < 2 || lastSegmentLength !== 2 || res.charCodeAt(res.length - 1) !== 46 /*.*/ || res.charCodeAt(res.length - 2) !== 46 /*.*/) {
-          if (res.length > 2) {
-            var lastSlashIndex = res.lastIndexOf('/');
-            if (lastSlashIndex !== res.length - 1) {
-              if (lastSlashIndex === -1) {
-                res = '';
-                lastSegmentLength = 0;
-              } else {
-                res = res.slice(0, lastSlashIndex);
-                lastSegmentLength = res.length - 1 - res.lastIndexOf('/');
-              }
-              lastSlash = i;
-              dots = 0;
-              continue;
-            }
-          } else if (res.length === 2 || res.length === 1) {
-            res = '';
-            lastSegmentLength = 0;
-            lastSlash = i;
-            dots = 0;
-            continue;
-          }
-        }
-        if (allowAboveRoot) {
-          if (res.length > 0)
-            res += '/..';
-          else
-            res = '..';
-          lastSegmentLength = 2;
-        }
-      } else {
-        if (res.length > 0)
-          res += '/' + path.slice(lastSlash + 1, i);
-        else
-          res = path.slice(lastSlash + 1, i);
-        lastSegmentLength = i - lastSlash - 1;
-      }
-      lastSlash = i;
-      dots = 0;
-    } else if (code === 46 /*.*/ && dots !== -1) {
-      ++dots;
-    } else {
-      dots = -1;
-    }
-  }
-  return res;
-}
-
-function _format(sep, pathObject) {
-  var dir = pathObject.dir || pathObject.root;
-  var base = pathObject.base || (pathObject.name || '') + (pathObject.ext || '');
-  if (!dir) {
-    return base;
-  }
-  if (dir === pathObject.root) {
-    return dir + base;
-  }
-  return dir + sep + base;
-}
-
-var posix = {
-  // path.resolve([from ...], to)
-  resolve: function resolve() {
-    var resolvedPath = '';
-    var resolvedAbsolute = false;
-    var cwd;
-
-    for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
-      var path;
-      if (i >= 0)
-        path = arguments[i];
-      else {
-        if (cwd === undefined)
-          cwd = process.cwd();
-        path = cwd;
-      }
-
-      assertPath(path);
-
-      // Skip empty entries
-      if (path.length === 0) {
-        continue;
-      }
-
-      resolvedPath = path + '/' + resolvedPath;
-      resolvedAbsolute = path.charCodeAt(0) === 47 /*/*/;
-    }
-
-    // At this point the path should be resolved to a full absolute path, but
-    // handle relative paths to be safe (might happen when process.cwd() fails)
-
-    // Normalize the path
-    resolvedPath = normalizeStringPosix(resolvedPath, !resolvedAbsolute);
-
-    if (resolvedAbsolute) {
-      if (resolvedPath.length > 0)
-        return '/' + resolvedPath;
-      else
-        return '/';
-    } else if (resolvedPath.length > 0) {
-      return resolvedPath;
-    } else {
-      return '.';
-    }
-  },
-
-  normalize: function normalize(path) {
-    assertPath(path);
-
-    if (path.length === 0) return '.';
-
-    var isAbsolute = path.charCodeAt(0) === 47 /*/*/;
-    var trailingSeparator = path.charCodeAt(path.length - 1) === 47 /*/*/;
-
-    // Normalize the path
-    path = normalizeStringPosix(path, !isAbsolute);
-
-    if (path.length === 0 && !isAbsolute) path = '.';
-    if (path.length > 0 && trailingSeparator) path += '/';
-
-    if (isAbsolute) return '/' + path;
-    return path;
-  },
-
-  isAbsolute: function isAbsolute(path) {
-    assertPath(path);
-    return path.length > 0 && path.charCodeAt(0) === 47 /*/*/;
-  },
-
-  join: function join() {
-    if (arguments.length === 0)
-      return '.';
-    var joined;
-    for (var i = 0; i < arguments.length; ++i) {
-      var arg = arguments[i];
-      assertPath(arg);
-      if (arg.length > 0) {
-        if (joined === undefined)
-          joined = arg;
-        else
-          joined += '/' + arg;
-      }
-    }
-    if (joined === undefined)
-      return '.';
-    return posix.normalize(joined);
-  },
-
-  relative: function relative(from, to) {
-    assertPath(from);
-    assertPath(to);
-
-    if (from === to) return '';
-
-    from = posix.resolve(from);
-    to = posix.resolve(to);
-
-    if (from === to) return '';
-
-    // Trim any leading backslashes
-    var fromStart = 1;
-    for (; fromStart < from.length; ++fromStart) {
-      if (from.charCodeAt(fromStart) !== 47 /*/*/)
-        break;
-    }
-    var fromEnd = from.length;
-    var fromLen = fromEnd - fromStart;
-
-    // Trim any leading backslashes
-    var toStart = 1;
-    for (; toStart < to.length; ++toStart) {
-      if (to.charCodeAt(toStart) !== 47 /*/*/)
-        break;
-    }
-    var toEnd = to.length;
-    var toLen = toEnd - toStart;
-
-    // Compare paths to find the longest common path from root
-    var length = fromLen < toLen ? fromLen : toLen;
-    var lastCommonSep = -1;
-    var i = 0;
-    for (; i <= length; ++i) {
-      if (i === length) {
-        if (toLen > length) {
-          if (to.charCodeAt(toStart + i) === 47 /*/*/) {
-            // We get here if `from` is the exact base path for `to`.
-            // For example: from='/foo/bar'; to='/foo/bar/baz'
-            return to.slice(toStart + i + 1);
-          } else if (i === 0) {
-            // We get here if `from` is the root
-            // For example: from='/'; to='/foo'
-            return to.slice(toStart + i);
-          }
-        } else if (fromLen > length) {
-          if (from.charCodeAt(fromStart + i) === 47 /*/*/) {
-            // We get here if `to` is the exact base path for `from`.
-            // For example: from='/foo/bar/baz'; to='/foo/bar'
-            lastCommonSep = i;
-          } else if (i === 0) {
-            // We get here if `to` is the root.
-            // For example: from='/foo'; to='/'
-            lastCommonSep = 0;
-          }
-        }
-        break;
-      }
-      var fromCode = from.charCodeAt(fromStart + i);
-      var toCode = to.charCodeAt(toStart + i);
-      if (fromCode !== toCode)
-        break;
-      else if (fromCode === 47 /*/*/)
-        lastCommonSep = i;
-    }
-
-    var out = '';
-    // Generate the relative path based on the path difference between `to`
-    // and `from`
-    for (i = fromStart + lastCommonSep + 1; i <= fromEnd; ++i) {
-      if (i === fromEnd || from.charCodeAt(i) === 47 /*/*/) {
-        if (out.length === 0)
-          out += '..';
-        else
-          out += '/..';
-      }
-    }
-
-    // Lastly, append the rest of the destination (`to`) path that comes after
-    // the common path parts
-    if (out.length > 0)
-      return out + to.slice(toStart + lastCommonSep);
-    else {
-      toStart += lastCommonSep;
-      if (to.charCodeAt(toStart) === 47 /*/*/)
-        ++toStart;
-      return to.slice(toStart);
-    }
-  },
-
-  _makeLong: function _makeLong(path) {
-    return path;
-  },
-
-  dirname: function dirname(path) {
-    assertPath(path);
-    if (path.length === 0) return '.';
-    var code = path.charCodeAt(0);
-    var hasRoot = code === 47 /*/*/;
-    var end = -1;
-    var matchedSlash = true;
-    for (var i = path.length - 1; i >= 1; --i) {
-      code = path.charCodeAt(i);
-      if (code === 47 /*/*/) {
-          if (!matchedSlash) {
-            end = i;
-            break;
-          }
-        } else {
-        // We saw the first non-path separator
-        matchedSlash = false;
-      }
-    }
-
-    if (end === -1) return hasRoot ? '/' : '.';
-    if (hasRoot && end === 1) return '//';
-    return path.slice(0, end);
-  },
-
-  basename: function basename(path, ext) {
-    if (ext !== undefined && typeof ext !== 'string') throw new TypeError('"ext" argument must be a string');
-    assertPath(path);
-
-    var start = 0;
-    var end = -1;
-    var matchedSlash = true;
-    var i;
-
-    if (ext !== undefined && ext.length > 0 && ext.length <= path.length) {
-      if (ext.length === path.length && ext === path) return '';
-      var extIdx = ext.length - 1;
-      var firstNonSlashEnd = -1;
-      for (i = path.length - 1; i >= 0; --i) {
-        var code = path.charCodeAt(i);
-        if (code === 47 /*/*/) {
-            // If we reached a path separator that was not part of a set of path
-            // separators at the end of the string, stop now
-            if (!matchedSlash) {
-              start = i + 1;
-              break;
-            }
-          } else {
-          if (firstNonSlashEnd === -1) {
-            // We saw the first non-path separator, remember this index in case
-            // we need it if the extension ends up not matching
-            matchedSlash = false;
-            firstNonSlashEnd = i + 1;
-          }
-          if (extIdx >= 0) {
-            // Try to match the explicit extension
-            if (code === ext.charCodeAt(extIdx)) {
-              if (--extIdx === -1) {
-                // We matched the extension, so mark this as the end of our path
-                // component
-                end = i;
-              }
-            } else {
-              // Extension does not match, so our result is the entire path
-              // component
-              extIdx = -1;
-              end = firstNonSlashEnd;
-            }
-          }
-        }
-      }
-
-      if (start === end) end = firstNonSlashEnd;else if (end === -1) end = path.length;
-      return path.slice(start, end);
-    } else {
-      for (i = path.length - 1; i >= 0; --i) {
-        if (path.charCodeAt(i) === 47 /*/*/) {
-            // If we reached a path separator that was not part of a set of path
-            // separators at the end of the string, stop now
-            if (!matchedSlash) {
-              start = i + 1;
-              break;
-            }
-          } else if (end === -1) {
-          // We saw the first non-path separator, mark this as the end of our
-          // path component
-          matchedSlash = false;
-          end = i + 1;
-        }
-      }
-
-      if (end === -1) return '';
-      return path.slice(start, end);
-    }
-  },
-
-  extname: function extname(path) {
-    assertPath(path);
-    var startDot = -1;
-    var startPart = 0;
-    var end = -1;
-    var matchedSlash = true;
-    // Track the state of characters (if any) we see before our first dot and
-    // after any path separator we find
-    var preDotState = 0;
-    for (var i = path.length - 1; i >= 0; --i) {
-      var code = path.charCodeAt(i);
-      if (code === 47 /*/*/) {
-          // If we reached a path separator that was not part of a set of path
-          // separators at the end of the string, stop now
-          if (!matchedSlash) {
-            startPart = i + 1;
-            break;
-          }
-          continue;
-        }
-      if (end === -1) {
-        // We saw the first non-path separator, mark this as the end of our
-        // extension
-        matchedSlash = false;
-        end = i + 1;
-      }
-      if (code === 46 /*.*/) {
-          // If this is our first dot, mark it as the start of our extension
-          if (startDot === -1)
-            startDot = i;
-          else if (preDotState !== 1)
-            preDotState = 1;
-      } else if (startDot !== -1) {
-        // We saw a non-dot and non-path separator before our dot, so we should
-        // have a good chance at having a non-empty extension
-        preDotState = -1;
-      }
-    }
-
-    if (startDot === -1 || end === -1 ||
-        // We saw a non-dot character immediately before the dot
-        preDotState === 0 ||
-        // The (right-most) trimmed path component is exactly '..'
-        preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
-      return '';
-    }
-    return path.slice(startDot, end);
-  },
-
-  format: function format(pathObject) {
-    if (pathObject === null || typeof pathObject !== 'object') {
-      throw new TypeError('The "pathObject" argument must be of type Object. Received type ' + typeof pathObject);
-    }
-    return _format('/', pathObject);
-  },
-
-  parse: function parse(path) {
-    assertPath(path);
-
-    var ret = { root: '', dir: '', base: '', ext: '', name: '' };
-    if (path.length === 0) return ret;
-    var code = path.charCodeAt(0);
-    var isAbsolute = code === 47 /*/*/;
-    var start;
-    if (isAbsolute) {
-      ret.root = '/';
-      start = 1;
-    } else {
-      start = 0;
-    }
-    var startDot = -1;
-    var startPart = 0;
-    var end = -1;
-    var matchedSlash = true;
-    var i = path.length - 1;
-
-    // Track the state of characters (if any) we see before our first dot and
-    // after any path separator we find
-    var preDotState = 0;
-
-    // Get non-dir info
-    for (; i >= start; --i) {
-      code = path.charCodeAt(i);
-      if (code === 47 /*/*/) {
-          // If we reached a path separator that was not part of a set of path
-          // separators at the end of the string, stop now
-          if (!matchedSlash) {
-            startPart = i + 1;
-            break;
-          }
-          continue;
-        }
-      if (end === -1) {
-        // We saw the first non-path separator, mark this as the end of our
-        // extension
-        matchedSlash = false;
-        end = i + 1;
-      }
-      if (code === 46 /*.*/) {
-          // If this is our first dot, mark it as the start of our extension
-          if (startDot === -1) startDot = i;else if (preDotState !== 1) preDotState = 1;
-        } else if (startDot !== -1) {
-        // We saw a non-dot and non-path separator before our dot, so we should
-        // have a good chance at having a non-empty extension
-        preDotState = -1;
-      }
-    }
-
-    if (startDot === -1 || end === -1 ||
-    // We saw a non-dot character immediately before the dot
-    preDotState === 0 ||
-    // The (right-most) trimmed path component is exactly '..'
-    preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
-      if (end !== -1) {
-        if (startPart === 0 && isAbsolute) ret.base = ret.name = path.slice(1, end);else ret.base = ret.name = path.slice(startPart, end);
-      }
-    } else {
-      if (startPart === 0 && isAbsolute) {
-        ret.name = path.slice(1, startDot);
-        ret.base = path.slice(1, end);
-      } else {
-        ret.name = path.slice(startPart, startDot);
-        ret.base = path.slice(startPart, end);
-      }
-      ret.ext = path.slice(startDot, end);
-    }
-
-    if (startPart > 0) ret.dir = path.slice(0, startPart - 1);else if (isAbsolute) ret.dir = '/';
-
-    return ret;
-  },
-
-  sep: '/',
-  delimiter: ':',
-  win32: null,
-  posix: null
-};
-
-posix.posix = posix;
-
-module.exports = posix;
-
-}).call(this)}).call(this,require('_process'))
-},{"_process":58}],58:[function(require,module,exports){
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-},{}]},{},[55]);
+},{"../../src/build/Interprete/Controlador":8,"../../src/build/Interprete/Gramatica/gramatica":18,"../../src/build/Interprete/TablaSimbolos/TablaSimbolos":56}]},{},[58]);

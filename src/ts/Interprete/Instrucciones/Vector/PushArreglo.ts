@@ -81,7 +81,8 @@ export class PushArreglo implements Instruccion{
 
     // }
     traducir(controlador: Controlador, ts:TablaSimbolos): any {
-        return 'push';
+        let c3d = '/*------push arreglos------*/\n';
+        return c3d
     }
     recorrer(): Nodo {
         throw new Error("Method not implemented.");

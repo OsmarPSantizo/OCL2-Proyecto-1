@@ -146,7 +146,6 @@ export class Logicas extends Operacion implements Expresion{
                 return c3d;
                 
             case Operador.OR:
-                c3d += 'A mamon'
                 c3d += this.exp1.traducir(controlador,ts)
                 c3d += this.exp2.traducir(controlador,ts)
                 return c3d;

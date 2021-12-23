@@ -63,7 +63,8 @@ export class AccesoStruct implements Expresion {
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos):String {
-        throw new Error("Method not implemented.");
+        let c3d = '/*------Acceso a structrs------*/\n';
+        return c3d
     }
 
     recorrer(): Nodo {
