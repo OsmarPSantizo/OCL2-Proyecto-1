@@ -147,7 +147,12 @@ export class AccesoVector implements Expresion, Instruccion{
     }
 
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("ACCESO VECTOR","");
+            padre.AddHijo(new Nodo(this.id,""));
+            padre.AddHijo(new Nodo("[",""));
+            padre.AddHijo(this.indice.recorrer());
+            padre.AddHijo(new Nodo("]",""));
+        return padre;
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos): String {

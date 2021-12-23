@@ -65,7 +65,7 @@ export class LenghtC implements Expresion{
     }
     recorrer(): Nodo {
         let padre = new Nodo("length","");
-        padre.AddHijo(new Nodo("probalndo",""));
+        padre.AddHijo(this.expresion.recorrer());
         padre.AddHijo(new Nodo(".",""));
         padre.AddHijo(new Nodo("length",""));
         padre.AddHijo(new Nodo("(",""));

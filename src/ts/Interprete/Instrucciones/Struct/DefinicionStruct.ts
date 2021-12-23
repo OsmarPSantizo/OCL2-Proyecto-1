@@ -54,7 +54,21 @@ export class DefinicionStruct implements Instruccion{
 
 
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("DEFINICION STRUCT","");
+            padre.AddHijo(new Nodo("struct",""));
+            
+            padre.AddHijo(new Nodo(this.nombreStruct,""));
+            padre.AddHijo(new Nodo("{",""));
+            let hijo_parametros = new Nodo("Lista_atributos","");
+            for (let para of this.listaAtributos){
+                hijo_parametros.AddHijo(new Nodo(para['identificador'],""));
+            }
+            padre.AddHijo(hijo_parametros);
+            padre.AddHijo(new Nodo("}",""));
+          
+
+
+        return padre;
     }
 
 

@@ -77,7 +77,14 @@ export class ModificarStruct implements Instruccion {
 
 
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("MODIFICAR STRUCT","");
+            padre.AddHijo(new Nodo(this.id,""));
+            padre.AddHijo(new Nodo(".",""));
+            padre.AddHijo(new Nodo(this.atributo,""));
+            padre.AddHijo(new Nodo("=",""));
+            padre.AddHijo(this.nuevoValor.recorrer());
+
+        return padre;
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos): String {

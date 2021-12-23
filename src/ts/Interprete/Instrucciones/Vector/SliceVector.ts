@@ -70,7 +70,15 @@ export class SliceVector implements Expresion{
     }
 
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("Slice","");
+        padre.AddHijo(new Nodo(this.id,""));
+        padre.AddHijo(new Nodo("[",""));
+        padre.AddHijo(this.inicio.recorrer());
+        padre.AddHijo(new Nodo(":",""));
+        padre.AddHijo(this.final.recorrer());
+        padre.AddHijo(new Nodo("]",""));
+        
+        return padre;
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos) :String {

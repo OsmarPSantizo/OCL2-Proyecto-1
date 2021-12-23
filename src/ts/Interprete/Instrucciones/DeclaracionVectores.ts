@@ -76,7 +76,22 @@ export class DeclaracionVectores implements Instruccion{
 
 
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("DECLARACION VECTORES","");
+        padre.AddHijo(new Nodo(this.type.nombre_tipo,""));
+        let hijos_id = new Nodo("Ids","");
+        for (let id of this.listaIds){
+            hijos_id.AddHijo(new Nodo(id,""))
+        }
+        padre.AddHijo(hijos_id);
+        padre.AddHijo(new Nodo("=",""))
+        padre.AddHijo(new Nodo("[",""))
+        let hijos_id2 = new Nodo("EXPRESIONES","");
+        for (let id of this.listaExpresiones){
+            hijos_id2.AddHijo(id.recorrer())
+        }
+        padre.AddHijo(new Nodo("]",""))
+
+        return padre
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos): String {

@@ -96,7 +96,21 @@ export class DeclaracionStruct implements Instruccion {
 
 
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("DECLARACION STRUCT","");
+            padre.AddHijo(new Nodo(this.structId,""));
+            padre.AddHijo(new Nodo(this.newVariable,""));
+            padre.AddHijo(new Nodo("=",""));
+            padre.AddHijo(new Nodo(this.structInstanceId,""));
+            padre.AddHijo(new Nodo("(",""));
+
+            let hijo_parametros = new Nodo("Lista Valores","");
+            for (let para of this.listaValores){
+                hijo_parametros.AddHijo(para.recorrer());
+            }
+            padre.AddHijo(hijo_parametros);
+            padre.AddHijo(new Nodo(")",""));
+
+        return padre;
     }
 
 

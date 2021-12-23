@@ -48,7 +48,15 @@ export class CharOfPosition implements Expresion{
         }
     }
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("Char of position","");
+            padre.AddHijo(this.expresion.recorrer());
+            padre.AddHijo(new Nodo(".",""));
+            padre.AddHijo(new Nodo("caracterOfPosition",""));
+            padre.AddHijo(new Nodo("(",""));
+            padre.AddHijo(this.posicion.recorrer());
+            padre.AddHijo(new Nodo(")",""));
+
+        return padre;
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos) :String {

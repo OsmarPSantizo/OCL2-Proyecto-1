@@ -118,7 +118,13 @@ export class PopArreglo implements Expresion, Instruccion{
     }
 
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("POP","");
+        padre.AddHijo(new Nodo(this.expresion['identificador'],""));
+        padre.AddHijo(new Nodo(".",""));
+        padre.AddHijo(new Nodo("pop",""));
+        padre.AddHijo(new Nodo("(",""));
+        padre.AddHijo(new Nodo(")",""));
+        return padre;
     }
 
 

@@ -76,7 +76,11 @@ export class AccesoStruct implements Expresion {
     }
 
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("ACCESO STRUCT","");
+            padre.AddHijo(new Nodo(this.id['identificador'],""));
+            padre.AddHijo(new Nodo(".",""));
+            padre.AddHijo(new Nodo(this.valor['identificador'],""));
+        return padre;
     }
 
 }

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DefinicionStruct = void 0;
 const Errores_1 = require("../../AST/Errores");
+const Nodo_1 = require("../../AST/Nodo");
 const Simbolo_1 = require("../../TablaSimbolos/Simbolo");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
 class DefinicionStruct {
@@ -28,7 +29,17 @@ class DefinicionStruct {
         ts.agregar(this.nombreStruct, nuevoSimbolo);
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("DEFINICION STRUCT", "");
+        padre.AddHijo(new Nodo_1.Nodo("struct", ""));
+        padre.AddHijo(new Nodo_1.Nodo(this.nombreStruct, ""));
+        padre.AddHijo(new Nodo_1.Nodo("{", ""));
+        let hijo_parametros = new Nodo_1.Nodo("Lista_atributos", "");
+        for (let para of this.listaAtributos) {
+            hijo_parametros.AddHijo(new Nodo_1.Nodo(para['identificador'], ""));
+        }
+        padre.AddHijo(hijo_parametros);
+        padre.AddHijo(new Nodo_1.Nodo("}", ""));
+        return padre;
     }
     traducir(controlador, ts) {
         let c3d = '/*------Definicion structs------*/\n';

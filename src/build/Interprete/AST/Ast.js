@@ -49,10 +49,6 @@ float h; //Puntero H
                 c3d += instruccion.traducir(controlador, ts);
             }
         }
-        for (let i = 0; i < cantidadGlobales; i++) {
-            c3d += `heap[${i}] = 0\n`;
-            c3d += `h = h + 1 \n`;
-        }
         ts.ambito = false;
         for (let instruccion of this.lista_instrucciones) {
             if (instruccion instanceof Fmain_1.Fmain) {

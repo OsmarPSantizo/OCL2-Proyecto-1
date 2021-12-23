@@ -82,7 +82,18 @@ export class AsignacionArreglo implements Instruccion{
 
 
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo("ASIGNACION ARREGLO","");
+        padre.AddHijo(new Nodo(this.id,""));
+        padre.AddHijo(new Nodo("=",""));
+        padre.AddHijo(new Nodo("[",""));
+        let hijo_instrucciones = new Nodo("Lista expresiones","");
+        for(let inst of this.listaExpresiones){
+            hijo_instrucciones.AddHijo(inst.recorrer());
+        }
+        padre.AddHijo(hijo_instrucciones);
+        padre.AddHijo(new Nodo("]",""));
+
+        return padre;
     }
 
     traducir(controlador: Controlador, ts: TablaSimbolos): String {

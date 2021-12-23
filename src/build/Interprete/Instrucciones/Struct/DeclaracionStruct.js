@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeclaracionStruct = void 0;
 const Errores_1 = require("../../AST/Errores");
+const Nodo_1 = require("../../AST/Nodo");
 const Simbolo_1 = require("../../TablaSimbolos/Simbolo");
 const Tipo_1 = require("../../TablaSimbolos/Tipo");
 class DeclaracionStruct {
@@ -66,7 +67,19 @@ class DeclaracionStruct {
         // console.log('VALORES ORIGINALES:', storedStruct.valor);
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("DECLARACION STRUCT", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.structId, ""));
+        padre.AddHijo(new Nodo_1.Nodo(this.newVariable, ""));
+        padre.AddHijo(new Nodo_1.Nodo("=", ""));
+        padre.AddHijo(new Nodo_1.Nodo(this.structInstanceId, ""));
+        padre.AddHijo(new Nodo_1.Nodo("(", ""));
+        let hijo_parametros = new Nodo_1.Nodo("Lista Valores", "");
+        for (let para of this.listaValores) {
+            hijo_parametros.AddHijo(para.recorrer());
+        }
+        padre.AddHijo(hijo_parametros);
+        padre.AddHijo(new Nodo_1.Nodo(")", ""));
+        return padre;
     }
     traducir(controlador, ts) {
         let c3d = '/*------Declaracion structs------*/\n';

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccesoStruct = void 0;
 const Errores_1 = require("../AST/Errores");
+const Nodo_1 = require("../AST/Nodo");
 const Tipo_1 = require("../TablaSimbolos/Tipo");
 class AccesoStruct {
     constructor(id, valor, linea, columna) {
@@ -51,7 +52,11 @@ class AccesoStruct {
         return c3d;
     }
     recorrer() {
-        throw new Error("Method not implemented.");
+        let padre = new Nodo_1.Nodo("ACCESO STRUCT", "");
+        padre.AddHijo(new Nodo_1.Nodo(this.id['identificador'], ""));
+        padre.AddHijo(new Nodo_1.Nodo(".", ""));
+        padre.AddHijo(new Nodo_1.Nodo(this.valor['identificador'], ""));
+        return padre;
     }
 }
 exports.AccesoStruct = AccesoStruct;

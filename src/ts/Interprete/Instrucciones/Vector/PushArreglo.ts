@@ -85,7 +85,16 @@ export class PushArreglo implements Instruccion{
         return c3d
     }
     recorrer(): Nodo {
-        throw new Error("Method not implemented.");
+        
+        let padre = new Nodo("PUSH","");
+        padre.AddHijo(new Nodo(this.id,""));
+        padre.AddHijo(new Nodo(".",""));
+        padre.AddHijo(new Nodo("push",""));
+        padre.AddHijo(new Nodo("(",""));
+        padre.AddHijo(this.valor.recorrer());
+        padre.AddHijo(new Nodo(")",""));
+        return padre;
+        
     }
 
 }
