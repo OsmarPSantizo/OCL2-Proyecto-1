@@ -10,17 +10,26 @@ El intérprete fue hecho con la herramienta Jison. Para instarlo debemos usar el
 
 La estructura del archivo gramatica.jison es la siguiente: 
 
-Aquí agregamos todas las opciones que deseamos en el interprete ![](Aspose.Words.b2ed5e7d-dc41-4e89-9ea3-c6f44f332e55.002.png)
+Aquí agregamos todas las opciones que deseamos en el interprete 
 
-Luego de agregar las definiciones léxicas empezamos a declarar nuestras expresiones regulares. ![](Aspose.Words.b2ed5e7d-dc41-4e89-9ea3-c6f44f332e55.003.png)
+![](Aspose.Words.b2ed5e7d-dc41-4e89-9ea3-c6f44f332e55.002.png)
 
-Aquí declaramos los símbolos del programa, colocando las palabras reservadas, comentarios, espacios en blanco, todos los símbolos ![](Aspose.Words.b2ed5e7d-dc41-4e89-9ea3-c6f44f332e55.004.jpeg)de expresiones regulares, etc 
+Luego de agregar las definiciones léxicas empezamos a declarar nuestras expresiones regulares. 
 
-Despues del símbolo lex agregamos ![](Aspose.Words.b2ed5e7d-dc41-4e89-9ea3-c6f44f332e55.005.png)el área de imports, donde importamos las clases que vamos a utilizar para que la gramática tengan funcionalidad, se debe declarar como constante 
+![](Aspose.Words.b2ed5e7d-dc41-4e89-9ea3-c6f44f332e55.003.png)
+
+Aquí declaramos los símbolos del programa, colocando las palabras reservadas, comentarios, espacios en blanco, todos los símbolos de expresiones regulares, etc 
+
+![](Aspose.Words.b2ed5e7d-dc41-4e89-9ea3-c6f44f332e55.004.jpeg)
+
+Despues del símbolo lex agregamos el área de imports, donde importamos las clases que vamos a utilizar para que la gramática tengan funcionalidad, se debe declarar como constante 
+
+![](Aspose.Words.b2ed5e7d-dc41-4e89-9ea3-c6f44f332e55.005.png)
 
 Luego se define la asociatividad y precedencias de los operadores si la gramática es ambigua, se agrega ![](Aspose.Words.b2ed5e7d-dc41-4e89-9ea3-c6f44f332e55.006.png)de menor a mayor. 
 
-` `Seguido de eso le indicamos cual será nuestro símbolo inicial. ![](Aspose.Words.b2ed5e7d-dc41-4e89-9ea3-c6f44f332e55.007.png)
+` `Seguido de eso le indicamos cual será nuestro símbolo inicial. 
+![](Aspose.Words.b2ed5e7d-dc41-4e89-9ea3-c6f44f332e55.007.png)
 
 ![](Aspose.Words.b2ed5e7d-dc41-4e89-9ea3-c6f44f332e55.008.jpeg)
 
