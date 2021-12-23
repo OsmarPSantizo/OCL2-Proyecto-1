@@ -5,7 +5,7 @@ const Declaracion_1 = require("../Instrucciones/Declaracion");
 const DeclaracionVectores_1 = require("../Instrucciones/DeclaracionVectores");
 const Fmain_1 = require("../Instrucciones/Fmain");
 const Funcion_1 = require("../Instrucciones/Funcion");
-const DeclaracionStruct_1 = require("../Instrucciones/Struct/DeclaracionStruct");
+const DefinicionStruct_1 = require("../Instrucciones/Struct/DefinicionStruct");
 const Errores_1 = require("./Errores");
 const Nodo_1 = require("./Nodo");
 class Ast {
@@ -18,11 +18,11 @@ class Ast {
         let temporales = `double `;
         let cuerpo = ``;
         let encabezado = `#include <stdio.h> //Importar para el uso de Printf
-#include <math.h> //Importar para el uso de libreria matematicas
-float heap[16384]; //Estructura para heap
-float stack[16394]; //Estructura para stack
-float p; //Puntero P
-float h; //Puntero H
+                        #include <math.h> //Importar para el uso de libreria matematicas
+                        float heap[16384]; //Estructura para heap
+                        float stack[16394]; //Estructura para stack
+                        float p; //Puntero P
+                        float h; //Puntero H
 `;
         let impresion = `void printString() {
     t0 = p+1;
@@ -83,7 +83,7 @@ float h; //Puntero H
         }
         //2da pasada. Se ejecuta las declaraciones de variables
         for (let instruccion of this.lista_instrucciones) {
-            if (instruccion instanceof Declaracion_1.Declaracion || instruccion instanceof DeclaracionVectores_1.DeclaracionVectores || instruccion instanceof DeclaracionStruct_1.DeclaracionStruct) {
+            if (instruccion instanceof Declaracion_1.Declaracion || instruccion instanceof DeclaracionVectores_1.DeclaracionVectores || instruccion instanceof DefinicionStruct_1.DefinicionStruct) {
                 instruccion.ejecutar(controlador, ts);
             }
         }

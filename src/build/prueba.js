@@ -16,17 +16,17 @@ const ejecutarCodigo = (entrada) => {
     console.log(controlador.consola);
 };
 ejecutarCodigo(`
+ struct animal {
+     int edad;
+     String name;
+     boolean mamifero;
+ }
 
  void main() {
-    int[] stack = [1, 2];
-    stack.push(3);
-    stack.push(4);
-    stack.push(5);
-    println(stack);
-    stack.pop();
-    int poppedValue = stack.pop();
-    println("poppedValue: " + poppedValue);
-    println(stack);
+
+    animal perro = animal(4, "Roberto", true);
+
+    println(perro.edad);
 
 }
 
